@@ -63,7 +63,6 @@
 
 .navText {
     display: none;
-    font-family: Montserrat;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
@@ -75,7 +74,6 @@
 .navTextActive {
     display: none;
     color: #fff;
-    font-family: Montserrat;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
