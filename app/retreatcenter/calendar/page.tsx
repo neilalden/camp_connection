@@ -152,7 +152,7 @@ const SimpleCalendar = ({ date, reservations, setReservations }: { date: Date, r
               {calendarDays.map((d, ix) => {
                 const cellNum = (i + 1) * (ix); // column + 1 x row
                 if (calendarDate === undefined && cellNum > Days[0].getUTCDay()) calendarDate = 0;
-                const rangeDate = Days[calendarDate ?? 0];
+                const rangeDate = calendarDate && Days[calendarDate] ? Days[calendarDate] : Days[0];
                 if (ix === 0) {
                   // week range column
                   var lastDay = new Date(rangeDate.getFullYear(), rangeDate.getMonth() + 1, 1);
