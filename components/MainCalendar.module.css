@@ -1,0 +1,147 @@
+.row {
+    display: flex;
+    flex-direction: row;
+
+    margin-left: 50px !important;
+}
+
+.filterContainer {
+    width: 210px;
+    border: 1px solid #F6F8F9;
+}
+
+.selectedFilter {
+    width: 120px !important;
+    min-height: 70px !important;
+    padding-bottom: 10px !important;
+}
+
+
+.selectedFilterText {
+    font-weight: normal !important;
+    font-size: 14px;
+    margin: 5px !important;
+    text-align: right !important;
+
+}
+
+.checkbox {}
+
+.calendarHeader {
+    width: 80px !important;
+    height: 25px !important;
+    border: 1px solid #F6F8F9;
+    text-align: center;
+}
+
+.calendarHeader0 {
+    width: 120px !important;
+    height: 25px !important;
+    border-top: 1px solid #F6F8F9;
+    text-align: center;
+}
+
+.calendarHeaderText {
+    font-size: 16px;
+    font-weight: medium;
+    color: #D9D9D9;
+}
+
+.calendarWeek {
+    display: flex;
+    flex-direction: row;
+}
+
+.calendarDay {
+    width: 80px !important;
+    min-height: 70px !important;
+    padding-bottom: 10px !important;
+    border: 1px solid #F6F8F9;
+    text-align: right;
+    overflow-x: visible;
+    z-index: 0 !important;
+}
+
+.calendarDate {
+    margin-right: 2px !important;
+    font-size: 12px;
+    color: #D9D9D9;
+}
+
+.space {
+    height: 8px !important;
+}
+
+.vacant {
+    width: 103% !important;
+    height: 12px !important;
+    margin-left: -1px !important;
+    margin-top: 0 !important;
+    display: flex;
+    z-index: 99 !important;
+}
+
+.vacant+.vacant {
+    margin-top: 10px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-content: center !important;
+    display: flex;
+    z-index: 99 !important;
+
+}
+
+.vacantLine {
+    height: 1px;
+    width: 100% !important;
+    background-color: #D9D9D9;
+    align-self: center !important;
+    z-index: 99 !important;
+}
+
+.booked {
+    background-image: linear-gradient(270deg, #149237 0%, #75CC94 100%);
+    background-attachment: fixed;
+    height: 12px !important;
+    width: 100%;
+}
+
+.reserved {
+    background: linear-gradient(270deg, #FFAB00 0%, #FFDD73 100%);
+
+    background-attachment: fixed;
+    height: 12px !important;
+    width: 100%;
+}
+
+.scheduledTail {
+    border-top-left-radius: 50px !important;
+    border-bottom-left-radius: 50px !important;
+}
+
+.scheduledHead {
+    border-top-right-radius: 50px !important;
+    border-bottom-right-radius: 50px !important;
+}
+
+.filterCategoryContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100% !important;
+    justify-content: space-between;
+    align-items: center;
+    background: #F6F8F9;
+    height: 30px;
+    padding: 2px 5px !important;
+    margin-bottom: 2px !important;
+}
+
+.filterCategoryTitle {}
+
+.showCategory {
+    height: 100px !important;
+}
+
+.hideCategory {
+    height: 0 !important;
+}

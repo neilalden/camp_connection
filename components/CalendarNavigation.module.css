@@ -1,0 +1,53 @@
+.calendarNavigation {
+    width: 50%;
+    align-items: center !important;
+    justify-content: center !important;
+    align-content: center !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendarNavigationYear {
+    flex-direction: row;
+}
+
+.calendarNavigationMonth {
+    flex-direction: row;
+}
+
+.calendarNavigationItem {
+    margin: 5px 10px !important
+}
+
+.calendarNavigationItemActive {
+    color: var(--chalky-500, #D8E189);
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    ;
+}
+
+.line {
+    height: 2.5px;
+    width: 400px;
+    margin: auto;
+    background: #dddddd;
+    border-radius: 200%;
+}
+
+.firstCalendarItem {
+    background: linear-gradient(270deg, #999 0%, rgba(153, 153, 153, 0.00) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+
+.lastCalendarItem {
+    background: linear-gradient(90deg, #999 0%, rgba(153, 153, 153, 0.00) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
