@@ -81,13 +81,6 @@
     margin-left: 10px !important;
 }
 
-.sideNav:hover .buttonActive {}
-
-.sideNav:hover .settingsButton {}
-
-.sideNav:hover .button {}
-
-.sideNav:hover .settingsButtonActive {}
 
 .sideNavButtons {
     margin-top: 29px !important;
