@@ -1,8 +1,4 @@
 .container {
-    height: 100% !important;
-}
-
-.mainRow {
     display: flex;
     flex-direction: row;
     flex-grow: 0;

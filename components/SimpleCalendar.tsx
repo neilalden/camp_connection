@@ -73,7 +73,7 @@ const SimpleCalendar = ({ date }: { date: Date }) => {
                                 let classes: string | undefined;
                                 let style: React.CSSProperties | undefined
 
-                                if (appointment && appointment.checkInDate && appointment.checkOutDate && currentDate) {
+                                if (appointment && !Array.isArray(appointment) && appointment.checkInDate && appointment.checkOutDate && currentDate) {
                                     let checkInString
                                     let checkOutString
                                     const bordersString = `2px solid ${appointment.color}`
