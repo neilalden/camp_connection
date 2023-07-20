@@ -1,15 +1,12 @@
-"use client"
-import { RootState } from "@/services/redux/store";
-import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-
-
+import LeadsColumn from "@/components/LeadsColumn"
+import styles from "./styles.module.css"
 const BookPage = () => {
-    const user = useSelector((state: RootState) => state.User.user)
-    const router = useRouter();
-    if (!user) router.push("/signin")
     return (
-        <div>Book</div>
+        <div className={styles.container}>
+            <div className={styles.mainRow}>
+                <LeadsColumn />
+            </div>
+        </div>
     )
 }
 

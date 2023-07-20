@@ -1,4 +1,4 @@
-import { ArgFunction, VoidFunction, HTMLEvent, SetStateType, ReservationType, FilterType } from "@/types"
+import { ArgFunction, VoidFunction, HTMLEvent, SetStateType, AppointmentType, FilterType } from "@/types"
 
 export const textInputSetState = (e: HTMLEvent<HTMLInputElement>, setState: SetStateType<string>) => {
     setState(e.target.value)
@@ -34,12 +34,12 @@ export const trunc = (str: string, num = 20, truncString = "...") => {
     else return str;
 }
 
-export const filterReservation = ({ reservation, selectedFilter }: { reservation: ReservationType, selectedFilter: FilterType }) => {
-    if (reservation?.rooms && selectedFilter.type === "Housing") {
-        return reservation.rooms.some((room) => room.id === selectedFilter.id || room.buildingId === selectedFilter.id)
+export const filterAppointment = ({ appointment, selectedFilter }: { appointment: AppointmentType, selectedFilter: FilterType }) => {
+    if (appointment?.rooms && selectedFilter.type === "Housing") {
+        return appointment.rooms.some((room) => room.id === selectedFilter.id || room.buildingId === selectedFilter.id)
     }
-    if (reservation?.amenities && selectedFilter.type === "Activity") {
-        return reservation.amenities.some((amenity) => amenity.id === selectedFilter.id)
+    if (appointment?.amenities && selectedFilter.type === "Activity") {
+        return appointment.amenities.some((amenity) => amenity.id === selectedFilter.id)
     }
     return false
 }
@@ -52,3 +52,16 @@ export const generateColor = () => {
     }
     return color
 };
+
+
+export const dateIsScheduled = ({ date, appointments }: { date?: Date; appointments?: Array<AppointmentType> }) => {
+    if (!date || !appointments) return undefined;
+    let result: Array<AppointmentType> = []
+    appointments.map(appointment => {
+        if (appointment.checkInDate && appointment.checkOutDate && date > appointment.checkInDate && date <= appointment.checkOutDate) {
+            if (result === undefined) result = [appointment];
+            else result.push(appointment)
+        }
+    })
+    return result.length === 0 ? undefined : result.length > 1 ? result : result[0]
+}

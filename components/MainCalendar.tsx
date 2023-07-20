@@ -1,13 +1,13 @@
 "use client"
 import React, { useState } from 'react'
 import styles from "./MainCalendar.module.css"
-import { arrayToMap, filterReservation, getDays } from '@/utils/functions'
+import { arrayToMap, filterAppointment, getDays } from '@/utils/functions'
 import { months, weekdays } from '@/utils/variables'
 import Colors from '@/common/colors'
-import { AmenityType, FilterType, ReservationType, RoomType } from '@/types'
+import { AmenityType, FilterType, AppointmentType, RoomType } from '@/types'
 import Image from 'next/image'
 import Images from '@/common/images'
-import { DaysSampleData, FacilitiesSampleData, reservationsSampleData, } from '@/utils/sampleData'
+import { DaysSampleData, FacilitiesSampleData, appointmentsSampleData, } from '@/utils/sampleData'
 const calendarWeeks = Array(6).fill(0)
 const calendarDays = Array(8).fill(0)
 
@@ -107,8 +107,8 @@ const MainCalendar = ({ date }: { date: Date }) => {
                                             <div className={styles.space} />
                                             {
                                                 currentDate && selectedFilters.map((selectedFilter, idx) => {
-                                                    const lastChecked = new Set<ReservationType["id"]>();
-                                                    const reservation = reservationsSampleData.find((r) => {
+                                                    const lastChecked = new Set<AppointmentType["id"]>();
+                                                    const appointment = appointmentsSampleData.find((r) => {
                                                         const matched = r.checkInDate && r.checkOutDate && currentDate > r.checkInDate && currentDate <= r?.checkOutDate
                                                         if (matched && !lastChecked.has(r.id)) {
                                                             lastChecked.add(r.id)
@@ -119,13 +119,13 @@ const MainCalendar = ({ date }: { date: Date }) => {
                                                     let checkInString
                                                     let checkOutString
                                                     const currentDateString = `${months[currentDate.getMonth()]} ${currentDate.getDate() - 1}`
-                                                    if (reservation && reservation.checkInDate) checkInString = `${months[reservation.checkInDate.getMonth()]} ${reservation.checkInDate.getDate()}`
-                                                    if (reservation && reservation.checkOutDate) checkOutString = `${months[reservation.checkOutDate.getMonth()]} ${reservation.checkOutDate.getDate() - 1}`
+                                                    if (appointment && appointment.checkInDate) checkInString = `${months[appointment.checkInDate.getMonth()]} ${appointment.checkInDate.getDate()}`
+                                                    if (appointment && appointment.checkOutDate) checkOutString = `${months[appointment.checkOutDate.getMonth()]} ${appointment.checkOutDate.getDate() - 1}`
 
                                                     return (
                                                         <div key={idx} className={styles.vacant}>
                                                             {
-                                                                reservation && filterReservation({ reservation: reservation, selectedFilter }) ? <div className={[reservation.status === "Booked" ? styles.booked : styles.reserved, checkInString === currentDateString && styles.scheduledTail, checkOutString === currentDateString && styles.scheduledHead].join(" ")} id={reservation.id} /> : <div className={styles.vacantLine} />
+                                                                appointment && filterAppointment({ appointment: appointment, selectedFilter }) ? <div className={[appointment.status === "Booked" ? styles.booked : styles.reserved, checkInString === currentDateString && styles.scheduledTail, checkOutString === currentDateString && styles.scheduledHead].join(" ")} id={appointment.id} /> : <div className={styles.vacantLine} />
                                                             }
                                                         </div>
                                                     )

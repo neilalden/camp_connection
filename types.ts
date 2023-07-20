@@ -66,7 +66,7 @@ export type MealType = {
     id: string;
     name: string
 }
-export type ReservationType = {
+export type AppointmentType = {
     id: string;
     reservedBy: ReserveeType;
     status: "Reserved" | "Booked";

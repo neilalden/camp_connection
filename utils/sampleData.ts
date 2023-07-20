@@ -1,6 +1,6 @@
 import Colors from "@/common/colors";
-import { FilterType, ReservationType } from "@/types";
-import { getDays } from "./functions";
+import { FilterType, AppointmentType } from "@/types";
+import { generateColor, getDays } from "./functions";
 export type RoomType = {
     id: string;
     name: string;
@@ -119,9 +119,30 @@ export const selectedFiltersSampleData: Array<FilterType> = [
     },
 ];
 
-export const reservationsSampleData: Array<ReservationType> = [
+export const leadsSampleData: Array<AppointmentType> = [
     {
-        id: "reservation1",
+        id: "John Doe",
+        color: generateColor(),
+        groupName: "Doe's group",
+        status: "Reserved",
+        reservedBy: {
+            id: "string",
+            name: "John Doe",
+            contactNumber: "+639 123 456",
+            email: "john.doe@email.com",
+        },
+        zipCode: "4030",
+        groupSize: 20,
+        checkInDays: 5,
+        amenities: [],
+        meals: [],
+        rooms: [],
+    }
+]
+
+export const appointmentsSampleData: Array<AppointmentType> = [
+    {
+        id: "appointment1",
         reservedBy: {
             id: "string",
             name: "Jane Doe",
@@ -149,7 +170,7 @@ export const reservationsSampleData: Array<ReservationType> = [
         rooms: []
     },
     {
-        id: "reservation2",
+        id: "appointment2",
         groupName: "Pearson Hardman",
         reservedBy: {
             id: "2",

@@ -1,3 +1,16 @@
+.container {
+    height: 100% !important;
+}
+
+.mainRow {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    height: 100% !important;
+    flex-grow: 1 !important;
+}
+
+
 .content {
     display: flex !important;
     flex-direction: row !important;

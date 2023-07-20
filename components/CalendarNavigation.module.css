@@ -21,7 +21,6 @@
 
 .calendarNavigationItemActive {
     color: var(--chalky-500, #D8E189);
-    font-family: Montserrat;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
