@@ -14,12 +14,12 @@ import { RetreatCenterUserType } from '@/types';
 import { RootState } from '@/services/redux/store';
 
 const RetreatCenterUserTestData: RetreatCenterUserType = {
-    firstName: "Neil",
-    lastName: "Escobin",
-    middleName: "Paicaglino",
+    firstName: "Alan",
+    lastName: "Brown",
+    middleName: "",
     birthDate: new Date("07/29/1999"),
     contactNumber: "09976447771",
-    email: "escobin.neil@gmail.com",
+    email: "alan.brown@gmail.com",
     organization: "CampConnection",
     role: "Manager",
     createdAt: new Date(),
