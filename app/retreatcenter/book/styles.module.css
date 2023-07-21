@@ -1,6 +1,6 @@
 /* LAYOUT STYLES */
 .main {
-    height: 100% !important;
+    height: calc(100% - 70px) !important;
     width: 100% !important;
     display: flex;
     flex-direction: column;
@@ -33,6 +33,8 @@
     flex-direction: column;
     align-items: center;
     margin: 10px 0 !important;
+    overflow-y: scroll;
+
 }
 
 .calendarContainer {
