@@ -2,7 +2,6 @@
 .content {
     display: flex !important;
     flex-direction: row !important;
-    flex-grow: 1;
     height: 100% !important;
 }
 
@@ -11,7 +10,6 @@
     width: 100% !important;
     display: flex !important;
     flex-direction: column;
-    flex-grow: 1 !important;
 
 }
 
@@ -25,7 +23,6 @@
     border-right: 1px solid var(--cascade-300, #C2CFD6);
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     justify-content: space-between;
     width: 45px;
 }
@@ -68,9 +65,7 @@
 .mainRow {
     display: flex;
     flex-direction: row;
-    flex-grow: 0;
     height: calc(100% - 50px) !important;
-    flex-grow: 1 !important;
 }
 
 .calendarContainer {
@@ -80,7 +75,6 @@
 .calendarColumn {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     align-items: center;
     margin: 10px 0 !important;
 }

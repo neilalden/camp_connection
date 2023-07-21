@@ -1,3 +1,4 @@
+"use client"
 import SigninPage from "./signin/page"
 
 const App = () => {

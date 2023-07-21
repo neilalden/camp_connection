@@ -1,10 +1,4 @@
 /* LAYOUT STYLES */
-.content {
-    display: flex !important;
-    flex-direction: row !important;
-    height: 100% !important;
-}
-
 .main {
     height: 100% !important;
     width: 100% !important;
@@ -12,25 +6,31 @@
     flex-direction: column;
 }
 
-.mainContent {
-    width: 100% !important;
+.content {
+    display: flex !important;
+    flex-direction: row !important;
     height: 100% !important;
 }
+
+.mainContent {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 
 /* LAYOUT STYLES */
 
 .container {
     display: flex;
     flex-direction: row;
-    flex-grow: 0;
     height: 100% !important;
-    flex-grow: 1 !important;
 }
 
 .calendarColumn {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     align-items: center;
     margin: 10px 0 !important;
 }
@@ -40,15 +40,79 @@
 }
 
 .retreatCenterCardContainer {
-    margin-top: 50px !important;
+    margin-top: 30px !important;
     width: 100%;
     display: flex;
     flex-direction: row;
-    flex-grow: 1;
     flex-flow: wrap;
     justify-content: center;
 }
 
 .retreatCenterCard {
-    margin: 0 30px !important
+    margin: 20px 30px !important
+}
+
+.campLogo {
+    border-radius: 15px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    object-fit: contain !important;
+}
+
+.detailsContainer {
+    margin: 4px 8px !important;
+}
+
+.groupName {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.distanceFrom {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal
+}
+
+.capacity {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal
+}
+
+.capacityDanger {
+    color: red;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal
+}
+
+.amenities {
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    margin-top: 10px !important;
+    margin-bottom: 5px !important;
+}
+
+.amenityLogo {
+    margin-right: 15px !important;
+
+}
+
+.bedsContainer {
+    margin-top: 10px !important;
+}
+
+.bedText {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal
 }

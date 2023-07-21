@@ -1,6 +1,8 @@
 import Colors from "@/common/colors";
 import { FilterType, AppointmentType, MealType } from "@/types";
 import { generateColor, getDays } from "./functions";
+import { URL } from "url";
+import Images from "@/common/images";
 export type RoomType = {
     id: string;
     name: string;
@@ -20,6 +22,7 @@ export type BuildingType = {
     rooms?: Array<RoomType>
 } & FilterType;
 export type ActivityType = {
+    class: "pool" | "paintball" | "zipline" | "canoe"
 } & FilterType;
 export type FacilitiesType = {
     housing: {
@@ -35,6 +38,7 @@ export type RetreatCenterType = {
     id: string;
     name: string;
     zipCode: number;
+    image?: string
     capacity?: number;
     meals?: Array<MealType>
 } & FacilitiesType
@@ -85,14 +89,28 @@ export const FacilitiesSampleData: FacilitiesType = {
     amenities: {
         activities: [
             {
+                id: "Zipline1",
+                name: "Zipline A",
+                type: "Activity",
+                class: "zipline"
+            },
+            {
+                id: "CanoeA",
+                name: "Canoe A",
+                type: "Activity",
+                class: "canoe"
+            },
+            {
                 id: "pool1",
                 name: "Pool A",
-                type: "Activity"
+                type: "Activity",
+                class: "pool"
             },
             {
                 id: "paintballA",
                 name: "Paintball A",
-                type: "Activity"
+                type: "Activity",
+                class: "paintball"
             }
         ]
 
@@ -112,7 +130,8 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
     {
         id: "Eatern Point Retreat House",
         name: "Eatern Point Retreat House",
-        zipCode: 1234,
+        image: Images["ic_logo"],
+        zipCode: 2143,
         capacity: 30,
         housing: {
             buildings: [
@@ -160,14 +179,76 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
         amenities: {
             activities: [
                 {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
                     id: "pool1",
                     name: "Pool A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "pool"
                 },
                 {
                     id: "paintballA",
                     name: "Paintball A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "paintball"
+                },
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
+                    id: "pool1",
+                    name: "Pool A",
+                    type: "Activity",
+                    class: "pool"
+                },
+                {
+                    id: "paintballA",
+                    name: "Paintball A",
+                    type: "Activity",
+                    class: "paintball"
+                },
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
+                    id: "pool1",
+                    name: "Pool A",
+                    type: "Activity",
+                    class: "pool"
+                },
+                {
+                    id: "paintballA",
+                    name: "Paintball A",
+                    type: "Activity",
+                    class: "paintball"
                 }
             ]
 
@@ -186,6 +267,7 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
         name: "Art of Living Retreat Center",
         zipCode: 5678,
         capacity: 50,
+        image: Images["ic_logo"],
         housing: {
             buildings: [
                 {
@@ -232,14 +314,28 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
         amenities: {
             activities: [
                 {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
                     id: "pool1",
                     name: "Pool A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "pool"
                 },
                 {
                     id: "paintballA",
                     name: "Paintball A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "paintball"
                 }
             ]
 
@@ -258,6 +354,7 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
         name: "Marianist Family Retreat Center",
         zipCode: 8234,
         capacity: 100,
+        image: Images["ic_logo"],
         housing: {
             buildings: [
                 {
@@ -306,14 +403,29 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
                 {
                     id: "pool1",
                     name: "Pool A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "pool"
                 },
                 {
                     id: "paintballA",
                     name: "Paintball A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "paintball"
+                },
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
                 }
             ]
+
 
         },
         meetingrooms: {
@@ -330,6 +442,7 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
         name: "Isabella Freedman Jewish Retreat Center",
         zipCode: 7654,
         capacity: 20,
+        image: Images["ic_logo"],
         housing: {
             buildings: [
                 {
@@ -376,14 +489,28 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
         amenities: {
             activities: [
                 {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
                     id: "pool1",
                     name: "Pool A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "pool"
                 },
                 {
                     id: "paintballA",
                     name: "Paintball A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "paintball"
                 }
             ]
 
@@ -402,6 +529,7 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
         name: "Abbey of Gethsemani",
         zipCode: 2134,
         capacity: 70,
+        image: Images["ic_logo"],
         housing: {
             buildings: [
                 {
@@ -448,16 +576,31 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
         amenities: {
             activities: [
                 {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
                     id: "pool1",
                     name: "Pool A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "pool"
                 },
                 {
                     id: "paintballA",
                     name: "Paintball A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "paintball"
                 }
             ]
+
 
         },
         meetingrooms: {
@@ -474,6 +617,7 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
         name: "Saint John’s Abbey",
         zipCode: 5843,
         capacity: 170,
+        image: Images["ic_logo"],
         housing: {
             buildings: [
                 {
@@ -520,14 +664,28 @@ export const RetreatCenterSsampleData: Array<RetreatCenterType> = [
         amenities: {
             activities: [
                 {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
                     id: "pool1",
                     name: "Pool A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "pool"
                 },
                 {
                     id: "paintballA",
                     name: "Paintball A",
-                    type: "Activity"
+                    type: "Activity",
+                    class: "paintball"
                 }
             ]
 

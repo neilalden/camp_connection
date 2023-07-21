@@ -1,3 +1,17 @@
+::-webkit-scrollbar {
+  width: 6px !important;
+  height: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E6E6E6;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D8E189;
+}
+
 :root {
   --chalky500: "#D8E189";
   --chalky400: "#E4EAAE";
@@ -106,4 +120,21 @@ a {
   font-weight: light;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.row-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.row-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

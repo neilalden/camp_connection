@@ -1,5 +1,6 @@
+
 const Images = {
-    ic_logo: require("../assets//ic_logo.png"),
+    ic_logo: require("../assets/ic_logo.png"),
     ic_grapic1: require("../assets/ic_grapic1.png"),
     ic_grapic2: require("../assets/ic_grapic2.png"),
     ic_grapic3: require("../assets/ic_grapic3.png"),
@@ -25,6 +26,12 @@ const Images = {
     ic_chevron_down: require("../assets/ic_chevron_down.png"),
     ic_book: require("../assets/ic_book.png"),
     ic_book_white: require("../assets/ic_book_white.png"),
+
+    ic_canoe: require("../assets/ic_canoe.png"),
+    ic_paintball: require("../assets/ic_paintball.png"),
+    ic_pool: require("../assets/ic_pool.png"),
+    ic_zipline: require("../assets/ic_zipline.png"),
 }
+
 
 export default Images;
