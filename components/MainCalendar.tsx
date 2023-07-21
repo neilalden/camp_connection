@@ -32,7 +32,7 @@ const MainCalendar = ({ date }: { date: Date }) => {
                 {showHousingFilter ?
                     <div>
                         {
-                            FacilitiesSampleData["housing"]["buildings"].map((building, i) => {
+                            FacilitiesSampleData && FacilitiesSampleData.housing.buildings?.map((building, i) => {
                                 return (
                                     <div key={i}>
                                         <input id={building.id} type="checkbox" onClick={() => setSelectedFilters([building])} />
@@ -54,7 +54,7 @@ const MainCalendar = ({ date }: { date: Date }) => {
                 {showAmenitiesFilter ?
                     <div>
                         {
-                            FacilitiesSampleData["amenities"]["activities"].map((activity, i) => {
+                            FacilitiesSampleData.amenities.activities && FacilitiesSampleData.amenities?.activities.map((activity, i) => {
                                 return (
                                     <div key={i}>
                                         <input id={activity.id} type="checkbox" onClick={() => setSelectedFilters([activity])
@@ -86,7 +86,7 @@ const MainCalendar = ({ date }: { date: Date }) => {
                                 {calendarDays.map((d, ix) => {
 
                                     const cellNum = (i + 1) * (ix); // basta kaylangan
-                                    if (calendarDate === undefined && cellNum > Days[0].getUTCDay()) calendarDate = 0; // basta kaylangan
+                                    if (calendarDate === undefined && cellNum > Days[0].getDay()) calendarDate = 0; // basta kaylangan
 
                                     if (ix === 0) return (
                                         <div key={ix} className={styles.selectedFilter}>
@@ -103,7 +103,7 @@ const MainCalendar = ({ date }: { date: Date }) => {
                                     const currentDate = calendarDate !== undefined && Days[calendarDate++];
                                     return (
                                         <div key={ix} className={styles.calendarDay}>
-                                            <span className={styles.calendarDate}>{currentDate ? currentDate.getUTCDate() : ""}</span>
+                                            <span className={styles.calendarDate}>{currentDate ? currentDate.getDate() : ""}</span>
                                             <div className={styles.space} />
                                             {
                                                 currentDate && selectedFilters.map((selectedFilter, idx) => {
@@ -123,7 +123,7 @@ const MainCalendar = ({ date }: { date: Date }) => {
                                                     if (appointment && appointment.checkOutDate) checkOutString = `${months[appointment.checkOutDate.getMonth()]} ${appointment.checkOutDate.getDate() - 1}`
 
                                                     return (
-                                                        <div key={idx} className={styles.vacant}>
+                                                        <div key={idx} className={styles.vacant} onClick={() => appointment ? alert(appointment) : ""}>
                                                             {
                                                                 appointment && filterAppointment({ appointment: appointment, selectedFilter }) ? <div className={[appointment.status === "Booked" ? styles.booked : styles.reserved, checkInString === currentDateString && styles.scheduledTail, checkOutString === currentDateString && styles.scheduledHead].join(" ")} id={appointment.id} /> : <div className={styles.vacantLine} />
                                                             }

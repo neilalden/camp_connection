@@ -7,13 +7,13 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Colors from '@/common/colors'
 import { months, weekdays } from '@/utils/variables'
-import { generateColor, getDays, trunc } from '@/utils/functions'
 import { AppointmentType, SetStateType } from '@/types'
 import { appointmentsSampleData } from '@/utils/sampleData'
 import CalendarNavigation from '@/components/CalendarNavigation'
 import { addLead } from '@/services/redux/slice/leads'
 import LeadsColumn from '@/components/LeadsColumn'
 import SimpleCalendar from '@/components/SimpleCalendar'
+import MainCalendar from '@/components/MainCalendar'
 
 const CalendarPage = () => {
   const appointments = useSelector((state: RootState) => state.Appointments.appointments)
@@ -41,7 +41,10 @@ const CalendarPage = () => {
             }} />
           </div>
 
-          <SimpleCalendar date={date} />
+          <div className={styles.calendarContainer}>
+            {/* <SimpleCalendar date={date} /> */}
+            <MainCalendar date={date} />
+          </div>
         </div>
       </div>
     </div>

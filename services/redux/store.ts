@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, configureStore, createStore } from "@reduxjs/toolkit";
 import { default as Appointments } from './slice/appointments';
 import { default as Leads } from './slice/leads';
+import { default as RetreatCenters } from './slice/retreatcenters';
 import { default as User } from './slice/user';
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
@@ -13,6 +14,7 @@ const persistConfig = {
 const reducers = combineReducers({
     Appointments,
     Leads,
+    RetreatCenters,
     User,
 });
 

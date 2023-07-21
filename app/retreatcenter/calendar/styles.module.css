@@ -1,3 +1,4 @@
+/* LAYOUTS STYLE */
 .content {
     display: flex !important;
     flex-direction: row !important;
@@ -19,6 +20,7 @@
     height: 100% !important;
 }
 
+/* LAYOUT STYLES */
 .sideNav {
     border-right: 1px solid var(--cascade-300, #C2CFD6);
     display: flex;
@@ -53,9 +55,6 @@
 }
 
 
-.text {
-    stroke-width: 1px;
-}
 
 .container {
     height: 100% !important;
@@ -74,8 +73,14 @@
     flex-grow: 1 !important;
 }
 
+.calendarContainer {
+    width: 500px !important
+}
+
 .calendarColumn {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    align-items: center;
+    margin: 10px 0 !important;
 }

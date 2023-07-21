@@ -79,5 +79,5 @@ export type AppointmentType = {
     amenities?: Array<AmenityType>;
     meals?: Array<MealType>;
     rooms?: Array<RoomType>;
-    zipCode?: string;
+    zipCode?: number;
 }

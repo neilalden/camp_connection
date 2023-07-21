@@ -7,7 +7,7 @@ export const getDays = ({ start, end }: { start: Date, end: Date }): Array<Date>
     if (start > end) return []
     const days: Array<Date> = []
     while (end > start) {
-        days.push(start)
+        days.push(new Date(start))
         const newDate = start.setDate(start.getDate() + 1);
         start = new Date(newDate);
     }
@@ -58,10 +58,20 @@ export const dateIsScheduled = ({ date, appointments }: { date?: Date; appointme
     if (!date || !appointments) return undefined;
     let result: Array<AppointmentType> = []
     appointments.map(appointment => {
-        if (appointment.checkInDate && appointment.checkOutDate && date > appointment.checkInDate && date <= appointment.checkOutDate) {
+        if (appointment.checkInDate && appointment.checkOutDate && date >= appointment.checkInDate && date <= appointment.checkOutDate) {
             if (result === undefined) result = [appointment];
             else result.push(appointment)
         }
     })
     return result.length === 0 ? undefined : result.length > 1 ? result : result[0]
 }
+
+export const sortArrayOfObjects = (array: Array<any>, num: number, property: string, order = "desc") => {
+    return [...array].sort((a: object, b: object) => {
+        return order === "desc"
+            // @ts-ignore
+            ? Math.abs(num - a[Number(property)]) - Math.abs(num - b[Number(property)])
+            // @ts-ignore
+            : Math.abs(num - b[Number(property)]) - Math.abs(num - a[Number(property)])
+    });
+};
