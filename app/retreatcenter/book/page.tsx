@@ -54,7 +54,7 @@ const BookPage = () => {
                                     <div className="row">
                                         <Image alt={retreatCenter.name} src={logo} height={120} width={120} className={styles.campLogo} />
                                         <div className={styles.detailsContainer}>
-                                            <p className={styles.groupName}>{trunc(retreatCenter.name, 32)}</p>
+                                            <p className={styles.groupName}>{trunc(retreatCenter.name, 28)}</p>
                                             <p className={capacityClass}>Max Capacity : {retreatCenter.capacity} People</p>
                                             {retreatCenter.distance ? <p className={styles.distanceFrom}>{Number(retreatCenter.distance) / 10} miles away</p> : null}
                                             <p className={[styles.capacity, styles.bedsContainer].join(" ")}>Beds Available : </p>
