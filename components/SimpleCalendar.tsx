@@ -17,12 +17,14 @@ const SimpleCalendar = ({ date }: { date: Date }) => {
         const parsed: AppointmentType = JSON.parse(widgetType)
         const appointment: AppointmentType = {
             ...parsed,
-            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate())),
-            checkOutDate: new Date(copiedDate.setDate(copiedDate.getDate() + parsed.checkInDays)),
+            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate() + 1)),
+            checkOutDate: new Date(copiedDate.setDate(copiedDate.getDate() + parsed.checkInDays - 1)),
         }
         dispatch(addAppointment(appointment))
     }
-    const dragOver = (e: React.DragEvent) => e.preventDefault();
+    const dragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+    }
     const endDate = () => {
         if (date.getMonth() === 11) return new Date(`${months[0]} 01 ${date.getFullYear() + 1}`)
         else return new Date(`${months[date.getMonth() + 1]} 01 ${date.getFullYear()}`)
@@ -81,7 +83,7 @@ const SimpleCalendar = ({ date }: { date: Date }) => {
 
                                     let checkInString
                                     let checkOutString
-                                    const currentDateString = `${months[currentDate.getMonth()]} ${currentDate.getDate()}`
+                                    const currentDateString = `${months[currentDate.getMonth()]} ${currentDate.getDate() + 1}`
                                     if (appointment && appointment.checkInDate) {
                                         checkInString = `${months[appointment.checkInDate.getMonth()]} ${appointment.checkInDate.getDate()}`
                                     }
