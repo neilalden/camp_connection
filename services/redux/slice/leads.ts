@@ -23,12 +23,15 @@ export const Leadslice = createSlice({
         addLead: (state, action: PayloadAction<AppointmentType>) => {
             state.leads = Array.isArray(state.leads) ? [...state.leads, action.payload] : [action.payload]
         },
+        removeLead: (state, action: PayloadAction<AppointmentType["id"]>) => {
+            state.leads = state.leads?.filter(lead => lead.id !== action.payload)
+        },
         clearLeads: (state) => {
             state.leads = undefined
         }
     },
 })
 
-export const { addLead, clearLeads } = Leadslice.actions
+export const { addLead, clearLeads, removeLead } = Leadslice.actions
 
 export default Leadslice.reducer

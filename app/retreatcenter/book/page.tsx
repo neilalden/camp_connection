@@ -2,16 +2,18 @@
 import LeadsColumn from "@/components/LeadsColumn"
 import styles from "./styles.module.css"
 import CalendarNavigation from "@/components/CalendarNavigation"
-import { CSSProperties, useState } from "react"
+import { CSSProperties, useEffect, useState } from "react"
 import SimpleCalendar from "@/components/SimpleCalendar"
-import { RetreatCenterSsampleData, RetreatCenterType } from "@/utils/sampleData"
+import { RetreatCenterType } from "@/utils/sampleData"
 import { AppointmentType } from "@/types"
-import { sortArrayOfObjects, trunc } from "@/utils/functions"
+import { ObjectToArray, sortArrayOfObjects, trunc } from "@/utils/functions"
 import Image from "next/image"
 import Images from "@/common/images"
+import { useSelector } from "react-redux"
+import { RootState } from "@/services/redux/store"
 type ExtraType = { distance?: number }
 const BookPage = () => {
-    const retreatCenters: Array<RetreatCenterType & ExtraType> = RetreatCenterSsampleData
+    const retreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
     const [rerenderingRetreatCenters, setRerenderingRetreatCenters] = useState<Array<RetreatCenterType & ExtraType>>(retreatCenters)
     const [date, setDate] = useState(new Date())
     const [currentAppointment, setCurrentAppointment] = useState<AppointmentType>()
@@ -25,7 +27,7 @@ const BookPage = () => {
         event.dataTransfer.setData("widgetType", widgetType);
         setCurrentAppointment(data)
         if (data && data.zipCode) {
-            let copy = retreatCenters.map(rc => ({ ...rc, distance: Math.abs(rc.zipCode - Number(data.zipCode)) }))
+            let copy = rerenderingRetreatCenters.map(rc => ({ ...rc, distance: Math.abs(rc.zipCode - Number(data.zipCode)) }))
             setRerenderingRetreatCenters(copy.sort((a, b) => {
                 if (!data.zipCode) return 0
                 if (!a.capacity || !b.capacity) return 0
@@ -54,7 +56,7 @@ const BookPage = () => {
                                     <div className="row">
                                         <Image alt={retreatCenter.name} src={logo} height={120} width={120} className={styles.campLogo} />
                                         <div className={styles.detailsContainer}>
-                                            <p className={styles.groupName}>{trunc(retreatCenter.name, 28)}</p>
+                                            <p className={styles.groupName}>{trunc(retreatCenter.name, 25)}</p>
                                             <p className={capacityClass}>Max Capacity : {retreatCenter.capacity} People</p>
                                             {retreatCenter.distance ? <p className={styles.distanceFrom}>{Number(retreatCenter.distance) / 10} miles away</p> : null}
                                             <p className={[styles.capacity, styles.bedsContainer].join(" ")}>Beds Available : </p>
@@ -81,7 +83,7 @@ const BookPage = () => {
                                         }
                                     </div>
                                     <div className={styles.calendarContainer}>
-                                        <SimpleCalendar date={date} />
+                                        <SimpleCalendar date={date} RetreatCenter={retreatCenters.find(rc => rc.id === retreatCenter.id) ?? retreatCenters[i]} />
                                     </div>
                                 </div>
                             )

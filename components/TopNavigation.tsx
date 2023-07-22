@@ -5,7 +5,6 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styles from "./Nav.module.css";
 import { clearLeads } from '@/services/redux/slice/leads';
-import { clearAppointments } from '@/services/redux/slice/appointments';
 const TopNavigation = () => {
     const dispatch = useDispatch();
     const router = useRouter()
@@ -14,7 +13,6 @@ const TopNavigation = () => {
     const logout = () => {
         router.push("/signin")
         dispatch(setUser(undefined))
-        dispatch(clearAppointments())
         dispatch(clearLeads())
     }
     return (

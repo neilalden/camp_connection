@@ -36,9 +36,12 @@ const LeadsColumn = ({ customOnDrag }: Props) => {
             status: status === true ? "Booked" : "Reserved",
             reservedBy: {
                 id: String(name),
-                name: String(name),
+                firstName: String(name.split(" ").at(0)),
+                lastName: String(name.split(" ").at(-1)),
                 contactNumber: "+639 123 456",
                 email: `${name?.replaceAll(" ", ".")}@email.com`,
+                createdAt: new Date(),
+                userCategory: "camper"
             },
             amenities: [],
             meals: [],
@@ -59,7 +62,7 @@ const LeadsColumn = ({ customOnDrag }: Props) => {
                         return (
                             <div key={lead.id} className={styles.leadCard} style={{ border: `3px solid ${lead.color}` }} draggable onDragStart={(e) => customOnDrag ? customOnDrag({ event: e, data: lead }) : onDrag(e, lead)}>
                                 <p className={styles.leadName} style={{ color: lead.color }}>{lead.groupName}</p>
-                                <p>{lead.reservedBy.name}</p>
+                                <p>{lead.reservedBy.firstName}</p>
                                 <p>{lead.reservedBy.contactNumber}</p>
                                 <p>{lead.zipCode}</p>
                             </div>

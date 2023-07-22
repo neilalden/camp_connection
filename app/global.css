@@ -138,3 +138,9 @@ a {
   flex-direction: row;
   justify-content: space-between;
 }
+
+*:has(.disable-scroll:hover) {
+  /* position: fixed !important; */
+  overflow-y: hidden !important;
+  height: 100% !important;
+}

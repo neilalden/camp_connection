@@ -75,3 +75,7 @@ export const sortArrayOfObjects = (array: Array<any>, num: number, property: str
             : Math.abs(num - b[Number(property)]) - Math.abs(num - a[Number(property)])
     });
 };
+
+export const ObjectToArray = (obj: any) => {
+    return Object.keys(obj).map((key) => obj[key]);
+}

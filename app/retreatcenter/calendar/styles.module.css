@@ -78,9 +78,9 @@
     display: flex;
     flex-direction: column;
     margin: 100px 0 0 100px !important;
-    overflow-y: scroll;
     flex: 1;
-    height: 100% !important;
+    overflow-y: scroll;
+    height: calc(100% - 50px) !important;
 }
 
 .monthTitle {
@@ -98,7 +98,10 @@
 .groups {
     display: flex;
     flex-direction: column;
+    flex-grow: 0;
     margin: 100px 100px 0 0 !important;
+    overflow-y: scroll;
+    max-height: 600px;
 }
 
 .groupCard {

@@ -34,7 +34,7 @@
     align-items: center;
     margin: 10px 0 !important;
     overflow-y: scroll;
-
+    overflow: overlay;
 }
 
 .calendarContainer {

@@ -4,12 +4,13 @@ import { months, weekdays } from "@/utils/variables";
 import styles from "./SimpleCalendar.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
-import { addAppointment } from "@/services/redux/slice/appointments";
-import { appointmentsSampleData } from "@/utils/sampleData";
+import { appointmentsSampleData, RetreatCenterType } from "@/utils/sampleData";
+import { addAppointment } from "@/services/redux/slice/retreatcenters";
+import { useEffect, useState } from "react";
+import { removeLead } from "@/services/redux/slice/leads";
 
-const SimpleCalendar = ({ date }: { date: Date }) => {
+const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: RetreatCenterType }) => {
     const dispatch = useDispatch()
-    const appointments = useSelector((state: RootState) => state.Appointments.appointments)
     const onDrop = (e: React.DragEvent, date?: Date) => {
         if (!date) return;
         const copiedDate = new Date(date)
@@ -20,7 +21,11 @@ const SimpleCalendar = ({ date }: { date: Date }) => {
             checkInDate: new Date(copiedDate.setDate(copiedDate.getDate() + 1)),
             checkOutDate: new Date(copiedDate.setDate(copiedDate.getDate() + parsed.checkInDays - 1)),
         }
-        dispatch(addAppointment(appointment))
+        dispatch(addAppointment({
+            retreatCenterId: RetreatCenter.id,
+            appointment: appointment
+        }))
+        dispatch(removeLead(appointment.id))
     }
     const dragOver = (e: React.DragEvent) => {
         e.preventDefault();
@@ -50,12 +55,14 @@ const SimpleCalendar = ({ date }: { date: Date }) => {
                             {calendarDays.map((d, ix) => {
                                 const cellNum = (i + 1) * (ix); // column + 1 x row
                                 if (calendarDate === undefined && Days[0] && cellNum > Days[0].getDay()) calendarDate = 0;
+                                if (!Days[0]) {
+                                    return;
+                                }
                                 const rangeDate = calendarDate && Days[calendarDate] !== undefined ? Days[calendarDate] : Days[0];
-                                const firstDayOfWeek = rangeDate.getDate()
+                                const firstDayOfWeek = rangeDate ? rangeDate.getDate() : Days[0].getDate()
 
                                 if (ix === 0) {
                                     const lastDayOfWeek = getDayOfWeek(new Date(new Date(rangeDate).setDate(rangeDate.getDate() + 1)), 6).getDate()
-                                    const firstDayOfWeek = rangeDate.getDate()
                                     const lastDayOfMonth = getLastDayOfMonth(rangeDate).getDate();
                                     let prefix: string | number = ""
                                     if (firstDayOfWeek === lastDayOfWeek) prefix = ""
@@ -73,7 +80,7 @@ const SimpleCalendar = ({ date }: { date: Date }) => {
                                     )
                                 }
                                 const currentDate = calendarDate !== undefined ? Days[calendarDate++] : undefined;
-                                const appointment = dateIsScheduled({ date: currentDate, appointments })
+                                const appointment = dateIsScheduled({ date: currentDate, appointments: RetreatCenter.appointments })
                                 let classes: string | undefined;
                                 let style: React.CSSProperties | undefined
 

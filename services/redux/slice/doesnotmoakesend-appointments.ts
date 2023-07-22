@@ -19,15 +19,15 @@ export const AppointmentSlice = createSlice({
     name: "appointment",
     initialState,
     reducers: {
-        addAppointment: (state, action: PayloadAction<AppointmentType>) => {
-            state.appointments = Array.isArray(state.appointments) ? [...state.appointments, action.payload] : [action.payload]
-        },
-        clearAppointments: (state) => {
-            state.appointments = undefined
-        }
+        // addAppointment: (state, action: PayloadAction<AppointmentType>) => {
+        //     state.appointments = Array.isArray(state.appointments) ? [...state.appointments, action.payload] : [action.payload]
+        // },
+        // clearAppointments: (state) => {
+        //     state.appointments = undefined
+        // }
     },
 })
 
-export const { addAppointment, clearAppointments } = AppointmentSlice.actions
+export const { } = AppointmentSlice.actions
 
 export default AppointmentSlice.reducer

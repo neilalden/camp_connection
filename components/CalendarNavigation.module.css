@@ -16,7 +16,10 @@
 }
 
 .calendarNavigationItem {
-    margin: 5px 10px !important
+    margin: 5px 10px !important;
+    transition-property: color !important;
+    transition-duration: .5s !important;
+    transition-timing-function: linear !important;
 }
 
 .calendarNavigationItemActive {
@@ -25,7 +28,7 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    ;
+
 }
 
 .line {

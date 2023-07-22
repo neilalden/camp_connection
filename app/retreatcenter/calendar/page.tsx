@@ -8,7 +8,6 @@ import 'react-circular-progressbar/dist/styles.css';
 import Colors from '@/common/colors'
 import { months, weekdays } from '@/utils/variables'
 import { AppointmentType, SetStateType } from '@/types'
-import { appointmentsSampleData } from '@/utils/sampleData'
 import CalendarNavigation from '@/components/CalendarNavigation'
 import { addLead } from '@/services/redux/slice/leads'
 import LeadsColumn from '@/components/LeadsColumn'
@@ -17,11 +16,13 @@ import MainCalendar from '@/components/MainCalendar'
 import Divider from '@/components/Divider'
 
 const CalendarPage = () => {
-  const appointments = useSelector((state: RootState) => state.Appointments.appointments)
+  const retreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
+  // const RetreatCenter = retreatCenters["Eatern Point Retreat House"]
+  const RetreatCenter = retreatCenters[0]
+
   const [date, setDate] = useState<Date>(new Date())
   const [progress, setProgress] = useState(66);
-  console.log(appointments)
-
+  if (!RetreatCenter) return;
   return (
     <div className={styles.container}>
       <div className={styles.heading}>
@@ -67,7 +68,7 @@ const CalendarPage = () => {
               </div>
               <p className={styles.monthTitle}>{months[date.getMonth()]}</p>
             </div>
-            <SimpleCalendar date={date} />
+            <SimpleCalendar date={date} RetreatCenter={RetreatCenter} />
             {/* <MainCalendar date={date} /> */}
           </div>
           <Divider className={styles.divider} />
@@ -108,7 +109,7 @@ const CalendarPage = () => {
                 </div>
                 <p className={styles.monthTitle}>{months[date.getMonth() - 1]}</p>
               </div>
-              <SimpleCalendar date={new Date(new Date(date).setMonth(new Date(date).getMonth() - 1))} />
+              <SimpleCalendar date={new Date(new Date(date).setMonth(new Date(date).getMonth() - 1))} RetreatCenter={RetreatCenter} />
               {/* <MainCalendar date={date} /> */}
             </div>
 
@@ -148,7 +149,7 @@ const CalendarPage = () => {
                 </div>
                 <p className={styles.monthTitle}>{months[date.getMonth() + 1]}</p>
               </div>
-              <SimpleCalendar date={new Date(new Date(date).setMonth(new Date(date).getMonth() + 1))} />
+              <SimpleCalendar date={new Date(new Date(date).setMonth(new Date(date).getMonth() + 1))} RetreatCenter={RetreatCenter} />
               {/* <MainCalendar date={date} /> */}
 
             </div>
@@ -156,7 +157,7 @@ const CalendarPage = () => {
         </div>
         <div className={styles.groups}>
           {
-            appointments && appointments.map((appointment, i) => {
+            RetreatCenter && RetreatCenter?.appointments?.map((appointment, i) => {
               return (
                 <button key={i} type='button' className={styles.groupCard} style={{ background: appointment.color }}>
                   <h3>{appointment.groupName}</h3>

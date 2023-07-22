@@ -1,16 +1,21 @@
-import { RetreatCenterSsampleData, RetreatCenterType } from "@/utils/sampleData";
+import { AppointmentType } from "@/types";
+import { ArrayRCSD, RetreatCenterSsampleData, RetreatCentersType, RetreatCenterType } from "@/utils/sampleData";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type RetreatCenterStateType = {
     loading: boolean;
     error?: string;
-    retreatCenters?: Array<RetreatCenterType>
+    retreatCenters: Array<RetreatCenterType>
     requestToken?: string;
+}
+export type AddAppointmentPayload = {
+    retreatCenterId: RetreatCenterType["id"];
+    appointment: AppointmentType
 }
 const initialState: RetreatCenterStateType = {
     loading: false,
     error: undefined,
-    retreatCenters: RetreatCenterSsampleData,
+    retreatCenters: ArrayRCSD,
     requestToken: undefined
 }
 
@@ -18,12 +23,35 @@ export const RetreatCentersSlice = createSlice({
     name: "retreatcenter",
     initialState,
     reducers: {
-        addAppointment: (state, action: PayloadAction<RetreatCenterType>) => {
-            state.retreatCenters = Array.isArray(state.retreatCenters) ? [...state.retreatCenters, action.payload] : [action.payload]
+        addRetreatCenter: (state, action: PayloadAction<RetreatCenterType>) => {
+            const retreatCenter = action.payload;
+            state.retreatCenters = {
+                ...state.retreatCenters,
+                [retreatCenter.id]: retreatCenter
+            }
         },
+        addAppointment: (state, action: PayloadAction<AddAppointmentPayload>) => {
+            const { retreatCenterId, appointment } = action.payload
+            // const retreatCenter = state.retreatCenters[retreatCenterId]
+            // if (retreatCenter.appointments !== undefined) retreatCenter.appointments.push(appointment)
+            // else retreatCenter.appointments = [appointment]
+            // // state.retreatCenters[retreatCenterId] = retreatCenter
+            // const copy = {
+            //     ...state.retreatCenters,
+            //     [retreatCenterId]: retreatCenter
+            // }
+            // state.retreatCenters = copy
+            state.retreatCenters.map(rc => {
+                if (retreatCenterId === rc.id) {
+                    rc.appointments = rc.appointments ? [...rc.appointments, appointment] : [appointment]
+                    return rc
+                }
+                return rc
+            })
+        }
     },
 })
 
-export const { addAppointment } = RetreatCentersSlice.actions
+export const { addRetreatCenter, addAppointment } = RetreatCentersSlice.actions
 
 export default RetreatCentersSlice.reducer

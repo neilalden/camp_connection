@@ -9,14 +9,16 @@ export type ScreenProps = {
 }
 
 type User = {
+    id: string;
+    photo?: string;
     firstName: string;
     lastName: string;
-    middleName: string | null;
-    birthDate: Date;
-    contactNumber: string;
-    email: string;
-    organization: string | null;
-    role: string | null;
+    middleName?: string;
+    birthDate?: Date;
+    contactNumber?: string;
+    email?: string;
+    organization?: string;
+    role?: string;
     createdAt: Date;
     userCategory: "camper" | "retreatcenter" | "campconnectionteam"
 }
@@ -40,13 +42,6 @@ export type FilterType = {
     type: "Housing" | "Meeting room" | "Activity" | "Group";
     // [key: string]: any
 }
-export type ReserveeType = {
-    id: string;
-    name: string;
-    contactNumber?: string;
-    email?: string;
-    photo?: string;
-}
 export type RoomType = {
     id: string;
     name: string;
@@ -68,7 +63,7 @@ export type MealType = {
 }
 export type AppointmentType = {
     id: string;
-    reservedBy: ReserveeType;
+    reservedBy: CamperUserType;
     status: "Reserved" | "Booked";
     checkInDays: number;
     groupName: string;
