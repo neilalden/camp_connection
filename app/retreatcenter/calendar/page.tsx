@@ -14,12 +14,13 @@ import { addLead } from '@/services/redux/slice/leads'
 import LeadsColumn from '@/components/LeadsColumn'
 import SimpleCalendar from '@/components/SimpleCalendar'
 import MainCalendar from '@/components/MainCalendar'
+import Divider from '@/components/Divider'
 
 const CalendarPage = () => {
   const appointments = useSelector((state: RootState) => state.Appointments.appointments)
   const [date, setDate] = useState<Date>(new Date())
   const [progress, setProgress] = useState(66);
-
+  console.log(appointments)
 
   return (
     <div className={styles.container}>
@@ -30,21 +31,139 @@ const CalendarPage = () => {
         <LeadsColumn />
         <div className={styles.calendarColumn}>
           <CalendarNavigation date={date} setDate={setDate} />
-          <div className={styles.progressbarContainer}>
-            <CircularProgressbar value={progress} text={`${progress}%`} styles={{
-              trail: {
-                strokeWidth: 1
-              },
-              path: {
-                stroke: Colors.green300,
-              }
-            }} />
-          </div>
-
           <div className={styles.calendarContainer}>
-            {/* <SimpleCalendar date={date} /> */}
-            <MainCalendar date={date} />
+            <div className={styles.progressbarsContainer}>
+              <div className='row'>
+                <div className={styles.progressbarContainer}>
+                  <CircularProgressbar value={progress} styles={{
+                    trail: {
+                      strokeWidth: 1
+                    },
+                    path: {
+                      stroke: Colors.green300,
+                    }
+                  }} />
+                </div>
+                <div>
+                  <p>{progress}%</p>
+                  <p>Weekend</p>
+                </div>
+              </div>
+              <div className='row'>
+                <div className={styles.progressbarContainer}>
+                  <CircularProgressbar value={progress} styles={{
+                    trail: {
+                      strokeWidth: 1
+                    },
+                    path: {
+                      stroke: Colors.yellow300,
+                    }
+                  }} />
+                </div>
+                <div>
+                  <p>{progress}%</p>
+                  <p>Weekend</p>
+                </div>
+              </div>
+              <p className={styles.monthTitle}>{months[date.getMonth()]}</p>
+            </div>
+            <SimpleCalendar date={date} />
+            {/* <MainCalendar date={date} /> */}
           </div>
+          <Divider className={styles.divider} />
+          <div className="row">
+            <div className={styles.prevCalendarContainer}>
+              <div className={styles.progressbarsContainer}>
+                <div className='row'>
+                  <div className={styles.progressbarContainer}>
+                    <CircularProgressbar value={progress} styles={{
+                      trail: {
+                        strokeWidth: 1
+                      },
+                      path: {
+                        stroke: Colors.green300,
+                      }
+                    }} />
+                  </div>
+                  <div>
+                    <p>{progress}%</p>
+                    <p>Weekend</p>
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className={styles.progressbarContainer}>
+                    <CircularProgressbar value={progress} styles={{
+                      trail: {
+                        strokeWidth: 1
+                      },
+                      path: {
+                        stroke: Colors.yellow300,
+                      }
+                    }} />
+                  </div>
+                  <div>
+                    <p>{progress}%</p>
+                    <p>Weekend</p>
+                  </div>
+                </div>
+                <p className={styles.monthTitle}>{months[date.getMonth() - 1]}</p>
+              </div>
+              <SimpleCalendar date={new Date(new Date(date).setMonth(new Date(date).getMonth() - 1))} />
+              {/* <MainCalendar date={date} /> */}
+            </div>
+
+            <div className={styles.nextCalendarContainer}>
+              <div className={styles.progressbarsContainer}>
+                <div className='row'>
+                  <div className={styles.progressbarContainer}>
+                    <CircularProgressbar value={progress} styles={{
+                      trail: {
+                        strokeWidth: 1
+                      },
+                      path: {
+                        stroke: Colors.green300,
+                      }
+                    }} />
+                  </div>
+                  <div>
+                    <p>{progress}%</p>
+                    <p>Weekend</p>
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className={styles.progressbarContainer}>
+                    <CircularProgressbar value={progress} styles={{
+                      trail: {
+                        strokeWidth: 1
+                      },
+                      path: {
+                        stroke: Colors.yellow300,
+                      }
+                    }} />
+                  </div>
+                  <div>
+                    <p>{progress}%</p>
+                    <p>Weekend</p>
+                  </div>
+                </div>
+                <p className={styles.monthTitle}>{months[date.getMonth() + 1]}</p>
+              </div>
+              <SimpleCalendar date={new Date(new Date(date).setMonth(new Date(date).getMonth() + 1))} />
+              {/* <MainCalendar date={date} /> */}
+
+            </div>
+          </div>
+        </div>
+        <div className={styles.groups}>
+          {
+            appointments && appointments.map((appointment, i) => {
+              return (
+                <button key={i} type='button' className={styles.groupCard} style={{ background: appointment.color }}>
+                  <h3>{appointment.groupName}</h3>
+                </button>
+              )
+            })
+          }
         </div>
       </div>
     </div>

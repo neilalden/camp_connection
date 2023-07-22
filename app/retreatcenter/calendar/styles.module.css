@@ -1,41 +1,27 @@
 /* LAYOUTS STYLE */
+
+.main {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+}
+
 .content {
     display: flex !important;
     flex-direction: row !important;
     height: 100% !important;
 }
 
-.main {
-    height: 100% !important;
-    width: 100% !important;
-    display: flex !important;
-    flex-direction: column;
-
-}
-
 .mainContent {
     width: 100% !important;
-    height: 100% !important;
-}
-
-/* LAYOUT STYLES */
-.sideNav {
-    border-right: 1px solid var(--cascade-300, #C2CFD6);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 45px;
+    height: 100%;
 }
 
-.sideNavButtons {
-    margin-top: 20px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100%;
-}
 
+/* LAYOUT STYLES */
 .heading {
     width: 100%;
     border-bottom: 1px solid #C2CFD6;
@@ -57,24 +43,70 @@
     height: 100% !important;
 }
 
+.progressbarsContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between
+}
+
 .progressbarContainer {
-    height: 100px;
-    width: 100px;
+    height: 90px;
+    width: 90px;
 }
 
 .mainRow {
     display: flex;
     flex-direction: row;
+    width: 100% !important;
     height: calc(100% - 50px) !important;
 }
 
 .calendarContainer {
-    width: 500px !important
+    width: 600px !important;
+}
+
+.prevCalendarContainer {
+    width: 300px;
+}
+
+.nextCalendarContainer {
+    width: 300px;
 }
 
 .calendarColumn {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 10px 0 !important;
+    margin: 100px 0 0 100px !important;
+    overflow-y: scroll;
+    flex: 1;
+    height: 100% !important;
+}
+
+.monthTitle {
+    color: #000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.divider {
+    width: 700px !important
+}
+
+.groups {
+    display: flex;
+    flex-direction: column;
+    margin: 100px 100px 0 0 !important;
+}
+
+.groupCard {
+    padding: 10px 20px !important;
+    border-radius: 5px;
+    margin-bottom: 10px !important;
+}
+
+.groupCard h3 {
+    color: #fff;
 }
