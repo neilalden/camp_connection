@@ -4,12 +4,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E6E6E6;
+  background: #e6e6e6;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D8E189;
+  background: #d8e189;
 }
 
 :root {
@@ -59,10 +59,9 @@
 }
 
 * {
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box !important;
-
 }
 
 html,
@@ -79,7 +78,6 @@ label {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
 }
 
 input {
@@ -92,7 +90,7 @@ input {
 }
 
 input:focus {
-  border: 2px solid #3C7FD6 !important;
+  border: 2px solid #3c7fd6 !important;
 }
 
 button {
@@ -107,7 +105,6 @@ br {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
 }
 
 .pointer {
