@@ -16,6 +16,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
         const copiedDate = new Date(date)
         const widgetType = e.dataTransfer.getData("widgetType") as string;
         const parsed: AppointmentType = JSON.parse(widgetType)
+        if (parsed.status === undefined) return; // it means that the data from drop is not an appointment
         const appointment: AppointmentType = {
             ...parsed,
             checkInDate: new Date(copiedDate.setDate(copiedDate.getDate() + 1)),
@@ -107,12 +108,10 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                     if (checkOutString === currentDateString) style = { ...style, borderRight: bordersString }
                                 }
 
-                                // if (!calendarDate) return;
-                                if ((i === 5 && firstDayOfWeek < 8) || i === 0 && !currentDate) return <div key={ix} className={[styles.vacant, styles.calendarDate].join(" ")} onDrop={(e) => onDrop(e, currentDate)} onDragOver={dragOver} />;
+                                if ((i >= 4 && firstDayOfWeek < 8) || i === 0 && !currentDate) return <div key={ix} className={[styles.vacant, styles.calendarDate].join(" ")} onDrop={(e) => onDrop(e, currentDate)} onDragOver={dragOver} />;
                                 return (
                                     <div key={ix} className={[styles.vacant, styles.calendarDate].join(" ")} onDrop={(e) => onDrop(e, currentDate)} onDragOver={dragOver}>
                                         {/* <span className={styles.calendarDate}>{currentDate ? currentDate.getDate() : ""}</span> */}
-
                                         {appointment ? <div className={classes} style={style} onClick={() => alert(JSON.stringify(appointment))} /> : <div className={styles.vacantLine} />}
                                     </div>
                                 )

@@ -1,6 +1,6 @@
 "use client"
 import { SetStateType, HTMLEvent } from "@/types"
-import { trunc } from "@/utils/functions"
+import { getNextMonth, getPrevMonth, trunc } from "@/utils/functions"
 import { months } from "@/utils/variables"
 import styles from "./CalendarNavigation.module.css"
 
@@ -40,9 +40,11 @@ const CalendarNavigation = ({ date, setDate }: { date: Date, setDate: SetStateTy
                 className={styles.calendarNavigationYear}
                 onWheel={(e: React.WheelEvent) => {
                     const isUp = checkScrollDirectionIsUp(e);
-                    let m = month + (isUp ? 1 : -1)
-                    if (m > 11) m = 0;
-                    if (m < 0) m = 11
+                    // let m = month + (isUp ? 1 : -1)
+                    const m = isUp ? getNextMonth(month) : getPrevMonth(month);
+
+                    // if (m > 11) m = 0;
+                    // if (m < 0) m = 11
                     setDate(new Date(`${months[m]} 01 ${year}`));
                 }}
             >

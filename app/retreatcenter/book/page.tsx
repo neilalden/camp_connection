@@ -11,12 +11,16 @@ import Image from "next/image"
 import Images from "@/common/images"
 import { useSelector } from "react-redux"
 import { RootState } from "@/services/redux/store"
+import Modal from "@/components/Modal"
 type ExtraType = { distance?: number }
 const BookPage = () => {
     const retreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
+
     const [rerenderingRetreatCenters, setRerenderingRetreatCenters] = useState<Array<RetreatCenterType & ExtraType>>(retreatCenters)
     const [date, setDate] = useState(new Date())
-    const [currentAppointment, setCurrentAppointment] = useState<AppointmentType>()
+    const [currentAppointment, setCurrentAppointment] = useState<AppointmentType>();
+    const [modalIsVisible, setModalIsVisible] = useState(false);
+
     const onDrop = (e: React.DragEvent) => {
         const widgetType = e.dataTransfer.getData("widgetType") as string;
         const parsed: any = JSON.parse(widgetType)
@@ -38,9 +42,18 @@ const BookPage = () => {
             }))
         }
     }
+    const clickLead = (appointment: AppointmentType) => {
+        setCurrentAppointment(appointment)
+        setModalIsVisible(true)
+    }
     return (
         <div className={styles.container}>
-            <LeadsColumn customOnDrag={customOnDrag} />
+            {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} data={currentAppointment} /> : null}
+            <div className={styles.leadColumn}>
+
+                <LeadsColumn customOnDrag={customOnDrag} leadCardOnClick={clickLead} />
+            </div>
+
             <div className={styles.calendarColumn}
                 onDragOver={onDragOver}
                 onDrop={onDrop}

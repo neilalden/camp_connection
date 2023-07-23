@@ -12,8 +12,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '@/services/redux/slice/user';
 import { RetreatCenterUserType } from '@/types';
 import { RootState } from '@/services/redux/store';
+import TextInputBase from '@/components/TextInputBase';
 
 const RetreatCenterUserTestData: RetreatCenterUserType = {
+    id: `Alan---${new Date().getTime()}`,
     firstName: "Alan",
     lastName: "Brown",
     middleName: "",
@@ -38,26 +40,14 @@ const SigninForm = () => {
     const handleSignin = () => dispatch(setUser(RetreatCenterUserTestData))
 
     return (
-        <form >
-            <br /><label htmlFor="email">Email</label><br />
-            <input
-                type="email"
-                name="email"
-                id="email"
-                className={styles.input}
-                value={email}
-                onChange={(e) => textInputSetState(e, setEmail)}
-            />
+        <form className={styles.form}>
+            <br />
+            <br />
 
-            <br /><label htmlFor="password">Password</label><br />
-            <input
-                type="password"
-                name="password"
-                id="password"
-                className={styles.input}
-                value={password}
-                onChange={(e) => textInputSetState(e, setPassword)}
-            />
+            <TextInputBase type='email' label='Email' value={email} setValue={setEmail} />
+
+            <br />
+            <TextInputBase type='password' label='Password' value={password} setValue={setPassword} containerStyle={styles.input} />
 
             <div className={styles.row}>
                 <Link href="/forgotpassword"><p>Forgot password</p></Link>

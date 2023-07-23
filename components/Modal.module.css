@@ -1,0 +1,30 @@
+.darkBackground {
+    background-color: #000;
+    opacity: .5;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    cursor: pointer;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal {
+    width: 250px !important;
+    height: 170px !important;
+    background: #fff;
+    opacity: 1;
+    color: #000;
+    z-index: 2 !important;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+}

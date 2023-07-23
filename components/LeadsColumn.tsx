@@ -1,18 +1,36 @@
 "use client"
 import { addLead } from "@/services/redux/slice/leads";
 import { RootState } from "@/services/redux/store";
-import { AppointmentType, ArgFunction } from "@/types";
-import { generateColor } from "@/utils/functions";
+import { AppointmentType, ArgFunction, HTMLEvent } from "@/types";
+import { debounce, generateColor } from "@/utils/functions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./LeadsColumn.module.css"
+import TextInputBase from "./TextInputBase";
+import { useEffect, useState } from "react";
 
 type Props = {
     customOnDrag?: ArgFunction
+    leadCardOnClick?: ArgFunction
 }
 
-const LeadsColumn = ({ customOnDrag }: Props) => {
+const LeadsColumn = (props: Props) => {
+    const { customOnDrag, leadCardOnClick } = props
     const dispatch = useDispatch();
     const leads = useSelector((state: RootState) => state.Leads.leads)
+    const [rerenderingLeads, setRerenderingnLeads] = useState(leads)
+    const [searchString, setSearchString] = useState("")
+
+    useEffect(() => {
+
+        if (searchString === "") { setRerenderingnLeads(leads); return; }
+        const result = leads?.filter(lead =>
+            lead.reservedBy.firstName.toLowerCase().includes(searchString.toLowerCase()) ||
+            lead.reservedBy.lastName.toLowerCase().includes(searchString.toLowerCase()) ||
+            lead.groupName.toLowerCase().includes(searchString.toLowerCase())
+        )
+        setRerenderingnLeads(result)
+    }, [searchString, leads])
+
     const onDrag = (e: React.DragEvent, data: AppointmentType) => {
         const widgetType = JSON.stringify(data)
         e.dataTransfer.setData("widgetType", widgetType)
@@ -35,7 +53,7 @@ const LeadsColumn = ({ customOnDrag }: Props) => {
             groupName: `${String(name).split(" ").at(-1)}'s group`,
             status: status === true ? "Booked" : "Reserved",
             reservedBy: {
-                id: String(name),
+                id: `${String(name)}---${new Date().getTime()}`,
                 firstName: String(name.split(" ").at(0)),
                 lastName: String(name.split(" ").at(-1)),
                 contactNumber: "+639 123 456",
@@ -57,10 +75,17 @@ const LeadsColumn = ({ customOnDrag }: Props) => {
         <div className={styles.leadscolumn}>
             <div>
                 <h3 className={styles.leadsTitle}>Leads</h3>
+                <TextInputBase value={searchString} setValue={setSearchString} placeholder="Search Lead" containerStyle={styles.searchInput} />
                 {
-                    leads && leads.map((lead) => {
+                    rerenderingLeads && rerenderingLeads.map((lead) => {
                         return (
-                            <div key={lead.id} className={styles.leadCard} style={{ border: `3px solid ${lead.color}` }} draggable onDragStart={(e) => customOnDrag ? customOnDrag({ event: e, data: lead }) : onDrag(e, lead)}>
+                            <div
+                                draggable
+                                key={lead.id}
+                                className={styles.leadCard}
+                                style={{ border: `3px solid ${lead.color}` }}
+                                onClick={() => leadCardOnClick ? leadCardOnClick(lead) : null}
+                                onDragStart={(e) => customOnDrag ? customOnDrag({ event: e, data: lead }) : onDrag(e, lead)}>
                                 <p className={styles.leadName} style={{ color: lead.color }}>{lead.groupName}</p>
                                 <p>{lead.reservedBy.firstName}</p>
                                 <p>{lead.reservedBy.contactNumber}</p>
@@ -73,7 +98,7 @@ const LeadsColumn = ({ customOnDrag }: Props) => {
             <div>
                 <button type='button' className={styles.addLead} onClick={openAddLead}>New Lead</button>
             </div>
-        </div>
+        </div >
     )
 }
 

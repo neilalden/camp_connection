@@ -79,3 +79,13 @@ export const sortArrayOfObjects = (array: Array<any>, num: number, property: str
 export const ObjectToArray = (obj: any) => {
     return Object.keys(obj).map((key) => obj[key]);
 }
+
+
+export const getNextMonth = (m: number) => {
+    if (m == 11) return 0;
+    return m + 1
+}
+export const getPrevMonth = (m: number) => {
+    if (m == 0) return 11;
+    return m - 1
+}

@@ -6,11 +6,11 @@
 }
 
 .calendarHeaderText0 {
-    width: 110px;
+    width: 100% !important;
 }
 
 .calendarHeader {
-    width: 80px !important;
+    width: 100% !important;
     text-align: center;
     margin-bottom: 10px !important;
 }
@@ -18,8 +18,8 @@
 
 .calendarHeaderText {
     color: var(--gray-200, #878787);
-    font-size: 125%;
-    font-weight: bolder
+    font-size: 130%;
+    font-weight: 900
 }
 
 .calendarWeek {
@@ -33,6 +33,7 @@
 .calendarWeekRange {
     width: 100% !important;
     min-width: 50px;
+    max-width: 100px;
     margin-right: 10px !important;
 }
 
@@ -47,7 +48,6 @@
 .calendarDay {
     width: 100% !important;
     height: 1px !important;
-    z-index: 0 !important;
     overflow-x: visible;
     margin: auto 0px !important;
 }
@@ -57,7 +57,6 @@
     background-attachment: fixed;
     width: 100% !important;
     height: 10px !important;
-    z-index: 0 !important;
     overflow-x: visible;
     margin: auto 0px !important;
     cursor: pointer;
@@ -69,7 +68,6 @@
     background-attachment: fixed;
     width: 100% !important;
     height: 10px !important;
-    z-index: 0 !important;
     overflow-x: visible;
     margin: auto 0px !important;
     cursor: pointer;
@@ -99,5 +97,4 @@
     width: 100% !important;
     background-color: #D9D9D9;
     align-self: center !important;
-    z-index: 99 !important;
 }
