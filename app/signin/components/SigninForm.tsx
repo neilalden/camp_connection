@@ -35,7 +35,7 @@ const SigninForm = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.User.user)
 
-    useEffect(() => { if (user) router.push(`/${user.userCategory}/calendar`) }, [user])
+    useEffect(() => { if (user) router.push(`/campconnection/leads`) }, [user])
 
     const handleSignin = () => dispatch(setUser(RetreatCenterUserTestData))
 

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./LeadsColumn.module.css"
 import TextInputBase from "./TextInputBase";
 import { useEffect, useState } from "react";
+import LeadCard from "./LeadCard";
 
 type Props = {
     customOnDrag?: ArgFunction
@@ -21,7 +22,6 @@ const LeadsColumn = (props: Props) => {
     const [searchString, setSearchString] = useState("")
 
     useEffect(() => {
-
         if (searchString === "") { setRerenderingnLeads(leads); return; }
         const result = leads?.filter(lead =>
             lead.reservedBy.firstName.toLowerCase().includes(searchString.toLowerCase()) ||
@@ -30,10 +30,9 @@ const LeadsColumn = (props: Props) => {
         )
         setRerenderingnLeads(result)
     }, [searchString, leads])
-
-    const onDrag = (e: React.DragEvent, data: AppointmentType) => {
+    const onDrag = ({ event, data }: { event: React.DragEvent<HTMLDivElement>; data: AppointmentType }) => {
         const widgetType = JSON.stringify(data)
-        e.dataTransfer.setData("widgetType", widgetType)
+        event.dataTransfer.setData("widgetType", widgetType)
     }
 
     const openAddLead = () => {
@@ -46,19 +45,21 @@ const LeadsColumn = (props: Props) => {
         const groupSize = prompt("How Many People Are Going?", "20");
         if (!groupSize || isNaN(Number(groupSize))) return alert("Number Of Group Size Is Invalid");
         const status = confirm("Are You Going To Pay Now?");
+        const createdAt = new Date();
+        const color = generateColor();
         const lead: AppointmentType =
         {
-            id: String(name),
-            color: generateColor(),
+            id: `${String(name)}---${zipCode}---${color}---${createdAt.toString()}`,
+            color: color,
             groupName: `${String(name).split(" ").at(-1)}'s group`,
             status: status === true ? "Booked" : "Reserved",
             reservedBy: {
-                id: `${String(name)}---${new Date().getTime()}`,
+                id: `${String(name)}---${createdAt.toString()}`,
                 firstName: String(name.split(" ").at(0)),
                 lastName: String(name.split(" ").at(-1)),
                 contactNumber: "+639 123 456",
                 email: `${name?.replaceAll(" ", ".")}@email.com`,
-                createdAt: new Date(),
+                createdAt: createdAt,
                 userCategory: "camper"
             },
             amenities: [],
@@ -75,17 +76,23 @@ const LeadsColumn = (props: Props) => {
         <div className={styles.leadscolumn}>
             <div>
                 <h3 className={styles.leadsTitle}>Leads</h3>
-                <TextInputBase value={searchString} setValue={setSearchString} placeholder="Search Lead" containerStyle={styles.searchInput} />
+                {leads && leads?.length >= 5 ? <TextInputBase value={searchString} setValue={setSearchString} placeholder="Search Lead" containerStyle={styles.searchInput} /> : null}
                 {
-                    rerenderingLeads && rerenderingLeads.map((lead) => {
+                    rerenderingLeads && rerenderingLeads.map((lead, i) => {
+                        // return <LeadCard
+                        //     key={i}
+                        //     lead={lead}
+                        //     onClick={() => leadCardOnClick && leadCardOnClick(lead)}
+                        //     onDragStart={(event: React.DragEvent<HTMLDivElement>) => customOnDrag ? customOnDrag({ event: event, data: lead }) : onDrag({ event: event, data: lead })}
+                        // />
                         return (
                             <div
                                 draggable
-                                key={lead.id}
+                                key={i}
                                 className={styles.leadCard}
                                 style={{ border: `3px solid ${lead.color}` }}
                                 onClick={() => leadCardOnClick ? leadCardOnClick(lead) : null}
-                                onDragStart={(e) => customOnDrag ? customOnDrag({ event: e, data: lead }) : onDrag(e, lead)}>
+                                onDragStart={(event) => customOnDrag ? customOnDrag({ event, data: lead }) : onDrag({ event, data: lead })}>
                                 <p className={styles.leadName} style={{ color: lead.color }}>{lead.groupName}</p>
                                 <p>{lead.reservedBy.firstName}</p>
                                 <p>{lead.reservedBy.contactNumber}</p>

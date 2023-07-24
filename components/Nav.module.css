@@ -41,14 +41,18 @@
 .sideNav {
     border-right: 1px solid var(--cascade-300, #C2CFD6);
     justify-content: space-between;
-    width: 50px;
+    width: 50px !important;
+    min-width: 50px !important;
     display: flex;
     flex-direction: column;
 
 }
 
 .sideNav:hover {
-    width: 150px;
+    /* width: 150px; */
+    width: 200px !important;
+    min-width: 200px !important;
+
 }
 
 .sideNav:hover .navText {
@@ -93,10 +97,11 @@
 .buttonActive {
     margin-top: 20px !important;
     padding: 10px 0 !important;
-    padding-left: 12px !important;
+    padding-left: 15px !important;
     background-color: #81ACE4 !important;
-    border-left: 3px solid var(--dodger-blue-500, #3C7FD6);
+    border-right: 3px solid var(--dodger-blue-500, #3C7FD6);
     width: 100%;
+    min-width: calc(100% + 2px) !important;
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;

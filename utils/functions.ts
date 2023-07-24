@@ -1,4 +1,5 @@
 import { ArgFunction, VoidFunction, HTMLEvent, SetStateType, AppointmentType, FilterType } from "@/types"
+import { months } from "./variables"
 
 export const textInputSetState = (e: HTMLEvent<HTMLInputElement>, setState: SetStateType<string>) => {
     setState(e.target.value)
@@ -58,7 +59,7 @@ export const dateIsScheduled = ({ date, appointments }: { date?: Date; appointme
     if (!date || !appointments) return undefined;
     let result: Array<AppointmentType> = []
     appointments.map(appointment => {
-        if (appointment.checkInDate && appointment.checkOutDate && new Date(new Date(date).setDate(new Date(date).getDate() + 1)) >= appointment.checkInDate && date < appointment.checkOutDate) {
+        if (appointment.checkInDate && appointment.checkOutDate && new Date(new Date(date).setDate(new Date(date).getDate() + 1)) >= new Date(appointment.checkInDate) && date < new Date(appointment.checkOutDate)) {
             if (result === undefined) result = [appointment];
             else result.push(appointment)
         }
@@ -89,3 +90,9 @@ export const getPrevMonth = (m: number) => {
     if (m == 0) return 11;
     return m - 1
 }
+
+export const getEndDate = (date: Date) => {
+    if (date.getMonth() === 11) return new Date(`${months[0]} 01 ${date.getFullYear() + 1}`)
+    else return new Date(`${months[date.getMonth() + 1]} 01 ${date.getFullYear()}`)
+}
+export const onDragOver = (e: React.DragEvent) => e.preventDefault();

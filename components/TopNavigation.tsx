@@ -5,15 +5,16 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styles from "./Nav.module.css";
 import { clearLeads } from '@/services/redux/slice/leads';
+import { clearAppointments } from '@/services/redux/slice/retreatcenters';
 const TopNavigation = () => {
     const dispatch = useDispatch();
     const router = useRouter()
     const user = useSelector((state: RootState) => state.User.user)
-    if (!user) router.push("/signin")
     const logout = () => {
         router.push("/signin")
         dispatch(setUser(undefined))
         dispatch(clearLeads())
+        dispatch(clearAppointments())
     }
     return (
         <nav className={styles.topNav}>

@@ -1,7 +1,6 @@
 /* LAYOUTS STYLE */
-
 .main {
-    height: 100% !important;
+    height: calc(100% - 70px) !important;
     width: 100% !important;
     display: flex;
     flex-direction: column;
@@ -138,6 +137,7 @@
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
+    overflow: visible !important;
     margin: 20px 0px !important;
 }
 

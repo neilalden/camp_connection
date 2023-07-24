@@ -13,7 +13,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "@/services/redux/store"
 import Modal from "@/components/Modal"
 type ExtraType = { distance?: number }
-const BookPage = () => {
+const Leads = () => {
     const retreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
 
     const [rerenderingRetreatCenters, setRerenderingRetreatCenters] = useState<Array<RetreatCenterType & ExtraType>>(retreatCenters)
@@ -109,4 +109,4 @@ const BookPage = () => {
 }
 
 
-export default BookPage
+export default Leads
