@@ -15,7 +15,7 @@ import SimpleCalendar from '@/components/SimpleCalendar'
 import MainCalendar from '@/components/MainCalendar'
 import Divider from '@/components/Divider'
 import { getNextMonth, getPrevMonth, trunc } from '@/utils/functions'
-import TextInputBase from '@/components/TextInputBase'
+import TextInput from '@/components/TextInput'
 import Modal from '@/components/Modal'
 
 const CalendarPage = () => {
@@ -34,7 +34,7 @@ const CalendarPage = () => {
   if (!RetreatCenter) return;
   return (
     <div className={styles.container}>
-      {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} data={currentAppointment} /> : null}
+      {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
       <div className={styles.heading}>
         <h3 className={styles.overviewTitle}>Overview</h3>
       </div>

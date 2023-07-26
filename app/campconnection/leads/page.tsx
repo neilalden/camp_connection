@@ -48,7 +48,7 @@ const Leads = () => {
 
     return (
         <div className={styles.container}>
-            {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} data={currentAppointment} /> : null}
+            {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
             <div className={styles.leadColumn}>
 
                 <LeadsColumn customOnDrag={customOnDrag} leadCardOnClick={clickLead} />

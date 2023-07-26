@@ -63,7 +63,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
     }
     const onDragEnd = (e: any) => setCurrentDrag(undefined)
     return (<div>
-        {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} data={currentAppointment} /> : null}
+        {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
         <div className={styles.calendarWeek}>
             {calendarDays.map((d, i) => {
                 if (i === 0) return <div key={i} className={styles.calendarHeaderText0} />
@@ -109,9 +109,9 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                             if (!Array.isArray(appointment) && appointment && appointment.checkInDate && appointment.checkOutDate && currentDate) {
                                 const checkInDate = new Date(appointment.checkInDate)
                                 const checkOutDate = new Date(appointment.checkOutDate)
-                                const bordersString = `2px solid ${appointment.color}`
+                                const backgroundString = appointment.color
 
-                                style = { borderTop: bordersString, borderBottom: bordersString }
+                                style = { background: backgroundString }
 
                                 let checkInString
                                 let checkOutString
@@ -126,19 +126,22 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                     currentDate.getDate() > checkInDate.getDate() && currentDate.getDate() <= checkOutDate.getDate() ?
                                         styles.booked : styles.calendarDay,
                                     appointment.status === "Booked" ? styles.booked : styles.reserved,
-                                    checkInString == currentDateString && styles.scheduledTail,
-                                    checkOutString === currentDateString && styles.scheduledHead,
+                                    checkInString == currentDateString ? appointment.status === "Booked" ? styles.bookingTail : styles.reservationTail : "",
+                                    checkOutString === currentDateString ? appointment.status === "Booked" ? styles.bookingHead : styles.reservationHead : "",
                                 ].join(" ");
-                                if (checkInString === currentDateString) style = { ...style, borderLeft: bordersString }
-                                if (checkOutString === currentDateString) style = { ...style, borderRight: bordersString }
+                                // if (checkInString === currentDateString) style = { ...style, borderLeft: backgroundString }
+                                // if (checkOutString === currentDateString) style = { ...style, borderRight: backgroundString }
                             }
                             if (Array.isArray(appointment)) {
-                                const bordersString = `linear-gradient(180deg, ${appointment.map(a => a.color).toString()}) 1`
+                                const backgroundString = `repeating-linear-gradient(180deg, ${appointment.map(a => a.color).toString()}) `
+
+                                const borderString = `linear-gradient(to top, ${appointment.map(a => a.status == "Booked" ? Colors.green400 : Colors.yellow400).toString()}) 1`
                                 style = {
-                                    borderWidth: "2px",
+                                    borderWidth: "3px",
                                     borderStyle: "solid",
-                                    borderImage: bordersString,
-                                    backgroundImage: `repeating-linear-gradient(to top, ${appointment.map(a => a.status == "Booked" ? Colors.green200 : Colors.yellow200).toString()} 20px)`
+                                    borderImage: borderString,
+                                    backgroundImage: backgroundString,
+                                    backgroundAttachment: "fixed"
                                 }
                                 classes = [
                                     styles.booked,

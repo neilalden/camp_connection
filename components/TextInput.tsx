@@ -1,32 +1,33 @@
 import { ArgFunction, SetStateType } from '@/types';
-import React, { HTMLAttributes } from 'react'
-import styles from "./TextInputBase.module.css"
+import React from 'react'
+import styles from "./TextInput.module.css"
 import { textInputSetState } from '@/utils/functions';
 type Props = {
-    type?: string;
+    type?: React.HTMLInputTypeAttribute;
     label?: string;
     placeholder?: string;
     value: string | number;
     setValue: SetStateType<string> | ArgFunction;
-    containerStyle?: any
-
+    containerStyle?: React.CSSProperties
+    containerClassName?: string;
 }
-const TextInputBase = (props: Props) => {
+const TextInput = (props: Props) => {
     const {
         type = "text",
         label,
         placeholder,
         value,
         setValue,
-        containerStyle
+        containerStyle,
+        containerClassName
     } = props
     return (
-        <div className={containerStyle}>
-            <label htmlFor={type}>{label}</label><br />
+        <div style={containerStyle} className={containerClassName}>
+            <label htmlFor={label}>{label}</label><br />
             <input
                 type={type}
-                name={type}
-                id={type}
+                name={label}
+                id={label}
                 value={value}
                 className={styles.input}
                 placeholder={placeholder}
@@ -36,4 +37,4 @@ const TextInputBase = (props: Props) => {
     )
 }
 
-export default TextInputBase
+export default TextInput

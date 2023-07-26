@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '@/services/redux/slice/user';
 import { RetreatCenterUserType } from '@/types';
 import { RootState } from '@/services/redux/store';
-import TextInputBase from '@/components/TextInputBase';
+import TextInput from '@/components/TextInput';
 
 const RetreatCenterUserTestData: RetreatCenterUserType = {
     id: `Alan---${new Date().getTime()}`,
@@ -23,7 +23,7 @@ const RetreatCenterUserTestData: RetreatCenterUserType = {
     contactNumber: "09976447771",
     email: "alan.brown@gmail.com",
     organization: "CampConnection",
-    role: "Manager",
+    userType: "Manager",
     createdAt: new Date(),
     userCategory: "retreatcenter"
 }
@@ -44,10 +44,10 @@ const SigninForm = () => {
             <br />
             <br />
 
-            <TextInputBase type='email' label='Email' value={email} setValue={setEmail} />
+            <TextInput type='email' label='Email' value={email} setValue={setEmail} />
 
             <br />
-            <TextInputBase type='password' label='Password' value={password} setValue={setPassword} containerStyle={styles.input} />
+            <TextInput type='password' label='Password' value={password} setValue={setPassword} containerClassName={styles.input} />
 
             <div className={styles.row}>
                 <Link href="/forgotpassword"><p>Forgot password</p></Link>
