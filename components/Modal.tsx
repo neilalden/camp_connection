@@ -6,7 +6,7 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Colors from '@/common/colors';
 type Props = {
-    data?: AppointmentType | Array<AppointmentType>
+    appointment?: AppointmentType | Array<AppointmentType>
     setIsVisible: SetStateType<boolean>
 }
 const Tabs = [
@@ -14,11 +14,13 @@ const Tabs = [
 ]
 const Modal = (props: Props) => {
     const {
-        data,
+        appointment,
         setIsVisible = () => { }
     } = props;
+    if (!appointment) return;
+    if (Array.isArray(appointment)) return;
     const [activeTab, setActiveTab] = useState(Tabs[0])
-    const currentData = Array.isArray(data) ? data[0] : data
+    const currentData = Array.isArray(appointment) ? appointment[0] : appointment
     const color = currentData?.color
     const modalContainer: React.CSSProperties = {
         outline: `5px solid ${color}`
@@ -51,22 +53,22 @@ const Modal = (props: Props) => {
                             })
                         }
                     </div>
-                    {getComponent(activeTab)}
+                    {getComponent(activeTab, appointment)}
                 </div>
             </div>
         </React.Fragment>
     )
 }
 
-const getComponent = (tab: string) => {
+const getComponent = (tab: string, appointment: AppointmentType) => {
     switch (tab) {
         case "Booking":
-            return <Booking />
+            return <Booking appointment={appointment} />
         default:
-            return <Housing />
+            return <Housing appointment={appointment} />
     }
 }
-const Booking = () => {
+const Booking = ({ appointment }: { appointment: AppointmentType }) => {
     return (
         <div className={styles.container}>
             <div className={styles.progressbarContainer}>
@@ -78,7 +80,7 @@ const Booking = () => {
                             strokeWidth: 1
                         },
                         path: {
-                            stroke: Colors.green300,
+                            stroke: appointment.color,
                         }
                     }} />
             </div>
@@ -86,35 +88,35 @@ const Booking = () => {
         </div>
     )
 }
-const Housing = () => {
+const Housing = ({ appointment }: { appointment: AppointmentType }) => {
     return (
         <div>
 
         </div>
     )
 }
-const Meeting = () => {
+const Meeting = ({ appointment }: { appointment: AppointmentType }) => {
     return (
         <div>
 
         </div>
     )
 }
-const Activity = () => {
+const Activity = ({ appointment }: { appointment: AppointmentType }) => {
     return (
         <div>
 
         </div>
     )
 }
-const Group = () => {
+const Group = ({ appointment }: { appointment: AppointmentType }) => {
     return (
         <div>
 
         </div>
     )
 }
-const Journey = () => {
+const Journey = ({ appointment }: { appointment: AppointmentType }) => {
     return (
         <div>
 

@@ -96,3 +96,5 @@ export const getEndDate = (date: Date) => {
     else return new Date(`${months[date.getMonth() + 1]} 01 ${date.getFullYear()}`)
 }
 export const onDragOver = (e: React.DragEvent) => e.preventDefault();
+
+export const isArray = (value: any) => Array.isArray(value)

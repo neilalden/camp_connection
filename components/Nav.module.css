@@ -136,7 +136,7 @@
     padding: 10px 0 !important;
     padding-left: 13px !important;
     background-color: #81ACE4 !important;
-    border-left: 3px solid var(--dodger-blue-500, #3C7FD6);
+    border-right: 3px solid var(--dodger-blue-500, #3C7FD6);
     width: 100%;
     display: flex !important;
     flex-direction: row !important;

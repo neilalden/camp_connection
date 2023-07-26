@@ -15,7 +15,7 @@ import SimpleCalendar from "@/components/SimpleCalendar";
 import MainCalendar from "@/components/MainCalendar";
 import Divider from "@/components/Divider";
 import { getNextMonth, getPrevMonth, trunc } from "@/utils/functions";
-import TextInputBase from "@/components/TextInputBase";
+import TextInput from "@/components/TextInput";
 import Modal from "@/components/Modal";
 
 const GroupLeads = () => {

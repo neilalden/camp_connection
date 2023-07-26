@@ -98,7 +98,16 @@ const SideNavigation = () => {
                     )
                 })}
             </div>
-            <button className={currentPage == "settings" ? styles.settingsButtonActive : styles.settingsButton}><Image src={currentPage == "settings" ? Images.ic_settings_white : Images.ic_settings} height={20} style={{ objectFit: "cover" }} alt={"Settings icon"} onClick={() => router.push(`/${user.userCategory}/settings`)} /><p className={currentPage === "settings" ? styles.navTextActive : styles.navText}>{"Settings"}</p></button>
+            <button
+                onClick={() => router.push(`/${"retreatcenter"}/profile`)}
+                className={currentPage == "profile" ? styles.settingsButtonActive : styles.settingsButton}>
+                <Image src={currentPage == "profile" ? Images.ic_settings_white : Images.ic_settings}
+                    height={20}
+                    style={{ objectFit: "cover" }}
+                    alt={"Settings icon"}
+                />
+                <p className={currentPage === "profile" ? styles.navTextActive : styles.navText}>{"Settings"}</p>
+            </button>
         </nav>
     )
 }
