@@ -35,20 +35,13 @@ const GroupLeads = () => {
     setModalIsVisible(true);
   };
   if (!RetreatCenter) return;
-
-  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
   return (
     <div className={styles.container}>
       {modalIsVisible ? (
-        <Modal setIsVisible={setModalIsVisible} data={currentAppointment} />
+        <Modal
+          setIsVisible={setModalIsVisible}
+          appointment={currentAppointment}
+        />
       ) : null}
       <div className={styles.heading}>
         <h3 className={styles.overviewTitle}>Overview</h3>
@@ -105,7 +98,7 @@ const GroupLeads = () => {
           </div>
           <Divider className={styles.divider} />
           {/* ------------------------------ */}
-          <div className={`row ${styles.largeRow}`}>
+          <div className="row">
             <div className={styles.prevCalendarContainer}>
               <div className={styles.progressbarsContainer}>
                 <div className="row">
@@ -161,7 +154,6 @@ const GroupLeads = () => {
                 RetreatCenter={RetreatCenter}
               />
             </div>
-
             <Divider className={styles.dividerVert} />
 
             <div className={styles.nextCalendarContainer}>
@@ -219,99 +211,28 @@ const GroupLeads = () => {
                 RetreatCenter={RetreatCenter}
               />
             </div>
-
-            {screenWidth >= 1700 ? (
-              <>
-                {" "}
-                <Divider className={styles.dividerVert} />
-                <div className={styles.nextCalendarContainer}>
-                  <div className={styles.progressbarsContainer}>
-                    <div className="row">
-                      <div className="row">
-                        <div className={styles.bottomProgressbarContainer}>
-                          <CircularProgressbar
-                            value={progress}
-                            styles={{
-                              trail: {
-                                strokeWidth: 1,
-                              },
-                              path: {
-                                stroke: Colors.green300,
-                              },
-                            }}
-                          />
-                        </div>
-                        <div>
-                          <p className={styles.bottomProgressText}>
-                            {progress}%
-                          </p>
-                          <p className={styles.bottomProgressText}>Weekend</p>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className={styles.bottomProgressbarContainer}>
-                          <CircularProgressbar
-                            value={progress}
-                            styles={{
-                              trail: {
-                                strokeWidth: 1,
-                              },
-                              path: {
-                                stroke: Colors.yellow300,
-                              },
-                            }}
-                          />
-                        </div>
-                        <div>
-                          <p className={styles.bottomProgressText}>
-                            {progress}%
-                          </p>
-                          <p className={styles.bottomProgressText}>Weekend</p>
-                        </div>
-                      </div>
-                    </div>
-                    <p className={styles.bottomMonthTitle}>
-                      {trunc(months[getNextMonth(date.getMonth())], 3, "")}
-                    </p>
-                  </div>
-                  <SimpleCalendar
-                    date={
-                      new Date(
-                        new Date(date).setMonth(new Date(date).getMonth() + 1)
-                      )
-                    }
-                    RetreatCenter={RetreatCenter}
-                  />
-                </div>
-              </>
-            ) : (
-              ""
-            )}
           </div>
         </div>
-
-        <div>
-          <div className={styles.groupsContainer}>
-            {RetreatCenter?.appointments.length > 0 ? (
-              <div className={styles.groupsHeading}>
-                <h3 className={styles.groupsTitle}>Groups</h3>
-              </div>
-            ) : null}
-            {RetreatCenter &&
-              RetreatCenter?.appointments?.map((appointment, i) => {
-                return (
-                  <button
-                    key={i}
-                    type="button"
-                    className={styles.groupCard}
-                    onClick={() => clickLead(appointment)}
-                    style={{ background: appointment.color }}
-                  >
-                    <h3>{appointment.groupName}</h3>
-                  </button>
-                );
-              })}
-          </div>
+        <div className={styles.groupsContainer}>
+          {RetreatCenter?.appointments.length > 0 ? (
+            <div className={styles.groupsHeading}>
+              <h3 className={styles.groupsTitle}>Groups</h3>
+            </div>
+          ) : null}
+          {RetreatCenter &&
+            RetreatCenter?.appointments?.map((appointment, i) => {
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  className={styles.groupCard}
+                  onClick={() => clickLead(appointment)}
+                  style={{ background: appointment.color }}
+                >
+                  <h3>{appointment.groupName}</h3>
+                </button>
+              );
+            })}
         </div>
       </div>
     </div>
