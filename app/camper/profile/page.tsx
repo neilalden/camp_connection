@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
-import Images from "@/common/images";
 import uploadicon from "../../../assets/userprofile/docicon.png";
 import { UsersSampleData } from "@/utils/sampleData";
 
@@ -12,12 +11,14 @@ const CamperProfile = () => {
         <div className={styles.flexRow}>
           <div className={styles.userdetails}>
             <div className={styles.profileImage}>
-              <img
+              <Image
                 src="https://scontent.fmnl9-4.fna.fbcdn.net/v/t39.30808-1/362247258_997350164798646_8804860415820605887_n.jpg?stp=c55.22.194.193a_dst-jpg_p240x240&_nc_cat=105&cb=99be929b-59f725be&ccb=1-7&_nc_sid=7206a8&_nc_eui2=AeGsgvY_P03wFxqfxyxEa-MphGACexseN86EYAJ7Gx43zgKKsty84-y8obBEbdE9AJwZN1heDXjHtvxXOucH7_YB&_nc_ohc=an8zLzlckd8AX_Da5jZ&_nc_ht=scontent.fmnl9-4.fna&_nc_e2o=s&oh=00_AfA0fWVrfYbZyetDIPwL8sq2DSBzHZp1rtnAnQ6Ga8tdhw&oe=64BD560C"
                 className={styles.profile}
+                alt=""
               />
               <span className={styles.editdot}>
-                <svg
+                {/* save as png */}
+                {/* <svg
                   width="6"
                   height="27"
                   viewBox="0 0 6 27"
@@ -31,12 +32,13 @@ const CamperProfile = () => {
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   />
-                </svg>
+                </svg> */}
               </span>
             </div>
             <div className={styles.details}>
               <h3>Neil Alden</h3>
               <address>123 street California, USA</address>
+              {/* bad practice */}
               <div
                 style={{
                   display: "flex",
@@ -75,6 +77,7 @@ const CamperProfile = () => {
                 />
               </svg>
             </div>
+
             <div className={styles.campgroup}>
               {UsersSampleData.map((user) => (
                 <div className={styles.campdetails} key={user.id}>
@@ -88,6 +91,7 @@ const CamperProfile = () => {
                 </div>
               ))}
             </div>
+
             <p className={styles.viewMore}>See all</p>
           </div>
         </div>
@@ -97,7 +101,9 @@ const CamperProfile = () => {
             <div className={styles.uploaded}>
               <div className={styles.uploadedDoc}>
                 <p>Valid ID</p>
-                <Image src={uploadicon} alt="set" />
+
+                {/* alt practice */}
+                <Image src={uploadicon} alt="Valid ID" />
               </div>
               <div className={styles.uploadedDoc}>
                 <p>Work Eligibility</p>

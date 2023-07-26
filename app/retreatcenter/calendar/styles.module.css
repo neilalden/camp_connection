@@ -47,43 +47,27 @@
   align-self: flex-end !important;
 }
 
-.groupsHeading {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  margin-top: 30px !important;
-}
-
-.groupsTitle {
-  font-size: 20px;
-  font-weight: 500;
-  align-self: start !important;
-}
-
 .container {
   height: 100% !important;
-}
-
-.progressbarsContainer {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-  margin-bottom: 10px !important;
-}
-
-.bottomProgressbarContainer {
-  height: 50px;
-  width: 50px;
-  margin-right: 10px !important;
 }
 
 .progressbarContainer {
   height: 90px;
   width: 90px;
-  margin-right: 10px !important;
+}
+
+.mainRow {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 0;
+  height: calc(100% - 50px) !important;
+  flex-grow: 1 !important;
+}
+
+.calendarColumn {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .leadscolumn {
@@ -95,94 +79,55 @@
   justify-content: space-between;
 }
 
-.bottomMonthTitle {
+.leadsTitle {
   color: #000;
-  font-size: 20px;
+  /* SemiBold - 24 */
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+  margin-top: 20px !important;
+}
+
+.leadCard {
+  border-radius: 5px;
+  min-height: 100px;
+  margin: 10px !important;
+  padding: 10px !important;
+  cursor: grab;
+}
+
+.leadName {
+  font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
 
-.progressText {
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  margin-right: 15px !important;
-}
-
-.bottomProgressText {
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  margin-right: 5px !important;
-}
-
-.mainRow {
+.vacant {
+  height: 100% !important;
+  min-height: 30px;
+  margin: auto 0 !important;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  width: 80px !important;
+}
+
+.vacantLine {
+  height: 1px;
   width: 100% !important;
-  max-width: 1600px !important;
-  height: calc(100% - 50px) !important;
+  background-color: #d9d9d9;
+  align-self: center !important;
+  z-index: 99 !important;
 }
 
-.calendarContainer {
-  margin: 50px auto !important;
-  width: 850px !important;
-}
-
-.prevCalendarContainer {
-  width: 400px;
-}
-
-.nextCalendarContainer {
-  width: 400px;
-}
-
-.calendarColumn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: scroll;
-  margin: 20px 0px !important;
-}
-
-.divider {
-  width: 800px !important;
-  height: 2px;
-  border-radius: 100%;
-  margin-bottom: 50px !important;
-}
-
-.dividerVert {
-  height: 250px !important;
-  width: 2px;
-  border-radius: 100%;
-  margin: 0 20px !important;
-}
-
-.groupsContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center !important;
-  align-content: center !important;
-  justify-items: center !important;
-  overflow-y: scroll;
-  height: calc(100%) !important;
-}
-
-.groupCard {
-  padding: 10px 20px !important;
-  border-radius: 5px;
-  margin: 10px !important;
-  width: 100%;
+.addLead {
+  width: calc(100% - 20px) !important;
+  height: 30px;
+  font-size: 14px;
   text-align: center;
-}
-
-.groupCard h3 {
+  border-radius: 5px;
+  margin: 25px 10px !important;
   color: #fff;
-  font-weight: 900;
-  font-weight: bolder;
+  background: #3c7fd6;
 }
