@@ -8,7 +8,7 @@ export type ScreenProps = {
     [key: string]: any
 }
 
-type User = {
+export type User = {
     id: string;
     photo?: string;
     firstName: string;
@@ -18,7 +18,6 @@ type User = {
     contactNumber?: string;
     email?: string;
     organization?: string;
-    role?: string;
     createdAt: Date;
     userCategory: "camper" | "retreatcenter" | "campconnectionteam"
 }

@@ -1,6 +1,13 @@
 import Colors from "@/common/colors";
+<<<<<<< HEAD
 import { FilterType, ReservationType } from "@/types";
 import { getDays } from "./functions";
+=======
+import { FilterType, AppointmentType, MealType, CampConnectionTeamUserType, CamperUserType, RetreatCenterUserType } from "@/types";
+import { generateColor, getDays } from "./functions";
+import { URL } from "url";
+import Images from "@/common/images";
+>>>>>>> largescreen
 export type RoomType = {
   id: string;
   name: string;
@@ -26,11 +33,30 @@ export type FacilitiesType = {
         buildings: Array<BuildingType>
     };
     amenities: {
+<<<<<<< HEAD
         activities: Array<ActivityType>
     } & FilterType;
     meetingrooms: {} & FilterType;
     groups: {} & FilterType;
 }
+=======
+        activities?: Array<ActivityType>
+    }
+    meetingrooms?: {}
+
+    appointments: Array<AppointmentType>
+}
+export type RetreatCenterType = {
+    id: string;
+    name: string;
+    zipCode: number;
+    image?: string
+    capacity?: number;
+    timezone?: string;
+    state?: string;
+    meals?: Array<MealType>
+} & FacilitiesType
+>>>>>>> largescreen
 export const FacilitiesSampleData: FacilitiesType = {
     housing: {
         buildings: [
@@ -99,10 +125,660 @@ export const FacilitiesSampleData: FacilitiesType = {
         type: "Meeting room"
 
     },
+<<<<<<< HEAD
     groups: {
         id: "Groups",
         name: "Groups",
         type: "Group"
+=======
+    appointments: []
+}
+
+export const DaysSampleData = getDays({ start: new Date("July 01 2023"), end: new Date("August 01 2023") });
+
+export const UsersSampleData: Array<CamperUserType | RetreatCenterUserType | CampConnectionTeamUserType> = [
+    {
+        photo: "https://thispersondoesnotexist.com/",
+        firstName: "John",
+        lastName: "Doe",
+        id: "1",
+        createdAt: new Date(),
+        userCategory: "retreatcenter",
+        userType: "Sales",
+        contactNumber: "+123 456 789",
+        email: "John.Doe@campconnetion.net"
+    },
+    {
+        photo: "https://thispersondoesnotexist.com/",
+        firstName: "Mike",
+        lastName: "Ross",
+        id: "2",
+        createdAt: new Date(),
+        userCategory: "retreatcenter",
+        userType: "Admin",
+        contactNumber: "+123 456 789",
+        email: "Mike.Ross@campconnetion.net"
+    },
+    {
+        photo: "https://thispersondoesnotexist.com/",
+        firstName: "Jessica",
+        lastName: "Pearson",
+        id: "3",
+        createdAt: new Date(),
+        userCategory: "retreatcenter",
+        userType: "Hospitality",
+        contactNumber: "+123 456 789",
+        email: "Jessica.Pearson@campconnetion.net"
+    },
+    {
+        photo: "https://thispersondoesnotexist.com/",
+        firstName: "Louis",
+        lastName: "Litt",
+        id: "4",
+        createdAt: new Date(),
+        userCategory: "retreatcenter",
+        userType: "Sales",
+        contactNumber: "+123 456 789",
+        email: "Louis.Litt@campconnetion.net"
+    },
+]
+
+export const ArrayRCSD: Array<RetreatCenterType> = [
+    {
+        id: "Eatern Point Retreat House",
+        name: "Eatern Point Retreat House",
+        state: "California",
+        image: Images["ic_logo"],
+        zipCode: 2143,
+        capacity: 30,
+        housing: {
+            buildings: [
+                {
+                    id: "buildingA",
+                    name: "Building A",
+                    type: "Housing",
+                    levels: [
+                        {
+                            id: "buildingAlevel1",
+                            name: "Level 1",
+                            rooms: [
+                                {
+                                    id: "buildingAlevel1room1",
+                                    name: "room101",
+                                    singleBed: 4
+                                },
+                                {
+                                    id: "buildingAlevel1room2",
+                                    name: "room102",
+                                    singleBed: 2,
+                                    doubleBed: 2
+                                }
+                            ]
+                        },
+                        {
+                            id: "buildingAlevel2",
+                            name: "Level 2",
+                            rooms: [
+                                {
+                                    id: "level2room1",
+                                    name: "room201",
+                                    queenBed: 2
+                                },
+                                {
+                                    id: "level2room2",
+                                    name: "room202",
+                                    queenBed: 2
+                                }
+                            ]
+                        }]
+                }
+            ]
+        },
+        amenities: {
+            activities: [
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
+                    id: "pool1",
+                    name: "Pool A",
+                    type: "Activity",
+                    class: "pool"
+                },
+                {
+                    id: "paintballA",
+                    name: "Paintball A",
+                    type: "Activity",
+                    class: "paintball"
+                },
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
+                    id: "pool1",
+                    name: "Pool A",
+                    type: "Activity",
+                    class: "pool"
+                },
+                {
+                    id: "paintballA",
+                    name: "Paintball A",
+                    type: "Activity",
+                    class: "paintball"
+                },
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
+                    id: "pool1",
+                    name: "Pool A",
+                    type: "Activity",
+                    class: "pool"
+                },
+                {
+                    id: "paintballA",
+                    name: "Paintball A",
+                    type: "Activity",
+                    class: "paintball"
+                }
+            ]
+
+        },
+        meetingrooms: {
+            id: "Meeting room",
+            name: "Meeting room",
+            type: "Meeting room"
+
+        },
+        appointments: []
+    },
+    {
+        id: "Art of Living Retreat Center",
+        name: "Art of Living Retreat Center",
+        zipCode: 5678,
+        capacity: 50,
+        image: Images["ic_logo"],
+        housing: {
+            buildings: [
+                {
+                    id: "buildingA",
+                    name: "Building A",
+                    type: "Housing",
+                    levels: [
+                        {
+                            id: "buildingAlevel1",
+                            name: "Level 1",
+                            rooms: [
+                                {
+                                    id: "buildingAlevel1room1",
+                                    name: "room101",
+                                    singleBed: 4
+                                },
+                                {
+                                    id: "buildingAlevel1room2",
+                                    name: "room102",
+                                    singleBed: 2,
+                                    doubleBed: 2
+                                }
+                            ]
+                        },
+                        {
+                            id: "buildingAlevel2",
+                            name: "Level 2",
+                            rooms: [
+                                {
+                                    id: "level2room1",
+                                    name: "room201",
+                                    queenBed: 2
+                                },
+                                {
+                                    id: "level2room2",
+                                    name: "room202",
+                                    queenBed: 2
+                                }
+                            ]
+                        }]
+                }
+            ]
+        },
+        amenities: {
+            activities: [
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
+                    id: "pool1",
+                    name: "Pool A",
+                    type: "Activity",
+                    class: "pool"
+                },
+                {
+                    id: "paintballA",
+                    name: "Paintball A",
+                    type: "Activity",
+                    class: "paintball"
+                }
+            ]
+
+        },
+        meetingrooms: {
+            id: "Meeting room",
+            name: "Meeting room",
+            type: "Meeting room"
+
+        },
+
+        appointments: []
+    },
+    {
+        id: "Marianist Family Retreat Center",
+        name: "Marianist Family Retreat Center",
+        zipCode: 8234,
+        capacity: 100,
+        image: Images["ic_logo"],
+        housing: {
+            buildings: [
+                {
+                    id: "buildingA",
+                    name: "Building A",
+                    type: "Housing",
+                    levels: [
+                        {
+                            id: "buildingAlevel1",
+                            name: "Level 1",
+                            rooms: [
+                                {
+                                    id: "buildingAlevel1room1",
+                                    name: "room101",
+                                    singleBed: 4
+                                },
+                                {
+                                    id: "buildingAlevel1room2",
+                                    name: "room102",
+                                    singleBed: 2,
+                                    doubleBed: 2
+                                }
+                            ]
+                        },
+                        {
+                            id: "buildingAlevel2",
+                            name: "Level 2",
+                            rooms: [
+                                {
+                                    id: "level2room1",
+                                    name: "room201",
+                                    queenBed: 2
+                                },
+                                {
+                                    id: "level2room2",
+                                    name: "room202",
+                                    queenBed: 2
+                                }
+                            ]
+                        }]
+                }
+            ]
+        },
+        amenities: {
+            activities: [
+                {
+                    id: "pool1",
+                    name: "Pool A",
+                    type: "Activity",
+                    class: "pool"
+                },
+                {
+                    id: "paintballA",
+                    name: "Paintball A",
+                    type: "Activity",
+                    class: "paintball"
+                },
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                }
+            ]
+
+
+        },
+        meetingrooms: {
+            id: "Meeting room",
+            name: "Meeting room",
+            type: "Meeting room"
+
+        },
+
+        appointments: []
+    },
+    {
+        id: "Isabella Freedman Jewish Retreat Center",
+        name: "Isabella Freedman Jewish Retreat Center",
+        zipCode: 7654,
+        capacity: 20,
+        image: Images["ic_logo"],
+        housing: {
+            buildings: [
+                {
+                    id: "buildingA",
+                    name: "Building A",
+                    type: "Housing",
+                    levels: [
+                        {
+                            id: "buildingAlevel1",
+                            name: "Level 1",
+                            rooms: [
+                                {
+                                    id: "buildingAlevel1room1",
+                                    name: "room101",
+                                    singleBed: 4
+                                },
+                                {
+                                    id: "buildingAlevel1room2",
+                                    name: "room102",
+                                    singleBed: 2,
+                                    doubleBed: 2
+                                }
+                            ]
+                        },
+                        {
+                            id: "buildingAlevel2",
+                            name: "Level 2",
+                            rooms: [
+                                {
+                                    id: "level2room1",
+                                    name: "room201",
+                                    queenBed: 2
+                                },
+                                {
+                                    id: "level2room2",
+                                    name: "room202",
+                                    queenBed: 2
+                                }
+                            ]
+                        }]
+                }
+            ]
+        },
+        amenities: {
+            activities: [
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
+                    id: "pool1",
+                    name: "Pool A",
+                    type: "Activity",
+                    class: "pool"
+                },
+                {
+                    id: "paintballA",
+                    name: "Paintball A",
+                    type: "Activity",
+                    class: "paintball"
+                }
+            ]
+
+        },
+        meetingrooms: {
+            id: "Meeting room",
+            name: "Meeting room",
+            type: "Meeting room"
+
+        },
+
+        appointments: []
+    },
+    {
+        id: "Saint John’s Abbey",
+        name: "Saint John’s Abbey",
+        zipCode: 5843,
+        capacity: 170,
+        image: Images["ic_logo"],
+        housing: {
+            buildings: [
+                {
+                    id: "buildingA",
+                    name: "Building A",
+                    type: "Housing",
+                    levels: [
+                        {
+                            id: "buildingAlevel1",
+                            name: "Level 1",
+                            rooms: [
+                                {
+                                    id: "buildingAlevel1room1",
+                                    name: "room101",
+                                    singleBed: 4
+                                },
+                                {
+                                    id: "buildingAlevel1room2",
+                                    name: "room102",
+                                    singleBed: 2,
+                                    doubleBed: 2
+                                }
+                            ]
+                        },
+                        {
+                            id: "buildingAlevel2",
+                            name: "Level 2",
+                            rooms: [
+                                {
+                                    id: "level2room1",
+                                    name: "room201",
+                                    queenBed: 2
+                                },
+                                {
+                                    id: "level2room2",
+                                    name: "room202",
+                                    queenBed: 2
+                                }
+                            ]
+                        }]
+                }
+            ]
+        },
+        amenities: {
+            activities: [
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
+                    id: "pool1",
+                    name: "Pool A",
+                    type: "Activity",
+                    class: "pool"
+                },
+                {
+                    id: "paintballA",
+                    name: "Paintball A",
+                    type: "Activity",
+                    class: "paintball"
+                }
+            ]
+
+        },
+        meetingrooms: {
+            id: "Meeting room",
+            name: "Meeting room",
+            type: "Meeting room"
+
+        },
+
+        appointments: []
+    },
+    {
+        id: "Abbey of Gethsemani",
+        name: "Abbey of Gethsemani",
+        zipCode: 2134,
+        capacity: 70,
+        image: Images["ic_logo"],
+        housing: {
+            buildings: [
+                {
+                    id: "buildingA",
+                    name: "Building A",
+                    type: "Housing",
+                    levels: [
+                        {
+                            id: "buildingAlevel1",
+                            name: "Level 1",
+                            rooms: [
+                                {
+                                    id: "buildingAlevel1room1",
+                                    name: "room101",
+                                    singleBed: 4
+                                },
+                                {
+                                    id: "buildingAlevel1room2",
+                                    name: "room102",
+                                    singleBed: 2,
+                                    doubleBed: 2
+                                }
+                            ]
+                        },
+                        {
+                            id: "buildingAlevel2",
+                            name: "Level 2",
+                            rooms: [
+                                {
+                                    id: "level2room1",
+                                    name: "room201",
+                                    queenBed: 2
+                                },
+                                {
+                                    id: "level2room2",
+                                    name: "room202",
+                                    queenBed: 2
+                                }
+                            ]
+                        }]
+                }
+            ]
+        },
+        amenities: {
+            activities: [
+                {
+                    id: "Zipline1",
+                    name: "Zipline A",
+                    type: "Activity",
+                    class: "zipline"
+                },
+                {
+                    id: "CanoeA",
+                    name: "Canoe A",
+                    type: "Activity",
+                    class: "canoe"
+                },
+                {
+                    id: "pool1",
+                    name: "Pool A",
+                    type: "Activity",
+                    class: "pool"
+                },
+                {
+                    id: "paintballA",
+                    name: "Paintball A",
+                    type: "Activity",
+                    class: "paintball"
+                }
+            ]
+
+
+        },
+        meetingrooms: {
+            id: "Meeting room",
+            name: "Meeting room",
+            type: "Meeting room"
+
+        },
+        appointments: []
+    },
+]
+
+export const leadsSampleData: Array<AppointmentType> = [
+    {
+        id: "John Doe",
+        color: generateColor(),
+        groupName: "Doe's group",
+        status: "Reserved",
+        reservedBy: {
+            id: "string",
+            firstName: "John",
+            lastName: "Doe",
+            createdAt: new Date(),
+            userCategory: "camper",
+            contactNumber: "+639 123 456",
+            email: "john.doe@email.com",
+        },
+        zipCode: 4030,
+        groupSize: 20,
+        checkInDays: 5,
+        amenities: [],
+        meals: [],
+        rooms: [],
+>>>>>>> largescreen
     }
 }
 export const DaysSampleData = getDays({ start: new Date("July 01 2023"), end: new Date("August 01 2023") });

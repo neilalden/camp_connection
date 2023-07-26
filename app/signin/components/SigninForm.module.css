@@ -1,5 +1,8 @@
+.form {
+    width: 250px;
+}
+
 .input {
-    width: 250px !important;
     margin-bottom: 10px !important
 }
 

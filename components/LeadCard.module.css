@@ -1,0 +1,15 @@
+.leadCard {
+    border-radius: 5px;
+    min-height: 100px;
+    min-width: 190px;
+    margin: 10px 5px 10px 10px !important;
+    padding: 10px !important;
+    cursor: grab
+}
+
+.leadName {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
