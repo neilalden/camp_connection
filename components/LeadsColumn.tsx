@@ -5,7 +5,7 @@ import { AppointmentType, ArgFunction, HTMLEvent } from "@/types";
 import { debounce, generateColor } from "@/utils/functions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./LeadsColumn.module.css"
-import TextInputBase from "./TextInputBase";
+import TextInput from "./TextInput";
 import { useEffect, useState } from "react";
 import LeadCard from "./LeadCard";
 
@@ -76,7 +76,7 @@ const LeadsColumn = (props: Props) => {
         <div className={styles.leadscolumn}>
             <div>
                 <h3 className={styles.leadsTitle}>Leads</h3>
-                {leads && leads?.length >= 5 ? <TextInputBase value={searchString} setValue={setSearchString} placeholder="Search Lead" containerStyle={styles.searchInput} /> : null}
+                {leads && leads?.length >= 5 ? <TextInput value={searchString} setValue={setSearchString} placeholder="Search Lead" containerStyle={styles.searchInput} /> : null}
                 {
                     rerenderingLeads && rerenderingLeads.map((lead, i) => {
                         // return <LeadCard

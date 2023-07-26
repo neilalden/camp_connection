@@ -16,14 +16,15 @@ const TopNavigation = () => {
         dispatch(clearLeads())
         dispatch(clearAppointments())
     }
+    if (!user) return router.push("/signin");
     return (
         <nav className={styles.topNav}>
             <h1 className={styles.logo}>CampConnection</h1>
             <button className={styles.profileButton} onClick={logout}>
                 <div className={styles.userIcon} />
                 <div className={styles.userDetails}>
-                    <p className="userName">{String(user?.firstName) + String(user?.lastName)}</p>
-                    <p className="userRole">{user?.role}</p>
+                    <p className="userName">{String(user.firstName) + String(user.lastName)}</p>
+                    <p className="userType">{String(user.userType)}</p>
                     {/* <Link href={`/${user.userCategory}/editprofile`}>Edit profile</Link> */}
                 </div>
             </button>
