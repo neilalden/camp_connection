@@ -12,8 +12,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '@/services/redux/slice/user';
 import { RetreatCenterUserType } from '@/types';
 import { RootState } from '@/services/redux/store';
+import TextInput from '@/components/TextInput';
 
 const RetreatCenterUserTestData: RetreatCenterUserType = {
+    id: `Alan---${new Date().getTime()}`,
     firstName: "Alan",
     lastName: "Brown",
     middleName: "",
@@ -21,7 +23,7 @@ const RetreatCenterUserTestData: RetreatCenterUserType = {
     contactNumber: "09976447771",
     email: "alan.brown@gmail.com",
     organization: "CampConnection",
-    role: "Manager",
+    userType: "Manager",
     createdAt: new Date(),
     userCategory: "retreatcenter"
 }
@@ -33,31 +35,19 @@ const SigninForm = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.User.user)
 
-    useEffect(() => { if (user) router.push(`/${user.userCategory}/calendar`) }, [user])
+    useEffect(() => { if (user) router.push(`/campconnection/leads`) }, [user])
 
     const handleSignin = () => dispatch(setUser(RetreatCenterUserTestData))
 
     return (
-        <form >
-            <br /><label htmlFor="email">Email</label><br />
-            <input
-                type="email"
-                name="email"
-                id="email"
-                className={styles.input}
-                value={email}
-                onChange={(e) => textInputSetState(e, setEmail)}
-            />
+        <form className={styles.form}>
+            <br />
+            <br />
 
-            <br /><label htmlFor="password">Password</label><br />
-            <input
-                type="password"
-                name="password"
-                id="password"
-                className={styles.input}
-                value={password}
-                onChange={(e) => textInputSetState(e, setPassword)}
-            />
+            <TextInput type='email' label='Email' value={email} setValue={setEmail} />
+
+            <br />
+            <TextInput type='password' label='Password' value={password} setValue={setPassword} containerClassName={styles.input} />
 
             <div className={styles.row}>
                 <Link href="/forgotpassword"><p>Forgot password</p></Link>

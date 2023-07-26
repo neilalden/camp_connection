@@ -2,16 +2,24 @@
 import Images from '@/common/images'
 import { Metadata } from 'next'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import SigninForm from './components/SigninForm'
 import { Provider } from 'react-redux'
 import { persistor, store } from '@/services/redux/store'
 import { PersistGate } from 'redux-persist/integration/react'
+import { GET } from '@/services/api'
 // export const metadata: Metadata = {
 //     title: "Signin",
 //     description: "Signin page of CampConnection"
 // }
 const SigninPage = () => {
+
+    useEffect(() => {
+        return
+        (async () => {
+            const x = await GET("https://www.atsdevs.org/api/book/bookingList.php")
+        })();
+    }, [])
     return (
         <div style={container}>
             <div style={{ height: "100px" }} />

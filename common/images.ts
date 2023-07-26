@@ -31,6 +31,14 @@ const Images = {
     ic_paintball: require("../assets/ic_paintball.png"),
     ic_pool: require("../assets/ic_pool.png"),
     ic_zipline: require("../assets/ic_zipline.png"),
+
+    ic_cc_arrow: require("../assets/ic_cc_arrow.png"),
+    ic_cc_arrow_white: require("../assets/ic_cc_arrow_white.png"),
+    ic_group: require("../assets/ic_group.png"),
+    ic_group_white: require("../assets/ic_group_white.png"),
+    ic_upload: require("../assets/ic_upload.png"),
+    ic_upload_white: require("../assets/ic_upload_white.png"),
+
 }
 
 

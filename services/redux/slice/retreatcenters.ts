@@ -32,15 +32,6 @@ export const RetreatCentersSlice = createSlice({
         },
         addAppointment: (state, action: PayloadAction<AddAppointmentPayload>) => {
             const { retreatCenterId, appointment } = action.payload
-            // const retreatCenter = state.retreatCenters[retreatCenterId]
-            // if (retreatCenter.appointments !== undefined) retreatCenter.appointments.push(appointment)
-            // else retreatCenter.appointments = [appointment]
-            // // state.retreatCenters[retreatCenterId] = retreatCenter
-            // const copy = {
-            //     ...state.retreatCenters,
-            //     [retreatCenterId]: retreatCenter
-            // }
-            // state.retreatCenters = copy
             state.retreatCenters.map(rc => {
                 if (retreatCenterId === rc.id) {
                     rc.appointments = rc.appointments ? [...rc.appointments, appointment] : [appointment]
@@ -48,10 +39,26 @@ export const RetreatCentersSlice = createSlice({
                 }
                 return rc
             })
+        },
+        cancelAppointment: (state, action: PayloadAction<{ retreatCenterId: RetreatCenterType["id"], appointmentId: AppointmentType["id"] }>) => {
+            const { retreatCenterId, appointmentId } = action.payload;
+            state.retreatCenters = state.retreatCenters.map((rc) => {
+                if (rc.id === retreatCenterId) {
+                    let newRc = { ...rc }
+                    newRc.appointments = rc.appointments.filter(a => a.id !== appointmentId)
+                    return newRc
+                }
+
+                return rc
+            })
+
+        },
+        clearAppointments: (state) => {
+            state.retreatCenters = state.retreatCenters.map(rc => ({ ...rc, appointments: [] }))
         }
     },
 })
 
-export const { addRetreatCenter, addAppointment } = RetreatCentersSlice.actions
+export const { addRetreatCenter, addAppointment, clearAppointments, cancelAppointment } = RetreatCentersSlice.actions
 
 export default RetreatCentersSlice.reducer
