@@ -25,7 +25,9 @@
     min-width: 190px;
     margin: 10px 5px 10px 10px !important;
     padding: 10px !important;
-    cursor: grab
+    cursor: grab;
+    background: #FFF;
+    opacity: 1;
 }
 
 .leadName {
