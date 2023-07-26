@@ -75,3 +75,8 @@ export type AppointmentType = {
     rooms?: Array<RoomType>;
     zipCode?: number;
 }
+
+export type FileType = {
+    url: string,
+    name: string,
+}

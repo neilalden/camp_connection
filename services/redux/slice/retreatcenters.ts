@@ -1,5 +1,5 @@
 import { AppointmentType } from "@/types";
-import { ArrayRCSD, RetreatCenterSsampleData, RetreatCentersType, RetreatCenterType } from "@/utils/sampleData";
+import { ArrayRCSD, RetreatCenterType } from "@/utils/sampleData";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type RetreatCenterStateType = {

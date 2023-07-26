@@ -184,8 +184,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                                 appointmentBeingDragged ?
                                                     {
                                                         ...style,
-                                                        borderLeft: `2px solid ${currentDrag.color}`,
-                                                        borderRight: `2px solid ${currentDrag.color}`,
+                                                        border: `3px solid ${currentDrag.color}`,
                                                     }
                                                     : style
                                             }

@@ -23,7 +23,7 @@ const RetreatCenterUserTestData: RetreatCenterUserType = {
     contactNumber: "09976447771",
     email: "alan.brown@gmail.com",
     organization: "CampConnection",
-    userType: "Manager",
+    userType: "Admin",
     createdAt: new Date(),
     userCategory: "retreatcenter"
 }

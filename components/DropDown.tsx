@@ -1,4 +1,4 @@
-import { SetStateType } from '@/types';
+import { ArgFunction, SetStateType } from '@/types';
 import React from 'react'
 import styles from "./DropDown.module.css"
 export type OptionType = {
@@ -8,7 +8,7 @@ export type OptionType = {
 type Props = {
     options: Array<OptionType>;
     value: string;
-    setValue: SetStateType<string>;
+    setValue: SetStateType<string> | ArgFunction;
     htmlFor?: string;
     containerStyle?: React.CSSProperties;
     containerClassName?: string;

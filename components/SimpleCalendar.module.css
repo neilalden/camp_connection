@@ -81,6 +81,7 @@
 
 }
 
+
 .booked:hover::after {
     content: attr(data-content);
     border-radius: 3px;

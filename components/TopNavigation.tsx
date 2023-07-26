@@ -16,7 +16,10 @@ const TopNavigation = () => {
         dispatch(clearLeads())
         dispatch(clearAppointments())
     }
-    if (!user) return router.push("/signin");
+    if (!user) {
+        router.push("/signin");
+        return null
+    }
     return (
         <nav className={styles.topNav}>
             <h1 className={styles.logo}>CampConnection</h1>

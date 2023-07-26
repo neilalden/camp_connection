@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px !important;
+    border-radius: 5px;
+    border: 2px solid #999999 !important;
+    outline: none;
+}
+
+.input {
+    width: 100% !important;
+    font-weight: normal !important;
+}
+
+.text {
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 10px !important;
+}
