@@ -48,7 +48,10 @@ const GroupLeads = () => {
   return (
     <div className={styles.container}>
       {modalIsVisible ? (
-        <Modal setIsVisible={setModalIsVisible} data={currentAppointment} />
+        <Modal
+          setIsVisible={setModalIsVisible}
+          appointment={currentAppointment}
+        />
       ) : null}
       <div className={styles.heading}>
         <h3 className={styles.overviewTitle}>Overview</h3>
