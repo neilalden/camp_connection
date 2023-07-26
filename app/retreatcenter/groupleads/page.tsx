@@ -274,18 +274,19 @@ const GroupLeads = () => {
                       </div>
                     </div>
                     <p className={styles.bottomMonthTitle}>
-                      {trunc(months[getNextMonth(date.getMonth())], 3, "")}
+                      {trunc(months[getNextMonth(date.getMonth() + 1)], 3, "")}
                     </p>
                   </div>
                   <SimpleCalendar
                     date={
                       new Date(
-                        new Date(date).setMonth(new Date(date).getMonth() + 1)
+                        new Date(date).setMonth(new Date(date).getMonth() + 2)
                       )
                     }
                     RetreatCenter={RetreatCenter}
                   />
                 </div>
+                <Divider className={styles.dividerVert} />
               </>
             ) : (
               ""

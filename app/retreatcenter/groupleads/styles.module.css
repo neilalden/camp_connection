@@ -220,4 +220,7 @@
   .largeRow {
     margin-left: 50px;
   }
+  .divider {
+    width: 1325px !important;
+  }
 }

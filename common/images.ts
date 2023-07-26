@@ -1,4 +1,3 @@
-
 const Images = {
     ic_logo: require("../assets/ic_logo.png"),
     ic_grapic1: require("../assets/ic_grapic1.png"),
@@ -39,8 +38,6 @@ const Images = {
     ic_upload: require("../assets/ic_upload.png"),
     ic_upload_white: require("../assets/ic_upload_white.png"),
     ic_clip: require("../assets/ic_clip.png"),
-
-}
-
+};
 
 export default Images;
