@@ -38,6 +38,7 @@ const Images = {
     ic_group_white: require("../assets/ic_group_white.png"),
     ic_upload: require("../assets/ic_upload.png"),
     ic_upload_white: require("../assets/ic_upload_white.png"),
+    ic_clip: require("../assets/ic_clip.png"),
 
 }
 

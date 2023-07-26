@@ -7,12 +7,15 @@ import { ArrayRCSD, RetreatCenterType, UsersSampleData } from "@/utils/sampleDat
 import { useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
 import TextInput from "@/components/TextInput";
-import { StatesInUSA, StatesWithCitiesAPI, TimeZones } from "@/utils/variables";
+import { StatesInUSA, StatesWithCitiesAPI, TimeZones, weekdays } from "@/utils/variables";
 import { GET } from "@/services/api";
 import { default as statesWithCities } from "@/utils/statesWithCities.json";
 import DropDown, { OptionType } from "@/components/DropDown";
 import DropDownUsers, { UsersOptionType } from "@/components/DropDownUsers";
 import CheckBox from "@/components/CheckBox";
+import FileUpload from "@/components/FileUpload";
+import FileButton from "@/components/FileButton";
+import RadioButton from "@/components/RadioButton";
 const options = StatesInUSA.map(state => ({ label: state, value: state }))
 const Userprofile = () => {
     // const retreatcenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)[0]
@@ -85,11 +88,143 @@ const Userprofile = () => {
                         <CheckBox value={isAceeptingGroups} onChange={() => setIsAcceptingGroups(prev => !prev)} label="Do you accept groups?" containerClassName={styles.inputStyle} />
                         <CheckBox value={isAceeptingRVTent} onChange={() => setIsAcceptingRVTent(prev => !prev)} label="Do you accept RV/Tent Camping?" containerClassName={styles.inputStyle} />
                         <CheckBox value={isRecievingCCLeads} onChange={() => setIsRecievingCCLeads(prev => !prev)} label="Receive Camp Connection Leads?" containerClassName={styles.inputStyle} />
+                        <span className="mini-link">Learn more</span>
+                        <div className={["row-around", styles.inputStyle].join(" ")}>
+                            <FileButton text="Contract for RV" containerClassName={styles.inputStyle} />
+                            <FileButton text="Contract for tent" containerClassName={styles.inputStyle} />
+                        </div>
                     </form>
+                </div>
+            </div>
+
+            <div className={["card", styles.scheduleContainer].join(" ")}>
+                <h4 className={styles.cardTitle}>Business Schedule</h4>
+                <div className="row-between">
+                    <SchedulePicker season={"Winter"} />
+                    <SchedulePicker season={"Spring"} />
+                    <SchedulePicker season={"Summer"} />
+                    <SchedulePicker season={"Fall"} />
                 </div>
             </div>
         </div>
     );
 };
+type ScheduleType = {
+    label: string;
+    value: boolean;
+    editMode: boolean;
+    from: {
+        hour: number;
+        ampm: "am" | "pm"
+    };
+    to: {
+        hour: number;
+        ampm: "am" | "pm"
+    }
+}
+const SchedulePicker = ({ season }: { season: string }) => {
+    const schedule: Array<ScheduleType> = weekdays.map(wd => ({
+        label: wd,
+        value: false,
+        editMode: false,
+        from: {
+            hour: 9,
+            ampm: "am"
+        },
+        to: {
+            hour: 5,
+            ampm: "pm"
+        }
+    }));
+    const [isOpenAnytime, setIsOpenAnytime] = useState(false);
+    const [weekSchedule, setWeekSchedule] = useState<Array<ScheduleType>>(schedule)
+    const onChange = ({ label, value }: { label: string, value: boolean }) => {
+        setWeekSchedule(prev => {
+            return prev.map((val) => {
+                if (val.label === label) return { ...val, value: !val.value }
+                return val
+            })
+        })
+    }
+    const toggleEdit = (sched: ScheduleType) => {
+        setWeekSchedule(prev => {
+            return prev.map((val) => {
+                if (val.label === sched.label) return { ...val, editMode: !val.editMode }
+                return val
+            })
+        })
+    }
+    const setHour = (value: string) => {
+
+    }
+    return (
+        <div className={styles.scheduleCard}>
+            <h3 className={styles.scheduleCardTitle}>{season}</h3>
+            <form className={styles.scheduleForm}>
+                <RadioButton
+                    name={`isOpenAnytime---${season}`}
+                    label="Open anytime"
+                    value={isOpenAnytime}
+                    onChange={() => setIsOpenAnytime(true)}
+                    containerClassName={styles.inputStyle} />
+                <span>Campers can book you anytime your calendar is not blocked</span>
+                <RadioButton
+                    name={`!isOpenAnytime---${season}`}
+                    label="Specific Hours"
+                    value={!isOpenAnytime}
+                    onChange={() => setIsOpenAnytime(false)}
+                    containerClassName={styles.inputStyle} />
+                <span>Campers can only book with set hours</span>
+                {!isOpenAnytime ?
+                    <div className={styles.scheduleCheckboxContainer}>
+                        {
+                            weekSchedule.map(sched => {
+                                if (sched.value) {
+                                    return (
+                                        <div className="row-between">
+                                            <CheckBox
+                                                label={sched.label}
+                                                value={sched.value}
+                                                onChange={() => onChange(sched)}
+                                                containerStyle={{ width: "65px" }}
+                                            />
+                                            {
+                                                sched.editMode ?
+                                                    (
+                                                        <div>
+                                                            <DropDown options={Array(12).fill(0).map(i => i + 1)} value={String(sched.from.hour)} setValue={setHour} />
+                                                        </div>
+                                                    )
+                                                    :
+                                                    (
+
+                                                        <p className={styles.scheduleString}>
+                                                            {`${sched.from.hour + sched.from.ampm} - ${sched.to.hour + sched.to.ampm}`}
+                                                        </p>
+                                                    )
+                                            }
+                                            <button type="button" className={styles.buttonSpan} onClick={() => toggleEdit(sched)}>edit</button>
+                                        </div>
+                                    )
+                                }
+                                return (
+                                    <div className="row">
+                                        <CheckBox
+                                            label={sched.label}
+                                            value={sched.value}
+                                            onChange={() => onChange(sched)}
+                                            containerStyle={{ width: "65px" }} />
+                                        <span className={styles.spanClosed}>Closed</span>
+                                    </div>
+                                )
+
+                            })
+                        }
+                    </div>
+                    : null}
+            </form>
+        </div>
+    )
+}
 
 export default React.memo(Userprofile);

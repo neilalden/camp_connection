@@ -76,7 +76,7 @@ const LeadsColumn = (props: Props) => {
         <div className={styles.leadscolumn}>
             <div>
                 <h3 className={styles.leadsTitle}>Leads</h3>
-                {leads && leads?.length >= 5 ? <TextInput value={searchString} setValue={setSearchString} placeholder="Search Lead" containerStyle={styles.searchInput} /> : null}
+                {leads && leads?.length >= 5 ? <TextInput value={searchString} setValue={setSearchString} placeholder="Search Lead" containerClassName={styles.searchInput} /> : null}
                 {
                     rerenderingLeads && rerenderingLeads.map((lead, i) => {
                         // return <LeadCard
@@ -90,7 +90,9 @@ const LeadsColumn = (props: Props) => {
                                 draggable
                                 key={i}
                                 className={styles.leadCard}
-                                style={{ border: `3px solid ${lead.color}` }}
+                                style={{
+                                    border: `3px solid ${lead.color}`,
+                                }}
                                 onClick={() => leadCardOnClick ? leadCardOnClick(lead) : null}
                                 onDragStart={(event) => customOnDrag ? customOnDrag({ event, data: lead }) : onDrag({ event, data: lead })}>
                                 <p className={styles.leadName} style={{ color: lead.color }}>{lead.groupName}</p>

@@ -22,6 +22,8 @@
     background-color: #F6F8F9;
 }
 
+
+
 /* LAYOUTS STYLE */
 
 .container {
@@ -32,6 +34,8 @@
     width: 90%;
     height: 100% !important;
 }
+
+
 
 .headerContainer {
     border-radius: 5px;
@@ -88,4 +92,51 @@
 
 .inputStyle {
     margin-top: 10px !important;
+}
+
+.scheduleContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 30px !important;
+    padding: 30px 25px !important;
+}
+
+.scheduleCard {
+    min-width: 200px;
+    max-width: 24%;
+    padding: 10px !important;
+    margin-top: 40px !important;
+    position: relative;
+
+}
+
+.scheduleForm {
+    border: 1px solid #D8E189;
+    padding: 20px !important;
+}
+
+.scheduleCardTitle {
+    position: absolute;
+    top: -23.5px !important;
+    border: 1px solid #D8E189;
+    border-bottom: 1px solid #fff !important;
+    padding: 5px 10px !important;
+}
+
+.scheduleCheckboxContainer {
+    margin-top: 20px !important;
+    font-size: 12px;
+}
+
+.buttonSpan {
+    font-size: 12px;
+    color: #3C7FD6;
+    font-weight: 400;
+    line-height: -1;
+}
+
+.spanClosed {
+    margin-top: 2.5px !important;
+    margin-left: 20px !important;
 }
