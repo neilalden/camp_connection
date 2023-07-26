@@ -1,13 +1,8 @@
 import Colors from "@/common/colors";
-<<<<<<< HEAD
-import { FilterType, ReservationType } from "@/types";
-import { getDays } from "./functions";
-=======
 import { FilterType, AppointmentType, MealType, CampConnectionTeamUserType, CamperUserType, RetreatCenterUserType } from "@/types";
 import { generateColor, getDays } from "./functions";
 import { URL } from "url";
 import Images from "@/common/images";
->>>>>>> largescreen
 export type RoomType = {
   id: string;
   name: string;
@@ -33,13 +28,6 @@ export type FacilitiesType = {
         buildings: Array<BuildingType>
     };
     amenities: {
-<<<<<<< HEAD
-        activities: Array<ActivityType>
-    } & FilterType;
-    meetingrooms: {} & FilterType;
-    groups: {} & FilterType;
-}
-=======
         activities?: Array<ActivityType>
     }
     meetingrooms?: {}
@@ -56,7 +44,6 @@ export type RetreatCenterType = {
     state?: string;
     meals?: Array<MealType>
 } & FacilitiesType
->>>>>>> largescreen
 export const FacilitiesSampleData: FacilitiesType = {
     housing: {
         buildings: [
@@ -125,12 +112,6 @@ export const FacilitiesSampleData: FacilitiesType = {
         type: "Meeting room"
 
     },
-<<<<<<< HEAD
-    groups: {
-        id: "Groups",
-        name: "Groups",
-        type: "Group"
-=======
     appointments: []
 }
 
@@ -778,7 +759,6 @@ export const leadsSampleData: Array<AppointmentType> = [
         amenities: [],
         meals: [],
         rooms: [],
->>>>>>> largescreen
     }
 }
 export const DaysSampleData = getDays({ start: new Date("July 01 2023"), end: new Date("August 01 2023") });
@@ -868,3 +848,5 @@ export const reservationsSampleData: Array<ReservationType> = [
             },
         ]
     },
+]
+
