@@ -76,15 +76,15 @@ const CamperProfile = () => {
               </svg>
             </div>
             <div className={styles.campgroup}>
-              {usersSampleData.map((user) => (
+              {UsersSampleData.map((user) => (
                 <div className={styles.campdetails} key={user.id}>
-                  <img src={user.profile} alt="" />
+                  <img src={user.photo} alt="" />
                   <div className={styles.userteam}>
                     <h3>
-                      {user.name} <br /> <span>{user.contactNumber}</span>
+                      {user.firstName} <br /> <span>{user.contactNumber}</span>
                     </h3>
                   </div>
-                  {user.status}
+                  {user.userType}
                 </div>
               ))}
             </div>
