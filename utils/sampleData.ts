@@ -857,3 +857,21 @@ export const appointmentsSampleData: Array<AppointmentType> = [
     ],
   },
 ];
+
+export const camperUserData: Array<
+  CamperUserType | RetreatCenterUserType | CampConnectionTeamUserType
+> = [
+  {
+    photo: "https://thispersondoesnotexist.com/",
+    firstName: "John",
+    lastName: "Doe",
+    middleName: "Doe",
+    id: "1",
+    createdAt: new Date(),
+    userCategory: "retreatcenter",
+    userType: "Group Leader",
+    camperTeam: "Sales",
+    contactNumber: "+123 456 789",
+    email: "John.Doe@campconnetion.net",
+  },
+];

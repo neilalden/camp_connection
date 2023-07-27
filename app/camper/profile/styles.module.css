@@ -1,289 +1,229 @@
-.container {
-    width: 100%;
-    padding: 3% 0;
-    background-color: #f6f8f9;
+/* LAYOUTS STYLE */
+
+.main {
+  height: 100% !important;
+  width: 100% !important;
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
-    display: flex !important;
-    flex-direction: row !important;
-    height: 100% !important;
-}
-
-.main {
-    height: 100% !important;
-    width: 100% !important;
-    display: flex;
-    flex-direction: column;
+  display: flex !important;
+  flex-direction: row !important;
+  height: 100% !important;
 }
 
 .mainContent {
-    width: 100% !important;
-    height: 100% !important;
+  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background-color: #f6f8f9;
 }
 
-.topNav {
-    background: #d8e189;
-    width: 100%;
-    height: 70px;
-    display: flex;
-    justify-content: space-between;
+/* LAYOUTS STYLE */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 500px;
+  width: 90%;
+  height: 100%;
+}
+
+.headerContainer {
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  width: 100%;
+  height: 200px;
+  margin-top: 55px !important;
+}
+
+.logoContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.editText {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-weight: bold;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.logoContainer:hover .overlay {
+  opacity: 1;
+}
+
+.logoContainer:hover .editText {
+  opacity: 1;
 }
 
 .logo {
-    font-size: 20px;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 0px 2px 2px 0px rgba(0, 0, 0);
-    padding: 23px 15px !important;
+  margin: 23px !important;
+  border-radius: 50%;
+  border: 2px solid white;
 }
 
-.userIcon {
-    height: 50px;
-    width: 50px;
-    border-radius: 50px;
-    border: 1px solid var(--black-400, #333);
-    margin-top: 8px !important;
+.campName {
+  align-self: center;
 }
 
-.userDetails {
-    margin-top: 8px !important;
-    margin-left: 10px !important;
+.campName {
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.profileButton {
-    width: 200px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 2px !important;
-    margin-right: 40px !important;
+.stateText {
+  font-size: 24px;
+  font-weight: 300;
 }
 
-.sideNav {
-    border-right: 1px solid var(--cascade-300, #c2cfd6);
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between;
-    width: 45px;
+.cardTitle {
+  font-size: 20px;
+  font-weight: 700;
 }
 
-.sideNavButtons {
-    margin-top: 20px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100%;
+.addressAndContactInfoContainer {
+  width: 30%;
+  margin-top: 30px !important;
+  padding: 30px 25px !important;
 }
 
-.buttonActive {
-    margin-top: 20px !important;
-    padding: 10px 0 !important;
-    background-color: #81ace4;
-    width: 100%;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
+.availabilityContainer {
+  width: 30%;
+  margin-top: 30px !important;
+  padding: 30px 25px !important;
 }
 
-.button {
-    margin-top: 20px !important;
-    padding: 10px 0 !important;
-    width: 100%;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
+.general {
+  width: 35%;
+  margin-top: 30px !important;
+  padding: 30px 25px !important;
 }
 
-.settingsButton {
-    margin-bottom: 20px !important;
-    align-items: center !important;
-    align-self: center !important;
+.inputStyle {
+  margin-top: 10px !important;
 }
 
-.flexCol {
-    display: flex;
-    flex-direction: column;
+.scheduleContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30px !important;
+  padding: 30px 25px !important;
 }
 
-.flexRow {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+.scheduleCard {
+  min-width: 200px;
+  max-width: 24%;
+  padding: 10px !important;
+  margin-top: 40px !important;
+  position: relative;
 }
 
-.userdetails {
-    width: 850px;
-    height: 650px;
-    background: #ffffff;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 0px 0px 15px 15px;
+.scheduleForm {
+  border: 1px solid #d8e189;
+  padding: 20px !important;
 }
 
-.userdetails .profileImage {
-    width: 100%;
-    height: 187px;
-    background: linear-gradient(270deg, #a0616a 0%, #ffb6b6 100%);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 15px 15px 0px 0px;
-    position: relative;
+.scheduleCardTitle {
+  position: absolute;
+  top: -23.5px !important;
+  border: 1px solid #d8e189;
+  border-bottom: 1px solid #fff !important;
+  padding: 5px 10px !important;
 }
 
-.profileImage img {
-    position: absolute;
-    box-sizing: border-box;
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    top: 50%;
-    left: 7%;
-    border: 5px solid #ffffff;
-    border-radius: 50%;
+.scheduleCheckboxContainer {
+  margin-top: 20px !important;
+  font-size: 12px;
 }
 
-.details {
-    margin: 100px 0 0 65px;
+.buttonSpan {
+  font-size: 12px;
+  color: #3c7fd6;
+  font-weight: 400;
+  line-height: -1;
 }
 
-.details h3 {
-    font-size: 32px;
-    font-weight: 600;
+.spanClosed {
+  margin-top: 2.5px !important;
+  margin-left: 20px !important;
 }
 
-.details address {
-    margin: 7px 0 7px 0;
+.campNameHead {
+  display: flex;
+  align-items: center;
+  gap: 25px;
 }
 
-.dot {
-    background: #f6f8f9;
-    border: 2px solid #111827;
+.campNameHead img {
+  width: 32.25px;
+  height: 25px;
 }
 
-.select {
-    margin-top: 40px;
-    width: 170px;
-    padding: 8px 12px;
-    background: #f6f8f9;
-    border: none;
-    font-size: 14px;
-    font-weight: 600;
-    outline: none;
+.userDocs {
+  width: 100%;
+  height: 406px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  margin-top: 30px;
+  padding: 30px 25px;
 }
 
-.editdot {
-    position: absolute;
-    right: 25px;
-    bottom: -60px;
+.userDocs h1 {
+  font-size: 20px;
 }
 
-.campteams {
-    width: 330px;
-    height: 650px;
-    background: #ffffff;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 15px;
-    padding: 18px;
-    position: relative;
+.docsContainer {
+  display: flex;
+  margin: 20px 0;
+  flex-direction: column;
+  gap: 25px;
 }
 
-.campteams div {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.uploadedDocs {
+  border: 1px solid #999999;
+  border-radius: 5px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #000000;
+  padding: 10px 45px;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
-.viewMore {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    border-radius: 0px 0px 15px 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    text-decoration: underline;
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.campteams h3 {
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.campgroup {
-    margin-top: 25px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.campdetails {
-    width: 100%;
-    gap: 2px;
-    margin: 12px 0;
-}
-
-.campdetails h3 {
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.campdetails img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-
-.campdetails .userteam {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.userteam span {
-    font-weight: 400;
-    font-size: 13px;
-}
-
-.docContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.docs {
-    width: 87%;
-    height: 300px;
-    background: #ffffff;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 15px;
-    margin-top: 30px;
-    padding: 2%;
-}
-
-.uploaded {
-    display: grid;
-    grid-template-columns: repeat(2, 0fr);
-    grid-gap: 15px;
-    margin-top: 30px;
-}
-
-.uploadedDoc {
-    display: flex;
-    border: 1px solid black;
-    border-radius: 5px;
-    align-items: center;
-    padding: 8px 20px;
-    justify-content: space-between;
-    width: 300px;
-}
-
-.uploadedDoc img {
-    width: 30px;
-    height: 30px;
+.uploadedDocs img {
+  width: 10px;
+  height: 15px;
+  position: absolute;
+  right: 10px;
 }
