@@ -226,7 +226,6 @@ const GroupLeads = () => {
             {screenWidth >= 1700 ? (
               <>
                 {" "}
-                <Divider className={styles.dividerVert} />
                 <div className={styles.nextCalendarContainer}>
                   <div className={styles.progressbarsContainer}>
                     <div className="row">
@@ -286,7 +285,6 @@ const GroupLeads = () => {
                     RetreatCenter={RetreatCenter}
                   />
                 </div>
-                <Divider className={styles.dividerVert} />
               </>
             ) : (
               ""
