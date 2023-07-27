@@ -3,6 +3,7 @@ import React from 'react'
 import styles from "./RadioButton.module.css"
 type Props = {
     name: string,
+    htmlFor?: string;
     label: string;
     value: boolean;
     onChange: ArgFunction;
@@ -13,6 +14,7 @@ const RadioButton = (props: Props) => {
     const {
         name,
         label,
+        htmlFor = name,
         value,
         onChange,
         containerStyle,

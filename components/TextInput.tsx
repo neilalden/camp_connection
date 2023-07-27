@@ -4,6 +4,7 @@ import styles from "./TextInput.module.css"
 import { textInputSetState } from '@/utils/functions';
 type Props = {
     type?: React.HTMLInputTypeAttribute;
+    htmlFor?: string;
     label?: string;
     placeholder?: string;
     value: string | number;
@@ -15,6 +16,7 @@ const TextInput = (props: Props) => {
     const {
         type = "text",
         label,
+        htmlFor = label,
         placeholder,
         value,
         setValue,
@@ -23,11 +25,11 @@ const TextInput = (props: Props) => {
     } = props
     return (
         <div style={containerStyle} className={containerClassName}>
-            <label htmlFor={label}>{label}</label><br />
+            <label htmlFor={htmlFor}>{label}</label><br />
             <input
                 type={type}
-                name={label}
-                id={label}
+                name={htmlFor}
+                id={htmlFor}
                 value={value}
                 className={styles.input}
                 placeholder={placeholder}

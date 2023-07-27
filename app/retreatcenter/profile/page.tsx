@@ -178,13 +178,14 @@ const SchedulePicker = ({ season }: { season: string }) => {
                 {!isOpenAnytime ?
                     <div className={styles.scheduleCheckboxContainer}>
                         {
-                            weekSchedule.map(sched => {
+                            weekSchedule.map((sched, i) => {
                                 if (sched.value) {
                                     return (
-                                        <div className="row-between">
+                                        <div key={i} className="row-between">
                                             <CheckBox
                                                 label={sched.label}
                                                 value={sched.value}
+                                                htmlFor={`${season}---${sched.label}`}
                                                 onChange={() => onChange(sched)}
                                                 containerStyle={{ width: "65px" }}
                                             />
@@ -208,10 +209,11 @@ const SchedulePicker = ({ season }: { season: string }) => {
                                     )
                                 }
                                 return (
-                                    <div className="row">
+                                    <div key={i} className="row">
                                         <CheckBox
                                             label={sched.label}
                                             value={sched.value}
+                                            htmlFor={`${season}---${sched.label}`}
                                             onChange={() => onChange(sched)}
                                             containerStyle={{ width: "65px" }} />
                                         <span className={styles.spanClosed}>Closed</span>
@@ -227,4 +229,4 @@ const SchedulePicker = ({ season }: { season: string }) => {
     )
 }
 
-export default React.memo(Userprofile);
+export default (Userprofile);
