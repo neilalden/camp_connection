@@ -78,36 +78,38 @@ const SideNavigation = () => {
     if (!user) return null;
     return (
         <nav className={styles.sideNav}>
-            <div className={styles.sideNavButtons}>
-                {sideNavs.map((nav, i) => {
-                    return (
-                        <button
-                            key={i}
-                            className={currentPage == nav.id ? styles.buttonActive : styles.button}
-                            onClick={() => {
-                                if (nav.category !== user.userCategory) clearRouteAndReroute(`/${nav.category}/${nav.id}`)
-                                else router.push(`/${user.userCategory}/${nav.id}`)
-                            }}
-                        >
-                            <Image src={nav.img}
-                                height={20}
-                                style={{ objectFit: "cover" }}
-                                alt={`${nav.name} icon`}
-                            /><p className={currentPage === nav.id ? styles.navTextActive : styles.navText}>{nav.name}</p>
-                        </button>
-                    )
-                })}
+            <div className={styles.navButtonsContainer}>
+                <div className={styles.sideNavButtons}>
+                    {sideNavs.map((nav, i) => {
+                        return (
+                            <button
+                                key={i}
+                                className={currentPage == nav.id ? styles.buttonActive : styles.button}
+                                onClick={() => {
+                                    if (nav.category !== user.userCategory) clearRouteAndReroute(`/${nav.category}/${nav.id}`)
+                                    else router.push(`/${user.userCategory}/${nav.id}`)
+                                }}
+                            >
+                                <Image src={nav.img}
+                                    height={20}
+                                    style={{ objectFit: "cover" }}
+                                    alt={`${nav.name} icon`}
+                                /><p className={currentPage === nav.id ? styles.navTextActive : styles.navText}>{nav.name}</p>
+                            </button>
+                        )
+                    })}
+                </div>
+                <button
+                    onClick={() => router.push(`/${"retreatcenter"}/profile`)}
+                    className={currentPage == "profile" ? styles.settingsButtonActive : styles.settingsButton}>
+                    <Image src={currentPage == "profile" ? Images.ic_settings_white : Images.ic_settings}
+                        height={20}
+                        style={{ objectFit: "cover" }}
+                        alt={"Settings icon"}
+                    />
+                    <p className={currentPage === "profile" ? styles.navTextActive : styles.navText}>{"Settings"}</p>
+                </button>
             </div>
-            <button
-                onClick={() => router.push(`/${"retreatcenter"}/profile`)}
-                className={currentPage == "profile" ? styles.settingsButtonActive : styles.settingsButton}>
-                <Image src={currentPage == "profile" ? Images.ic_settings_white : Images.ic_settings}
-                    height={20}
-                    style={{ objectFit: "cover" }}
-                    alt={"Settings icon"}
-                />
-                <p className={currentPage === "profile" ? styles.navTextActive : styles.navText}>{"Settings"}</p>
-            </button>
         </nav>
     )
 }

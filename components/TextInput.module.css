@@ -2,3 +2,10 @@
     width: 100% !important;
     font-weight: normal !important;
 }
+
+.disabledInput {
+    width: 100% !important;
+    font-weight: normal !important;
+    background: #E6E6E6;
+    cursor: not-allowed
+}

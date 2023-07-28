@@ -80,6 +80,19 @@ export type AppointmentType = {
 };
 
 export type FileType = {
-  url: string;
-  name: string;
-};
+  url: string,
+  name: string,
+}
+export type ScheduleType = {
+  label: string;
+  value: boolean;
+  editMode: boolean;
+  from: {
+    hour: number;
+    ampm: "am" | "pm"
+  };
+  to: {
+    hour: number;
+    ampm: "am" | "pm"
+  }
+}

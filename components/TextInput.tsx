@@ -6,6 +6,7 @@ type Props = {
     type?: React.HTMLInputTypeAttribute;
     htmlFor?: string;
     label?: string;
+    disabled?: boolean;
     placeholder?: string;
     value: string | number;
     setValue: SetStateType<string> | ArgFunction;
@@ -16,6 +17,7 @@ const TextInput = (props: Props) => {
     const {
         type = "text",
         label,
+        disabled = false,
         htmlFor = label,
         placeholder,
         value,
@@ -25,13 +27,14 @@ const TextInput = (props: Props) => {
     } = props
     return (
         <div style={containerStyle} className={containerClassName}>
-            <label htmlFor={htmlFor}>{label}</label><br />
+            {label ? <><label htmlFor={htmlFor}>{label}</label><br /></> : null}
             <input
                 type={type}
                 name={htmlFor}
                 id={htmlFor}
                 value={value}
-                className={styles.input}
+                disabled={disabled}
+                className={disabled ? styles.disabledInput : styles.input}
                 placeholder={placeholder}
                 onChange={(e) => textInputSetState(e, setValue)}
             />
