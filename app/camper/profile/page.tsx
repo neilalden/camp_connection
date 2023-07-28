@@ -8,7 +8,7 @@ import {
   ArrayRCSD,
   RetreatCenterType,
   UsersSampleData,
-  camperUserData,
+  RetreatCenterUserData,
 } from "@/utils/sampleData";
 import { useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
@@ -27,6 +27,7 @@ import CheckBox from "@/components/CheckBox";
 import FileUpload from "@/components/FileUpload";
 import FileButton from "@/components/FileButton";
 import RadioButton from "@/components/RadioButton";
+import DateInput from "@/components/DateInput";
 const options = StatesInUSA.map((state) => ({ label: state, value: state }));
 const Userprofile = () => {
   // const retreatcenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)[0]
@@ -42,14 +43,13 @@ const Userprofile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [birthDate, setBirthDate] = useState(new Date());
   const [representative, setRepresentative] = useState<UsersOptionType>();
   const [stateOptions] = useState<Array<OptionType>>(
     Object.keys(statesWithCities).map((s) => ({ label: s, value: s }))
   );
   // @ts-ignore
-  const cityOptions: Array<OptionType> = Array.isArray(statesWithCities[state])
-    ? statesWithCities[state].map((c) => ({ label: c, value: c }))
+  const cityOptions: Array<OptionType> = Array.isArray(statesWithCities[state]) ? statesWithCities[state].map((c) => ({ label: c, value: c }))
     : [];
   const timeZoneOptions: Array<OptionType> = TimeZones.map((tz) => ({
     label: tz,
@@ -78,10 +78,10 @@ const Userprofile = () => {
         </div>
         <div className={styles.campName}>
           <div className={styles.campNameHead}>
-            <h3>{camperUserData[0].camperTeam} Team</h3>
+            <h3>{RetreatCenterUserData.userType} Team</h3>
             <Image src={Images.ic_user_group} alt="groupdropdown" />
           </div>
-          <p className={styles.stateText}>{camperUserData[0].userType}</p>
+          <p className={styles.stateText}>{RetreatCenterUserData.position}</p>
         </div>
         <div className={styles.videoIntro}></div>
       </div>
@@ -114,9 +114,8 @@ const Userprofile = () => {
               setValue={setMiddleName}
             />
 
-            <TextInput
+            <DateInput
               label="Birthdate"
-              type="date"
               value={birthDate}
               setValue={setBirthDate}
               containerClassName={styles.inputStyle}
@@ -265,7 +264,7 @@ const SchedulePicker = ({ season }: { season: string }) => {
       });
     });
   };
-  const setHour = (value: string) => {};
+  const setHour = (value: string) => { };
   return (
     <div className={styles.scheduleCard}>
       <h3 className={styles.scheduleCardTitle}>{season}</h3>
@@ -311,9 +310,8 @@ const SchedulePicker = ({ season }: { season: string }) => {
                       </div>
                     ) : (
                       <p className={styles.scheduleString}>
-                        {`${sched.from.hour + sched.from.ampm} - ${
-                          sched.to.hour + sched.to.ampm
-                        }`}
+                        {`${sched.from.hour + sched.from.ampm} - ${sched.to.hour + sched.to.ampm
+                          }`}
                       </p>
                     )}
                     <button

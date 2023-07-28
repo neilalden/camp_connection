@@ -22,18 +22,18 @@ export type User = {
 };
 export interface CamperUserType extends User {
   userType?:
-    | "Group Leader"
-    | "Group Member"
-    | "Camper Gaurdian/Parent"
-    | "Individual Camper";
+  | "Group Leader"
+  | "Group Member"
+  | "Camper Gaurdian/Parent"
+  | "Individual Camper";
   groupName?: string;
-  camperTeam?: string;
   checkInDate?: Date;
   checkOutDate?: Date;
   checkInDays?: Number;
 }
 export interface RetreatCenterUserType extends User {
   userType?: "Admin" | "Hospitality" | "Sales" | "Food" | "Group Coordinator";
+  position?: "Leader" | "Member" | "Assistant"
 }
 export interface CampConnectionTeamUserType extends User {
   userType?: "Admin" | "Sales" | "Support";

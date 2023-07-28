@@ -3,15 +3,36 @@
 .main {
   height: 100% !important;
   width: 100% !important;
-  display: flex !important;
+  display: flex;
   flex-direction: column;
-  flex-grow: 1 !important;
+}
+
+.content {
+  display: flex !important;
+  flex-direction: row !important;
+  height: 100% !important;
 }
 
 .mainContent {
   width: 100% !important;
-  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background-color: #f6f8f9;
 }
+
+/* LAYOUTS STYLE */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 500px;
+  width: 100%;
+  height: 100%;
+}
+
 
 .sideNav {
   border-right: 1px solid var(--cascade-300, #c2cfd6);
@@ -45,10 +66,6 @@
   margin-left: 50px !important;
   border-bottom: 2px solid var(--dodger-blue-500, #c2cfd6);
   align-self: flex-end !important;
-}
-
-.container {
-  height: 100% !important;
 }
 
 .progressbarContainer {
