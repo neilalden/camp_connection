@@ -28,6 +28,10 @@ import FileUpload from "@/components/FileUpload";
 import FileButton from "@/components/FileButton";
 import RadioButton from "@/components/RadioButton";
 import DateInput from "@/components/DateInput";
+import { sortArrayOfObjects } from "@/utils/functions";
+import ZipcodeToTimezone from "zipcode-to-timezone";
+import { usaStatesFull } from "typed-usa-states";
+
 const options = StatesInUSA.map((state) => ({ label: state, value: state }));
 const Userprofile = () => {
   // const retreatcenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)[0]
@@ -62,6 +66,25 @@ const Userprofile = () => {
     value: user.id,
     user: user,
   }));
+
+  useEffect(() => {
+    if (!zipcode) {
+      setState("");
+      setCity("");
+      setTimezone("");
+      return;
+    }
+    setTimezone(String(ZipcodeToTimezone.lookup(zipcode)));
+    const stateFull = usaStatesFull.find(
+      (state) =>
+        state.zipCodes &&
+        state.zipCodes.some((zcItem) =>
+          zcItem.some((zc) => String(zc) === zipcode)
+        )
+    );
+    if (!stateFull) return;
+    setState(stateFull.name);
+  }, [zipcode]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [editMode, setEditMode] = useState(false);
@@ -117,7 +140,7 @@ const Userprofile = () => {
         <div
           className={["card", styles.addressAndContactInfoContainer].join(" ")}
         >
-          <h4 className={styles.cardTitle}>Name & Birthdate</h4>
+          <h4 className={styles.cardTitle}>Name</h4>
           <form>
             <TextInput
               type="text"
@@ -167,19 +190,19 @@ const Userprofile = () => {
               setValue={setEmail}
               containerClassName={styles.inputStyle}
             />
-            <TextInput
+            {/* <TextInput
               label="Website"
               type="url"
               value={website}
               setValue={setWebsite}
               containerClassName={styles.inputStyle}
-            />
-            <DropDown
-              htmlFor="Time Zone"
-              options={timeZoneOptions}
+            /> */}
+            <TextInput
+              label="Timezone"
               value={timezone}
               setValue={setTimezone}
               containerClassName={styles.inputStyle}
+              disabled
             />
           </form>
         </div>
@@ -189,16 +212,22 @@ const Userprofile = () => {
         >
           <h4 className={styles.cardTitle}>Address</h4>
           <form>
-            <DropDown
-              htmlFor="State"
-              options={stateOptions}
+            <TextInput
+              label="Zipcode"
+              value={zipcode}
+              setValue={setZipcode}
+              containerClassName={styles.inputStyle}
+            />
+            <TextInput
+              label="State"
               value={state}
               setValue={setState}
               containerClassName={styles.inputStyle}
+              disabled
             />
             <DropDown
               htmlFor="City"
-              options={cityOptions}
+              options={sortArrayOfObjects(cityOptions, "label")}
               value={city}
               setValue={setCity}
               containerClassName={styles.inputStyle}
@@ -209,17 +238,11 @@ const Userprofile = () => {
               setValue={setStreet}
               containerClassName={styles.inputStyle}
             />
-            <TextInput
-              label="Zipcode"
-              value={zipcode}
-              setValue={setZipcode}
-              containerClassName={styles.inputStyle}
-            />
           </form>
         </div>
       </div>
 
-      <div className={["card", styles.scheduleContainer].join(" ")}>
+      {/* <div className={["card", styles.scheduleContainer].join(" ")}>
         <h4 className={styles.cardTitle}>Business Schedule</h4>
         <div className="row-between">
           <SchedulePicker season={"Winter"} />
@@ -227,7 +250,7 @@ const Userprofile = () => {
           <SchedulePicker season={"Summer"} />
           <SchedulePicker season={"Fall"} />
         </div>
-      </div>
+      </div> */}
 
       <div className={styles.userDocs}>
         <h1>Uploaded Docs</h1>
