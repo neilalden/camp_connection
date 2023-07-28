@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Images from "@/common/images";
@@ -44,12 +44,14 @@ const Userprofile = () => {
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [birthDate, setBirthDate] = useState(new Date());
+
   const [representative, setRepresentative] = useState<UsersOptionType>();
   const [stateOptions] = useState<Array<OptionType>>(
     Object.keys(statesWithCities).map((s) => ({ label: s, value: s }))
   );
   // @ts-ignore
-  const cityOptions: Array<OptionType> = Array.isArray(statesWithCities[state]) ? statesWithCities[state].map((c) => ({ label: c, value: c }))
+  const cityOptions: Array<OptionType> = Array.isArray(statesWithCities[state])
+    ? statesWithCities[state].map((c) => ({ label: c, value: c }))
     : [];
   const timeZoneOptions: Array<OptionType> = TimeZones.map((tz) => ({
     label: tz,
@@ -61,20 +63,46 @@ const Userprofile = () => {
     user: user,
   }));
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [editMode, setEditMode] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  const handleEditClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+      const imageUrl = URL.createObjectURL(selectedFile);
+      setImageFile(selectedFile);
+      setImageUrl(imageUrl); // Set the new image URL for display
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={["card", styles.headerContainer].join(" ")}>
         <div className={styles.logoContainer}>
           <Image
+            src={imageUrl || Images.ic_user_profile} // Use imageUrl or the default image
             alt="Company Logo"
-            src={Images.ic_user_profile}
             className={styles.logo}
             height={150}
             width={150}
             style={{ objectFit: "contain" }}
           />
-          <div className={styles.overlay}></div>
+          <div className={styles.overlay} onClick={handleEditClick}></div>
           <p className={styles.editText}>Edit</p>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            ref={fileInputRef}
+            style={{ display: "none" }}
+          />
         </div>
         <div className={styles.campName}>
           <div className={styles.campNameHead}>
@@ -264,7 +292,7 @@ const SchedulePicker = ({ season }: { season: string }) => {
       });
     });
   };
-  const setHour = (value: string) => { };
+  const setHour = (value: string) => {};
   return (
     <div className={styles.scheduleCard}>
       <h3 className={styles.scheduleCardTitle}>{season}</h3>
@@ -310,8 +338,9 @@ const SchedulePicker = ({ season }: { season: string }) => {
                       </div>
                     ) : (
                       <p className={styles.scheduleString}>
-                        {`${sched.from.hour + sched.from.ampm} - ${sched.to.hour + sched.to.ampm
-                          }`}
+                        {`${sched.from.hour + sched.from.ampm} - ${
+                          sched.to.hour + sched.to.ampm
+                        }`}
                       </p>
                     )}
                     <button
