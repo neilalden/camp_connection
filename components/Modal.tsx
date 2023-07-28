@@ -17,8 +17,8 @@ const Modal = (props: Props) => {
         appointment,
         setIsVisible = () => { }
     } = props;
-    if (!appointment) return;
-    if (Array.isArray(appointment)) return;
+    if (!appointment) return null;
+    if (Array.isArray(appointment)) return null;
     const [activeTab, setActiveTab] = useState(Tabs[0])
     const currentData = Array.isArray(appointment) ? appointment[0] : appointment
     const color = currentData?.color

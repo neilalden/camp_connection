@@ -6,7 +6,6 @@ export type RetreatCenterStateType = {
     loading: boolean;
     error?: string;
     retreatCenters: Array<RetreatCenterType>
-    requestToken?: string;
 }
 export type AddAppointmentPayload = {
     retreatCenterId: RetreatCenterType["id"];
@@ -16,7 +15,6 @@ const initialState: RetreatCenterStateType = {
     loading: false,
     error: undefined,
     retreatCenters: ArrayRCSD,
-    requestToken: undefined
 }
 
 export const RetreatCentersSlice = createSlice({

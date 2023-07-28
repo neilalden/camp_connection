@@ -67,13 +67,17 @@ export const dateIsScheduled = ({ date, appointments }: { date?: Date; appointme
     return result.length === 0 ? undefined : result.length > 1 ? result : result[0]
 }
 
-export const sortArrayOfObjects = (array: Array<any>, num: number, property: string, order = "desc") => {
+export const sortArrayOfObjects = (array: Array<any>, property: string) => {
     return [...array].sort((a: object, b: object) => {
-        return order === "desc"
-            // @ts-ignore
-            ? Math.abs(num - a[Number(property)]) - Math.abs(num - b[Number(property)])
-            // @ts-ignore
-            : Math.abs(num - b[Number(property)]) - Math.abs(num - a[Number(property)])
+        // @ts-ignore
+        if (a[property] < b[property]) {
+            return -1;
+        }
+        // @ts-ignore
+        if (a[property] > b[property]) {
+            return 1;
+        }
+        return 0;
     });
 };
 

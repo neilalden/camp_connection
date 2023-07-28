@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, configureStore, createStore } from "@reduxjs/toolkit";
 // import { default as Appointments } from './slice/doesnotmoakesend-appointments';
 import { default as Leads } from './slice/leads';
+import { default as RetreatCenter } from './slice/retreatcenter';
 import { default as RetreatCenters } from './slice/retreatcenters';
 import { default as User } from './slice/user';
 import { persistStore, persistReducer } from 'redux-persist'
@@ -14,6 +15,7 @@ const persistConfig = {
 const reducers = combineReducers({
     // Appointments,
     Leads,
+    RetreatCenter,
     RetreatCenters,
     User,
 });
