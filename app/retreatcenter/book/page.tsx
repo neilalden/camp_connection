@@ -6,7 +6,7 @@ import { CSSProperties, useEffect, useRef, useState } from "react"
 import SimpleCalendar from "@/components/SimpleCalendar"
 import { RetreatCenterType } from "@/utils/sampleData"
 import { AppointmentType } from "@/types"
-import { ObjectToArray, onDragOver, sortArrayOfObjects, trunc } from "@/utils/functions"
+import { ObjectToArray, onDragOver, trunc } from "@/utils/functions"
 import Image from "next/image"
 import Images from "@/common/images"
 import { useSelector } from "react-redux"
@@ -30,13 +30,13 @@ const BookPage = () => {
         event.dataTransfer.setData("widgetType", widgetType);
         setCurrentAppointment(data)
         if (data && data.zipCode) {
-            let copy = rerenderingRetreatCenters.map(rc => ({ ...rc, distance: Math.abs(rc.zipCode - Number(data.zipCode)) }))
+            let copy = rerenderingRetreatCenters.map(rc => ({ ...rc, distance: Math.abs(Number(rc.zipCode) - Number(data.zipCode)) }))
             setRerenderingRetreatCenters(copy.sort((a, b) => {
                 if (!data.zipCode) return 0
                 if (!a.capacity || !b.capacity) return 0
                 if (data.groupSize && data.groupSize > b.capacity) return -1
-                if (Math.abs(data.zipCode - a.zipCode) > Math.abs(data.zipCode - b.zipCode)) return 1;
-                if (Math.abs(data.zipCode - a.zipCode) < Math.abs(data.zipCode - b.zipCode)) return -1;
+                if (Math.abs(data.zipCode - Number(a.zipCode)) > Math.abs(data.zipCode - Number(b.zipCode))) return 1;
+                if (Math.abs(data.zipCode - Number(a.zipCode)) < Math.abs(data.zipCode - Number(b.zipCode))) return -1;
                 return 0
             }))
         }

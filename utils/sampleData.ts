@@ -45,11 +45,12 @@ export type FacilitiesType = {
 export type RetreatCenterType = {
   id: string;
   name: string;
-  zipCode: number;
+  zipCode: string;
   image?: string;
   capacity?: number;
   timezone?: string;
   state?: string;
+  city?: string;
   meals?: Array<MealType>;
 } & FacilitiesType;
 export const FacilitiesSampleData: FacilitiesType = {
@@ -193,7 +194,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Eatern Point Retreat House",
     state: "California",
     image: Images["ic_logo"],
-    zipCode: 2143,
+    zipCode: "2143",
     capacity: 30,
     housing: {
       buildings: [
@@ -325,7 +326,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
   {
     id: "Art of Living Retreat Center",
     name: "Art of Living Retreat Center",
-    zipCode: 5678,
+    zipCode: "5678",
     capacity: 50,
     image: Images["ic_logo"],
     housing: {
@@ -411,7 +412,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
   {
     id: "Marianist Family Retreat Center",
     name: "Marianist Family Retreat Center",
-    zipCode: 8234,
+    zipCode: "8234",
     capacity: 100,
     image: Images["ic_logo"],
     housing: {
@@ -497,7 +498,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
   {
     id: "Isabella Freedman Jewish Retreat Center",
     name: "Isabella Freedman Jewish Retreat Center",
-    zipCode: 7654,
+    zipCode: "7654",
     capacity: 20,
     image: Images["ic_logo"],
     housing: {
@@ -583,7 +584,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
   {
     id: "Saint John’s Abbey",
     name: "Saint John’s Abbey",
-    zipCode: 5843,
+    zipCode: "5843",
     capacity: 170,
     image: Images["ic_logo"],
     housing: {
@@ -669,7 +670,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
   {
     id: "Abbey of Gethsemani",
     name: "Abbey of Gethsemani",
-    zipCode: 2134,
+    zipCode: "2134",
     capacity: 70,
     image: Images["ic_logo"],
     housing: {
