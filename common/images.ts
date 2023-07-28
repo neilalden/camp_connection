@@ -38,6 +38,14 @@ const Images = {
   ic_upload: require("../assets/ic_upload.png"),
   ic_upload_white: require("../assets/ic_upload_white.png"),
   ic_clip: require("../assets/ic_clip.png"),
+  ic_setup: require("../assets/ic_setup.png"),
+  ic_staff_id: require("../assets/ic_staff_id.png"),
+  ic_camp: require("../assets/ic_camp.png"),
+  ic_setup_white: require("../assets/ic_setup_white.png"),
+  ic_staff_id_white: require("../assets/ic_staff_id_white.png"),
+  ic_camp_white: require("../assets/ic_camp_white.png"),
+  ic_back: require("../assets/ic_back.png"),
+  ic_back_white: require("../assets/ic_back_white.png"),
 
   //user
   ic_user_profile: require("../assets/ic_user_profile.png"),

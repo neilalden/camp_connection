@@ -177,9 +177,8 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                     {appointment && currentDate && cond ?
                                         <div
                                             data-content={!Array.isArray(appointment) ?
-                                                `${appointment.groupSize} Attendees` :
-                                                appointment.reduce((accu, curr) => accu += curr.groupSize ?? 0, 0) + " Attendees"}
-                                            data-background={!Array.isArray(appointment) && appointment.color}
+                                                `${appointment.groupName}` :
+                                                appointment.map((app) => app.groupName).toString().replaceAll(",", ", \n")}
                                             style={
                                                 appointmentBeingDragged ?
                                                     {

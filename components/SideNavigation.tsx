@@ -7,13 +7,14 @@ import { usePathname } from "next/navigation"
 import React from 'react'
 import { useSelector } from 'react-redux';
 import styles from "./Nav.module.css"
+type SideNavType = { id: string; name: string; img: string; category: string }
 const SideNavigation = () => {
     const pathname = usePathname();
     const paths = pathname.split("/")
     const currentCatergory = paths[1]
     const currentPage = paths.at(-1);
 
-    const sideNavs: Array<{ id: string; name: string; img: string; category: string }> = [
+    const sideNavs: Array<SideNavType> = [
         {
             category: "campconnection",
             id: "leads",
@@ -69,9 +70,30 @@ const SideNavigation = () => {
             img: currentPage === "book" ? Images["ic_book_white"] : Images["ic_book"]
         },
     ]
+    const settingsNav: Array<SideNavType> = [
+        {
+            category: "retreatcenter",
+            id: "profile",
+            name: "Camp Profile",
+            img: currentPage === "profile" ? Images["ic_camp_white"] : Images["ic_camp"]
+        },
+        {
+            category: "retreatcenter",
+            id: "userprofile",
+            name: "User Profile",
+            img: currentPage === "userprofile" ? Images["ic_staff_id_white"] : Images["ic_staff_id"]
+        },
+        {
+            category: "retreatcenter",
+            id: "setupcamp",
+            name: "Setup Camp",
+            img: Images["ic_setup"]
+        },
+    ]
     const router = useRouter()
     const user = useSelector((state: RootState) => state.User.user)
-
+    const isInSettings = currentCatergory === "settings"
+    const toRender = isInSettings ? settingsNav : sideNavs
     const clearRouteAndReroute = (newRoute: string) => {
         router.replace(newRoute);
     };
@@ -80,14 +102,14 @@ const SideNavigation = () => {
         <nav className={styles.sideNav}>
             <div className={styles.navButtonsContainer}>
                 <div className={styles.sideNavButtons}>
-                    {sideNavs.map((nav, i) => {
+                    {toRender.map((nav, i) => {
                         return (
                             <button
                                 key={i}
                                 className={currentPage == nav.id ? styles.buttonActive : styles.button}
                                 onClick={() => {
                                     if (nav.category !== user.userCategory) clearRouteAndReroute(`/${nav.category}/${nav.id}`)
-                                    else router.push(`/${user.userCategory}/${nav.id}`)
+                                    else router.push(isInSettings ? `/settings/${user.userCategory}/${nav.id}` : `/${user.userCategory}/${nav.id}`)
                                 }}
                             >
                                 <Image src={nav.img}
@@ -100,14 +122,14 @@ const SideNavigation = () => {
                     })}
                 </div>
                 <button
-                    onClick={() => router.push(`/${"retreatcenter"}/profile`)}
-                    className={currentPage == "profile" ? styles.settingsButtonActive : styles.settingsButton}>
-                    <Image src={currentPage == "profile" ? Images.ic_settings_white : Images.ic_settings}
+                    onClick={() => router.push(isInSettings ? `/${user.userCategory}/${user.userCategory === "campconnectionteam" ? "leads" : "groupleads"}` : `/settings/retreatcenter/profile`)}
+                    className={styles.settingsButton}>
+                    <Image src={isInSettings ? Images.ic_back : Images.ic_settings}
                         height={20}
                         style={{ objectFit: "cover" }}
                         alt={"Settings icon"}
                     />
-                    <p className={currentPage === "profile" ? styles.navTextActive : styles.navText}>{"Settings"}</p>
+                    <p className={styles.navText}>{isInSettings ? "Go Back" : "Settings"}</p>
                 </button>
             </div>
         </nav>
