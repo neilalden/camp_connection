@@ -87,12 +87,6 @@ export type ScheduleType = {
   label: string;
   value: boolean;
   editMode: boolean;
-  from: {
-    hour: number;
-    ampm: "am" | "pm"
-  };
-  to: {
-    hour: number;
-    ampm: "am" | "pm"
-  }
+  from: string;
+  to: string
 }
