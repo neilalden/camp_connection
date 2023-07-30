@@ -1,7 +1,6 @@
 import { ArgFunction, FileType, SetStateType } from '@/types';
 import React from 'react'
 import styles from "./FileUpload.module.css"
-import { textInputSetState } from '@/utils/functions';
 type Props = {
     label?: string;
     placeholder?: string;
@@ -9,6 +8,7 @@ type Props = {
     setValue: SetStateType<File> | ArgFunction;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
+    inputClassName?: string
 }
 const FileUpload = (props: Props) => {
     const {
@@ -17,7 +17,8 @@ const FileUpload = (props: Props) => {
         value,
         setValue,
         containerStyle,
-        containerClassName
+        containerClassName,
+        inputClassName
     } = props
     return (
         <div style={containerStyle} className={containerClassName}>
@@ -26,7 +27,7 @@ const FileUpload = (props: Props) => {
                 type="file"
                 name={label}
                 id={label}
-                className={styles.input}
+                className={[styles.input, inputClassName].join(" ")}
                 placeholder={placeholder}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     const { files } = event.target;

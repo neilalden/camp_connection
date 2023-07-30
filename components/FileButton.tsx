@@ -1,7 +1,6 @@
 import { ArgFunction, SetStateType } from '@/types';
 import React from 'react'
 import styles from "./FileButton.module.css"
-import { textInputSetState } from '@/utils/functions';
 import Image from 'next/image';
 import Images from '@/common/images';
 type Props = {

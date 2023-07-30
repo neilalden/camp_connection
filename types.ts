@@ -44,17 +44,54 @@ export type FilterType = {
   type: "Housing" | "Meeting room" | "Activity" | "Group";
   // [key: string]: any
 };
+export type MeetingRoomType = {
+  id: string;
+  name: string;
+  capacity: number;
+
+}
 export type RoomType = {
   id: string;
   name: string;
   buildingId?: string;
   level?: string;
-  single?: number;
-  double?: number;
-  queen?: number;
-  king?: number;
-  bunk?: string;
+  beds?: Array<BedType>
 };
+export type EquipmentType = {
+  id: string;
+  name: string;
+}
+export type BedType =
+  SingleBedType
+  | DoubleBedType
+  | QueenBedType
+  | KingBedType
+  | BunkBedType
+  | CustomBedType
+export type SingleBedType = {
+  name: "Single",
+  capacity: number
+}
+export type DoubleBedType = {
+  name: "Double",
+  capacity: number
+}
+export type QueenBedType = {
+  name: "Queen Size",
+  capacity: number
+}
+export type KingBedType = {
+  name: "King Size",
+  capacity: number
+}
+export type BunkBedType = {
+  name: "Bunk Bed",
+  capacity: number
+}
+export type CustomBedType = {
+  name: "Custom Bed Type",
+  capacity: number
+}
 export type AmenityType = {
   id: string;
   name: string;

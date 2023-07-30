@@ -96,13 +96,13 @@ const Userprofile = () => {
               containerClassName={styles.inputStyle}
               label="First Name"
               value={firstName}
-              setValue={setFirstName}
+              setValue={(e) => setFirstName(e.target.value)}
             />
 
             <TextInput
               label="Middle Name"
               value={middleName}
-              setValue={setMiddleName}
+              setValue={(e) => setMiddleName(e.target.value)}
               containerClassName={styles.inputStyle}
             />
 
@@ -111,7 +111,7 @@ const Userprofile = () => {
               containerClassName={styles.inputStyle}
               label="Last Name"
               value={lastName}
-              setValue={setMiddleName}
+              setValue={(e) => setMiddleName(e.target.value)}
             />
 
             <DateInput
@@ -129,21 +129,21 @@ const Userprofile = () => {
               label="Phone Number"
               type="tel"
               value={phoneNumber}
-              setValue={setPhoneNumber}
+              setValue={(e) => setPhoneNumber(e.target.value)}
               containerClassName={styles.inputStyle}
             />
             <TextInput
               label="Email"
               type="email"
               value={email}
-              setValue={setEmail}
+              setValue={(e) => setEmail(e.target.value)}
               containerClassName={styles.inputStyle}
             />
             <TextInput
               label="Website"
               type="url"
               value={website}
-              setValue={setWebsite}
+              setValue={(e) => setWebsite(e.target.value)}
               containerClassName={styles.inputStyle}
             />
             <DropDown
@@ -178,13 +178,13 @@ const Userprofile = () => {
             <TextInput
               label="Street"
               value={street}
-              setValue={setStreet}
+              setValue={(e) => setStreet(e.target.value)}
               containerClassName={styles.inputStyle}
             />
             <TextInput
               label="Zipcode"
               value={zipcode}
-              setValue={setZipcode}
+              setValue={(e) => setZipcode(e.target.value)}
               containerClassName={styles.inputStyle}
             />
           </form>

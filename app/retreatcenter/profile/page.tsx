@@ -27,7 +27,7 @@ const options = StatesInUSA.map(state => ({ label: state, value: state }))
 const Userprofile = () => {
     const dispatch = useDispatch()
     const retreatcenter = useSelector((state: RootState) => state.RetreatCenter.retreatCenter)
-    const [retreatCenterName, setRetreatCenterNameUseState] = useState(undefined)
+    const [retreatCenterName, setRetreatCenterNameUseState] = useState<string | undefined>(undefined)
     const [state, setState] = useState("")
     const [city, setCity] = useState("")
     const [street, setStreet] = useState("")
@@ -74,7 +74,7 @@ const Userprofile = () => {
                     style={{ objectFit: "contain" }}
                 />
                 <div className={styles.campName}>
-                    <TextInput placeholder="Type your camp name here" value={String(retreatcenter?.name)} setValue={setRetreatCenterNameUseState} containerClassName={styles.campNameInputStyle} />
+                    <TextInput placeholder="Type your camp name here" value={String(retreatcenter?.name)} setValue={(e) => setRetreatCenterNameUseState(e.target.value)} containerClassName={styles.campNameInputStyle} />
                     <p className={styles.stateText}>
                         {state}
                     </p>
@@ -88,20 +88,20 @@ const Userprofile = () => {
                 <div className={["card", styles.addressAndContactInfoContainer].join(" ")}>
                     <h4 className={styles.cardTitle}>Address</h4>
                     <form>
-                        <TextInput label="Zipcode" value={zipcode} setValue={setZipcode} containerClassName={styles.inputStyle} />
-                        <TextInput label="State" value={state} setValue={setState} containerClassName={styles.inputStyle} disabled />
-                        <TextInput label="City" value={city} setValue={setCity} containerClassName={styles.inputStyle} />
-                        <TextInput label="Street" value={street} setValue={setStreet} containerClassName={styles.inputStyle} />
+                        <TextInput label="Zipcode" value={zipcode} setValue={(e) => setZipcode(e.target.value)} containerClassName={styles.inputStyle} />
+                        <TextInput label="State" value={state} setValue={(e) => setState(e.target.value)} containerClassName={styles.inputStyle} disabled />
+                        <TextInput label="City" value={city} setValue={(e) => setCity(e.target.value)} containerClassName={styles.inputStyle} />
+                        <TextInput label="Street" value={street} setValue={(e) => setStreet(e.target.value)} containerClassName={styles.inputStyle} />
                     </form>
                 </div>
                 <div className={["card", styles.availabilityContainer].join(" ")}>
                     <h4 className={styles.cardTitle}>Contact Info</h4>
                     <form>
-                        <TextInput label="Phone Number" type="tel" value={phoneNumber} setValue={setPhoneNumber} containerClassName={styles.inputStyle} />
-                        <TextInput label="Email" type="email" value={email} setValue={setEmail} containerClassName={styles.inputStyle} />
-                        <TextInput label="Website" type="url" value={website} setValue={setWebsite} containerClassName={styles.inputStyle} />
-                        <TextInput label="Timezone" value={timezone} setValue={setTimezone} containerClassName={styles.inputStyle} disabled />
-                        {/* <DropDown htmlFor="Time Zone" options={timeZoneOptions} value={timezone} setValue={setTimezone} containerClassName={styles.inputStyle} /> */}
+                        <TextInput label="Phone Number" type="tel" value={phoneNumber} setValue={(e) => setPhoneNumber(e.target.value)} containerClassName={styles.inputStyle} />
+                        <TextInput label="Email" type="email" value={email} setValue={(e) => setEmail(e.target.value)} containerClassName={styles.inputStyle} />
+                        <TextInput label="Website" type="url" value={website} setValue={(e) => setWebsite(e.target.value)} containerClassName={styles.inputStyle} />
+                        <TextInput label="Timezone" value={timezone} setValue={(e) => setTimezone(e.target.value)} containerClassName={styles.inputStyle} disabled />
+                        {/* <DropDown htmlFor="Time Zone" options={timeZoneOptions} value={timezone} setValue={(e)=>setTimezone(e.target.value)} containerClassName={styles.inputStyle} /> */}
                     </form>
                 </div>
                 <div className={["card", styles.general].join(" ")}>
@@ -238,7 +238,7 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
                                                     (
                                                         <div className={styles.schedContainer}>
                                                             <div className={["row", styles.timeInputContainer].join(" ")}>
-                                                                {/* <DropDown options={Array(12).fill(0).map(i => i + 1)} value={String(sched.from.hour)} setValue={setHour} /> */}
+                                                                {/* <DropDown options={Array(12).fill(0).map(i => i + 1)} value={String(sched.from.hour)} setValue={(e)=>setHour(e.target.value)} /> */}
                                                                 <input type={"time"} onChange={e => setHour(e.target.value, "from", sched.label)} className={styles.timeInput} />
                                                                 <h4 className={styles.timeInputTo}>to</h4>
                                                                 <input type={"time"} onChange={e => setHour(e.target.value, "to", sched.label)} className={styles.timeInput} />

@@ -1,0 +1,124 @@
+/* LAYOUTS STYLE */
+
+.main {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+}
+
+.content {
+    display: flex !important;
+    flex-direction: row !important;
+    height: 100% !important;
+}
+
+.mainContent {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+
+
+/* LAYOUTS STYLE */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 500px;
+    width: 90%;
+    height: 100% !important;
+}
+
+.collapsableSection {
+    width: 90%;
+    min-height: 90px;
+    height: 90px;
+    background: #E0E7EB;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+    margin-top: 30px !important;
+}
+
+.sectionTitle {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.setUpContainer {
+    width: 90%;
+    border: 1px solid #E0E7EB;
+    padding: 30px !important;
+}
+
+.meetingSetupContainer {
+    width: 90%;
+    border: 1px solid #E0E7EB;
+    padding: 30px !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buildingName {
+    width: 15%;
+    margin: 0 auto !important;
+}
+
+
+.housingCardsContainer {
+    width: 100%;
+    margin-top: 10px !important;
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: space-evenly;
+}
+
+.roomCard {
+    width: 30%;
+    min-height: 200px !important;
+    background: #F6F8F9;
+    margin-top: 20px !important;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+
+.inputInsideBox {
+    width: 90% !important;
+    margin: 25px 5% !important;
+    border-bottom: 3px solid #E0E7EB;
+}
+
+.addBedButton {
+    border: 3px solid #E0E7EB !important;
+    width: 90%;
+    margin: 20px 5% !important;
+    text-align: center;
+    color: #85A0AD;
+    font-size: 18px;
+    font-weight: 900 !important;
+    position: absolute;
+    top: 70%;
+}
+
+.meetingRoomCardsContainer {
+    width: 50%;
+    min-height: 100px;
+}
+
+.diagramCardsContainer {
+    width: 50%;
+    min-height: 100px;
+}

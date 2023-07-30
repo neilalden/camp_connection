@@ -1,7 +1,6 @@
-import { ArgFunction, SetStateType } from '@/types';
+import { ArgFunction, HTMLEvent, SetStateType } from '@/types';
 import React from 'react'
 import styles from "./TextInput.module.css"
-import { textInputSetState } from '@/utils/functions';
 type Props = {
     type?: React.HTMLInputTypeAttribute;
     htmlFor?: string;
@@ -9,9 +8,10 @@ type Props = {
     disabled?: boolean;
     placeholder?: string;
     value: string | number;
-    setValue: SetStateType<string> | ArgFunction;
+    setValue: (e: HTMLEvent<HTMLInputElement>) => void;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
+    inputClassName?: string
 }
 const TextInput = (props: Props) => {
     const {
@@ -23,7 +23,8 @@ const TextInput = (props: Props) => {
         value,
         setValue,
         containerStyle,
-        containerClassName
+        containerClassName,
+        inputClassName
     } = props
     return (
         <div style={containerStyle} className={containerClassName}>
@@ -34,9 +35,9 @@ const TextInput = (props: Props) => {
                 id={htmlFor}
                 value={value}
                 disabled={disabled}
-                className={disabled ? styles.disabledInput : styles.input}
+                className={[disabled ? styles.disabledInput : styles.input, inputClassName].join(" ")}
                 placeholder={placeholder}
-                onChange={(e) => textInputSetState(e, setValue)}
+                onChange={setValue}
             />
         </div >
     )

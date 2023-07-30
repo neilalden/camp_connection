@@ -1,7 +1,6 @@
 "use client";
 import Images from '@/common/images';
 import Divider from '@/components/Divider';
-import { textInputSetState } from '@/utils/functions';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect } from 'react'
@@ -44,10 +43,10 @@ const SigninForm = () => {
             <br />
             <br />
 
-            <TextInput type='email' label='Email' value={email} setValue={setEmail} />
+            <TextInput type='email' label='Email' value={email} setValue={(e) => setEmail(e.target.value)} />
 
             <br />
-            <TextInput type='password' label='Password' value={password} setValue={setPassword} containerClassName={styles.input} />
+            <TextInput type='password' label='Password' value={password} setValue={(e) => setPassword(e.target.value)} containerClassName={styles.input} />
 
             <div className={styles.row}>
                 <Link href="/forgotpassword"><p>Forgot password</p></Link>

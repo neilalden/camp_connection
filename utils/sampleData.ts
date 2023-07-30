@@ -831,30 +831,6 @@ export const appointmentsSampleData: Array<AppointmentType> = [
     amenities: [],
     meals: [],
     rooms: [
-      {
-        id: "301",
-        name: "301",
-        single: 4,
-        buildingId: "buildingA",
-      },
-      {
-        id: "302",
-        name: "302",
-        single: 4,
-        buildingId: "buildingA",
-      },
-      {
-        id: "303",
-        name: "303",
-        single: 4,
-        buildingId: "buildingA",
-      },
-      {
-        id: "304",
-        name: "304",
-        single: 4,
-        buildingId: "buildingA",
-      },
     ],
   },
 ];
