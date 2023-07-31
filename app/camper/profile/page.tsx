@@ -10,7 +10,7 @@ import {
   UsersSampleData,
   RetreatCenterUserData,
 } from "@/utils/sampleData";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/services/redux/store";
 import TextInput from "@/components/TextInput";
 import {
@@ -31,9 +31,11 @@ import DateInput from "@/components/DateInput";
 import { sortArrayOfObjects } from "@/utils/functions";
 import ZipcodeToTimezone from "zipcode-to-timezone";
 import { usaStatesFull } from "typed-usa-states";
+import { setUserProfile } from "@/services/redux/slice/user";
 
 const options = StatesInUSA.map((state) => ({ label: state, value: state }));
 const Userprofile = () => {
+  const dispatch = useDispatch();
   // const retreatcenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)[0]
   const retreatcenter = ArrayRCSD[0];
   const [state, setState] = useState("");
@@ -90,6 +92,9 @@ const Userprofile = () => {
   const [editMode, setEditMode] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const profileImage = useSelector(
+    (state: RootState) => state.User.user?.photo
+  );
 
   const handleEditClick = () => {
     if (fileInputRef.current) {
@@ -101,16 +106,16 @@ const Userprofile = () => {
     if (e.target.files && e.target.files.length > 0) {
       const selectedFile = e.target.files[0];
       const imageUrl = URL.createObjectURL(selectedFile);
-      setImageFile(selectedFile);
-      setImageUrl(imageUrl); // Set the new image URL for display
+      dispatch(setUserProfile(imageUrl)); // Dispatch the action to update the Redux state
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={["card", styles.headerContainer].join(" ")}>
         <div className={styles.logoContainer}>
           <Image
-            src={imageUrl || Images.ic_user_profile} // Use imageUrl or the default image
+            src={profileImage ? profileImage : Images.ic_user_profile} // Use imageUrl or the default image
             alt="Company Logo"
             className={styles.logo}
             height={150}
