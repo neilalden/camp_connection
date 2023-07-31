@@ -22,10 +22,10 @@ export type User = {
 };
 export interface CamperUserType extends User {
   userType?:
-  | "Group Leader"
-  | "Group Member"
-  | "Camper Gaurdian/Parent"
-  | "Individual Camper";
+    | "Group Leader"
+    | "Group Member"
+    | "Camper Gaurdian/Parent"
+    | "Individual Camper";
   groupName?: string;
   checkInDate?: Date;
   checkOutDate?: Date;
@@ -33,7 +33,7 @@ export interface CamperUserType extends User {
 }
 export interface RetreatCenterUserType extends User {
   userType?: "Admin" | "Hospitality" | "Sales" | "Food" | "Group Coordinator";
-  position?: "Leader" | "Member" | "Assistant"
+  position?: "Leader" | "Member" | "Assistant";
 }
 export interface CampConnectionTeamUserType extends User {
   userType?: "Admin" | "Sales" | "Support";
@@ -80,13 +80,13 @@ export type AppointmentType = {
 };
 
 export type FileType = {
-  url: string,
-  name: string,
-}
+  url: string;
+  name: string;
+};
 export type ScheduleType = {
   label: string;
   value: boolean;
   editMode: boolean;
   from: string;
-  to: string
-}
+  to: string;
+};

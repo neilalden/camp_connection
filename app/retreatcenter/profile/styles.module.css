@@ -1,191 +1,222 @@
 /* LAYOUTS STYLE */
 
 .main {
-    height: 100% !important;
-    width: 100% !important;
-    display: flex;
-    flex-direction: column;
-    overflow-y: hidden;
+  height: 100% !important;
+  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
 }
 
 .content {
-    display: flex !important;
-    flex-direction: row !important;
-    height: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  height: 100% !important;
 }
 
 .mainContent {
-    width: 100% !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    background-color: #F6F8F9;
-    overflow-y: scroll;
+  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background-color: #f6f8f9;
+  overflow-y: scroll;
 }
-
-
 
 /* LAYOUTS STYLE */
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 500px;
-    width: 90%;
-    height: 100% !important;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 500px;
+  width: 90%;
+  height: 100% !important;
 }
 
-
-
 .headerContainer {
-    border-radius: 5px;
-    background: #FFF;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    display: flex;
-    width: 100%;
-    height: 200px;
-    margin-top: 55px !important;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  width: 100%;
+  height: 200px;
+  margin-top: 55px !important;
+}
+
+.logoContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.editText {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #000;
+  font-weight: bold;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.logoContainer:hover .overlay {
+  opacity: 1;
+}
+
+.logoContainer:hover .editText {
+  opacity: 1;
 }
 
 .logo {
-    margin: 23px !important;
-    border-radius: 50%;
-    border: 2px solid white
+  margin: 23px !important;
+  border-radius: 50%;
+  border: 2px solid white;
 }
 
 .campName {
-    align-self: center;
+  align-self: center;
 }
 
 .campNameInputStyle {
-    width: 400px;
-    margin-top: 10px !important;
+  width: 400px;
+  margin-top: 10px !important;
 }
 
-.campNameInputStyle>input {
-    outline: 0 !important;
-    border: 0 !important;
-    font-size: 28px;
-    font-weight: bold !important;
+.campNameInputStyle > input {
+  outline: 0 !important;
+  border: 0 !important;
+  font-size: 28px;
+  font-weight: bold !important;
 }
 
 .stateText {
-    font-size: 24px;
-    font-weight: 300;
-    margin-left: 5px;
+  font-size: 24px;
+  font-weight: 300;
+  margin-left: 5px;
 }
 
 .cardTitle {
-    font-size: 20px;
-    font-weight: 700;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .addressAndContactInfoContainer {
-    width: 30%;
-    margin-top: 30px !important;
-    padding: 30px 25px !important;
+  width: 30%;
+  margin-top: 30px !important;
+  padding: 30px 25px !important;
 }
 
 .availabilityContainer {
-    width: 30%;
-    margin-top: 30px !important;
-    padding: 30px 25px !important;
+  width: 30%;
+  margin-top: 30px !important;
+  padding: 30px 25px !important;
 }
 
 .general {
-    width: 35%;
-    margin-top: 30px !important;
-    padding: 30px 25px !important;
+  width: 35%;
+  margin-top: 30px !important;
+  padding: 30px 25px !important;
 }
 
 .inputStyle {
-    margin-top: 10px !important;
+  margin-top: 10px !important;
 }
 
 .scheduleContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 30px !important;
-    padding: 30px 25px !important;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30px !important;
+  padding: 30px 25px !important;
 }
 
 .scheduleCard {
-    min-width: 200px;
-    width: 24%;
-    padding: 10px !important;
-    margin-top: 40px !important;
-    position: relative;
+  min-width: 200px;
+  width: 24%;
+  padding: 10px !important;
+  margin-top: 40px !important;
+  position: relative;
 }
 
 .scheduleForm {
-    border: 1px solid #D8E189;
-    padding: 20px !important;
+  border: 1px solid #d8e189;
+  padding: 20px !important;
 }
 
 .scheduleCardTitle {
-    position: absolute;
-    top: -24px !important;
-    border: 1px solid #D8E189;
-    border-bottom: 2px solid #fff !important;
-    padding: 5px 10px !important;
-    background: #FFF;
-
+  position: absolute;
+  top: -24px !important;
+  border: 1px solid #d8e189;
+  border-bottom: 2px solid #fff !important;
+  padding: 5px 10px !important;
+  background: #fff;
 }
 
 .scheduleCheckboxContainer {
-    margin-top: 20px !important;
-    font-size: 12px;
+  margin-top: 20px !important;
+  font-size: 12px;
 }
 
 .buttonSpan {
-    font-size: 12px;
-    color: #3C7FD6;
-    font-weight: 400;
-    line-height: -1;
+  font-size: 12px;
+  color: #3c7fd6;
+  font-weight: 400;
+  line-height: -1;
 }
 
 .spanClosed {
-    margin-top: 2.5px !important;
-    margin-left: 20px !important;
+  margin-top: 2.5px !important;
+  margin-left: 20px !important;
 }
 
 .bottomSpace {
-    height: 1px !important;
-    width: 1px;
-    background: none !important;
-    padding: 100px !important;
+  height: 1px !important;
+  width: 1px;
+  background: none !important;
+  padding: 100px !important;
 }
 
 .timeInputContainer {
-    height: 30px;
-    position: absolute;
-    top: 15px;
-    left: -35px;
+  height: 30px;
+  position: absolute;
+  top: 15px;
+  left: -35px;
 }
 
 .timeInputTo {
-    text-align: center;
-    margin: 10px 5px;
+  text-align: center;
+  margin: 10px 5px;
 }
 
 .timeInput {
-    font-size: 12px !important;
-    font-weight: lighter;
+  font-size: 12px !important;
+  font-weight: lighter;
 }
 
 .buttonApplyToAll {
-    font-weight: 500;
-    text-decoration: underline;
-    color: #3C7FD6;
-    margin-top: 50px !important;
+  font-weight: 500;
+  text-decoration: underline;
+  color: #3c7fd6;
+  margin-top: 50px !important;
 }
 
 .schedContainer {
-    height: 50px;
-    margin-bottom: 15px !important;
-    position: relative !important;
+  height: 50px;
+  margin-bottom: 15px !important;
+  position: relative !important;
 }

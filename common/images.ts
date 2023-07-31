@@ -51,6 +51,7 @@ const Images = {
   ic_user_profile: require("../assets/ic_user_profile.png"),
   ic_user_group: require("../assets/ic_user_group.png"),
   ic_doc_icon: require("../assets/ic_doc_icon.png"),
+  ic_user_image: require("../assets/ic_user_image.png"),
 };
 
 export default Images;

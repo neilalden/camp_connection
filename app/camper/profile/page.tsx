@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Images from "@/common/images";
@@ -10,7 +10,7 @@ import {
   UsersSampleData,
   RetreatCenterUserData,
 } from "@/utils/sampleData";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/services/redux/store";
 import TextInput from "@/components/TextInput";
 import {
@@ -28,8 +28,14 @@ import FileUpload from "@/components/FileUpload";
 import FileButton from "@/components/FileButton";
 import RadioButton from "@/components/RadioButton";
 import DateInput from "@/components/DateInput";
+import { sortArrayOfObjects } from "@/utils/functions";
+import ZipcodeToTimezone from "zipcode-to-timezone";
+import { usaStatesFull } from "typed-usa-states";
+import { setUserProfile } from "@/services/redux/slice/user";
+
 const options = StatesInUSA.map((state) => ({ label: state, value: state }));
 const Userprofile = () => {
+  const dispatch = useDispatch();
   // const retreatcenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)[0]
   const retreatcenter = ArrayRCSD[0];
   const [state, setState] = useState("");
@@ -44,12 +50,14 @@ const Userprofile = () => {
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [birthDate, setBirthDate] = useState(new Date());
+
   const [representative, setRepresentative] = useState<UsersOptionType>();
   const [stateOptions] = useState<Array<OptionType>>(
     Object.keys(statesWithCities).map((s) => ({ label: s, value: s }))
   );
   // @ts-ignore
-  const cityOptions: Array<OptionType> = Array.isArray(statesWithCities[state]) ? statesWithCities[state].map((c) => ({ label: c, value: c }))
+  const cityOptions: Array<OptionType> = Array.isArray(statesWithCities[state])
+    ? statesWithCities[state].map((c) => ({ label: c, value: c }))
     : [];
   const timeZoneOptions: Array<OptionType> = TimeZones.map((tz) => ({
     label: tz,
@@ -61,20 +69,68 @@ const Userprofile = () => {
     user: user,
   }));
 
+  useEffect(() => {
+    if (!zipcode) {
+      setState("");
+      setCity("");
+      setTimezone("");
+      return;
+    }
+    setTimezone(String(ZipcodeToTimezone.lookup(zipcode)));
+    const stateFull = usaStatesFull.find(
+      (state) =>
+        state.zipCodes &&
+        state.zipCodes.some((zcItem) =>
+          zcItem.some((zc) => String(zc) === zipcode)
+        )
+    );
+    if (!stateFull) return;
+    setState(stateFull.name);
+  }, [zipcode]);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [editMode, setEditMode] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const profileImage = useSelector(
+    (state: RootState) => state.User.user?.photo
+  );
+
+  const handleEditClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+      const imageUrl = URL.createObjectURL(selectedFile);
+      dispatch(setUserProfile(imageUrl)); // Dispatch the action to update the Redux state
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={["card", styles.headerContainer].join(" ")}>
         <div className={styles.logoContainer}>
           <Image
+            src={profileImage ? profileImage : Images.ic_user_profile} // Use imageUrl or the default image
             alt="Company Logo"
-            src={Images.ic_user_profile}
             className={styles.logo}
             height={150}
             width={150}
             style={{ objectFit: "contain" }}
           />
-          <div className={styles.overlay}></div>
+          <div className={styles.overlay} onClick={handleEditClick}></div>
           <p className={styles.editText}>Edit</p>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            ref={fileInputRef}
+            style={{ display: "none" }}
+          />
         </div>
         <div className={styles.campName}>
           <div className={styles.campNameHead}>
@@ -89,7 +145,7 @@ const Userprofile = () => {
         <div
           className={["card", styles.addressAndContactInfoContainer].join(" ")}
         >
-          <h4 className={styles.cardTitle}>Name & Birthdate</h4>
+          <h4 className={styles.cardTitle}>Name</h4>
           <form>
             <TextInput
               type="text"
@@ -139,19 +195,19 @@ const Userprofile = () => {
               setValue={setEmail}
               containerClassName={styles.inputStyle}
             />
-            <TextInput
+            {/* <TextInput
               label="Website"
               type="url"
               value={website}
               setValue={setWebsite}
               containerClassName={styles.inputStyle}
-            />
-            <DropDown
-              htmlFor="Time Zone"
-              options={timeZoneOptions}
+            /> */}
+            <TextInput
+              label="Timezone"
               value={timezone}
               setValue={setTimezone}
               containerClassName={styles.inputStyle}
+              disabled
             />
           </form>
         </div>
@@ -161,16 +217,22 @@ const Userprofile = () => {
         >
           <h4 className={styles.cardTitle}>Address</h4>
           <form>
-            <DropDown
-              htmlFor="State"
-              options={stateOptions}
+            <TextInput
+              label="Zipcode"
+              value={zipcode}
+              setValue={setZipcode}
+              containerClassName={styles.inputStyle}
+            />
+            <TextInput
+              label="State"
               value={state}
               setValue={setState}
               containerClassName={styles.inputStyle}
+              disabled
             />
             <DropDown
               htmlFor="City"
-              options={cityOptions}
+              options={sortArrayOfObjects(cityOptions, "label")}
               value={city}
               setValue={setCity}
               containerClassName={styles.inputStyle}
@@ -181,17 +243,11 @@ const Userprofile = () => {
               setValue={setStreet}
               containerClassName={styles.inputStyle}
             />
-            <TextInput
-              label="Zipcode"
-              value={zipcode}
-              setValue={setZipcode}
-              containerClassName={styles.inputStyle}
-            />
           </form>
         </div>
       </div>
 
-      <div className={["card", styles.scheduleContainer].join(" ")}>
+      {/* <div className={["card", styles.scheduleContainer].join(" ")}>
         <h4 className={styles.cardTitle}>Business Schedule</h4>
         <div className="row-between">
           <SchedulePicker season={"Winter"} />
@@ -199,7 +255,7 @@ const Userprofile = () => {
           <SchedulePicker season={"Summer"} />
           <SchedulePicker season={"Fall"} />
         </div>
-      </div>
+      </div> */}
 
       <div className={styles.userDocs}>
         <h1>Uploaded Docs</h1>
@@ -264,7 +320,7 @@ const SchedulePicker = ({ season }: { season: string }) => {
       });
     });
   };
-  const setHour = (value: string) => { };
+  const setHour = (value: string) => {};
   return (
     <div className={styles.scheduleCard}>
       <h3 className={styles.scheduleCardTitle}>{season}</h3>
@@ -310,8 +366,9 @@ const SchedulePicker = ({ season }: { season: string }) => {
                       </div>
                     ) : (
                       <p className={styles.scheduleString}>
-                        {`${sched.from.hour + sched.from.ampm} - ${sched.to.hour + sched.to.ampm
-                          }`}
+                        {`${sched.from.hour + sched.from.ampm} - ${
+                          sched.to.hour + sched.to.ampm
+                        }`}
                       </p>
                     )}
                     <button
