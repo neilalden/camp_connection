@@ -44,16 +44,18 @@ export type FilterType = {
   type: "Housing" | "Meeting room" | "Activity" | "Group";
   // [key: string]: any
 };
+export type MeetingRoomType = {
+  id: string;
+  name: string;
+  capacity: number;
+
+}
 export type RoomType = {
   id: string;
   name: string;
   buildingId?: string;
   level?: string;
-  single?: number;
-  double?: number;
-  queen?: number;
-  king?: number;
-  bunk?: string;
+  beds?: Array<BedType>
 };
 export type DiagramType = {
   id: string;

@@ -87,7 +87,7 @@ const SideNavigation = () => {
             category: "retreatcenter",
             id: "setupcamp",
             name: "Setup Camp",
-            img: Images["ic_setup"]
+            img: currentPage === "setupcamp" ? Images["ic_setup_white"] : Images["ic_setup"]
         },
     ]
     const router = useRouter()

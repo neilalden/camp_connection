@@ -1,9 +1,6 @@
 import { ArgFunction, VoidFunction, HTMLEvent, SetStateType, AppointmentType, FilterType } from "@/types"
 import { months } from "./variables"
 
-export const textInputSetState = (e: HTMLEvent<HTMLInputElement>, setState: SetStateType<string>) => {
-    setState(e.target.value)
-}
 export const getDays = ({ start, end }: { start: Date, end: Date }): Array<Date> => {
     if (start > end) return []
     const days: Array<Date> = []

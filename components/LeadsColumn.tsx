@@ -76,7 +76,7 @@ const LeadsColumn = (props: Props) => {
         <div className={styles.leadscolumn}>
             <div>
                 <h3 className={styles.leadsTitle}>Leads</h3>
-                {leads && leads?.length >= 5 ? <TextInput value={searchString} setValue={setSearchString} placeholder="Search Lead" containerClassName={styles.searchInput} /> : null}
+                {leads && leads?.length >= 5 ? <TextInput value={searchString} setValue={(e) => setSearchString(e.target.value)} placeholder="Search Lead" containerClassName={styles.searchInput} /> : null}
                 {
                     rerenderingLeads && rerenderingLeads.map((lead, i) => {
                         // return <LeadCard

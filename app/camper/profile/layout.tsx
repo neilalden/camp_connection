@@ -8,19 +8,19 @@ import { PersistGate } from "redux-persist/integration/react";
 import styles from "./styles.module.css";
 
 const Layout = ({ children }: any) => {
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <div className={styles.main}>
-          <TopNavigation />
-          <div className={styles.content}>
-            <SideNavigation />
-            <div className={styles.mainContent}>{children}</div>
-          </div>
-        </div>
-      </PersistGate>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <div className={styles.main}>
+                    <TopNavigation />
+                    <div className={styles.content}>
+                        <SideNavigation />
+                        <div className={styles.mainContent}>{children}</div>
+                    </div>
+                </div>
+            </PersistGate>
+        </Provider>
+    );
 };
 
 export default Layout;

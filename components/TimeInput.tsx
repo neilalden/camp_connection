@@ -1,7 +1,6 @@
 import { ArgFunction, SetStateType } from '@/types';
 import React from 'react'
 import styles from "./TextInput.module.css"
-import { textInputSetState } from '@/utils/functions';
 type Props = {
     htmlFor?: string;
     label?: string;
@@ -34,7 +33,7 @@ const TimeInput = (props: Props) => {
                 disabled={disabled}
                 className={disabled ? styles.disabledInput : styles.input}
                 placeholder={placeholder}
-                onChange={(e) => textInputSetState(e, setValue)}
+                onChange={(e) => setValue(e.target.value)}
             />
         </div >
     )

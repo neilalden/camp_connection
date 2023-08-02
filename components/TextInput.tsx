@@ -1,7 +1,6 @@
 import { ArgFunction, HTMLEvent, SetStateType } from '@/types';
 import React from 'react'
 import styles from "./TextInput.module.css"
-import { textInputSetState } from '@/utils/functions';
 type Props = {
     type?: React.HTMLInputTypeAttribute;
     htmlFor?: string;
@@ -46,9 +45,9 @@ const TextInput = (props: Props) => {
                 value={value}
                 autoFocus={autofocus}
                 disabled={disabled}
-                className={disabled ? styles.disabledInput : styles.input}
+                className={[disabled ? styles.disabledInput : styles.input, inputClassName].join(" ")}
                 placeholder={placeholder}
-                onChange={(e) => textInputSetState(e, setValue)}
+                onChange={setValue}
             />
             {bottomLabel ? <><br /><label htmlFor={htmlFor} className={[styles.bottomLabel, labelClassName].join(" ")}>{bottomLabel}</label></> : null}
 

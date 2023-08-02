@@ -56,8 +56,7 @@ const Userprofile = () => {
     Object.keys(statesWithCities).map((s) => ({ label: s, value: s }))
   );
   // @ts-ignore
-  const cityOptions: Array<OptionType> = Array.isArray(statesWithCities[state])
-    ? statesWithCities[state].map((c) => ({ label: c, value: c }))
+  const cityOptions: Array<OptionType> = Array.isArray(statesWithCities[state]) ? statesWithCities[state].map((c) => ({ label: c, value: c }))
     : [];
   const timeZoneOptions: Array<OptionType> = TimeZones.map((tz) => ({
     label: tz,
@@ -95,7 +94,6 @@ const Userprofile = () => {
   const profileImage = useSelector(
     (state: RootState) => state.User.user?.photo
   );
-
   const handleEditClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -152,13 +150,13 @@ const Userprofile = () => {
               containerClassName={styles.inputStyle}
               label="First Name"
               value={firstName}
-              setValue={setFirstName}
+              setValue={(e) => setFirstName(e.target.value)}
             />
 
             <TextInput
               label="Middle Name"
               value={middleName}
-              setValue={setMiddleName}
+              setValue={(e) => setMiddleName(e.target.value)}
               containerClassName={styles.inputStyle}
             />
 
@@ -167,7 +165,7 @@ const Userprofile = () => {
               containerClassName={styles.inputStyle}
               label="Last Name"
               value={lastName}
-              setValue={setMiddleName}
+              setValue={(e) => setMiddleName(e.target.value)}
             />
 
             <DateInput
@@ -185,27 +183,27 @@ const Userprofile = () => {
               label="Phone Number"
               type="tel"
               value={phoneNumber}
-              setValue={setPhoneNumber}
+              setValue={(e) => setPhoneNumber(e.target.value)}
               containerClassName={styles.inputStyle}
             />
             <TextInput
               label="Email"
               type="email"
               value={email}
-              setValue={setEmail}
+              setValue={(e) => setEmail(e.target.value)}
               containerClassName={styles.inputStyle}
             />
             {/* <TextInput
               label="Website"
               type="url"
               value={website}
-              setValue={setWebsite}
+              setValue={(e)=>setWebsite(e.target.value)}
               containerClassName={styles.inputStyle}
             /> */}
             <TextInput
               label="Timezone"
               value={timezone}
-              setValue={setTimezone}
+              setValue={(e) => setTimezone(e.target.value)}
               containerClassName={styles.inputStyle}
               disabled
             />
@@ -220,13 +218,13 @@ const Userprofile = () => {
             <TextInput
               label="Zipcode"
               value={zipcode}
-              setValue={setZipcode}
+              setValue={(e) => setZipcode(e.target.value)}
               containerClassName={styles.inputStyle}
             />
             <TextInput
               label="State"
               value={state}
-              setValue={setState}
+              setValue={(e) => setState(e.target.value)}
               containerClassName={styles.inputStyle}
               disabled
             />
@@ -240,7 +238,7 @@ const Userprofile = () => {
             <TextInput
               label="Street"
               value={street}
-              setValue={setStreet}
+              setValue={(e) => setStreet(e.target.value)}
               containerClassName={styles.inputStyle}
             />
           </form>
@@ -320,7 +318,7 @@ const SchedulePicker = ({ season }: { season: string }) => {
       });
     });
   };
-  const setHour = (value: string) => {};
+  const setHour = (value: string) => { };
   return (
     <div className={styles.scheduleCard}>
       <h3 className={styles.scheduleCardTitle}>{season}</h3>
@@ -366,9 +364,8 @@ const SchedulePicker = ({ season }: { season: string }) => {
                       </div>
                     ) : (
                       <p className={styles.scheduleString}>
-                        {`${sched.from.hour + sched.from.ampm} - ${
-                          sched.to.hour + sched.to.ampm
-                        }`}
+                        {`${sched.from.hour + sched.from.ampm} - ${sched.to.hour + sched.to.ampm
+                          }`}
                       </p>
                     )}
                     <button

@@ -28,7 +28,6 @@ const TopNavigation = () => {
     return null;
   }
 
-  console.log(retreatcenter?.logo);
 
   return (
     <nav className={styles.topNav}>
