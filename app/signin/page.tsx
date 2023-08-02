@@ -5,8 +5,7 @@ import Image from 'next/image'
 import React, { useEffect } from 'react'
 import SigninForm from './components/SigninForm'
 import { Provider } from 'react-redux'
-import { persistor, store } from '@/services/redux/store'
-import { PersistGate } from 'redux-persist/integration/react'
+import { store } from '@/services/redux/store'
 import { GET } from '@/services/api'
 // export const metadata: Metadata = {
 //     title: "Signin",
@@ -26,9 +25,7 @@ const SigninPage = () => {
             <Image alt="CampConnection Logo" src={Images.ic_logo} style={logo} />
             <div style={{ height: "100px" }} />
             <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <SigninForm />
-                </PersistGate>
+                <SigninForm />
             </Provider>
             <div style={{ height: "100px" }} />
         </div>
