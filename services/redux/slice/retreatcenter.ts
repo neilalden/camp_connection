@@ -69,7 +69,7 @@ const initialState: RetreatCenterStateType = {
     },
 }
 
-export const RetreatCentersSlice = createSlice({
+export const RetreatCenterSlice = createSlice({
     name: "retreatcenter",
     initialState,
     reducers: {
@@ -242,4 +242,5 @@ export const {
     setRoomBeds,
     setBedStyles
 }
-    = RetreatCentersSlice.actions
+    = RetreatCenterSlice.actions
+export default RetreatCenterSlice.reducer

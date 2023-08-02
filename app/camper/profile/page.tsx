@@ -94,7 +94,6 @@ const Userprofile = () => {
   const profileImage = useSelector(
     (state: RootState) => state.User.user?.photo
   );
-
   const handleEditClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -184,27 +183,27 @@ const Userprofile = () => {
               label="Phone Number"
               type="tel"
               value={phoneNumber}
-              setValue={(e) => setPhoneNumber}
+              setValue={(e) => setPhoneNumber(e.target.value)}
               containerClassName={styles.inputStyle}
             />
             <TextInput
               label="Email"
               type="email"
               value={email}
-              setValue={(e) => setEmail}
+              setValue={(e) => setEmail(e.target.value)}
               containerClassName={styles.inputStyle}
             />
             {/* <TextInput
               label="Website"
               type="url"
               value={website}
-              setValue={(e)=>setWebsite}
+              setValue={(e)=>setWebsite(e.target.value)}
               containerClassName={styles.inputStyle}
             /> */}
             <TextInput
               label="Timezone"
               value={timezone}
-              setValue={(e) => setTimezone}
+              setValue={(e) => setTimezone(e.target.value)}
               containerClassName={styles.inputStyle}
               disabled
             />
@@ -219,13 +218,13 @@ const Userprofile = () => {
             <TextInput
               label="Zipcode"
               value={zipcode}
-              setValue={(e) => setZipcode}
+              setValue={(e) => setZipcode(e.target.value)}
               containerClassName={styles.inputStyle}
             />
             <TextInput
               label="State"
               value={state}
-              setValue={(e) => setState}
+              setValue={(e) => setState(e.target.value)}
               containerClassName={styles.inputStyle}
               disabled
             />

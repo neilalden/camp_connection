@@ -1,0 +1,229 @@
+/* LAYOUTS STYLE */
+
+.main {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex !important;
+    flex-direction: row !important;
+    height: 100% !important;
+}
+
+.mainContent {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    background-color: #f6f8f9;
+}
+
+/* LAYOUTS STYLE */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 500px;
+    width: 90%;
+    height: 100%;
+}
+
+.headerContainer {
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    width: 100%;
+    height: 200px;
+    margin-top: 55px !important;
+}
+
+.logoContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.editText {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-weight: bold;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.logoContainer:hover .overlay {
+    opacity: 1;
+}
+
+.logoContainer:hover .editText {
+    opacity: 1;
+}
+
+.logo {
+    margin: 23px !important;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.campName {
+    align-self: center;
+}
+
+.campName {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.stateText {
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.cardTitle {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.addressAndContactInfoContainer {
+    width: 30%;
+    margin-top: 30px !important;
+    padding: 30px 25px !important;
+}
+
+.availabilityContainer {
+    width: 30%;
+    margin-top: 30px !important;
+    padding: 30px 25px !important;
+}
+
+.general {
+    width: 35%;
+    margin-top: 30px !important;
+    padding: 30px 25px !important;
+}
+
+.inputStyle {
+    margin-top: 10px !important;
+}
+
+.scheduleContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 30px !important;
+    padding: 30px 25px !important;
+}
+
+.scheduleCard {
+    min-width: 200px;
+    max-width: 24%;
+    padding: 10px !important;
+    margin-top: 40px !important;
+    position: relative;
+}
+
+.scheduleForm {
+    border: 1px solid #d8e189;
+    padding: 20px !important;
+}
+
+.scheduleCardTitle {
+    position: absolute;
+    top: -23.5px !important;
+    border: 1px solid #d8e189;
+    border-bottom: 1px solid #fff !important;
+    padding: 5px 10px !important;
+}
+
+.scheduleCheckboxContainer {
+    margin-top: 20px !important;
+    font-size: 12px;
+}
+
+.buttonSpan {
+    font-size: 12px;
+    color: #3c7fd6;
+    font-weight: 400;
+    line-height: -1;
+}
+
+.spanClosed {
+    margin-top: 2.5px !important;
+    margin-left: 20px !important;
+}
+
+.campNameHead {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.campNameHead img {
+    width: 32.25px;
+    height: 25px;
+}
+
+.userDocs {
+    width: 100%;
+    height: 406px;
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin-top: 30px;
+    padding: 30px 25px;
+}
+
+.userDocs h1 {
+    font-size: 20px;
+}
+
+.docsContainer {
+    display: flex;
+    margin: 20px 0;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.uploadedDocs {
+    border: 1px solid #999999;
+    border-radius: 5px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #000000;
+    padding: 10px 45px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.uploadedDocs img {
+    width: 10px;
+    height: 15px;
+    position: absolute;
+    right: 10px;
+}

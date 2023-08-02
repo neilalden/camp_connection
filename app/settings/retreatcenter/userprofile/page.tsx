@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Images from "@/common/images";
@@ -10,7 +10,7 @@ import {
   UsersSampleData,
   RetreatCenterUserData,
 } from "@/utils/sampleData";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
 import TextInput from "@/components/TextInput";
 import {
@@ -28,9 +28,11 @@ import FileUpload from "@/components/FileUpload";
 import FileButton from "@/components/FileButton";
 import RadioButton from "@/components/RadioButton";
 import DateInput from "@/components/DateInput";
+import { setUserProfile } from "@/services/redux/slice/user";
 const options = StatesInUSA.map((state) => ({ label: state, value: state }));
 const Userprofile = () => {
   // const retreatcenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)[0]
+  const dispatch = useDispatch()
   const retreatcenter = ArrayRCSD[0];
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
@@ -60,21 +62,44 @@ const Userprofile = () => {
     value: user.id,
     user: user,
   }));
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const profileImage = useSelector(
+    (state: RootState) => state.User.user?.photo
+  );
+  const handleEditClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+      const imageUrl = URL.createObjectURL(selectedFile);
+      dispatch(setUserProfile(imageUrl)); // Dispatch the action to update the Redux state
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={["card", styles.headerContainer].join(" ")}>
         <div className={styles.logoContainer}>
           <Image
+            src={profileImage ? profileImage : Images.ic_user_profile} // Use imageUrl or the default image
             alt="Company Logo"
-            src={Images.ic_user_profile}
             className={styles.logo}
             height={150}
             width={150}
             style={{ objectFit: "contain" }}
           />
-          <div className={styles.overlay}></div>
+          <div className={styles.overlay} onClick={handleEditClick}></div>
           <p className={styles.editText}>Edit</p>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            ref={fileInputRef}
+            style={{ display: "none" }}
+          />
         </div>
         <div className={styles.campName}>
           <div className={styles.campNameHead}>
