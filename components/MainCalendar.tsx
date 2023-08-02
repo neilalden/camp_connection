@@ -27,7 +27,7 @@ const MainCalendar = ({ date }: { date: Date }) => {
                     setShowHousingFilter(prev => !prev)
                 }}>
                     <h4 className={styles.filterCategoryTitle}>Housing</h4>
-                    <Image src={showHousingFilter ? Images.ic_chevron_up : Images.ic_chevron_down} height={9} alt={showHousingFilter ? "Chevron up" : "Chevron down"} />
+                    <Image alt="Chevron up" src={showHousingFilter ? Images.ic_chevron_up : Images.ic_chevron_down} height={9} />
                 </button>
                 {showHousingFilter ?
                     <div>
@@ -49,7 +49,7 @@ const MainCalendar = ({ date }: { date: Date }) => {
                     setShowAmenitiesFilter(prev => !prev)
                 }}>
                     <h4 className={styles.filterCategoryTitle}>Amenities</h4>
-                    <Image src={showAmenitiesFilter ? Images.ic_chevron_up : Images.ic_chevron_down} height={9} alt={showAmenitiesFilter ? "Chevron up" : "Chevron down"} />
+                    <Image alt="Chevron up" src={showAmenitiesFilter ? Images.ic_chevron_up : Images.ic_chevron_down} height={9} />
                 </button>
                 {showAmenitiesFilter ?
                     <div>

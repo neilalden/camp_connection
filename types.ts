@@ -1,7 +1,7 @@
 export type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;
 export type HTMLEvent<T> = React.ChangeEvent<T>;
 export type VoidFunction = () => void;
-export type ArgFunction = (arg?: any) => void;
+export type ArgFunction = (...arg: any) => void;
 export type ScreenProps = {
   children?: React.ReactNode;
   [key: string]: any;
@@ -33,7 +33,7 @@ export interface CamperUserType extends User {
 }
 export interface RetreatCenterUserType extends User {
   userType?: "Admin" | "Hospitality" | "Sales" | "Food" | "Group Coordinator";
-  position?: "Leader" | "Member" | "Assistant"
+  position?: "Leader" | "Member" | "Assistant";
 }
 export interface CampConnectionTeamUserType extends User {
   userType?: "Admin" | "Sales" | "Support";
@@ -57,40 +57,27 @@ export type RoomType = {
   level?: string;
   beds?: Array<BedType>
 };
-export type EquipmentType = {
+export type DiagramType = {
   id: string;
   name: string;
+  photo?: string;
+  items?: Array<ItemType>
 }
-export type BedType =
-  SingleBedType
-  | DoubleBedType
-  | QueenBedType
-  | KingBedType
-  | BunkBedType
-  | CustomBedType
-export type SingleBedType = {
-  name: "Single",
-  capacity: number
+export type ItemType = {
+  id: string;
+  name: string;
+  amount: number
 }
-export type DoubleBedType = {
-  name: "Double",
-  capacity: number
+export type PricingType = {
+  nights: number | "*";
+  price: number;
 }
-export type QueenBedType = {
-  name: "Queen Size",
-  capacity: number
-}
-export type KingBedType = {
-  name: "King Size",
-  capacity: number
-}
-export type BunkBedType = {
-  name: "Bunk Bed",
-  capacity: number
-}
-export type CustomBedType = {
-  name: "Custom Bed Type",
-  capacity: number
+export type BedType = {
+  id: string;
+  name: string;
+  capacity: number;
+  amount: number;
+  pricing: PricingType | Array<PricingType>
 }
 export type AmenityType = {
   id: string;
@@ -117,13 +104,13 @@ export type AppointmentType = {
 };
 
 export type FileType = {
-  url: string,
-  name: string,
-}
+  url: string;
+  name: string;
+};
 export type ScheduleType = {
   label: string;
   value: boolean;
   editMode: boolean;
   from: string;
-  to: string
-}
+  to: string;
+};

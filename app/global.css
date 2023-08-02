@@ -83,9 +83,6 @@
 html body {
   width: 100%;
   height: 100vh;
-  overflow-x: hidden;
-  /* max-width: 2400px !important;
-  margin: 0 auto !important; */
 }
 
 label {
@@ -97,17 +94,18 @@ label {
 }
 
 input {
-  all: unset;
+  outline: 0;
+  border: 0;
   font-size: 16px;
   font-weight: 600;
   padding: 5px 5px 2px 5px !important;
-  border-bottom: 3px solid transparent;
-  /*  */
+  border-bottom: 3px solid #E0E7EB;
   transition: border .5s ease-out 0s;
+  background: transparent;
 }
 
 input:focus {
-  border-bottom: 3px solid #85A0AD;
+  border-bottom: 3px solid #85A0AD !important;
 }
 
 .box-shadow {
@@ -120,6 +118,11 @@ button {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.button-link {
+  color: #2D8BE2;
+  text-decoration: underline;
 }
 
 br {
@@ -142,7 +145,12 @@ a {
 
 .row {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+.row-reverse {
+  display: flex;
+  flex-direction: row-reverse
 }
 
 .row-center {
@@ -169,6 +177,10 @@ a {
   justify-content: space-around;
 }
 
+.no-wrap {
+  white-space: nowrap;
+}
+
 .mini-link {
   color: #2D8BE2;
   font-size: 12px;
@@ -192,7 +204,6 @@ a {
 
 span {
   font-size: 10px;
-  color: #999999;
   font-weight: 400;
   line-height: -1;
 }

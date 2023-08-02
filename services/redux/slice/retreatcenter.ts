@@ -59,8 +59,6 @@ export const RetreatCentersSlice = createSlice({
             state.retreatCenter.appointments = []
         }
     },
-})
+});
 
 export const { setRetreatCenterName, setRetreatCenterZipCode, clearAppointments, cancelAppointment } = RetreatCentersSlice.actions
-
-export default RetreatCentersSlice.reducer

@@ -99,3 +99,6 @@ export const getEndDate = (date: Date) => {
 export const onDragOver = (e: React.DragEvent) => e.preventDefault();
 
 export const isArray = (value: any) => Array.isArray(value)
+
+
+export const IDGenerator = () => Number(new Date().getTime() + Math.random() + Math.floor(Math.random() * 10000)).toString()

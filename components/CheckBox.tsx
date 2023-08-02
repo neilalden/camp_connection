@@ -4,6 +4,7 @@ import styles from "./CheckBox.module.css"
 type Props = {
     label: string;
     value: boolean;
+    labelClassname?: string;
     htmlFor?: string;
     onChange: ArgFunction;
     containerStyle?: React.CSSProperties
@@ -16,7 +17,8 @@ const CheckBox = (props: Props) => {
         htmlFor = label,
         onChange,
         containerStyle,
-        containerClassName
+        containerClassName,
+        labelClassname
     } = props
     return (
         <div style={containerStyle} className={containerClassName}>
@@ -28,7 +30,7 @@ const CheckBox = (props: Props) => {
                 onChange={onChange}
                 className={styles.input}
             />
-            <label htmlFor={htmlFor} className={styles.label}>{label}</label>
+            <label htmlFor={htmlFor} className={[styles.label, labelClassname].join(" ")}>{label}</label>
         </div >
     )
 }
