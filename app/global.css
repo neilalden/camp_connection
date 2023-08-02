@@ -143,6 +143,40 @@ a {
   cursor: pointer;
 }
 
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.col-reverse {
+  display: flex;
+  flex-direction: column-reverse
+}
+
+.col-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.col-between {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.col-evenly {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.col-around {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
 .row {
   display: flex;
   flex-direction: column;
