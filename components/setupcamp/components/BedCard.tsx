@@ -47,7 +47,7 @@ const BedCard = ({
         <div className={styles.bedCard}
             onClick={() => setShowBedStyleOptions(prev => prev ? true : false)}
         >
-            {showModal ? <Modal setIsVisible={setShowModal} component={<AddBedStyleComponent BedStyle={toEditBedStyle} />} /> : null}
+            {showModal ? <Modal setIsVisible={setShowModal} component={<AddBedStyleComponent BedStyle={toEditBedStyle} setIsVisible={setShowModal} />} /> : null}
             <div className="row-between" style={{ margin: "10px 5px", position: "relative" }}
                 onClick={() => setShowBedStyleOptions(false)}
             >

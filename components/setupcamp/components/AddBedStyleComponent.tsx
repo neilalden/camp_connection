@@ -2,12 +2,15 @@ import Colors from "@/common/colors"
 import TextInput from "@/components/TextInput"
 import { setBedPrice, addBedStyle, setBedStyles, setBedStyle } from "@/services/redux/slice/retreatcenter"
 import { RootState } from "@/services/redux/store"
-import { BedType } from "@/types"
+import { BedType, SetStateType } from "@/types"
 import { IDGenerator } from "@/utils/functions"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-
-const AddBedStyleComponent = ({ BedStyle }: { BedStyle?: BedType }) => {
+type Props = {
+    BedStyle?: BedType
+    setIsVisible?: SetStateType<boolean>
+}
+const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
     const dispatch = useDispatch()
     const BEDSTYLES = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.bedStyles)
     const [bedstyle, setBedstyle] = useState<BedType>(BedStyle ?? {
@@ -138,11 +141,13 @@ const AddBedStyleComponent = ({ BedStyle }: { BedStyle?: BedType }) => {
                 {
                     BedStyle ?
                         <button
+                            type="button"
                             style={deleteBedStyleStyle}
                             onClick={() => {
                                 if (!BEDSTYLES) return;
                                 const confirmed = confirm("Are you sure you want to delete this bed?");
                                 if (confirmed) dispatch(setBedStyle([...BEDSTYLES].filter(bs => bs.id !== BedStyle?.id)))
+                                if (setIsVisible) setIsVisible(false)
                             }}>
                             Delete Bed Style
                         </button>
@@ -150,10 +155,12 @@ const AddBedStyleComponent = ({ BedStyle }: { BedStyle?: BedType }) => {
                 }
 
                 <button
+                    type="button"
                     style={saveBedStyleStyle}
                     onClick={() => {
                         if (BedStyle) updateBed()
                         else dispatch(addBedStyle(bedstyle))
+                        if (setIsVisible) setIsVisible(false)
                     }}>
                     Save Bed Style
                 </button>

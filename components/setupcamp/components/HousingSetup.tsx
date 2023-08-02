@@ -17,6 +17,7 @@ const HousingSetup = () => {
                 })
             }
             <button
+                type="button"
                 className={styles.addHousingButton}
                 onClick={() => {
                     dispatch(addHouse({
