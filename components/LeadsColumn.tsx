@@ -1,8 +1,8 @@
 "use client"
-import { addLead } from "@/services/redux/slice/leads";
+import { addLead, addNewLeads } from "@/services/redux/slice/leads";
 import { RootState } from "@/services/redux/store";
 import { AppointmentType, ArgFunction, HTMLEvent } from "@/types";
-import { debounce, generateColor } from "@/utils/functions";
+import { IDGenerator, debounce, generateColor } from "@/utils/functions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./LeadsColumn.module.css"
 import TextInput from "./TextInput";
@@ -16,7 +16,7 @@ type Props = {
 
 const LeadsColumn = (props: Props) => {
     const { customOnDrag, leadCardOnClick } = props
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     const leads = useSelector((state: RootState) => state.Leads.leads)
     const [rerenderingLeads, setRerenderingnLeads] = useState(leads)
     const [searchString, setSearchString] = useState("")
@@ -35,7 +35,7 @@ const LeadsColumn = (props: Props) => {
         event.dataTransfer.setData("widgetType", widgetType)
     }
 
-    const openAddLead = () => {
+    const openAddLead = async () => {
         const name = prompt("Enter Name", "John Doe");
         if (!name) return;
         const checkInDays = prompt("How Many Days Are Going To Stay?", "5");
@@ -47,29 +47,22 @@ const LeadsColumn = (props: Props) => {
         const status = confirm("Are You Going To Pay Now?");
         const createdAt = new Date();
         const color = generateColor();
-        const lead: AppointmentType =
+
+        const lead =
         {
-            id: `${String(name)}---${zipCode}---${color}---${createdAt.toString()}`,
             color: color,
             groupName: `${String(name).split(" ").at(-1)}'s group`,
             status: status === true ? "Booked" : "Reserved",
-            reservedBy: {
-                id: `${String(name)}---${createdAt.toString()}`,
-                firstName: String(name.split(" ").at(0)),
-                lastName: String(name.split(" ").at(-1)),
-                contactNumber: "+639 123 456",
-                email: `${name?.replaceAll(" ", ".")}@email.com`,
-                createdAt: createdAt,
-                userCategory: "camper"
-            },
+            reservedBy: 123,
             amenities: [],
             meals: [],
             rooms: [],
             groupSize: Number(groupSize),
             checkInDays: Number(checkInDays),
-            zipCode: Number(zipCode)
+            zipCode: Number(zipCode),
+            createdAt: createdAt
         }
-        dispatch(addLead(lead))
+        dispatch(addNewLeads(lead))
     }
 
     return (

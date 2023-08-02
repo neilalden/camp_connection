@@ -1,3 +1,4 @@
+"use client";
 import { setUser } from "@/services/redux/slice/user";
 import { RootState } from "@/services/redux/store";
 import { useRouter } from "next/navigation";

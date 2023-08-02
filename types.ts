@@ -72,6 +72,13 @@ export type PricingType = {
   nights: number | "*";
   price: number;
 }
+export type SpotType = {
+  id: string;
+  name: string;
+  capacity: number;
+  amount: number;
+  pricing: PricingType | Array<PricingType>
+}
 export type BedType = {
   id: string;
   name: string;

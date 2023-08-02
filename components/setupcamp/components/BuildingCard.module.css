@@ -1,0 +1,86 @@
+.collapsableSection {
+    width: 90%;
+    min-height: 90px;
+    height: 90px;
+    background: #E0E7EB;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+    margin-top: 15px !important;
+}
+
+.sectionTitle {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.buildingCard {
+    border: 1px solid #E0E7EB;
+    padding: 30px 15px;
+}
+
+.housingCardsContainer {
+    width: 100%;
+    margin-top: 10px !important;
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: space-evenly;
+}
+
+.roomCard {
+    width: 30%;
+    min-width: 300px;
+    min-height: 200px !important;
+    background: #F6F8F9;
+    margin-top: 20px !important;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.inputInsideBox {
+    width: 90% !important;
+    margin: 25px 5% !important;
+    border-bottom: 1px solid #E0E7EB;
+}
+
+.addBedButton {
+    border: 1px solid #E0E7EB !important;
+    width: calc(100% - 20px) !important;
+    margin: 0 10px 15px 10px;
+    text-align: center;
+    color: #85A0AD;
+    font-size: 18px;
+    font-weight: 900 !important;
+    transition: .5s ease-out 0s;
+    padding: 5px 0;
+}
+
+.addBedButton:hover {
+    border: 1px solid #85A0AD !important;
+
+}
+
+.pricingButton {
+    font-size: 10px;
+    color: #85A0AD;
+    font-weight: 600;
+    align-self: center;
+    margin: auto;
+    display: block;
+    margin-bottom: 1px;
+}
+
+.buildingNameInputStyle {
+    width: 400px;
+}
+
+.buildingNameInputStyle>input {
+    outline: 0 !important;
+    border: 0 !important;
+    font-size: 20px;
+    font-weight: 700 !important;
+}

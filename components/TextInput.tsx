@@ -15,7 +15,10 @@ type Props = {
     inputClassName?: string;
     labelClassName?: string;
     autofocus?: boolean;
-    onClick?: ArgFunction
+    onClick?: ArgFunction;
+    labelStyle?: React.CSSProperties
+    inputStyle?: React.CSSProperties
+
 }
 const TextInput = (props: Props) => {
     const {
@@ -32,12 +35,15 @@ const TextInput = (props: Props) => {
         inputClassName,
         labelClassName,
         autofocus,
-        onClick
+        labelStyle,
+        inputStyle,
+        onClick,
     } = props
     return (
         <div style={containerStyle} className={containerClassName}>
-            {label ? <><label htmlFor={htmlFor} className={labelClassName}>{label}</label><br /></> : null}
+            {label ? <><label htmlFor={htmlFor} style={labelStyle} className={labelClassName}>{label}</label><br /></> : null}
             <input
+                style={inputStyle}
                 onClick={onClick}
                 type={type}
                 name={htmlFor}
@@ -49,7 +55,7 @@ const TextInput = (props: Props) => {
                 placeholder={placeholder}
                 onChange={setValue}
             />
-            {bottomLabel ? <><br /><label htmlFor={htmlFor} className={[styles.bottomLabel, labelClassName].join(" ")}>{bottomLabel}</label></> : null}
+            {bottomLabel ? <><br /><label htmlFor={htmlFor} style={labelStyle} className={[styles.bottomLabel, labelClassName].join(" ")}>{bottomLabel}</label></> : null}
 
         </div >
     )

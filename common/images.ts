@@ -46,6 +46,7 @@ const Images = {
   ic_camp_white: require("../assets/ic_camp_white.png"),
   ic_back: require("../assets/ic_back.png"),
   ic_back_white: require("../assets/ic_back_white.png"),
+  ic_edit_gray: require("../assets/ic_edit_gray.png"),
 
   //user
   ic_user_profile: require("../assets/ic_user_profile.png"),

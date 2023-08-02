@@ -1,7 +1,8 @@
+import { POST } from "@/services/api";
 import { AppointmentType } from "@/types";
 import { generateColor } from "@/utils/functions";
 import { leadsSampleData } from "@/utils/sampleData";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type LeadsStateType = {
     loading: boolean;
@@ -15,7 +16,14 @@ const initialState: LeadsStateType = {
     leads: undefined,
     requestToken: undefined
 }
-
+export const addNewLeads = createAsyncThunk("user/newleads", async (lead: any) => {
+    const response = await POST(
+        "http://atsdevs.org/api/users/leads/insertLeads.php",
+        lead
+    );
+    return response;
+}
+);
 export const Leadslice = createSlice({
     name: "leads",
     initialState,

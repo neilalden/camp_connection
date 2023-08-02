@@ -1,11 +1,11 @@
-"use client";
-import SideNavigation from "@/components/SideNavigation";
-import TopNavigation from "@/components/TopNavigation";
-import { persistor, store } from "@/services/redux/store";
-import React from "react";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import styles from "./styles.module.css";
+"use client"
+import SideNavigation from '@/components/SideNavigation'
+import TopNavigation from '@/components/TopNavigation'
+import { persistor, store } from '@/services/redux/store'
+import React from 'react'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import styles from "./styles.module.css"
 
 const Layout = ({ children }: any) => {
     return (
@@ -19,8 +19,9 @@ const Layout = ({ children }: any) => {
                     </div>
                 </div>
             </PersistGate>
-        </Provider>
-    );
-};
+        </Provider >
+    )
+}
 
-export default Layout;
+
+export default Layout

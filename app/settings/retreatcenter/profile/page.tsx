@@ -74,7 +74,7 @@ const Userprofile = () => {
                     style={{ objectFit: "contain" }}
                 />
                 <div className={styles.campName}>
-                    <TextInput placeholder="Type your camp name here" value={String(retreatcenter?.name)} setValue={(e) => setRetreatCenterNameUseState(e.target.value)} containerClassName={styles.campNameInputStyle} />
+                    <TextInput placeholder="Camp name..." value={String(retreatcenter?.name)} setValue={(e) => setRetreatCenterNameUseState(e.target.value)} containerClassName={styles.campNameInputStyle} />
                     <p className={styles.stateText}>
                         {state}
                     </p>

@@ -59,7 +59,7 @@
 
 .booked {
     border-top: 3px solid #149237;
-    border-bottom: 3px solid #149237;
+    border-bottom: 1px solid #149237;
     width: 100% !important;
     height: 15px !important;
     overflow-x: visible;
@@ -71,7 +71,7 @@
 
 .reserved {
     border-top: 3px solid #FFB31A;
-    border-bottom: 3px solid #FFB31A;
+    border-bottom: 1px solid #FFB31A;
     width: 100% !important;
     height: 15px !important;
     overflow-x: visible;

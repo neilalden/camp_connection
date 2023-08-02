@@ -1,4 +1,4 @@
-import { AppointmentType, BedType, PricingType, RoomType } from "@/types";
+import { AppointmentType, BedType, PricingType, RoomType, SpotType } from "@/types";
 import { IDGenerator } from "@/utils/functions";
 import { ArrayRCSD, BuildingType, FacilitiesType, RetreatCenterType } from "@/utils/sampleData";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -33,12 +33,35 @@ const initialState: RetreatCenterStateType = {
         },
         amenities: {},
         appointments: [],
+        spots: [],
+        spotStyles: [
+            {
+                id: IDGenerator(),
+                name: "RV Spot",
+                capacity: 10,
+                amount: 5,
+                pricing: {
+                    nights: "*",
+                    price: 100
+                }
+            },
+            {
+                id: IDGenerator(),
+                name: "Tent Spot",
+                capacity: 4,
+                amount: 5,
+                pricing: {
+                    nights: "*",
+                    price: 100
+                }
+            },
+        ],
         bedStyles: [
             {
                 id: IDGenerator(),
                 name: "King Bed",
                 capacity: 4,
-                amount: 0,
+                amount: 5,
                 pricing: {
                     nights: "*",
                     price: 100
@@ -48,7 +71,7 @@ const initialState: RetreatCenterStateType = {
                 id: IDGenerator(),
                 name: "Queen Bed",
                 capacity: 3,
-                amount: 0,
+                amount: 5,
                 pricing: {
                     nights: "*",
                     price: 90
@@ -58,14 +81,30 @@ const initialState: RetreatCenterStateType = {
                 id: IDGenerator(),
                 name: "Single Bed",
                 capacity: 1,
-                amount: 0,
+                amount: 5,
                 pricing: {
                     nights: "*",
                     price: 50
                 }
             }
         ],
-        items: []
+        items: [
+            {
+                id: IDGenerator(),
+                name: "Projector",
+                amount: 5
+            },
+            {
+                id: IDGenerator(),
+                name: "Office Chairs",
+                amount: 50
+            },
+            {
+                id: IDGenerator(),
+                name: "Long table",
+                amount: 2
+            }
+        ]
     },
 }
 
@@ -73,6 +112,10 @@ export const RetreatCenterSlice = createSlice({
     name: "retreatcenter",
     initialState,
     reducers: {
+        setSpots: (state, action: PayloadAction<{ spots: RetreatCenterType["spots"] }>) => {
+            const { spots } = action.payload;
+            state.retreatCenter.spots = spots
+        },
         setBedStyles: (state, action) => {
             state.retreatCenter.bedStyles = action.payload
         },
@@ -169,12 +212,26 @@ export const RetreatCenterSlice = createSlice({
         setBedStyle: (state, action: PayloadAction<Array<BedType>>) => {
             state.retreatCenter.bedStyles = action.payload
         },
+        addSpotStyle: (state, action: PayloadAction<SpotType>) => {
+            if (!Array.isArray(state.retreatCenter.spotStyles)) {
+                state.retreatCenter.spotStyles = [action.payload]
+                return;
+            }
+            state.retreatCenter.spotStyles = [...state.retreatCenter.spotStyles, action.payload]
+        },
         addBedStyle: (state, action) => {
             if (!Array.isArray(state.retreatCenter.bedStyles)) {
                 state.retreatCenter.bedStyles = action.payload
                 return;
             }
             state.retreatCenter.bedStyles = [...state.retreatCenter.bedStyles, action.payload]
+        },
+        addItemType: (state, action) => {
+            if (!Array.isArray(state.retreatCenter.items)) {
+                state.retreatCenter.items = action.payload
+                return;
+            }
+            state.retreatCenter.items = [...state.retreatCenter.items, action.payload]
         },
         editBedStyleName: (state, action: PayloadAction<EditBedStyleName>) => {
             const { id, name } = action.payload
@@ -240,7 +297,10 @@ export const {
     setBuildingNumberRooms,
     setBuildingRooms,
     setRoomBeds,
-    setBedStyles
+    setBedStyles,
+    setSpots,
+    addSpotStyle,
+    addItemType
 }
     = RetreatCenterSlice.actions
 export default RetreatCenterSlice.reducer
