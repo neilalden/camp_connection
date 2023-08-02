@@ -735,30 +735,6 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
   },
 ];
 
-export const leadsSampleData: Array<AppointmentType> = [
-  {
-    id: "John Doe",
-    color: generateColor(),
-    groupName: "Doe's group",
-    status: "Reserved",
-    reservedBy: {
-      id: "string",
-      firstName: "John",
-      lastName: "Doe",
-      createdAt: new Date(),
-      userCategory: "camper",
-      contactNumber: "+639 123 456",
-      email: "john.doe@email.com",
-    },
-    zipCode: 4030,
-    groupSize: 20,
-    checkInDays: 5,
-    amenities: [],
-    meals: [],
-    rooms: [],
-  },
-];
-
 export const appointmentsSampleData: Array<AppointmentType> = [
   {
     id: "appointment1",
@@ -778,6 +754,7 @@ export const appointmentsSampleData: Array<AppointmentType> = [
     checkInDate: new Date("July 05 2023"),
     checkOutDate: new Date("July 10 2023"),
     checkInDays: 3,
+    createdAt: new Date(),
     amenities: [
       {
         id: "pool1",
@@ -813,6 +790,7 @@ export const appointmentsSampleData: Array<AppointmentType> = [
     meals: [],
     rooms: [
     ],
+    createdAt: new Date(),
   },
 ];
 

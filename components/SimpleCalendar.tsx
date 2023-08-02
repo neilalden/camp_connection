@@ -4,7 +4,7 @@ import { months, weekdays } from "@/utils/variables";
 import styles from "./SimpleCalendar.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
-import { appointmentsSampleData, RetreatCenterType } from "@/utils/sampleData";
+import { RetreatCenterType } from "@/utils/sampleData";
 import { addAppointment, cancelAppointment } from "@/services/redux/slice/retreatcenters";
 import { useEffect, useState } from "react";
 import { removeLead } from "@/services/redux/slice/leads";

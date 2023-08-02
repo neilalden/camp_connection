@@ -1,7 +1,5 @@
 import { POST } from "@/services/api";
 import { AppointmentType } from "@/types";
-import { generateColor } from "@/utils/functions";
-import { leadsSampleData } from "@/utils/sampleData";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type LeadsStateType = {

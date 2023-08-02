@@ -18,9 +18,10 @@ const LeadsColumn = (props: Props) => {
     const { customOnDrag, leadCardOnClick } = props
     const dispatch = useDispatch<any>();
     const leads = useSelector((state: RootState) => state.Leads.leads)
+    const user = useSelector((state: RootState) => state.User.user)
+    if (!user) return;
     const [rerenderingLeads, setRerenderingnLeads] = useState(leads)
     const [searchString, setSearchString] = useState("")
-
     useEffect(() => {
         if (searchString === "") { setRerenderingnLeads(leads); return; }
         const result = leads?.filter(lead =>
@@ -48,12 +49,13 @@ const LeadsColumn = (props: Props) => {
         const createdAt = new Date();
         const color = generateColor();
 
-        const lead =
+        const lead: AppointmentType =
         {
+            id: IDGenerator(),
+            reservedBy: user,
             color: color,
             groupName: `${String(name).split(" ").at(-1)}'s group`,
             status: status === true ? "Booked" : "Reserved",
-            reservedBy: 123,
             amenities: [],
             meals: [],
             rooms: [],
@@ -62,7 +64,7 @@ const LeadsColumn = (props: Props) => {
             zipCode: Number(zipCode),
             createdAt: createdAt
         }
-        dispatch(addNewLeads(lead))
+        dispatch(addLead(lead))
     }
 
     return (

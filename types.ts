@@ -96,7 +96,7 @@ export type MealType = {
 };
 export type AppointmentType = {
   id: string;
-  reservedBy: CamperUserType;
+  reservedBy: CamperUserType | RetreatCenterUserType | CampConnectionTeamUserType;
   status: "Reserved" | "Booked";
   checkInDays: number;
   groupName: string;
@@ -108,6 +108,7 @@ export type AppointmentType = {
   meals?: Array<MealType>;
   rooms?: Array<RoomType>;
   zipCode?: number;
+  createdAt: Date
 };
 
 export type FileType = {
