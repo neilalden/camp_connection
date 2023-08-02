@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Images from '@/common/images'
 import { RootState } from '@/services/redux/store';
 import Image from 'next/image'

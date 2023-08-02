@@ -21,7 +21,6 @@ export const addNewLeads = createAsyncThunk("user/newleads", async (lead: any) =
         "http://atsdevs.org/api/users/leads/insertLeads.php",
         lead
     );
-    console.log(response)
     return response;
 }
 );

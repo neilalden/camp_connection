@@ -1,0 +1,25 @@
+.setUpContainer {
+    width: 90%;
+    border: 1px solid #E0E7EB;
+    padding: 30px !important;
+}
+
+.addHousingButton {
+    border: 1px solid #E0E7EB !important;
+    width: 100%;
+    text-align: center;
+    color: #85A0AD;
+    font-size: 18px;
+    font-weight: 900 !important;
+    margin-top: 30px !important;
+    height: 50px;
+    transition: .5s ease-out 0s;
+
+}
+
+
+.addHousingButton:hover,
+.addBedButton:hover {
+    border: 1px solid #85A0AD !important;
+
+}

@@ -42,6 +42,8 @@ const Colors = {
     cascade200: "#E0E7EB",
     cascade100: "#F6F8F9",
     white: "#FFFFFF",
+    black: "#000000",
+    transparent: "transparent"
 }
 
 export default Colors;

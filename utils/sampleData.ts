@@ -8,6 +8,7 @@ import {
   RetreatCenterUserType,
   BedType,
   ItemType,
+  SpotType,
 } from "@/types";
 import { generateColor, getDays } from "./functions";
 import { URL } from "url";
@@ -52,6 +53,8 @@ export type RetreatCenterType = {
   logo?: string;
   meals?: Array<MealType>;
   bedStyles?: Array<BedType>
+  spotStyles?: Array<SpotType>;
+  spots?: Array<SpotType>;
   items?: Array<ItemType>
 } & FacilitiesType;
 export const FacilitiesSampleData: FacilitiesType = {
@@ -120,51 +123,51 @@ export const DaysSampleData = getDays({
 export const UsersSampleData: Array<
   CamperUserType | RetreatCenterUserType | CampConnectionTeamUserType
 > = [
-  {
-    photo: "https://thispersondoesnotexist.com/",
-    firstName: "John",
-    lastName: "Doe",
-    id: "1",
-    createdAt: new Date(),
-    userCategory: "retreatcenter",
-    userType: "Sales",
-    contactNumber: "+123 456 789",
-    email: "John.Doe@campconnetion.net",
-  },
-  {
-    photo: "https://thispersondoesnotexist.com/",
-    firstName: "Mike",
-    lastName: "Ross",
-    id: "2",
-    createdAt: new Date(),
-    userCategory: "retreatcenter",
-    userType: "Admin",
-    contactNumber: "+123 456 789",
-    email: "Mike.Ross@campconnetion.net",
-  },
-  {
-    photo: "https://thispersondoesnotexist.com/",
-    firstName: "Jessica",
-    lastName: "Pearson",
-    id: "3",
-    createdAt: new Date(),
-    userCategory: "retreatcenter",
-    userType: "Hospitality",
-    contactNumber: "+123 456 789",
-    email: "Jessica.Pearson@campconnetion.net",
-  },
-  {
-    photo: "https://thispersondoesnotexist.com/",
-    firstName: "Louis",
-    lastName: "Litt",
-    id: "4",
-    createdAt: new Date(),
-    userCategory: "retreatcenter",
-    userType: "Sales",
-    contactNumber: "+123 456 789",
-    email: "Louis.Litt@campconnetion.net",
-  },
-];
+    {
+      photo: "https://thispersondoesnotexist.com/",
+      firstName: "John",
+      lastName: "Doe",
+      id: "1",
+      createdAt: new Date(),
+      userCategory: "retreatcenter",
+      userType: "Sales",
+      contactNumber: "+123 456 789",
+      email: "John.Doe@campconnetion.net",
+    },
+    {
+      photo: "https://thispersondoesnotexist.com/",
+      firstName: "Mike",
+      lastName: "Ross",
+      id: "2",
+      createdAt: new Date(),
+      userCategory: "retreatcenter",
+      userType: "Admin",
+      contactNumber: "+123 456 789",
+      email: "Mike.Ross@campconnetion.net",
+    },
+    {
+      photo: "https://thispersondoesnotexist.com/",
+      firstName: "Jessica",
+      lastName: "Pearson",
+      id: "3",
+      createdAt: new Date(),
+      userCategory: "retreatcenter",
+      userType: "Hospitality",
+      contactNumber: "+123 456 789",
+      email: "Jessica.Pearson@campconnetion.net",
+    },
+    {
+      photo: "https://thispersondoesnotexist.com/",
+      firstName: "Louis",
+      lastName: "Litt",
+      id: "4",
+      createdAt: new Date(),
+      userCategory: "retreatcenter",
+      userType: "Sales",
+      contactNumber: "+123 456 789",
+      email: "Louis.Litt@campconnetion.net",
+    },
+  ];
 
 export const ArrayRCSD: Array<RetreatCenterType> = [
   {
