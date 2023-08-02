@@ -23,7 +23,7 @@ const SigninPage = () => {
     return (
         <div style={container}>
             <div style={{ height: "100px" }} />
-            <Image src={Images.ic_logo} style={logo} alt="CampConnection Logo" />
+            <Image alt="CampConnection Logo" src={Images.ic_logo} style={logo} />
             <div style={{ height: "100px" }} />
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>

@@ -1,4 +1,4 @@
-import { ArgFunction, SetStateType } from '@/types';
+import { ArgFunction, HTMLEvent, SetStateType } from '@/types';
 import React from 'react'
 import styles from "./TextInput.module.css"
 import { textInputSetState } from '@/utils/functions';
@@ -6,38 +6,52 @@ type Props = {
     type?: React.HTMLInputTypeAttribute;
     htmlFor?: string;
     label?: string;
+    bottomLabel?: string;
     disabled?: boolean;
     placeholder?: string;
     value: string | number;
-    setValue: SetStateType<string> | ArgFunction;
+    setValue?: (e: HTMLEvent<HTMLInputElement>) => void;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
+    inputClassName?: string;
+    labelClassName?: string;
+    autofocus?: boolean;
+    onClick?: ArgFunction
 }
 const TextInput = (props: Props) => {
     const {
         type = "text",
         label,
+        bottomLabel,
         disabled = false,
         htmlFor = label,
         placeholder,
         value,
         setValue,
         containerStyle,
-        containerClassName
+        containerClassName,
+        inputClassName,
+        labelClassName,
+        autofocus,
+        onClick
     } = props
     return (
         <div style={containerStyle} className={containerClassName}>
-            {label ? <><label htmlFor={htmlFor}>{label}</label><br /></> : null}
+            {label ? <><label htmlFor={htmlFor} className={labelClassName}>{label}</label><br /></> : null}
             <input
+                onClick={onClick}
                 type={type}
                 name={htmlFor}
                 id={htmlFor}
                 value={value}
+                autoFocus={autofocus}
                 disabled={disabled}
                 className={disabled ? styles.disabledInput : styles.input}
                 placeholder={placeholder}
                 onChange={(e) => textInputSetState(e, setValue)}
             />
+            {bottomLabel ? <><br /><label htmlFor={htmlFor} className={[styles.bottomLabel, labelClassName].join(" ")}>{bottomLabel}</label></> : null}
+
         </div >
     )
 }

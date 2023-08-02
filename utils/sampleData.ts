@@ -6,6 +6,8 @@ import {
   CampConnectionTeamUserType,
   CamperUserType,
   RetreatCenterUserType,
+  BedType,
+  ItemType,
 } from "@/types";
 import { generateColor, getDays } from "./functions";
 import { URL } from "url";
@@ -13,11 +15,7 @@ import Images from "@/common/images";
 export type RoomType = {
   id: string;
   name: string;
-  singleBed?: number;
-  doubleBed?: number;
-  queenBed?: number;
-  kingBed?: number;
-  bunkBed?: number;
+  beds: Array<BedType>
 };
 export type LevelType = {
   id: string;
@@ -25,7 +23,7 @@ export type LevelType = {
   rooms?: Array<RoomType>;
 };
 export type BuildingType = {
-  levels?: Array<LevelType>;
+  // levels?: Array<LevelType>;
   rooms?: Array<RoomType>;
 } & FilterType;
 export type ActivityType = {
@@ -53,6 +51,8 @@ export type RetreatCenterType = {
   city?: string;
   logo?: string;
   meals?: Array<MealType>;
+  bedStyles?: Array<BedType>
+  items?: Array<ItemType>
 } & FacilitiesType;
 export const FacilitiesSampleData: FacilitiesType = {
   housing: {
@@ -61,39 +61,16 @@ export const FacilitiesSampleData: FacilitiesType = {
         id: "buildingA",
         name: "Building A",
         type: "Housing",
-        levels: [
+        rooms: [
           {
-            id: "buildingAlevel1",
-            name: "Level 1",
-            rooms: [
-              {
-                id: "buildingAlevel1room1",
-                name: "room101",
-                singleBed: 4,
-              },
-              {
-                id: "buildingAlevel1room2",
-                name: "room102",
-                singleBed: 2,
-                doubleBed: 2,
-              },
-            ],
+            id: "buildingAlevel1room1",
+            name: "room101",
+            beds: []
           },
           {
-            id: "buildingAlevel2",
-            name: "Level 2",
-            rooms: [
-              {
-                id: "level2room1",
-                name: "room201",
-                queenBed: 2,
-              },
-              {
-                id: "level2room2",
-                name: "room202",
-                queenBed: 2,
-              },
-            ],
+            id: "buildingAlevel1room2",
+            name: "room102",
+            beds: []
           },
         ],
       },
@@ -203,41 +180,41 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           id: "buildingA",
           name: "Building A",
           type: "Housing",
-          levels: [
-            {
-              id: "buildingAlevel1",
-              name: "Level 1",
-              rooms: [
-                {
-                  id: "buildingAlevel1room1",
-                  name: "room101",
-                  singleBed: 4,
-                },
-                {
-                  id: "buildingAlevel1room2",
-                  name: "room102",
-                  singleBed: 2,
-                  doubleBed: 2,
-                },
-              ],
-            },
-            {
-              id: "buildingAlevel2",
-              name: "Level 2",
-              rooms: [
-                {
-                  id: "level2room1",
-                  name: "room201",
-                  queenBed: 2,
-                },
-                {
-                  id: "level2room2",
-                  name: "room202",
-                  queenBed: 2,
-                },
-              ],
-            },
-          ],
+          // levels: [
+          //   {
+          //     id: "buildingAlevel1",
+          //     name: "Level 1",
+          //     rooms: [
+          //       {
+          //         id: "buildingAlevel1room1",
+          //         name: "room101",
+          //         singleBed: 4,
+          //       },
+          //       {
+          //         id: "buildingAlevel1room2",
+          //         name: "room102",
+          //         singleBed: 2,
+          //         doubleBed: 2,
+          //       },
+          //     ],
+          //   },
+          //   {
+          //     id: "buildingAlevel2",
+          //     name: "Level 2",
+          //     rooms: [
+          //       {
+          //         id: "level2room1",
+          //         name: "room201",
+          //         queenBed: 2,
+          //       },
+          //       {
+          //         id: "level2room2",
+          //         name: "room202",
+          //         queenBed: 2,
+          //       },
+          //     ],
+          //   },
+          // ],
         },
       ],
     },
@@ -336,41 +313,41 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           id: "buildingA",
           name: "Building A",
           type: "Housing",
-          levels: [
-            {
-              id: "buildingAlevel1",
-              name: "Level 1",
-              rooms: [
-                {
-                  id: "buildingAlevel1room1",
-                  name: "room101",
-                  singleBed: 4,
-                },
-                {
-                  id: "buildingAlevel1room2",
-                  name: "room102",
-                  singleBed: 2,
-                  doubleBed: 2,
-                },
-              ],
-            },
-            {
-              id: "buildingAlevel2",
-              name: "Level 2",
-              rooms: [
-                {
-                  id: "level2room1",
-                  name: "room201",
-                  queenBed: 2,
-                },
-                {
-                  id: "level2room2",
-                  name: "room202",
-                  queenBed: 2,
-                },
-              ],
-            },
-          ],
+          // levels: [
+          //   {
+          //     id: "buildingAlevel1",
+          //     name: "Level 1",
+          //     rooms: [
+          //       {
+          //         id: "buildingAlevel1room1",
+          //         name: "room101",
+          //         singleBed: 4,
+          //       },
+          //       {
+          //         id: "buildingAlevel1room2",
+          //         name: "room102",
+          //         singleBed: 2,
+          //         doubleBed: 2,
+          //       },
+          //     ],
+          //   },
+          //   {
+          //     id: "buildingAlevel2",
+          //     name: "Level 2",
+          //     rooms: [
+          //       {
+          //         id: "level2room1",
+          //         name: "room201",
+          //         queenBed: 2,
+          //       },
+          //       {
+          //         id: "level2room2",
+          //         name: "room202",
+          //         queenBed: 2,
+          //       },
+          //     ],
+          //   },
+          // ],
         },
       ],
     },
@@ -422,41 +399,41 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           id: "buildingA",
           name: "Building A",
           type: "Housing",
-          levels: [
-            {
-              id: "buildingAlevel1",
-              name: "Level 1",
-              rooms: [
-                {
-                  id: "buildingAlevel1room1",
-                  name: "room101",
-                  singleBed: 4,
-                },
-                {
-                  id: "buildingAlevel1room2",
-                  name: "room102",
-                  singleBed: 2,
-                  doubleBed: 2,
-                },
-              ],
-            },
-            {
-              id: "buildingAlevel2",
-              name: "Level 2",
-              rooms: [
-                {
-                  id: "level2room1",
-                  name: "room201",
-                  queenBed: 2,
-                },
-                {
-                  id: "level2room2",
-                  name: "room202",
-                  queenBed: 2,
-                },
-              ],
-            },
-          ],
+          // levels: [
+          //   {
+          //     id: "buildingAlevel1",
+          //     name: "Level 1",
+          //     rooms: [
+          //       {
+          //         id: "buildingAlevel1room1",
+          //         name: "room101",
+          //         singleBed: 4,
+          //       },
+          //       {
+          //         id: "buildingAlevel1room2",
+          //         name: "room102",
+          //         singleBed: 2,
+          //         doubleBed: 2,
+          //       },
+          //     ],
+          //   },
+          //   {
+          //     id: "buildingAlevel2",
+          //     name: "Level 2",
+          //     rooms: [
+          //       {
+          //         id: "level2room1",
+          //         name: "room201",
+          //         queenBed: 2,
+          //       },
+          //       {
+          //         id: "level2room2",
+          //         name: "room202",
+          //         queenBed: 2,
+          //       },
+          //     ],
+          //   },
+          // ],
         },
       ],
     },
@@ -508,41 +485,41 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           id: "buildingA",
           name: "Building A",
           type: "Housing",
-          levels: [
-            {
-              id: "buildingAlevel1",
-              name: "Level 1",
-              rooms: [
-                {
-                  id: "buildingAlevel1room1",
-                  name: "room101",
-                  singleBed: 4,
-                },
-                {
-                  id: "buildingAlevel1room2",
-                  name: "room102",
-                  singleBed: 2,
-                  doubleBed: 2,
-                },
-              ],
-            },
-            {
-              id: "buildingAlevel2",
-              name: "Level 2",
-              rooms: [
-                {
-                  id: "level2room1",
-                  name: "room201",
-                  queenBed: 2,
-                },
-                {
-                  id: "level2room2",
-                  name: "room202",
-                  queenBed: 2,
-                },
-              ],
-            },
-          ],
+          // levels: [
+          //   {
+          //     id: "buildingAlevel1",
+          //     name: "Level 1",
+          //     rooms: [
+          //       {
+          //         id: "buildingAlevel1room1",
+          //         name: "room101",
+          //         singleBed: 4,
+          //       },
+          //       {
+          //         id: "buildingAlevel1room2",
+          //         name: "room102",
+          //         singleBed: 2,
+          //         doubleBed: 2,
+          //       },
+          //     ],
+          //   },
+          //   {
+          //     id: "buildingAlevel2",
+          //     name: "Level 2",
+          //     rooms: [
+          //       {
+          //         id: "level2room1",
+          //         name: "room201",
+          //         queenBed: 2,
+          //       },
+          //       {
+          //         id: "level2room2",
+          //         name: "room202",
+          //         queenBed: 2,
+          //       },
+          //     ],
+          //   },
+          // ],
         },
       ],
     },
@@ -594,41 +571,41 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           id: "buildingA",
           name: "Building A",
           type: "Housing",
-          levels: [
-            {
-              id: "buildingAlevel1",
-              name: "Level 1",
-              rooms: [
-                {
-                  id: "buildingAlevel1room1",
-                  name: "room101",
-                  singleBed: 4,
-                },
-                {
-                  id: "buildingAlevel1room2",
-                  name: "room102",
-                  singleBed: 2,
-                  doubleBed: 2,
-                },
-              ],
-            },
-            {
-              id: "buildingAlevel2",
-              name: "Level 2",
-              rooms: [
-                {
-                  id: "level2room1",
-                  name: "room201",
-                  queenBed: 2,
-                },
-                {
-                  id: "level2room2",
-                  name: "room202",
-                  queenBed: 2,
-                },
-              ],
-            },
-          ],
+          // levels: [
+          //   {
+          //     id: "buildingAlevel1",
+          //     name: "Level 1",
+          //     rooms: [
+          //       {
+          //         id: "buildingAlevel1room1",
+          //         name: "room101",
+          //         singleBed: 4,
+          //       },
+          //       {
+          //         id: "buildingAlevel1room2",
+          //         name: "room102",
+          //         singleBed: 2,
+          //         doubleBed: 2,
+          //       },
+          //     ],
+          //   },
+          //   {
+          //     id: "buildingAlevel2",
+          //     name: "Level 2",
+          //     rooms: [
+          //       {
+          //         id: "level2room1",
+          //         name: "room201",
+          //         queenBed: 2,
+          //       },
+          //       {
+          //         id: "level2room2",
+          //         name: "room202",
+          //         queenBed: 2,
+          //       },
+          //     ],
+          //   },
+          // ],
         },
       ],
     },
@@ -680,41 +657,41 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           id: "buildingA",
           name: "Building A",
           type: "Housing",
-          levels: [
-            {
-              id: "buildingAlevel1",
-              name: "Level 1",
-              rooms: [
-                {
-                  id: "buildingAlevel1room1",
-                  name: "room101",
-                  singleBed: 4,
-                },
-                {
-                  id: "buildingAlevel1room2",
-                  name: "room102",
-                  singleBed: 2,
-                  doubleBed: 2,
-                },
-              ],
-            },
-            {
-              id: "buildingAlevel2",
-              name: "Level 2",
-              rooms: [
-                {
-                  id: "level2room1",
-                  name: "room201",
-                  queenBed: 2,
-                },
-                {
-                  id: "level2room2",
-                  name: "room202",
-                  queenBed: 2,
-                },
-              ],
-            },
-          ],
+          // levels: [
+          //   {
+          //     id: "buildingAlevel1",
+          //     name: "Level 1",
+          //     rooms: [
+          //       {
+          //         id: "buildingAlevel1room1",
+          //         name: "room101",
+          //         singleBed: 4,
+          //       },
+          //       {
+          //         id: "buildingAlevel1room2",
+          //         name: "room102",
+          //         singleBed: 2,
+          //         doubleBed: 2,
+          //       },
+          //     ],
+          //   },
+          //   {
+          //     id: "buildingAlevel2",
+          //     name: "Level 2",
+          //     rooms: [
+          //       {
+          //         id: "level2room1",
+          //         name: "room201",
+          //         queenBed: 2,
+          //       },
+          //       {
+          //         id: "level2room2",
+          //         name: "room202",
+          //         queenBed: 2,
+          //       },
+          //     ],
+          //   },
+          // ],
         },
       ],
     },

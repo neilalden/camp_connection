@@ -193,6 +193,7 @@
     flex-direction: column;
     position: relative;
   }
+
   .largCalendar::before {
     content: "";
     position: absolute;
@@ -209,7 +210,6 @@
     align-items: center;
     height: 900px;
     width: 3px;
-    background-color: red;
   }
 
   .horizontalLine {
@@ -218,9 +218,11 @@
     background-color: #000;
     margin-bottom: 30px;
   }
+
   .largeRow {
     margin-left: 50px;
   }
+
   .divider {
     width: 1325px !important;
   }

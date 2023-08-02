@@ -112,10 +112,11 @@ const SideNavigation = () => {
                                     else router.push(isInSettings ? `/settings/${user.userCategory}/${nav.id}` : `/${user.userCategory}/${nav.id}`)
                                 }}
                             >
-                                <Image src={nav.img}
+                                <Image
+                                    alt={`${nav.name} icon`}
+                                    src={nav.img}
                                     height={20}
                                     style={{ objectFit: "cover" }}
-                                    alt={`${nav.name} icon`}
                                 /><p className={currentPage === nav.id ? styles.navTextActive : styles.navText}>{nav.name}</p>
                             </button>
                         )
@@ -124,10 +125,11 @@ const SideNavigation = () => {
                 <button
                     onClick={() => router.push(isInSettings ? `/${user.userCategory}/${user.userCategory === "campconnectionteam" ? "leads" : "groupleads"}` : `/settings/retreatcenter/profile`)}
                     className={styles.settingsButton}>
-                    <Image src={isInSettings ? Images.ic_back : Images.ic_settings}
+                    <Image
+                        alt={"Settings icon"}
+                        src={isInSettings ? Images.ic_back : Images.ic_settings}
                         height={20}
                         style={{ objectFit: "cover" }}
-                        alt={"Settings icon"}
                     />
                     <p className={styles.navText}>{isInSettings ? "Go Back" : "Settings"}</p>
                 </button>

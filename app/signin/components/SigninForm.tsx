@@ -13,9 +13,10 @@ import { setUser } from '@/services/redux/slice/user';
 import { RetreatCenterUserType } from '@/types';
 import { RootState } from '@/services/redux/store';
 import TextInput from '@/components/TextInput';
+import { IDGenerator } from '@/utils/functions';
 
 const RetreatCenterUserTestData: RetreatCenterUserType = {
-    id: `Alan---${new Date().getTime()}`,
+    id: `Alan---${IDGenerator()}`,
     firstName: "Alan",
     lastName: "Brown",
     middleName: "",
@@ -68,7 +69,7 @@ const SigninForm = () => {
                 className={styles.googleButton}
                 onClick={handleSignin}
             >
-                <Image src={Images.ic_google} alt="Google icon" className={styles.icon} />
+                <Image alt="Google icon" src={Images.ic_google} className={styles.icon} />
                 Sign in with Google
             </button>
         </form>

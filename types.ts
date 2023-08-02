@@ -1,7 +1,7 @@
 export type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;
 export type HTMLEvent<T> = React.ChangeEvent<T>;
 export type VoidFunction = () => void;
-export type ArgFunction = (arg?: any) => void;
+export type ArgFunction = (...arg: any) => void;
 export type ScreenProps = {
   children?: React.ReactNode;
   [key: string]: any;
@@ -22,10 +22,10 @@ export type User = {
 };
 export interface CamperUserType extends User {
   userType?:
-    | "Group Leader"
-    | "Group Member"
-    | "Camper Gaurdian/Parent"
-    | "Individual Camper";
+  | "Group Leader"
+  | "Group Member"
+  | "Camper Gaurdian/Parent"
+  | "Individual Camper";
   groupName?: string;
   checkInDate?: Date;
   checkOutDate?: Date;
@@ -55,6 +55,28 @@ export type RoomType = {
   king?: number;
   bunk?: string;
 };
+export type DiagramType = {
+  id: string;
+  name: string;
+  photo?: string;
+  items?: Array<ItemType>
+}
+export type ItemType = {
+  id: string;
+  name: string;
+  amount: number
+}
+export type PricingType = {
+  nights: number | "*";
+  price: number;
+}
+export type BedType = {
+  id: string;
+  name: string;
+  capacity: number;
+  amount: number;
+  pricing: PricingType | Array<PricingType>
+}
 export type AmenityType = {
   id: string;
   name: string;

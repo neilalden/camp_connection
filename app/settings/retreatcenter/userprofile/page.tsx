@@ -79,7 +79,9 @@ const Userprofile = () => {
         <div className={styles.campName}>
           <div className={styles.campNameHead}>
             <h3>{RetreatCenterUserData.userType} Team</h3>
-            <Image src={Images.ic_user_group} alt="groupdropdown" />
+            <Image
+              alt="groupdropdown"
+              src={Images.ic_user_group} />
           </div>
           <p className={styles.stateText}>{RetreatCenterUserData.position}</p>
         </div>
@@ -206,11 +208,11 @@ const Userprofile = () => {
         <div className={styles.docsContainer}>
           <div className={styles.uploadedDocs}>
             <p>ValidID</p>
-            <Image src={Images.ic_doc_icon} alt="document icon" />
+            <Image alt="document icon" src={Images.ic_doc_icon} />
           </div>
           <div className={styles.uploadedDocs}>
             <p>Elegibility</p>
-            <Image src={Images.ic_doc_icon} alt="document icon" />
+            <Image alt="document icon" src={Images.ic_doc_icon} />
           </div>
         </div>
       </div>
