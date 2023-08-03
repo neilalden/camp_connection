@@ -85,7 +85,7 @@ const Userprofile = () => {
             <div className={["card", styles.headerContainer].join(" ")}>
                 <div className={styles.logoContainer}>
                     <Image
-                        src={campPhoto ? campPhoto : Images.ic_user_profile}
+                        src={campPhoto ? campPhoto : Images.ic_logo}
                         alt="Compant Logo"
                         className={styles.logo}
                         height={150}
