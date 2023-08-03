@@ -132,7 +132,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     id: "Eatern Point Retreat House",
     name: "Eatern Point Retreat House",
     state: "California",
-    image: Images["ic_logo"],
+    photo: Images["ic_logo"],
     zipCode: "2143",
     capacity: 30,
     housing: {
@@ -267,7 +267,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Art of Living Retreat Center",
     zipCode: "5678",
     capacity: 50,
-    image: Images["ic_logo"],
+    photo: Images["ic_logo"],
     housing: {
       buildings: [
         {
@@ -353,7 +353,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Marianist Family Retreat Center",
     zipCode: "8234",
     capacity: 100,
-    image: Images["ic_logo"],
+    photo: Images["ic_logo"],
     housing: {
       buildings: [
         {
@@ -439,7 +439,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Isabella Freedman Jewish Retreat Center",
     zipCode: "7654",
     capacity: 20,
-    image: Images["ic_logo"],
+    photo: Images["ic_logo"],
     housing: {
       buildings: [
         {
@@ -525,7 +525,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Saint John’s Abbey",
     zipCode: "5843",
     capacity: 170,
-    image: Images["ic_logo"],
+    photo: Images["ic_logo"],
     housing: {
       buildings: [
         {
@@ -611,7 +611,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Abbey of Gethsemani",
     zipCode: "2134",
     capacity: 70,
-    image: Images["ic_logo"],
+    photo: Images["ic_logo"],
     housing: {
       buildings: [
         {
