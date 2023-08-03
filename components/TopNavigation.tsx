@@ -14,10 +14,11 @@ const TopNavigation = () => {
   const router = useRouter();
   const user = useSelector((state: RootState) => state.User.user);
   const userProfile = useSelector((state: RootState) => state.User.user?.photo);
+  const campPhoto = useSelector((state: RootState) => state.RetreatCenter.retreatCenter?.photo);
   const retreatcenter = useSelector(
     (state: RootState) => state.RetreatCenter.retreatCenter
   );
-
+  console.log(campPhoto)
   const logout = () => {
     router.push("/signin");
     dispatch(setUser(undefined));
@@ -32,14 +33,17 @@ const TopNavigation = () => {
 
   return (
     <nav className={styles.topNav}>
-      {retreatcenter?.logo ? (
-        <Image
-          src={retreatcenter.logo}
-          height={150}
-          width={150}
-          alt="Company Logo"
-          className={styles.companyLogo}
-        />
+      {campPhoto ? (
+
+        <div className={styles.logoContainer}>
+          <Image
+            src={campPhoto ?? Images.ic_logo}
+            height={150}
+            width={150}
+            alt="Company Logo"
+            className={styles.companyLogo}
+          />
+        </div>
       ) : (
         <div className={styles.logoContainer}>
           <h1 className={styles.logo}>

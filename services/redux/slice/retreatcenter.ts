@@ -26,6 +26,7 @@ const initialState: RetreatCenterStateType = {
         id: IDGenerator(),
         name: "",
         zipCode: "",
+        photo: undefined,
         housing: {
             buildings: [
             ],
@@ -111,6 +112,9 @@ export const RetreatCenterSlice = createSlice({
     name: "retreatcenter",
     initialState,
     reducers: {
+        setRetreatCenterPhoto: (state, action: PayloadAction<string>) => {
+            if (state.retreatCenter) state.retreatCenter.photo = action.payload;
+        },
         setBuildings: (state, action: PayloadAction<Array<BuildingType>>) => {
             state.retreatCenter.housing.buildings = action.payload
         },
@@ -330,7 +334,8 @@ export const {
     addSpotStyle,
     setCampAreaSpaces,
     setSpaceSpots,
-    setSpotStyles
+    setSpotStyles,
+    setRetreatCenterPhoto
 }
     = RetreatCenterSlice.actions
 export default RetreatCenterSlice.reducer

@@ -27,7 +27,7 @@ import FileUpload from "@/components/FileUpload";
 import FileButton from "@/components/FileButton";
 import RadioButton from "@/components/RadioButton";
 import DateInput from "@/components/DateInput";
-import { setUserProfile } from "@/services/redux/slice/user";
+import { setUserPhoto } from "@/services/redux/slice/user";
 const options = StatesInUSA.map((state) => ({ label: state, value: state }));
 const Userprofile = () => {
   // const retreatcenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)[0]
@@ -75,7 +75,7 @@ const Userprofile = () => {
     if (e.target.files && e.target.files.length > 0) {
       const selectedFile = e.target.files[0];
       const imageUrl = URL.createObjectURL(selectedFile);
-      dispatch(setUserProfile(imageUrl)); // Dispatch the action to update the Redux state
+      dispatch(setUserPhoto(imageUrl)); // Dispatch the action to update the Redux state
     }
   };
   return (

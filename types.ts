@@ -162,7 +162,7 @@ export type RetreatCenterType = {
   id: string;
   name: string;
   zipCode: string;
-  image?: string;
+  photo?: string;
   capacity?: number;
   timezone?: string;
   state?: string;
