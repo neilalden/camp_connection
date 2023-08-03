@@ -5,7 +5,6 @@ import Image from "next/image";
 import Images from "@/common/images";
 import {
   ArrayRCSD,
-  RetreatCenterType,
   UsersSampleData,
 } from "@/utils/sampleData";
 import { useDispatch, useSelector } from "react-redux";

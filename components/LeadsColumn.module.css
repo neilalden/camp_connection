@@ -1,5 +1,5 @@
 .leadscolumn {
-    min-width: 200px;
+    min-width: 210px;
     border-right: 1px solid var(--cascade-300, #C2CFD6);
     display: flex;
     flex-direction: column;

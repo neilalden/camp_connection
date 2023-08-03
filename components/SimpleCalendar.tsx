@@ -1,10 +1,9 @@
-import { AppointmentType, SetStateType } from "@/types";
+import { AppointmentType, SetStateType, RetreatCenterType } from "@/types";
 import { dateIsScheduled, getDays, getEndDate, onDragOver, trunc } from "@/utils/functions";
 import { months, weekdays } from "@/utils/variables";
 import styles from "./SimpleCalendar.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
-import { RetreatCenterType } from "@/utils/sampleData";
 import { addAppointment, cancelAppointment } from "@/services/redux/slice/retreatcenters";
 import { useEffect, useState } from "react";
 import { removeLead } from "@/services/redux/slice/leads";

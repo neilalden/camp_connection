@@ -8,55 +8,13 @@ import {
   RetreatCenterUserType,
   BedType,
   ItemType,
-  SpotType,
+  RoomType,
+  FacilitiesType,
+  RetreatCenterType,
 } from "@/types";
 import { generateColor, getDays } from "./functions";
 import { URL } from "url";
 import Images from "@/common/images";
-export type RoomType = {
-  id: string;
-  name: string;
-  beds: Array<BedType>
-};
-export type LevelType = {
-  id: string;
-  name: string;
-  rooms?: Array<RoomType>;
-};
-export type BuildingType = {
-  // levels?: Array<LevelType>;
-  rooms?: Array<RoomType>;
-} & FilterType;
-export type ActivityType = {
-  class: "pool" | "paintball" | "zipline" | "canoe";
-} & FilterType;
-export type FacilitiesType = {
-  housing: {
-    buildings?: Array<BuildingType>;
-  };
-  amenities: {
-    activities?: Array<ActivityType>;
-  };
-  meetingrooms?: {};
-
-  appointments: Array<AppointmentType>;
-};
-export type RetreatCenterType = {
-  id: string;
-  name: string;
-  zipCode: string;
-  image?: string;
-  capacity?: number;
-  timezone?: string;
-  state?: string;
-  city?: string;
-  logo?: string;
-  meals?: Array<MealType>;
-  bedStyles?: Array<BedType>
-  spotStyles?: Array<SpotType>;
-  spots?: Array<SpotType>;
-  items?: Array<ItemType>
-} & FacilitiesType;
 export const FacilitiesSampleData: FacilitiesType = {
   housing: {
     buildings: [
@@ -107,7 +65,7 @@ export const FacilitiesSampleData: FacilitiesType = {
       },
     ],
   },
-  meetingrooms: {
+  meetingRooms: {
     id: "Meeting room",
     name: "Meeting room",
     type: "Meeting room",
@@ -297,7 +255,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         },
       ],
     },
-    meetingrooms: {
+    meetingRooms: {
       id: "Meeting room",
       name: "Meeting room",
       type: "Meeting room",
@@ -382,7 +340,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         },
       ],
     },
-    meetingrooms: {
+    meetingRooms: {
       id: "Meeting room",
       name: "Meeting room",
       type: "Meeting room",
@@ -468,7 +426,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         },
       ],
     },
-    meetingrooms: {
+    meetingRooms: {
       id: "Meeting room",
       name: "Meeting room",
       type: "Meeting room",
@@ -554,7 +512,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         },
       ],
     },
-    meetingrooms: {
+    meetingRooms: {
       id: "Meeting room",
       name: "Meeting room",
       type: "Meeting room",
@@ -640,7 +598,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         },
       ],
     },
-    meetingrooms: {
+    meetingRooms: {
       id: "Meeting room",
       name: "Meeting room",
       type: "Meeting room",
@@ -726,7 +684,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         },
       ],
     },
-    meetingrooms: {
+    meetingRooms: {
       id: "Meeting room",
       name: "Meeting room",
       type: "Meeting room",

@@ -32,7 +32,7 @@
     justify-content: space-evenly;
 }
 
-.roomCard {
+.spaceCard {
     width: 30%;
     min-width: 300px;
     min-height: 200px !important;

@@ -1,10 +1,15 @@
+import Images from "@/common/images";
 import TextInput from "@/components/TextInput";
-import { setBedStyles, addSpotStyle } from "@/services/redux/slice/retreatcenter";
+import { addSpotStyle, setSpotStyles, } from "@/services/redux/slice/retreatcenter";
 import { RootState } from "@/services/redux/store";
-import { BedType, SpotType } from "@/types";
+import { SpotType, } from "@/types";
 import { IDGenerator } from "@/utils/functions";
+import Image from "next/image";
+import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import AddBedStyleComponent from "./AddBedStyleComponent";
+import Modal from "./Modal";
 import styles from "./SpotCard.module.css"
 const SpotCard = ({
     spot,
@@ -12,21 +17,26 @@ const SpotCard = ({
     changeSpot,
     changeSpotAmount,
 }: {
-    spot: BedType,
+    spot: SpotType,
     deleteSpot: VoidFunction,
     changeSpot: (spot: SpotType) => void,
     changeSpotAmount: (value: number, spot: SpotType) => void,
 }) => {
     const dispatch = useDispatch()
     const spotStyles = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.spotStyles)
-    const [showBedStyleOptions, setShowBedStyleOptions] = useState(false)
+    const [showSpotStyleOptions, setShowSpotStyleOptions] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    const [toEditSpotStyle, setToEditSpotStyle] = useState<SpotType | undefined>()
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                setShowBedStyleOptions(false)
+                setShowSpotStyleOptions(false)
             }
             if (event.key === 'Enter') {
-                setShowBedStyleOptions(false)
+                setShowSpotStyleOptions(false)
+            }
+            if (event.key === 'Space') {
+                setShowSpotStyleOptions(false)
             }
         };
         window.addEventListener('keydown', handleEsc);
@@ -37,106 +47,118 @@ const SpotCard = ({
     }, []);
 
 
-    const changeBedCapacity = (value: number, parambed: BedType) => {
+    const changeSpotCapacity = (value: number, paramspot: SpotType) => {
         if (isNaN(value)) return;
-        const newBedStyles = spotStyles?.map((spotStyle) => spotStyle.id === parambed.id ? ({ ...spotStyle, capacity: value }) : spotStyle)
-        dispatch(setBedStyles(newBedStyles))
+        const newSpotStyles = spotStyles?.map((spotStyle) => spotStyle.id === paramspot.id ? ({ ...spotStyle, capacity: value }) : spotStyle)
+        dispatch(setSpotStyles(newSpotStyles))
     }
-    const changeBedName = (value: string, parambed: BedType) => {
-        const newBedStyles = spotStyles?.map((spotStyle) => spotStyle.id === parambed.id ? ({ ...spotStyle, name: value }) : spotStyle)
-        dispatch(setBedStyles(newBedStyles))
+    const changeSpotName = (value: string, paramspot: SpotType) => {
+        const newSpotStyles = spotStyles?.map((spotStyle) => spotStyle.id === paramspot.id ? ({ ...spotStyle, name: value }) : spotStyle)
+        dispatch(setSpotStyles(newSpotStyles))
     }
 
     return (
-        <div className={styles.spotCard}>
+        <div className={styles.spotCard}
+            onClick={() => setShowSpotStyleOptions(prev => prev ? true : false)}
+        >
+            {showModal ? <Modal setIsVisible={setShowModal} component={<AddBedStyleComponent BedStyle={toEditSpotStyle} setIsVisible={setShowModal} />} /> : null}
             <div className="row-between" style={{ margin: "10px 5px 5px 5px", position: "relative" }}>
                 <button
                     type="button"
-                    className={styles.deletePriceButton}
+                    className={styles.deleteButton}
                     onClick={deleteSpot}>X</button>
                 {
-                    showBedStyleOptions ? (
-                        <div
-                            className={styles.bedStyleOptionsContainer}
-                            onClick={(e) => { e.stopPropagation(); setShowBedStyleOptions(false) }}
+                    showSpotStyleOptions ? (
+                        <React.Fragment>
+                            <div className={styles.darkBackground} onClick={() => setShowSpotStyleOptions(false)} />
+                            <div
+                                className={styles.spotStyleOptionsContainer}
+                                onClick={() => setShowSpotStyleOptions(prev => prev ? false : true)}
 
-                        >
-                            {
-                                spotStyles?.map((spotStyle, i) => {
-                                    return (
-                                        <div
-                                            key={i}
-                                            className={styles.bedStyleOption}
-                                            style={{ width: "90%" }}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                changeSpot({ ...spotStyle, amount: spot.amount });
-                                                setShowBedStyleOptions(false)
-                                            }}
-
-                                        >
-                                            <button
-                                                className={styles.optionBedButton}
+                            >
+                                {
+                                    spotStyles?.map((spotstyle, i) => {
+                                        const currentSpot = spotstyle.id === spot.id
+                                        return (
+                                            <div
+                                                key={i}
+                                                className={styles.spotStyleOption}
+                                                style={{ width: "90%" }}
                                                 onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    changeSpot({ ...spotStyle, amount: spot.amount })
-                                                    setShowBedStyleOptions(false)
+                                                    changeSpot({ ...spotstyle, amount: spot.amount });
+                                                    setShowSpotStyleOptions(prev => prev ? false : true)
                                                 }}
-                                                style={{
-                                                    color: spotStyle.name === spot.name ? "#000" : "#999"
-                                                }}
+
                                             >
-                                                <TextInput
-                                                    onClick={(e) => { e.stopPropagation(); changeSpot({ ...spotStyle, amount: spot.amount }) }}
-                                                    containerClassName={styles.bedInputStyle}
-                                                    value={spotStyle.name}
-                                                    setValue={(e) => changeBedName(e.target.value, spotStyle)}
-                                                />
-                                            </button>
-                                            <TextInput
-                                                onClick={(e) => { e.stopPropagation(); changeSpot({ ...spotStyle, amount: spot.amount }) }}
-                                                inputClassName={styles.bedCapacityInput}
-                                                labelClassName={styles.capacityLabelClassName}
-                                                value={spotStyle.capacity}
-                                                setValue={(e) => changeBedCapacity(Number(e.target.value), spotStyle)}
-                                            />
-                                        </div>
-                                    )
-                                })
-                            }
-                            <button
-                                className={styles.addMeetingRoomButton}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    dispatch(addSpotStyle({
-                                        id: IDGenerator(),
-                                        name: `RV Spot`,
-                                        capacity: 3,
-                                        pricing: {
-                                            nights: "*",
-                                            price: 20
-                                        },
-                                        amount: 5
-                                    }))
-                                }}
-                            >+</button>
-                        </div>
+                                                <button
+                                                    type="button"
+                                                    className={styles.optionSpotButton}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        changeSpot({ ...spotstyle, amount: spot.amount })
+                                                        setShowSpotStyleOptions(false)
+                                                    }}
+                                                    style={{
+                                                        color: currentSpot ? "#000" : "#999"
+                                                    }}
+                                                >
+                                                    {spotstyle.name} {currentSpot ? "▴" : ""}
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setToEditSpotStyle(spotstyle)
+                                                        setShowModal(true)
+                                                    }}
+                                                    style={{ marginTop: "5px" }}
+                                                >
+                                                    <Image src={Images.ic_edit_gray} alt="edit icon" height={15} />
+                                                </button>
+                                            </div>
+                                        )
+                                    })
+                                }
+                                <button
+                                    type="button"
+                                    className={styles.addMeetingRoomButton}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setToEditSpotStyle(undefined)
+                                        setShowModal(true)
+                                    }}
+                                >+</button>
+
+                            </div>
+                        </React.Fragment>
                     ) : (
-                        <button className={styles.selectBedButton} onClick={() => setShowBedStyleOptions(prev => !prev)}>
-                            {spot.name}
+                        <button
+                            type="button" className={styles.selectSpotButton} onClick={(e) => { e.stopPropagation(); setShowSpotStyleOptions(true) }}>
+                            {spot.name} ▾
                         </button>
                     )
                 }
-                <div className={styles.amountControlContainer}>
-                    <TextInput
-                        containerClassName={styles.bedCapacityInputContainer}
-                        inputClassName={styles.bedCapacityInput}
-                        value={spot.amount}
-                        setValue={(e) => changeSpotAmount(Number(e.target.value), spot)}
-                    />
+                <div className="row">
+
+                    <div className={styles.amountControlContainer}>
+                        <TextInput
+                            containerClassName={styles.spotCapacityInputContainer}
+                            inputClassName={styles.spotCapacityInput}
+                            value={spot.amount}
+                            setValue={(e) => { e.stopPropagation(); changeSpotAmount(Number(e.target.value), spot) }}
+                        />
+                    </div>
+                    <button
+                        type="button"
+                        disabled={spot.amount === 1}
+                        onClick={() => changeSpotAmount(spot.amount - 1, spot)}
+                        className={[spot.amount === 1 && "disabled", styles.capacityPlus].join(" ")}>-</button>
+                    <button
+                        type="button"
+                        onClick={() => changeSpotAmount(spot.amount + 1, spot)}
+                        className={styles.capacityPlus}>+</button>
                 </div>
             </div>
-            <button className={styles.pricingButton}>pricing</button>
         </div>
     )
 }

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Images from "@/common/images";
-import { ArrayRCSD, RetreatCenterType, UsersSampleData } from "@/utils/sampleData";
+import { ArrayRCSD, UsersSampleData } from "@/utils/sampleData";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
 import TextInput from "@/components/TextInput";

@@ -50,13 +50,6 @@ export type MeetingRoomType = {
   capacity: number;
 
 }
-export type RoomType = {
-  id: string;
-  name: string;
-  buildingId?: string;
-  level?: string;
-  beds?: Array<BedType>
-};
 export type DiagramType = {
   id: string;
   name: string;
@@ -72,20 +65,7 @@ export type PricingType = {
   nights: number | "*";
   price: number;
 }
-export type SpotType = {
-  id: string;
-  name: string;
-  capacity: number;
-  amount: number;
-  pricing: PricingType | Array<PricingType>
-}
-export type BedType = {
-  id: string;
-  name: string;
-  capacity: number;
-  amount: number;
-  pricing: PricingType | Array<PricingType>
-}
+
 export type AmenityType = {
   id: string;
   name: string;
@@ -122,3 +102,74 @@ export type ScheduleType = {
   from: string;
   to: string;
 };
+export type LevelType = {
+  id: string;
+  name: string;
+  rooms?: Array<RoomType>;
+};
+export type BedType = {
+  id: string;
+  name: string;
+  capacity: number;
+  amount: number;
+  pricing: PricingType | Array<PricingType>
+}
+export type SpotType = {
+  id: string;
+  name: string;
+  capacity: number;
+  amount: number;
+  pricing: PricingType | Array<PricingType>
+}
+export type RoomType = {
+  id: string;
+  name: string;
+  buildingId?: string;
+  level?: string;
+  beds: Array<BedType>
+};
+export type SpaceType = {
+  id: string;
+  name: string;
+  campAreaId?: string;
+  level?: string;
+  spots: Array<SpotType>
+};
+
+export type CampAreaType = {
+  spaces?: Array<SpaceType>;
+} & FilterType;
+export type BuildingType = {
+  // levels?: Array<LevelType>;
+  rooms?: Array<RoomType>;
+} & FilterType;
+export type ActivityType = {
+  class: "pool" | "paintball" | "zipline" | "canoe";
+} & FilterType;
+export type FacilitiesType = {
+  housing: {
+    buildings?: Array<BuildingType>;
+    campAreas?: Array<CampAreaType>
+  };
+  amenities: {
+    activities?: Array<ActivityType>;
+  };
+  meetingRooms?: {};
+
+  appointments: Array<AppointmentType>;
+};
+export type RetreatCenterType = {
+  id: string;
+  name: string;
+  zipCode: string;
+  image?: string;
+  capacity?: number;
+  timezone?: string;
+  state?: string;
+  city?: string;
+  logo?: string;
+  meals?: Array<MealType>;
+  bedStyles?: Array<BedType>
+  spotStyles?: Array<SpotType>;
+  items?: Array<ItemType>
+} & FacilitiesType;
