@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Images from "@/common/images";
@@ -21,7 +21,7 @@ import ZipcodeToTimezone from "zipcode-to-timezone"
 import { ScheduleType } from "@/types";
 import { sortArrayOfObjects } from "@/utils/functions";
 import Divider from "@/components/Divider";
-import { setRetreatCenterName } from "@/services/redux/slice/retreatcenter";
+import { setRetreatCenterName, setRetreatCenterPhoto } from "@/services/redux/slice/retreatcenter";
 import Colors from "@/common/colors";
 const options = StatesInUSA.map(state => ({ label: state, value: state }))
 const Userprofile = () => {
@@ -62,17 +62,46 @@ const Userprofile = () => {
         if (retreatCenterName === undefined) return
         dispatch(setRetreatCenterName(retreatCenterName))
     }, [retreatCenterName])
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const campPhoto = useSelector(
+        (state: RootState) => state.RetreatCenter.retreatCenter?.photo
+    );
+    const handleEditClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const selectedFile = e.target.files[0];
+            const imageUrl = URL.createObjectURL(selectedFile);
+            dispatch(setRetreatCenterPhoto(imageUrl));
+        }
+    };
     return (
         <div className={styles.container}>
             <div className={["card", styles.headerContainer].join(" ")}>
-                <Image
-                    alt="Compant Logo"
-                    src={Images.ic_logo}
-                    className={styles.logo}
-                    height={150}
-                    width={150}
-                    style={{ objectFit: "contain" }}
-                />
+                <div className={styles.logoContainer}>
+                    <Image
+                        src={campPhoto ? campPhoto : Images.ic_user_profile}
+                        alt="Compant Logo"
+                        className={styles.logo}
+                        height={150}
+                        width={150}
+                        style={{ objectFit: "contain" }}
+                    />
+                    <div className={styles.overlay} onClick={handleEditClick}></div>
+                    <p className={styles.editText}>Edit</p>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoChange}
+                        ref={fileInputRef}
+                        style={{ display: "none" }}
+                    />
+                </div>
                 <div className={styles.campName}>
                     <TextInput placeholder="Camp name..." value={String(retreatcenter?.name)} setValue={(e) => setRetreatCenterNameUseState(e.target.value)} containerClassName={styles.campNameInputStyle} />
                     <p className={styles.stateText}>

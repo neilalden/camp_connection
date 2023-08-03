@@ -30,7 +30,7 @@ import DateInput from "@/components/DateInput";
 import { sortArrayOfObjects } from "@/utils/functions";
 import ZipcodeToTimezone from "zipcode-to-timezone";
 import { usaStatesFull } from "typed-usa-states";
-import { setUserProfile } from "@/services/redux/slice/user";
+import { setUserPhoto } from "@/services/redux/slice/user";
 
 const options = StatesInUSA.map((state) => ({ label: state, value: state }));
 const Userprofile = () => {
@@ -103,7 +103,7 @@ const Userprofile = () => {
     if (e.target.files && e.target.files.length > 0) {
       const selectedFile = e.target.files[0];
       const imageUrl = URL.createObjectURL(selectedFile);
-      dispatch(setUserProfile(imageUrl)); // Dispatch the action to update the Redux state
+      dispatch(setUserPhoto(imageUrl)); // Dispatch the action to update the Redux state
     }
   };
 

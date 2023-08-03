@@ -62,7 +62,7 @@ const Leads = () => {
                 <div className={styles.retreatCenterCardContainer}>
                     {
                         rerenderingRetreatCenters.map((retreatCenter, i) => {
-                            const logo = typeof retreatCenter.image === "string" ? { uri: retreatCenter.image } : Images["ic_logo"]
+                            const logo = typeof retreatCenter.photo === "string" ? { uri: retreatCenter.photo } : Images["ic_logo"]
                             const capacityClass = currentAppointment?.groupSize && retreatCenter.capacity && currentAppointment.groupSize > retreatCenter.capacity ? styles.capacityDanger : styles.capacity
                             return (
                                 <div key={i} className={styles.retreatCenterCard}>
