@@ -1,6 +1,5 @@
-import { AppointmentType, BedType, PricingType, RoomType, SpotType } from "@/types";
+import { AppointmentType, BedType, BuildingType, PricingType, RetreatCenterType, RoomType, CampAreaType, SpotType } from "@/types";
 import { IDGenerator } from "@/utils/functions";
-import { ArrayRCSD, BuildingType, FacilitiesType, RetreatCenterType } from "@/utils/sampleData";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type RetreatCenterStateType = {
@@ -29,11 +28,11 @@ const initialState: RetreatCenterStateType = {
         zipCode: "",
         housing: {
             buildings: [
-            ]
+            ],
+            campAreas: [],
         },
         amenities: {},
         appointments: [],
-        spots: [],
         spotStyles: [
             {
                 id: IDGenerator(),
@@ -59,12 +58,12 @@ const initialState: RetreatCenterStateType = {
         bedStyles: [
             {
                 id: IDGenerator(),
-                name: "King Bed",
-                capacity: 4,
+                name: "Bunk Bed",
+                capacity: 2,
                 amount: 5,
                 pricing: {
                     nights: "*",
-                    price: 100
+                    price: 50
                 }
             },
             {
@@ -79,14 +78,14 @@ const initialState: RetreatCenterStateType = {
             },
             {
                 id: IDGenerator(),
-                name: "Single Bed",
-                capacity: 1,
+                name: "King Bed",
+                capacity: 4,
                 amount: 5,
                 pricing: {
                     nights: "*",
-                    price: 50
+                    price: 100
                 }
-            }
+            },
         ],
         items: [
             {
@@ -112,12 +111,31 @@ export const RetreatCenterSlice = createSlice({
     name: "retreatcenter",
     initialState,
     reducers: {
-        setSpots: (state, action: PayloadAction<{ spots: RetreatCenterType["spots"] }>) => {
-            const { spots } = action.payload;
-            state.retreatCenter.spots = spots
+        setBuildings: (state, action: PayloadAction<Array<BuildingType>>) => {
+            state.retreatCenter.housing.buildings = action.payload
+        },
+        setCampAreas: (state, action: PayloadAction<Array<CampAreaType>>) => {
+            state.retreatCenter.housing.campAreas = action.payload
+        },
+        setSpotStyles: (state, action) => {
+            state.retreatCenter.spotStyles = action.payload
         },
         setBedStyles: (state, action) => {
             state.retreatCenter.bedStyles = action.payload
+        },
+        setSpaceSpots: (state, action: PayloadAction<{ campAreaId: CampAreaType["id"], spaces: CampAreaType["spaces"] }>) => {
+            const { campAreaId, spaces } = action.payload;
+            if (!state.retreatCenter.housing.campAreas) return;
+            state.retreatCenter.housing.campAreas = state.retreatCenter.housing.campAreas?.map((campArea) => {
+                if (campArea.id === campAreaId) {
+                    return {
+                        ...campArea,
+                        spaces: spaces
+                    }
+                }
+                return campArea
+            })
+
         },
         setRoomBeds: (state, action: PayloadAction<{ buildingId: BuildingType["id"], rooms: BuildingType["rooms"] }>) => {
             const { buildingId, rooms } = action.payload;
@@ -130,6 +148,19 @@ export const RetreatCenterSlice = createSlice({
                     }
                 }
                 return building
+            })
+
+        },
+        setCampAreaSpaces: (state, action: PayloadAction<{ id: CampAreaType["id"], spaces: CampAreaType["spaces"] }>) => {
+            const { id, spaces } = action.payload;
+            state.retreatCenter.housing.campAreas = state.retreatCenter.housing.campAreas?.map((campArea) => {
+                if (campArea.id === id) {
+                    return {
+                        ...campArea,
+                        spaces: spaces
+                    }
+                }
+                return campArea
             })
 
         },
@@ -146,31 +177,11 @@ export const RetreatCenterSlice = createSlice({
             })
 
         },
-        setBuildingNumberRooms: (state, action: PayloadAction<{ id: BuildingType["id"], rooms: number }>) => {
-            const { id, rooms } = action.payload;
-            if (isNaN(rooms) || rooms < 0) return
-            const roomObject = {
-                id: IDGenerator(),
-                name: "",
-                beds: []
-            }
-            const roomArray = Array(Number(rooms)).fill(roomObject)
-            state.retreatCenter.housing.buildings = state.retreatCenter.housing.buildings?.map((building) => {
-                if (building.id === id) {
-                    return {
-                        ...building,
-                        rooms: roomArray.map((room, i) => (
-                            {
-                                ...room,
-                                id: IDGenerator(),
-                                name: `Room 1${i + 1 > 9 ? i + 1 : "0" + (i + 1)}`,
-                                beds: []
-                            }
-                        ))
-                    }
-                }
-                return building
-            })
+        setCampAreaName: (state, action: PayloadAction<{ id: CampAreaType["id"], name: CampAreaType["name"] }>) => {
+            const { id, name } = action.payload
+            state.retreatCenter.housing.campAreas = state.retreatCenter.housing.campAreas?.map((campArea) =>
+                campArea.id === id ? ({ ...campArea, name: name }) : campArea
+            )
         },
         setBuildingName: (state, action: PayloadAction<{ id: BuildingType["id"], name: BuildingType["name"] }>) => {
             const { id, name } = action.payload
@@ -178,7 +189,13 @@ export const RetreatCenterSlice = createSlice({
                 building.id === id ? ({ ...building, name: name }) : building
             )
         },
-        addHouse: (state, action: PayloadAction<BuildingType>) => {
+        addCampArea: (state, action: PayloadAction<CampAreaType>) => {
+            if (!state.retreatCenter.housing.campAreas) state.retreatCenter.housing.campAreas = [action.payload]
+            else state.retreatCenter.housing.campAreas = [...state.retreatCenter.housing.campAreas, action.payload]
+
+
+        },
+        addBuilding: (state, action: PayloadAction<BuildingType>) => {
             if (!state.retreatCenter.housing.buildings) state.retreatCenter.housing.buildings = [action.payload]
             else state.retreatCenter.housing.buildings = [...state.retreatCenter.housing.buildings, action.payload]
 
@@ -212,9 +229,16 @@ export const RetreatCenterSlice = createSlice({
         setBedStyle: (state, action: PayloadAction<Array<BedType>>) => {
             state.retreatCenter.bedStyles = action.payload
         },
-        addSpotStyle: (state, action: PayloadAction<SpotType>) => {
+        addCampAreastyle: (state, action: PayloadAction<SpotType>) => {
             if (!Array.isArray(state.retreatCenter.spotStyles)) {
                 state.retreatCenter.spotStyles = [action.payload]
+                return;
+            }
+            state.retreatCenter.spotStyles = [...state.retreatCenter.spotStyles, action.payload]
+        },
+        addSpotStyle: (state, action) => {
+            if (!Array.isArray(state.retreatCenter.spotStyles)) {
+                state.retreatCenter.spotStyles = action.payload
                 return;
             }
             state.retreatCenter.spotStyles = [...state.retreatCenter.spotStyles, action.payload]
@@ -292,15 +316,21 @@ export const {
     setBedStyle,
     setBedPrice,
     addBedPriceDay,
-    addHouse,
+    addBuilding,
     setBuildingName,
-    setBuildingNumberRooms,
     setBuildingRooms,
     setRoomBeds,
     setBedStyles,
-    setSpots,
+    setCampAreas,
+    addCampAreastyle,
+    addItemType,
+    setBuildings,
+    addCampArea,
+    setCampAreaName,
     addSpotStyle,
-    addItemType
+    setCampAreaSpaces,
+    setSpaceSpots,
+    setSpotStyles
 }
     = RetreatCenterSlice.actions
 export default RetreatCenterSlice.reducer

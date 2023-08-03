@@ -1,6 +1,6 @@
-/* LAYOUTS STYLE */
+/* LAYOUT STYLES */
 .main {
-  height: calc(100% - 70px) !important;
+  height: 100% !important;
   width: 100% !important;
   display: flex;
   flex-direction: column;
@@ -19,7 +19,19 @@
   height: 100%;
 }
 
+
 /* LAYOUT STYLES */
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.leadColumn {
+  overflow: hidden !important;
+}
+
 .heading {
   width: 100%;
   border-bottom: 1px solid #c2cfd6;
@@ -50,9 +62,6 @@
   align-self: start !important;
 }
 
-.container {
-  height: 100% !important;
-}
 
 .progressbarsContainer {
   display: flex;
@@ -106,15 +115,6 @@
   margin-right: 5px !important;
 }
 
-.mainRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100% !important;
-  max-width: 1600px !important;
-  height: calc(100% - 50px) !important;
-}
-
 .calendarContainer {
   margin: 50px auto !important;
   width: 850px !important;
@@ -143,12 +143,14 @@
   height: 2px;
   border-radius: 100%;
   margin-bottom: 50px !important;
+  background-color: #eee;
 }
 
 .dividerVert {
   height: 250px !important;
   width: 2px;
   border-radius: 100%;
+  background-color: #eee;
   margin: 0 20px !important;
 }
 
@@ -159,7 +161,9 @@
   align-content: center !important;
   justify-items: center !important;
   overflow-y: scroll;
+  overflow-x: hidden;
   height: calc(100%) !important;
+  min-width: 210px;
 }
 
 .groupCard {

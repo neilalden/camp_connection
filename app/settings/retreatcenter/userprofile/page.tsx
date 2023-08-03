@@ -6,7 +6,6 @@ import Image from "next/image";
 import Images from "@/common/images";
 import {
   ArrayRCSD,
-  RetreatCenterType,
   UsersSampleData,
   RetreatCenterUserData,
 } from "@/utils/sampleData";

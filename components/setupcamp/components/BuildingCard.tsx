@@ -1,17 +1,16 @@
 import Images from "@/common/images"
 import TextInput from "@/components/TextInput"
-import { setBuildingRooms, setRoomBeds, setBuildingName, setBuildingNumberRooms } from "@/services/redux/slice/retreatcenter"
+import { setBuildingRooms, setRoomBeds, setBuildingName, setBuildings } from "@/services/redux/slice/retreatcenter"
 import { RootState } from "@/services/redux/store"
-import { RoomType, BedType } from "@/types"
-import { arrayToMap } from "@/utils/functions"
-import { BuildingType } from "@/utils/sampleData"
+import { RoomType, BedType, ArgFunction, BuildingType } from "@/types"
+import { arrayToMap, IDGenerator } from "@/utils/functions"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styles from "./BuildingCard.module.css"
 import BedCard from "./BedCard"
 
-const BuildingCard = ({ building }: { building: BuildingType }) => {
+const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, deleteBuilding: ArgFunction }) => {
     const dispatch = useDispatch()
     const BEDSTYLES = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.bedStyles)
 
@@ -58,33 +57,65 @@ const BuildingCard = ({ building }: { building: BuildingType }) => {
             rooms: rooms
         }))
     }
+    const setupUpdateBuildingRooms = (buildingId: BuildingType["id"], numberOfRooms: number) => {
+        let newRooms: Array<RoomType> = [...building.rooms ?? []]
+        const length = newRooms.length
+        if (length >= numberOfRooms) newRooms = newRooms.filter((item, index) => index < numberOfRooms)
+        else {
+            const addedRooms: Array<RoomType> = Array(numberOfRooms - length).fill({ id: IDGenerator(), name: `Room 1${length + 1 > 9 ? length + 1 : "0" + (length + 1)}`, beds: newRooms.at(-1) ? newRooms.at(-1)?.beds : [] })
+            newRooms.push(...addedRooms)
+        }
+        dispatch(setRoomBeds({
+            buildingId: buildingId,
+            rooms: newRooms
+        }))
+    }
+
     return (
         <div>
-            <button type="button" className={styles.collapsableSection} style={{ width: "100%" }} onClick={() => setOpenBuilding(prev => !prev)}>
-                {/* <h4 className={styles.sectionTitle}>{building.name}</h4> */}
-                <TextInput
-                    placeholder="Building name..."
-                    value={building.name}
-                    setValue={(e) => { e.stopPropagation(); dispatch(setBuildingName({ id: building.id, name: e.target.value })) }}
-                    containerClassName={styles.buildingNameInputStyle}
-                />
+            <button type="button" className={styles.collapsableSection} style={{ width: "100%" }} onClick={(e) => setOpenBuilding(prev => !prev)}>
+                <div className="row">
+                    {!openBuilding ? <button
+                        type="button"
+                        className={styles.deleteButton}
+                        onClick={deleteBuilding}
+                    >X</button> : null}
+                    <TextInput
+                        placeholder="Building name..."
+                        value={building.name}
+                        onClick={(e) => { e.stopPropagation(); }}
+                        setValue={(e) => dispatch(setBuildingName({ id: building.id, name: e.target.value }))}
+                        containerClassName={styles.buildingNameInputStyle}
+                    /></div>
+
                 <Image alt="chevron down" src={openBuilding ? Images.ic_chevron_up : Images.ic_chevron_down} height={15} />
             </button>
             {openBuilding ?
                 <div className={styles.buildingCard}>
                     <div className="row-between">
-                        <TextInput
-                            type="number"
-                            label="Number of rooms"
-                            placeholder="8"
-                            value={building.rooms?.length ?? ""}
-                            setValue={(e) => dispatch(setBuildingNumberRooms({ id: building.id, rooms: Number(e.target.value) }))}
-                        />
+                        <div className="row">
+                            <TextInput
+                                type="number"
+                                label="Number of rooms"
+                                placeholder="8"
+                                value={building.rooms?.length ?? ""}
+                                setValue={(e) => setupUpdateBuildingRooms(building.id, Number(e.target.value))}
+                            />
+                            <button
+                                type="button"
+                                disabled={building.rooms?.length === 0}
+                                onClick={() => setupUpdateBuildingRooms(building.id, Number(building.rooms?.length) - 1)}
+                                className={[building.rooms?.length === 0 && "disabled", styles.capacityPlus].join(" ")}>-</button>
+                            <button
+                                type="button"
+                                onClick={() => setupUpdateBuildingRooms(building.id, Number(building.rooms?.length) + 1)}
+                                className={styles.capacityPlus}>+</button>
+                        </div>
                         <TextInput
                             disabled
                             label="Capacity"
                             value={building.rooms?.reduce((accu, room) =>
-                                room.beds.reduce((acc, bed) => acc + (bedStylesMap.get(bed.id)?.capacity * bed.amount), accu), 0)
+                                room.beds?.reduce((acc, bed) => acc + (bedStylesMap.get(bed.id)?.capacity * bed.amount), accu), 0)
                                 ?? ""}
                         />
                     </div>
@@ -94,7 +125,8 @@ const BuildingCard = ({ building }: { building: BuildingType }) => {
                                 <div key={ind} className={styles.roomCard}>
                                     <TextInput
                                         inputClassName={styles.inputInsideBox}
-                                        placeholder={room.name}
+                                        containerClassName={styles.buildingNameInputStyle}
+                                        placeholder={"Room name..."}
                                         value={room.name}
                                         setValue={(e) => changeRoomName({
                                             name: e.target.value,

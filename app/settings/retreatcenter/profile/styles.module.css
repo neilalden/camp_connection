@@ -67,7 +67,7 @@
 
 .campNameInputStyle>input {
     outline: 0 !important;
-    border: 0 !important;
+    border: 0;
     font-size: 28px;
     font-weight: bold !important;
 }

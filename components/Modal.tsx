@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styles from "./Modal.module.css"
 import { AppointmentType, SetStateType } from '@/types'
-import { RetreatCenterType } from '@/utils/sampleData'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Colors from '@/common/colors';

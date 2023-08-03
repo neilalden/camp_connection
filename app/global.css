@@ -83,6 +83,8 @@
 html body {
   width: 100%;
   height: 100vh;
+  overflow-x: hidden;
+
 }
 
 label {
@@ -97,15 +99,21 @@ input {
   outline: 0;
   border: 0;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 900 !important;
   padding: 5px 5px 2px 5px !important;
   border-bottom: 1px solid #E0E7EB;
-  transition: border .5s ease-out 0s;
+  transition: .5s ease-out 0s !important;
   background: transparent;
 }
 
 input:focus {
   border-bottom: 1px solid #85A0AD !important;
+  color: #85A0AD
+}
+
+input:hover {
+  border-bottom: 1px solid #85A0AD !important;
+  color: #85A0AD
 }
 
 .box-shadow {

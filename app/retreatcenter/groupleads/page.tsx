@@ -47,17 +47,11 @@ const GroupLeads = () => {
   }, []);
   return (
     <div className={styles.container}>
-      {modalIsVisible ? (
-        <Modal
-          setIsVisible={setModalIsVisible}
-          appointment={currentAppointment}
-        />
-      ) : null}
-      <div className={styles.heading}>
-        <h3 className={styles.overviewTitle}>Overview</h3>
-      </div>
-      <div className={styles.mainRow}>
+      {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+      <div className={styles.leadColumn}>
         <LeadsColumn leadCardOnClick={clickLead} />
+      </div>
+      <div className="row-evenly">
         <div className={styles.calendarColumn}>
           <CalendarNavigation date={date} setDate={setDate} />
           <div className={styles.calendarContainer}>
@@ -98,7 +92,7 @@ const GroupLeads = () => {
                   </div>
                   <div>
                     <p className={styles.progressText}>{progress}%</p>
-                    <p className={styles.progressText}>Weekend</p>
+                    <p className={styles.progressText}>Mid-week</p>
                   </div>
                 </div>
               </div>
@@ -147,7 +141,7 @@ const GroupLeads = () => {
                     </div>
                     <div>
                       <p className={styles.bottomProgressText}>{progress}%</p>
-                      <p className={styles.bottomProgressText}>Weekend</p>
+                      <p className={styles.bottomProgressText}>Mid-week</p>
                     </div>
                   </div>
                 </div>
@@ -205,7 +199,7 @@ const GroupLeads = () => {
                     </div>
                     <div>
                       <p className={styles.bottomProgressText}>{progress}%</p>
-                      <p className={styles.bottomProgressText}>Weekend</p>
+                      <p className={styles.bottomProgressText}>Mid-week</p>
                     </div>
                   </div>
                 </div>
@@ -225,7 +219,6 @@ const GroupLeads = () => {
 
             {screenWidth >= 1700 ? (
               <>
-                {" "}
                 <div className={styles.nextCalendarContainer}>
                   <div className={styles.progressbarsContainer}>
                     <div className="row">
@@ -268,7 +261,7 @@ const GroupLeads = () => {
                           <p className={styles.bottomProgressText}>
                             {progress}%
                           </p>
-                          <p className={styles.bottomProgressText}>Weekend</p>
+                          <p className={styles.bottomProgressText}>Mid-week</p>
                         </div>
                       </div>
                     </div>
@@ -286,9 +279,7 @@ const GroupLeads = () => {
                   />
                 </div>
               </>
-            ) : (
-              ""
-            )}
+            ) : null}
           </div>
         </div>
 

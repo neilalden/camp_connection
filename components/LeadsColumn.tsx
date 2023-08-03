@@ -19,7 +19,7 @@ const LeadsColumn = (props: Props) => {
     const dispatch = useDispatch<any>();
     const leads = useSelector((state: RootState) => state.Leads.leads)
     const user = useSelector((state: RootState) => state.User.user)
-    if (!user) return;
+    if (!user) return null;
     const [rerenderingLeads, setRerenderingnLeads] = useState(leads)
     const [searchString, setSearchString] = useState("")
     useEffect(() => {

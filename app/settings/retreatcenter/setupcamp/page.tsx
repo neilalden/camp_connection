@@ -4,19 +4,19 @@ import styles from "./styles.module.css"
 import Images from "@/common/images";
 import TextInput from "@/components/TextInput";
 import { useEffect, useState } from "react";
-import { ArgFunction, BedType, DiagramType, HTMLEvent, MeetingRoomType, RoomType, SpotType } from "@/types";
+import { ArgFunction, BedType, DiagramType, HTMLEvent, MeetingRoomType, RoomType, CampAreaType, BuildingType, RetreatCenterType } from "@/types";
 import Divider from "@/components/Divider";
 import FileUpload from "@/components/FileUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
-import { addBedPriceDay, addBedStyle, addHouse, addItemType, addSpotStyle, editBedStyleCapacity, editBedStyleName, setBedPrice, setBedStyle, setBedStyles, setBuildingName, setBuildingNumberRooms, setBuildingRooms, setRoomBeds, setSpots } from "@/services/redux/slice/retreatcenter";
+import { addItemType, } from "@/services/redux/slice/retreatcenter";
 import RadioButton from "@/components/RadioButton";
 import CheckBox from "@/components/CheckBox";
 import DropDown from "@/components/DropDown";
 import { IDGenerator, arrayToMap } from "@/utils/functions";
-import { BuildingType, RetreatCenterType } from "@/utils/sampleData";
 import HousingSetup from "@/components/setupcamp/components/HousingSetup";
 import SpotCard from "@/components/setupcamp/components/SpotCard";
+import RVAndTentSetup from "@/components/setupcamp/components/RVAndTentSetup";
 const Userprofile = () => {
     const [showHousing, setShowHousing] = useState(false)
     const [showRvAndTent, setShowRvAndTent] = useState(false)
@@ -35,7 +35,7 @@ const Userprofile = () => {
                 <h3 className={styles.sectionTitle}>RV & Tent</h3>
                 <Image alt="chevron down" src={showRvAndTent ? Images.ic_chevron_up : Images.ic_chevron_down} height={15} />
             </button>
-            {showRvAndTent ? <RVAndTenntSetup /> : null}
+            {showRvAndTent ? <RVAndTentSetup /> : null}
 
             <button type="button" className={styles.collapsableSection} onClick={() => setShowActivities(prev => !prev)}>
                 <h3 className={styles.sectionTitle}>Activities</h3>
@@ -197,86 +197,6 @@ const MeetingRoomsSetup = () => {
 }
 const ActivitiesSetup = () => {
     return (<div className={styles.setUpContainer}></div>
-    )
-}
-const RVAndTenntSetup = () => {
-    const dispatch = useDispatch()
-    const SPOTS = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.spots)
-    const SPOTSSTYLES = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.spotStyles)
-    const [file, setFile] = useState()
-
-    const updateSpots = (spots: RetreatCenterType["spots"]) => {
-        dispatch(setSpots({
-            spots: spots,
-        }))
-    }
-
-    return (
-
-        <div className={styles.setUpContainer}>
-            <div className="row-between">
-                <TextInput
-                    inputClassName="box-shadow"
-                    label="Number of spots"
-                    type="number"
-                    placeholder="8"
-                    value={Number(SPOTS?.length ?? 0)}
-                    setValue={(e) => {
-                        const value = Number(e.target.value)
-                        if (isNaN(value) || value < 0) return
-                        const spotObject: SpotType = SPOTSSTYLES ? SPOTSSTYLES[0] : {
-                            id: IDGenerator(),
-                            name: `RV Spot`,
-                            capacity: 3,
-                            pricing: {
-                                nights: "*",
-                                price: 20
-                            },
-                            amount: 5
-                        }
-                        const newSpots = Array(Number(value)).fill(spotObject)
-                        updateSpots(newSpots)
-                    }}
-
-                />
-                <FileUpload
-                    label="RV & Tent Contract"
-                    inputClassName="box-shadow"
-                    setValue={setFile}
-                />
-            </div>
-            <div className={styles.housingCardsContainer}>
-
-                {
-                    SPOTS && SPOTS.map((spot, i) => {
-                        const deleteSpot = () => {
-                            let spots = [...SPOTS]
-                            spots.splice(i, 1)
-                            updateSpots(spots)
-                        }
-                        const changeSpot = (spot: SpotType) => {
-                            let spots = [...SPOTS]
-                            spots[i] = spot
-                            updateSpots(spots)
-                        }
-                        const changeSpotAmount = (value: number, spot: SpotType) => {
-                            if (isNaN(value)) return;
-                            const spots = [...SPOTS]?.map((sp) => sp.id == spot.id ? { ...spot, amount: value } : sp)
-                            updateSpots(spots)
-                        }
-                        return (
-                            <SpotCard key={i}
-                                spot={spot}
-                                changeSpot={changeSpot}
-                                changeSpotAmount={changeSpotAmount}
-                                deleteSpot={deleteSpot}
-                            />
-                        )
-                    })
-                }
-            </div>
-
-        </div>
     )
 }
 export default (Userprofile);

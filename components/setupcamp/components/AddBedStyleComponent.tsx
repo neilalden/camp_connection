@@ -1,13 +1,15 @@
 import Colors from "@/common/colors"
+import Divider from "@/components/Divider"
 import TextInput from "@/components/TextInput"
 import { setBedPrice, addBedStyle, setBedStyles, setBedStyle } from "@/services/redux/slice/retreatcenter"
 import { RootState } from "@/services/redux/store"
-import { BedType, SetStateType } from "@/types"
+import { BedType, SetStateType, SpotType } from "@/types"
 import { IDGenerator } from "@/utils/functions"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import styles from "./AddBedStyleComponent.module.css"
 type Props = {
-    BedStyle?: BedType
+    BedStyle?: BedType | SpotType
     setIsVisible?: SetStateType<boolean>
 }
 const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
@@ -50,7 +52,8 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
                     setValue={e => setBedstyle(prev => ({ ...prev, capacity: Number(e.target.value) }))}
                 />
             </div>
-
+            <Divider style={{ width: "100%", margin: "10px" }} />
+            <h4 style={{ marginBottom: "10px" }}>Pricing</h4>
             <div
                 style={Array.isArray(bedstyle.pricing) ? pricingContainerStyle : {}}
             >
@@ -100,41 +103,62 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
                             </div>
                         )
                     }) : (
-                        <TextInput
-                            inputStyle={capacityInputStyle}
-                            containerStyle={priceContainerStyle}
-                            labelStyle={priceLabelStyle}
-                            containerClassName="row-reverse no-wrap"
-                            label={`per night`}
-                            value={bedstyle.pricing.price}
-                            setValue={(e) => {
-                                const value = Number(e.target.value);
-                                if (isNaN(value)) return alert("Price is not a number")
-                                setBedstyle(prev => ({
-                                    ...prev,
-                                    pricing: {
-                                        nights: "*",
-                                        price: value
-                                    }
-                                }))
-                            }}
-                        />
+                        <div
+                            className='row-between'
+                            style={{ margin: "10px", width: "100%" }}
+                        >
+                            <TextInput
+                                inputStyle={capacityInputStyle}
+                                containerStyle={priceContainerStyle}
+                                labelStyle={priceLabelStyle}
+                                containerClassName="row-reverse no-wrap"
+                                label={`$ per night`}
+                                value={bedstyle.pricing.price}
+                                setValue={(e) => {
+                                    const value = Number(e.target.value);
+                                    if (isNaN(value)) return alert("Price is not a number")
+                                    setBedstyle(prev => ({
+                                        ...prev,
+                                        pricing: {
+                                            nights: "*",
+                                            price: value
+                                        }
+                                    }))
+                                }}
+                            />
+                            <button
+                                type='button'
+                                className={styles.buttonHover}
+                                style={addButtonStyle}
+                                onClick={() => {
+                                    setBedstyle(prev => ({
+                                        ...prev,
+                                        pricing: Array.isArray(prev.pricing) ?
+                                            [...prev.pricing, { nights: prev.pricing.length + 1, price: 100 }]
+                                            : [{ ...prev.pricing, nights: 1 }, { nights: 2, price: 100 }]
+                                    }))
+                                }}>
+                                +
+                            </button>
+                        </div>
                     )
 
                 }
-                <button
-                    type='button'
-                    style={addButtonStyle}
-                    onClick={() => {
-                        setBedstyle(prev => ({
-                            ...prev,
-                            pricing: Array.isArray(prev.pricing) ?
-                                [...prev.pricing, { nights: prev.pricing.length + 1, price: 100 }]
-                                : [{ ...prev.pricing, nights: 1 }, { nights: 2, price: 100 }]
-                        }))
-                    }}>
-                    Add Night
-                </button>
+                {Array.isArray(bedstyle.pricing) ?
+                    <button
+                        type='button'
+                        className={styles.buttonHover}
+                        style={addButtonStyle}
+                        onClick={() => {
+                            setBedstyle(prev => ({
+                                ...prev,
+                                pricing: Array.isArray(prev.pricing) ?
+                                    [...prev.pricing, { nights: prev.pricing.length + 1, price: 100 }]
+                                    : [{ ...prev.pricing, nights: 1 }, { nights: 2, price: 100 }]
+                            }))
+                        }}>
+                        +
+                    </button> : null}
             </div>
 
             <div className="row-between" style={{ width: "300px", marginTop: "20px" }}>
@@ -196,14 +220,14 @@ const priceLabelStyle: React.CSSProperties = {
     marginLeft: "7px"
 }
 const addButtonStyle: React.CSSProperties = {
-    borderColor: Colors.blue500,
+    borderColor: Colors.cascade200,
     borderWidth: "1px",
     borderStyle: "solid",
-    borderRadius: 5,
     width: "90px",
     height: "24px",
-    color: Colors.blue500,
+    color: Colors.cascade500,
     fontSize: 12,
+    fontWeight: 900,
     textAlign: "center",
     alignSelf: "center",
     justifySelf: "center",

@@ -9,7 +9,7 @@ type Props = {
     disabled?: boolean;
     placeholder?: string;
     value: string | number;
-    setValue?: (e: HTMLEvent<HTMLInputElement>) => void;
+    setValue?: ArgFunction | VoidFunction;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
     inputClassName?: string;
@@ -18,7 +18,6 @@ type Props = {
     onClick?: ArgFunction;
     labelStyle?: React.CSSProperties
     inputStyle?: React.CSSProperties
-
 }
 const TextInput = (props: Props) => {
     const {
@@ -39,6 +38,7 @@ const TextInput = (props: Props) => {
         inputStyle,
         onClick,
     } = props
+
     return (
         <div style={containerStyle} className={containerClassName}>
             {label ? <><label htmlFor={htmlFor} style={labelStyle} className={labelClassName}>{label}</label><br /></> : null}
