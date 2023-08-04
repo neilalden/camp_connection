@@ -86,7 +86,7 @@ const ItemsSetup = () => {
                 }
             </div>
             <button
-                className={styles.addMeetingRoomButton}
+                className={styles.addItemsButton}
                 onClick={
                     () => dispatch(addItemType({
                         id: IDGenerator(),

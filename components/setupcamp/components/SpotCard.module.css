@@ -115,6 +115,10 @@
 }
 
 
+.spotCapacityInputContainer {
+    max-width: 45px !important;
+}
+
 .spotCapacityInput {
     background: #fff !important;
     height: 30px !important;
@@ -125,4 +129,8 @@
 
 .spotCapacityInput:focus {
     border: 1px solid #85A0AD;
+}
+
+.selectSpotButton {
+    min-width: 100px !important;
 }

@@ -81,7 +81,7 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
                         onClick={deleteBuilding}
                     >X</button> : null}
                     <TextInput
-                        placeholder="Building name..."
+                        placeholder="Building/House name..."
                         value={building.name}
                         onClick={(e) => { e.stopPropagation(); }}
                         setValue={(e) => dispatch(setBuildingName({ id: building.id, name: e.target.value }))}

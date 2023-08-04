@@ -46,23 +46,26 @@
 .logoContainer {
   position: relative;
   display: inline-block;
+  min-width: 150px;
 }
 
 .overlay {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
-  opacity: 0;
+  top: 100px;
+  left: 23px;
+  width: 150px;
+  height: 37%;
+  background-color: rgba(255, 255, 255, 0);
+  border-bottom-left-radius: 150px;
+  border-bottom-right-radius: 150px;
   transition: opacity 0.3s ease;
   cursor: pointer;
 }
 
+
 .editText {
   position: absolute;
-  bottom: 25%;
+  bottom: 30%;
   left: 50%;
   transform: translateX(-50%);
   color: #fff;
@@ -74,16 +77,17 @@
 
 .logoContainer:hover .overlay {
   opacity: 1;
+  background-color: #C2CFD6;
 }
 
 .logoContainer:hover .editText {
   opacity: 1;
+  background-color: #C2CFD6;
 }
 
 .logo {
   margin: 23px !important;
   border-radius: 50%;
-  border: 2px solid white;
 }
 
 .campName {
