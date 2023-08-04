@@ -2,7 +2,7 @@
 import { setUser } from "@/services/redux/slice/user";
 import { RootState } from "@/services/redux/store";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Nav.module.css";
 import { clearLeads } from "@/services/redux/slice/leads";
@@ -15,10 +15,13 @@ const TopNavigation = () => {
   const user = useSelector((state: RootState) => state.User.user);
   const userProfile = useSelector((state: RootState) => state.User.user?.photo);
   const campPhoto = useSelector((state: RootState) => state.RetreatCenter.retreatCenter?.photo);
-  const retreatcenter = useSelector(
-    (state: RootState) => state.RetreatCenter.retreatCenter
-  );
-  console.log(campPhoto)
+  const retreatcenter = useSelector((state: RootState) => state.RetreatCenter.retreatCenter);
+  const [campPhotoState, setCampPhotoState] = useState<string | undefined>(campPhoto)
+
+  useEffect(() => {
+    setCampPhotoState(campPhoto)
+  }, [campPhoto])
+
   const logout = () => {
     router.push("/signin");
     dispatch(setUser(undefined));
@@ -33,19 +36,19 @@ const TopNavigation = () => {
 
   return (
     <nav className={styles.topNav}>
-      {campPhoto ? (
-
+      {campPhotoState ? (
         <div className={styles.logoContainer}>
           <Image
-            src={campPhoto ?? Images.ic_logo}
-            height={150}
-            width={150}
+            src={campPhotoState ?? Images.ic_logo}
+            height={200}
+            width={200}
             alt="Company Logo"
             className={styles.companyLogo}
+            onError={e => setCampPhotoState(undefined)}
           />
         </div>
       ) : (
-        <div className={styles.logoContainer}>
+        <div className={styles.logoTextContainer}>
           <h1 className={styles.logo}>
             {retreatcenter?.name !== ""
               ? retreatcenter?.name

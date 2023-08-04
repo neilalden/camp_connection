@@ -46,6 +46,11 @@ const Userprofile = () => {
     // const timeZoneOptions: Array<OptionType> = TimeZones.map(tz => ({ label: tz, value: tz }))
     const userOptions: Array<UsersOptionType> = UsersSampleData.map(user => ({ label: `${user.firstName} ${user.lastName} • ${user.userType}`, value: user.id, user: user }))
 
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const campPhoto = useSelector((state: RootState) => state.RetreatCenter.retreatCenter?.photo);
+    const [campPhotoState, setCampPhotoState] = useState<string | undefined>(campPhoto)
+
     useEffect(() => {
         if (!zipcode) {
             setState("")
@@ -62,11 +67,9 @@ const Userprofile = () => {
         if (retreatCenterName === undefined) return
         dispatch(setRetreatCenterName(retreatCenterName))
     }, [retreatCenterName])
-
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const campPhoto = useSelector(
-        (state: RootState) => state.RetreatCenter.retreatCenter?.photo
-    );
+    useEffect(() => {
+        setCampPhotoState(campPhoto)
+    }, [campPhoto])
     const handleEditClick = () => {
         if (fileInputRef.current) {
             fileInputRef.current.click();
@@ -85,12 +88,13 @@ const Userprofile = () => {
             <div className={["card", styles.headerContainer].join(" ")}>
                 <div className={styles.logoContainer}>
                     <Image
-                        src={campPhoto ? campPhoto : Images.ic_logo}
+                        src={campPhotoState ?? Images.ic_logo}
                         alt="Compant Logo"
                         className={styles.logo}
                         height={150}
                         width={150}
                         style={{ objectFit: "contain" }}
+                        onError={e => setCampPhotoState(undefined)}
                     />
                     <div className={styles.overlay} onClick={handleEditClick}></div>
                     <p className={styles.editText}>Edit</p>
