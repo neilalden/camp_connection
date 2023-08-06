@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import styles from "./Modal.module.css"
-import { AppointmentType, SetStateType } from '@/types'
+import { AppointmentType, BuildingType, SetStateType } from '@/types'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Colors from '@/common/colors';
+import HousingSetup from './setupcamp/components/HousingSetup';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBuildings } from '@/services/redux/slice/retreatcenters';
+import { RootState } from '@/services/redux/store';
+import BuildingCard from './BuildingCard';
 type Props = {
     appointment?: AppointmentType | Array<AppointmentType>
     setIsVisible: SetStateType<boolean>
@@ -88,9 +93,17 @@ const Booking = ({ appointment }: { appointment: AppointmentType }) => {
     )
 }
 const Housing = ({ appointment }: { appointment: AppointmentType }) => {
+    const dispatch = useDispatch()
+    const BUILDINGS = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.housing.buildings)
     return (
-        <div>
-
+        <div className={styles.setUpContainer}>
+            {
+                BUILDINGS && BUILDINGS.map((building, i) => {
+                    return (
+                        <BuildingCard building={building} />
+                    )
+                })
+            }
         </div>
     )
 }

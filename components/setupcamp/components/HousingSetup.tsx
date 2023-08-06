@@ -1,4 +1,4 @@
-import { addBuilding, setBuildings } from "@/services/redux/slice/retreatcenter"
+import { addBuilding, setBuildings } from "@/services/redux/slice/retreatcenters"
 import { RootState } from "@/services/redux/store"
 import { IDGenerator } from "@/utils/functions"
 import { useDispatch, useSelector } from "react-redux"
@@ -7,7 +7,7 @@ import BuildingCard from "./BuildingCard"
 import { BuildingType } from "@/types"
 const HousingSetup = () => {
     const dispatch = useDispatch()
-    const BUILDINGS = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.housing.buildings)
+    const BUILDINGS = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.housing.buildings)
 
     return (
         <div className={styles.setUpContainer}>

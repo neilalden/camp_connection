@@ -1,4 +1,5 @@
 import { ArgFunction, VoidFunction, HTMLEvent, SetStateType, AppointmentType, FilterType } from "@/types"
+import { Dispatch, SetStateAction } from "react"
 import { months } from "./variables"
 
 export const getDays = ({ start, end }: { start: Date, end: Date }): Array<Date> => {
@@ -17,7 +18,7 @@ export const arrayToMap = ({ array, key, convertTo }: { array: Array<any>, key: 
     return new Map(array.map(i => [i[key], i]));
 }
 
-export const debounce = (func: VoidFunction | ArgFunction, delay = 1000) => {
+export const debounce = (func: VoidFunction | ArgFunction | any, delay = 1000) => {
     let timeout: any;
     return (...args: any) => {
         clearTimeout(timeout);
@@ -102,3 +103,43 @@ export const isArray = (value: any) => Array.isArray(value)
 
 
 export const IDGenerator = () => Number(new Date().getTime() + Math.random() + Math.floor(Math.random() * 10000)).toString()
+export const ItemGenerator = () => {
+    const items = ["Projector", "Chairs", "Tables", "T.V.", "Projection Screen", "Computer", "Laptop"]
+    return items[getRandomInt(items.length)]
+}
+export const BedStyleGenerator = () => {
+    const items = ["Single Bed", "Double Bed", "Double Bunk Bed"]
+    return items[getRandomInt(items.length)]
+}
+export const SpotStyleGenerator = () => {
+    const items = ["Large RV", "Small Rv", "Large tent", "Small Tent"]
+    return items[getRandomInt(items.length)]
+}
+function getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+}
+
+export const calculateDistance = ({
+    lat1,
+    lon1,
+    lat2,
+    lon2
+}: {
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+}
+) => {
+    let R = 6371; // km
+    let dLat = (lat2 - lat1) * Math.PI / 180;
+    let dLon = (lon2 - lon1) * Math.PI / 180;
+    let newLat1 = (lat1) * Math.PI / 180;
+    let newLat2 = (lat2) * Math.PI / 180;
+
+    let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(newLat1) * Math.cos(newLat2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    let d = R * c;
+    return d;
+}

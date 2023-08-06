@@ -1,6 +1,6 @@
 import Images from "@/common/images";
 import TextInput from "@/components/TextInput";
-import { addSpotStyle, setSpotStyles, } from "@/services/redux/slice/retreatcenter";
+import { addSpotStyle, setSpotStyles, } from "@/services/redux/slice/retreatcenters";
 import { RootState } from "@/services/redux/store";
 import { SpotType, } from "@/types";
 import { IDGenerator } from "@/utils/functions";
@@ -8,7 +8,7 @@ import Image from "next/image";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AddBedStyleComponent from "./AddBedStyleComponent";
+import AddSpotStyleComponent from "./AddSpotStyleComponent";
 import Modal from "./Modal";
 import styles from "./SpotCard.module.css"
 const SpotCard = ({
@@ -23,7 +23,7 @@ const SpotCard = ({
     changeSpotAmount: (value: number, spot: SpotType) => void,
 }) => {
     const dispatch = useDispatch()
-    const spotStyles = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.spotStyles)
+    const spotStyles = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.spotStyles)
     const [showSpotStyleOptions, setShowSpotStyleOptions] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [toEditSpotStyle, setToEditSpotStyle] = useState<SpotType | undefined>()
@@ -61,7 +61,7 @@ const SpotCard = ({
         <div className={styles.spotCard}
             onClick={() => setShowSpotStyleOptions(prev => prev ? true : false)}
         >
-            {showModal ? <Modal setIsVisible={setShowModal} component={<AddBedStyleComponent BedStyle={toEditSpotStyle} setIsVisible={setShowModal} />} /> : null}
+            {showModal ? <Modal setIsVisible={setShowModal} component={<AddSpotStyleComponent SpotStyle={toEditSpotStyle} setIsVisible={setShowModal} />} /> : null}
             <div className="row-between" style={{ margin: "10px 5px 5px 5px", position: "relative" }}>
                 <button
                     type="button"
@@ -150,9 +150,9 @@ const SpotCard = ({
                     </div>
                     <button
                         type="button"
-                        disabled={spot.amount === 1}
+                        disabled={spot.amount <= 1}
                         onClick={() => changeSpotAmount(spot.amount - 1, spot)}
-                        className={[spot.amount === 1 && "disabled", styles.capacityPlus].join(" ")}>-</button>
+                        className={[spot.amount <= 1 && "disabled", styles.capacityPlus].join(" ")}>-</button>
                     <button
                         type="button"
                         onClick={() => changeSpotAmount(spot.amount + 1, spot)}

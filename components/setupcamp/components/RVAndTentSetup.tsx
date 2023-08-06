@@ -1,4 +1,4 @@
-import { addCampArea, setCampAreas } from "@/services/redux/slice/retreatcenter"
+import { addCampArea, setCampAreas } from "@/services/redux/slice/retreatcenters"
 import { RootState } from "@/services/redux/store"
 import { IDGenerator } from "@/utils/functions"
 import { useDispatch, useSelector } from "react-redux"
@@ -8,7 +8,7 @@ import CampAreaCard from "./CampAreaCard"
 
 const RVAndTentSetup = () => {
     const dispatch = useDispatch()
-    const CAMPAREAS = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.housing.campAreas)
+    const CAMPAREAS = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.housing.campAreas)
     return (
         <div className={styles.setUpContainer}>
             {

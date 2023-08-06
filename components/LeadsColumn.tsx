@@ -1,24 +1,27 @@
 "use client"
-import { addLead, addNewLeads } from "@/services/redux/slice/leads";
+import { addLead, addNewLeads, removeLead, setDraggedLead } from "@/services/redux/slice/leads";
 import { RootState } from "@/services/redux/store";
 import { AppointmentType, ArgFunction, HTMLEvent } from "@/types";
-import { IDGenerator, debounce, generateColor } from "@/utils/functions";
+import { IDGenerator, debounce, generateColor, onDragOver } from "@/utils/functions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./LeadsColumn.module.css"
 import TextInput from "./TextInput";
 import { useEffect, useState } from "react";
 import LeadCard from "./LeadCard";
+import { cancelAppointment } from "@/services/redux/slice/retreatcenters";
 
 type Props = {
     customOnDrag?: ArgFunction
     leadCardOnClick?: ArgFunction
+    showZipCode?: boolean
 }
 
 const LeadsColumn = (props: Props) => {
-    const { customOnDrag, leadCardOnClick } = props
+    const { customOnDrag, leadCardOnClick, showZipCode = false } = props
     const dispatch = useDispatch<any>();
     const leads = useSelector((state: RootState) => state.Leads.leads)
     const user = useSelector((state: RootState) => state.User.user)
+    const RetreatCenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter);
     if (!user) return null;
     const [rerenderingLeads, setRerenderingnLeads] = useState(leads)
     const [searchString, setSearchString] = useState("")
@@ -34,28 +37,30 @@ const LeadsColumn = (props: Props) => {
     const onDrag = ({ event, data }: { event: React.DragEvent<HTMLDivElement>; data: AppointmentType }) => {
         const widgetType = JSON.stringify(data)
         event.dataTransfer.setData("widgetType", widgetType)
+        dispatch(setDraggedLead(data))
     }
 
     const openAddLead = async () => {
-        const name = prompt("Enter Name", "John Doe");
-        if (!name) return;
-        const checkInDays = prompt("How Many Days Are Going To Stay?", "5");
-        if (!checkInDays || isNaN(Number(checkInDays))) return alert("Number Of Days Stay Is Invalid")
-        const zipCode = prompt("What's Your Area Code?", "1234");
-        if (!zipCode || isNaN(Number(zipCode))) return alert("Area Code Is Invalid");
-        const groupSize = prompt("How Many People Are Going?", "20");
-        if (!groupSize || isNaN(Number(groupSize))) return alert("Number Of Group Size Is Invalid");
-        const status = confirm("Are You Going To Pay Now?");
+
+        const checkInDays = ""
+        const zipCode = ""
+        const groupSize = ""
         const createdAt = new Date();
         const color = generateColor();
-
         const lead: AppointmentType =
         {
             id: IDGenerator(),
             reservedBy: user,
+            reservee: {
+                id: IDGenerator(),
+                firstName: "",
+                lastName: "",
+                createdAt: new Date(),
+                userCategory: "camper",
+            },
             color: color,
-            groupName: `${String(name).split(" ").at(-1)}'s group`,
-            status: status === true ? "Booked" : "Reserved",
+            groupName: "",
+            status: "Reserved",
             amenities: [],
             meals: [],
             rooms: [],
@@ -67,39 +72,42 @@ const LeadsColumn = (props: Props) => {
         dispatch(addLead(lead))
     }
 
+    const onDrop = (e: React.DragEvent) => {
+        const widgetType = e.dataTransfer.getData("widgetType") as string;
+        const parsed: AppointmentType = JSON.parse(widgetType)
+        const isALead = leads?.find((lead) => lead.id === parsed.id)
+        if (isALead) dispatch(removeLead(parsed.id))
+        else dispatch(cancelAppointment({
+            appointmentId: parsed.id
+        }))
+        dispatch(addLead(parsed))
+
+    }
     return (
-        <div className={styles.leadscolumn}>
-            <div>
+        <div
+            className={styles.leadscolumn}
+            onDrop={onDrop}
+            onDragOver={onDragOver}
+        >
+            <div style={{ height: "100%", overflowY: "hidden" }}>
                 <h3 className={styles.leadsTitle}>Leads</h3>
                 {leads && leads?.length >= 5 ? <TextInput value={searchString} setValue={(e) => setSearchString(e.target.value)} placeholder="Search Lead" containerClassName={styles.searchInput} /> : null}
-                {
-                    rerenderingLeads && rerenderingLeads.map((lead, i) => {
-                        // return <LeadCard
-                        //     key={i}
-                        //     lead={lead}
-                        //     onClick={() => leadCardOnClick && leadCardOnClick(lead)}
-                        //     onDragStart={(event: React.DragEvent<HTMLDivElement>) => customOnDrag ? customOnDrag({ event: event, data: lead }) : onDrag({ event: event, data: lead })}
-                        // />
-                        return (
-                            <div
-                                draggable
-                                key={i}
-                                className={styles.leadCard}
-                                style={{
-                                    border: `3px solid ${lead.color}`,
-                                }}
-                                onClick={() => leadCardOnClick ? leadCardOnClick(lead) : null}
-                                onDragStart={(event) => customOnDrag ? customOnDrag({ event, data: lead }) : onDrag({ event, data: lead })}>
-                                <p className={styles.leadName} style={{ color: lead.color }}>{lead.groupName}</p>
-                                <p>{lead.reservedBy.firstName}</p>
-                                <p>{lead.reservedBy.contactNumber}</p>
-                                <p>{lead.zipCode}</p>
-                            </div>
-                        )
-                    })
-                }
+                <div className={styles.leadsContainer}>
+                    {
+                        rerenderingLeads && rerenderingLeads.map((lead, i) => {
+                            return (
+                                <LeadCard
+                                    showZipCode={showZipCode}
+                                    key={i}
+                                    lead={lead}
+                                    onClick={() => leadCardOnClick ? leadCardOnClick(lead) : null}
+                                    onDragStart={(event) => customOnDrag ? customOnDrag({ event, data: lead }) : onDrag({ event, data: lead })}
+                                />)
+                        })
+                    }
+                </div>
             </div>
-            <div>
+            <div style={{ minHeight: "50px" }}>
                 <button type='button' className={styles.addLead} onClick={openAddLead}>New Lead</button>
             </div>
         </div >

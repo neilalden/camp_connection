@@ -58,3 +58,7 @@
 }
 
 .container {}
+
+.setUpContainer {
+    width: 100%;
+}

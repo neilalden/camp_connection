@@ -35,7 +35,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
     Leads,
-    RetreatCenter,
+    // RetreatCenter,
     RetreatCenters,
     User,
 });

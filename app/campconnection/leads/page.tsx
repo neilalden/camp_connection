@@ -8,12 +8,15 @@ import { AppointmentType, RetreatCenterType } from "@/types"
 import { ObjectToArray, onDragOver, trunc } from "@/utils/functions"
 import Image from "next/image"
 import Images from "@/common/images"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/services/redux/store"
 import Modal from "@/components/Modal"
+import { setDraggedLead } from "@/services/redux/slice/leads"
 type ExtraType = { distance?: number }
 const Leads = () => {
+    const dispatch = useDispatch()
     const retreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
+    const retreatCenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter)
 
     const [rerenderingRetreatCenters, setRerenderingRetreatCenters] = useState<Array<RetreatCenterType & ExtraType>>(retreatCenters)
     const [date, setDate] = useState(new Date())
@@ -22,12 +25,13 @@ const Leads = () => {
 
     const onDrop = (e: React.DragEvent) => {
         const widgetType = e.dataTransfer.getData("widgetType") as string;
-        const parsed: any = JSON.parse(widgetType)
+        // const parsed: any = JSON.parse(widgetType)
     }
     const customOnDrag = ({ event, data }: { event: React.DragEvent, data: AppointmentType }) => {
         const widgetType = JSON.stringify(data);
         event.dataTransfer.setData("widgetType", widgetType);
         setCurrentAppointment(data)
+        dispatch(setDraggedLead(data))
         if (data && data.zipCode) {
             let copy = rerenderingRetreatCenters.map(rc => ({ ...rc, distance: Math.abs(Number(rc.zipCode) - Number(data.zipCode)) }))
             setRerenderingRetreatCenters(copy.sort((a, b) => {
@@ -51,7 +55,7 @@ const Leads = () => {
             {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
             <div className={styles.leadColumn}>
 
-                <LeadsColumn customOnDrag={customOnDrag} leadCardOnClick={clickLead} />
+                <LeadsColumn customOnDrag={customOnDrag} leadCardOnClick={clickLead} showZipCode />
             </div>
 
             <div className={styles.calendarColumn}
@@ -62,8 +66,8 @@ const Leads = () => {
                 <div className={styles.retreatCenterCardContainer}>
                     {
                         rerenderingRetreatCenters.map((retreatCenter, i) => {
-                            const logo = typeof retreatCenter.photo === "string" ? { uri: retreatCenter.photo } : Images["ic_logo"]
                             const capacityClass = currentAppointment?.groupSize && retreatCenter.capacity && currentAppointment.groupSize > retreatCenter.capacity ? styles.capacityDanger : styles.capacity
+                            const logo = retreatCenter.photo ? retreatCenter.photo : Images["ic_logo"]
                             return (
                                 <div key={i} className={styles.retreatCenterCard}>
                                     <div className="row">

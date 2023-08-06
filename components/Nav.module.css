@@ -22,6 +22,7 @@
   display: flex;
   justify-content: start;
   align-items: center;
+  cursor: pointer;
 }
 
 .logoTextContainer {
@@ -29,13 +30,18 @@
   text-align: center;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-left: 50px;
 }
 
 .logo {
   font-size: 20px;
   font-weight: bold;
   color: #d8e189;
-  text-shadow: 0px 2px 2px 0px rgba(0, 0, 0) !important;
+  text-shadow: 0px 2px 2px 0px rgb(141, 102, 102) !important;
   padding: 15px 0px !important;
   min-width: 300px !important;
 }
@@ -173,4 +179,54 @@
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
+}
+
+.addRetreatCenterButton {
+  border: 1px solid #E0E7EB !important;
+  width: 90%;
+  margin: 10px 5% 5px 5% !important;
+  text-align: center;
+  color: #85A0AD;
+  font-size: 18px;
+  font-weight: 900 !important;
+  margin-top: 30px !important;
+  height: 50px;
+  transition: .5s ease-out 0s;
+}
+
+
+.addRetreatCenterButton:hover {
+  border: 1px solid #85A0AD !important;
+
+}
+
+.campOptionContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+  margin: 5px;
+  text-align: end;
+}
+
+.campOptionImage {
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.retreatCentersContainer {
+  position: absolute;
+  min-height: 100px;
+  min-width: 210px;
+  background: #F6F8F9;
+  cursor: pointer;
+  top: 70px;
+  left: 50px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }

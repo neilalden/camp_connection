@@ -1,6 +1,6 @@
 import Images from "@/common/images"
 import TextInput from "@/components/TextInput"
-import { setBuildingRooms, setRoomBeds, setBuildingName, setBuildings } from "@/services/redux/slice/retreatcenter"
+import { setBuildingRooms, setRoomBeds, setBuildingName, setBuildings } from "@/services/redux/slice/retreatcenters"
 import { RootState } from "@/services/redux/store"
 import { RoomType, BedType, ArgFunction, BuildingType } from "@/types"
 import { arrayToMap, IDGenerator } from "@/utils/functions"
@@ -12,7 +12,7 @@ import BedCard from "./BedCard"
 
 const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, deleteBuilding: ArgFunction }) => {
     const dispatch = useDispatch()
-    const BEDSTYLES = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.bedStyles)
+    const BEDSTYLES = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.bedStyles)
 
     const [openBuilding, setOpenBuilding] = useState(true)
 
@@ -83,7 +83,6 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
                     <TextInput
                         placeholder="Building/House name..."
                         value={building.name}
-                        onClick={(e) => { e.stopPropagation(); }}
                         setValue={(e) => dispatch(setBuildingName({ id: building.id, name: e.target.value }))}
                         containerClassName={styles.buildingNameInputStyle}
                     /></div>
@@ -173,6 +172,7 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
                                             }
                                             const changeBedAmount = (value: number, parambed: BedType) => {
                                                 if (isNaN(value)) return;
+                                                if (value < 1) return;
                                                 const rooms = building.rooms?.map((rm) => {
                                                     if (rm.id === room.id) {
                                                         return {

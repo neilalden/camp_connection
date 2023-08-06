@@ -15,13 +15,13 @@ import TextInput from '@/components/TextInput';
 import { IDGenerator } from '@/utils/functions';
 
 const RetreatCenterUserTestData: RetreatCenterUserType = {
-    id: `Alan---${IDGenerator()}`,
-    firstName: "Alan",
-    lastName: "Brown",
+    id: IDGenerator(),
+    firstName: "Reuvin",
+    lastName: "Hernandez",
     middleName: "",
     birthDate: new Date("07/29/1999"),
     contactNumber: "09976447771",
-    email: "alan.brown@gmail.com",
+    email: "reuvin.hernandez@gmail.com",
     organization: "CampConnection",
     userType: "Admin",
     createdAt: new Date(),

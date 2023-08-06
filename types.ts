@@ -9,16 +9,16 @@ export type ScreenProps = {
 
 export type User = {
   id: string;
-  photo?: string;
   firstName: string;
   lastName: string;
+  createdAt: Date;
+  userCategory: "camper" | "retreatcenter" | "campconnectionteam";
+  photo?: string;
   middleName?: string;
   birthDate?: Date;
   contactNumber?: string;
   email?: string;
   organization?: string;
-  createdAt: Date;
-  userCategory: "camper" | "retreatcenter" | "campconnectionteam";
 };
 export interface CamperUserType extends User {
   userType?:
@@ -48,18 +48,6 @@ export type MeetingRoomType = {
   id: string;
   name: string;
   capacity: number;
-
-}
-export type DiagramType = {
-  id: string;
-  name: string;
-  photo?: string;
-  items?: Array<ItemType>
-}
-export type ItemType = {
-  id: string;
-  name: string;
-  amount: number
 }
 export type PricingType = {
   nights: number | "*";
@@ -77,6 +65,7 @@ export type MealType = {
 export type AppointmentType = {
   id: string;
   reservedBy: CamperUserType | RetreatCenterUserType | CampConnectionTeamUserType;
+  reservee: CamperUserType
   status: "Reserved" | "Booked";
   checkInDays: number;
   groupName: string;
@@ -107,6 +96,17 @@ export type LevelType = {
   name: string;
   rooms?: Array<RoomType>;
 };
+export type ItemType = {
+  id: string;
+  name: string;
+  amount: number
+}
+export type DiagramType = {
+  id: string;
+  name: string;
+  photo?: string;
+  items: Array<ItemType>
+}
 export type BedType = {
   id: string;
   name: string;
@@ -154,8 +154,7 @@ export type FacilitiesType = {
   amenities: {
     activities?: Array<ActivityType>;
   };
-  meetingRooms?: {};
-
+  meetingRooms?: Array<MeetingRoomType>;
   appointments: Array<AppointmentType>;
 };
 export type RetreatCenterType = {
@@ -167,9 +166,13 @@ export type RetreatCenterType = {
   timezone?: string;
   state?: string;
   city?: string;
-  logo?: string;
+  street?: string;
+  contactNumber?: string;
+  email?: string;
+  website?: string;
   meals?: Array<MealType>;
-  bedStyles?: Array<BedType>
-  spotStyles?: Array<SpotType>;
-  items?: Array<ItemType>
+  bedStyles: Array<BedType>
+  spotStyles: Array<SpotType>;
+  itemStyles: Array<ItemType>;
+  diagramStyles: Array<DiagramType>
 } & FacilitiesType;
