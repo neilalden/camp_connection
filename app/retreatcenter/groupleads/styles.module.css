@@ -1,6 +1,6 @@
 /* LAYOUT STYLES */
 .main {
-  height: 100% !important;
+  height: calc(100% - 70px) !important;
   width: 100% !important;
   display: flex;
   flex-direction: column;
@@ -25,11 +25,7 @@
 .container {
   display: flex;
   flex-direction: row;
-  height: 100%;
-}
-
-.leadColumn {
-  overflow: hidden !important;
+  height: 100% !important;
 }
 
 .heading {

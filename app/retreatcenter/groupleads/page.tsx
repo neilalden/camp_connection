@@ -23,7 +23,9 @@ const GroupLeads = () => {
     (state: RootState) => state.RetreatCenters.retreatCenters
   );
   // const RetreatCenter = retreatCenters["Eatern Point Retreat House"]
-  const RetreatCenter = retreatCenters[0];
+  const RetreatCenter = useSelector(
+    (state: RootState) => state.RetreatCenters.retreatCenter
+  );
   const [date, setDate] = useState<Date>(new Date());
   const [progress, setProgress] = useState(66);
   const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -37,7 +39,6 @@ const GroupLeads = () => {
   if (!RetreatCenter) return;
 
   const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
-
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -46,10 +47,11 @@ const GroupLeads = () => {
     };
   }, []);
   return (
+
     <div className={styles.container}>
       {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
       <div className={styles.leadColumn}>
-        <LeadsColumn leadCardOnClick={clickLead} />
+        <LeadsColumn leadCardOnClick={clickLead} showZipCode={false} />
       </div>
       <div className="row-evenly">
         <div className={styles.calendarColumn}>

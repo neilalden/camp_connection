@@ -1,30 +1,31 @@
 import { AppointmentType, SetStateType, RetreatCenterType } from "@/types";
-import { dateIsScheduled, getDays, getEndDate, onDragOver, trunc } from "@/utils/functions";
+import { dateIsScheduled, debounce, getDays, getEndDate, onDragOver, trunc } from "@/utils/functions";
 import { months, weekdays } from "@/utils/variables";
 import styles from "./SimpleCalendar.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
 import { addAppointment, cancelAppointment } from "@/services/redux/slice/retreatcenters";
 import { useEffect, useState } from "react";
-import { removeLead } from "@/services/redux/slice/leads";
+import { AppointmentTypeWithExtraProp, removeLead, setDraggedLead } from "@/services/redux/slice/leads";
 import Modal from "./Modal";
 import Colors from "@/common/colors";
-type AppointmentTypeWithExtraProp = {
-    draggedDate: Date
-} & AppointmentType
-
 const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: RetreatCenterType }) => {
     const dispatch = useDispatch()
     const retreatcenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
+    const draggedLead: any = useSelector((state: RootState) => state.Leads.draggedLead)
     const [modalIsVisible, setModalIsVisible] = useState(false);
     const [currentAppointment, setCurrentAppointment] = useState<AppointmentType | Array<AppointmentType>>()
-    const [currentDrag, setCurrentDrag] = useState<AppointmentTypeWithExtraProp>()
+    const [currentRetreatCenter, setCurrentRetreatCenter] = useState<RetreatCenterType>(RetreatCenter)
 
     const Days = getDays({ start: new Date(`${months[date.getMonth()]} 01 ${date.getFullYear()}`), end: getEndDate(date) });
     const calendarWeeks = Array(6).fill(0)
     const calendarDays = Array(8).fill(0)
     let calendarDate: number | undefined = undefined;
 
+
+    useEffect(() => {
+        setCurrentRetreatCenter(RetreatCenter)
+    }, [RetreatCenter])
 
 
     const onDrop = (e: React.DragEvent, date?: Date) => {
@@ -41,12 +42,28 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
         }
 
         const isBooked = retreatcenters.find(rc => rc.appointments.some(a => a.id === appointment.id));
-        if (isBooked) dispatch(cancelAppointment({ retreatCenterId: RetreatCenter.id, appointmentId: appointment.id }))
+        if (isBooked) dispatch(cancelAppointment({ appointmentId: appointment.id }))
         dispatch(addAppointment({
-            retreatCenterId: RetreatCenter.id,
+            retreatCenterId: currentRetreatCenter.id,
             appointment: appointment
         }))
         dispatch(removeLead(appointment.id))
+        dispatch(setDraggedLead(undefined))
+    }
+    const leaveDrag = (e: React.DragEvent) => { e.preventDefault(); debounce(setCurrentRetreatCenter(RetreatCenter), 500) }
+    const onDropPreview = (data: AppointmentType, date?: Date) => {
+        if (!date) return;
+        const copiedDate = new Date(date)
+        if (data.status === undefined) return; // it means that the data from drop is not an appointment
+        const appointment: AppointmentType = {
+            ...data,
+            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate() + 1)),
+            checkOutDate: new Date(copiedDate.setDate(copiedDate.getDate() + data.checkInDays - 1)),
+        }
+        setCurrentRetreatCenter(prev => ({
+            ...prev,
+            appointments: [...prev.appointments, appointment]
+        }))
     }
     const clickAppointment = (appointment: AppointmentType | Array<AppointmentType>) => {
         setCurrentAppointment(appointment)
@@ -58,9 +75,10 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
         if (!currentDate) return;
         if (Array.isArray(data)) return;
         const newdata: AppointmentTypeWithExtraProp = { ...data, draggedDate: currentDate }
-        setCurrentDrag(newdata)
+        // setCurrentDrag(newdata)
+        dispatch(setDraggedLead(newdata))
     }
-    const onDragEnd = (e: any) => setCurrentDrag(undefined)
+    const onDragEnd = (e: any) => dispatch(setDraggedLead(undefined))
     return (<div>
         {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
         <div className={styles.calendarWeek}>
@@ -102,7 +120,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                 )
                             }
                             const currentDate = calendarDate !== undefined ? Days[calendarDate++] : undefined;
-                            const appointment = dateIsScheduled({ date: currentDate, appointments: RetreatCenter.appointments });
+                            const appointment = dateIsScheduled({ date: currentDate, appointments: currentRetreatCenter.appointments });
                             let classes: string | undefined;
                             let style: React.CSSProperties | undefined;
                             if (!Array.isArray(appointment) && appointment && appointment.checkInDate && appointment.checkOutDate && currentDate) {
@@ -128,8 +146,6 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                     checkInString == currentDateString ? appointment.status === "Booked" ? styles.bookingTail : styles.reservationTail : "",
                                     checkOutString === currentDateString ? appointment.status === "Booked" ? styles.bookingHead : styles.reservationHead : "",
                                 ].join(" ");
-                                // if (checkInString === currentDateString) style = { ...style, borderLeft: backgroundString }
-                                // if (checkOutString === currentDateString) style = { ...style, borderRight: backgroundString }
                             }
                             if (Array.isArray(appointment)) {
                                 const backgroundString = `repeating-linear-gradient(180deg, ${appointment.map(a => a.color).toString()}) `
@@ -153,7 +169,11 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                     key={ix}
                                     className={[styles.vacant, styles.calendarDate].join(" ")}
                                     onDrop={(e) => onDrop(e, currentDate)}
-                                    onDragOver={onDragOver}
+                                    onDragOver={e => {
+                                        e.preventDefault();
+                                        debounce(onDropPreview(draggedLead, currentDate), 1000)
+                                    }}
+                                    onDragLeave={leaveDrag}
                                 />;
 
                             {/* currentDrag === is the user dragging an item ? */ }
@@ -161,8 +181,8 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                             {/* appointmentBeingDragged === appointment is being dragged */ }
                             {/* cellBeingDragged === the specific date of appointment being dragged */ }
                             const isDraggable = !Array.isArray(appointment) && appointment && appointment.status === "Reserved"
-                            const cellBeingDragged = currentDrag && currentDate && currentDrag.draggedDate.toString() === currentDate.toString()
-                            const appointmentBeingDragged = !Array.isArray(appointment) && currentDate && appointment && currentDrag?.id === appointment.id
+                            const cellBeingDragged = draggedLead && currentDate && draggedLead?.draggedDate?.toString() === currentDate.toString()
+                            const appointmentBeingDragged = !Array.isArray(appointment) && currentDate && appointment && draggedLead?.id === appointment.id
                             let cond = true;
                             if (appointmentBeingDragged && !cellBeingDragged) cond = false
                             return (
@@ -170,9 +190,12 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                     key={ix}
                                     className={[styles.vacant, styles.calendarDate].join(" ")}
                                     onDrop={(e) => onDrop(e, currentDate)}
-                                    onDragOver={onDragOver}
+                                    onDragOver={e => {
+                                        e.preventDefault();
+                                        debounce(onDropPreview(draggedLead, currentDate), 1000)
+                                    }}
+                                    onDragLeave={leaveDrag}
                                 >
-                                    {/* <span className={styles.calendarDate}>{currentDate ? currentDate.getDate() : ""}</span> */}
                                     {appointment && currentDate && cond ?
                                         <div
                                             data-content={!Array.isArray(appointment) ?
@@ -182,7 +205,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                                 appointmentBeingDragged ?
                                                     {
                                                         ...style,
-                                                        border: `3px solid ${currentDrag.color}`,
+                                                        border: `3px solid ${draggedLead.color}`,
                                                     }
                                                     : style
                                             }
@@ -192,15 +215,28 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                             onDragStart={(e) => onDrag(e, appointment, currentDate)}
                                             onDragEnd={e => onDragEnd(e)}
                                             onClick={() => clickAppointment(appointment)}
-                                        >{!Array.isArray(currentDrag) && appointmentBeingDragged ? (
+                                            onDragOver={e => {
+                                                e.preventDefault();
+                                                debounce(onDropPreview(draggedLead, currentDate), 1000)
+                                            }}
+                                            onDragLeave={leaveDrag}
+
+                                        >{!Array.isArray(draggedLead) && appointmentBeingDragged ? (
                                             <div>
                                                 <p className={styles.leadName} style={{ color: appointment.color }}>{appointment.groupName}</p>
-                                                <p>{appointment.reservedBy.firstName}</p>
-                                                <p>{appointment.reservedBy.contactNumber}</p>
+                                                <p>{appointment.reservee.firstName}</p>
+                                                <p>{appointment.reservee.contactNumber}</p>
                                                 <p>{appointment.zipCode}</p>
                                             </div>)
                                             : null}</div>
-                                        : <div className={styles.vacantLine} />}
+                                        : <div
+                                            className={styles.vacantLine}
+                                            onDragOver={e => {
+                                                e.preventDefault();
+                                                debounce(onDropPreview(draggedLead, currentDate), 1000)
+                                            }}
+                                            onDragLeave={leaveDrag}
+                                        />}
                                 </div>
                             )
                         })}

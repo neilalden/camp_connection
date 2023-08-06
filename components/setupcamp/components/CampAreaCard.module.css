@@ -48,6 +48,20 @@
     margin: 25px 5% !important;
 }
 
+.buildingNameInputContainer {
+    width: 400px;
+}
+
+.buildingNameInputContainer>input {
+    outline: 0 !important;
+    border: 0;
+    font-size: 20px;
+    font-weight: 700 !important;
+    max-width: 250px;
+
+}
+
+
 .addBedButton {
     border: 1px solid #E0E7EB !important;
     width: calc(100% - 20px) !important;
@@ -73,17 +87,6 @@
     margin: auto;
     display: block;
     margin-bottom: 1px;
-}
-
-.buildingNameInputStyle {
-    width: 400px;
-}
-
-.buildingNameInputStyle>input {
-    outline: 0 !important;
-    border: 0;
-    font-size: 20px;
-    font-weight: 700 !important;
 }
 
 .deleteButton {

@@ -115,20 +115,9 @@
     font-weight: 600;
 }
 
-.addMeetingRoomButton {
-    border: 1px solid #E0E7EB !important;
-    width: 90%;
-    margin: 10px 5% 5px 5% !important;
-    text-align: center;
-    color: #85A0AD;
-    font-size: 18px;
-    font-weight: 900 !important;
-
-}
-
 
 .meetingRoomCardsContainer {
-    width: 50%;
+    width: 40%;
     min-height: 100px;
     justify-content: center;
     align-items: center;
@@ -145,7 +134,7 @@
 
 .meetingRoomCardNameInputContainer {
     width: 80% !important;
-    margin: 26px 0 25px 25px;
+    margin: 28px 0 25px 25px;
 }
 
 .meetingRoomCardNameInput {
@@ -166,6 +155,8 @@
     max-width: 70px !important;
     border: 1px solid #E0E7EB;
     text-align: center !important;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .meetingRoomCardCapacityInput:focus {
@@ -179,20 +170,14 @@
     font-weight: 300;
 }
 
-.diagramCard {
-    width: 90%;
-    min-height: 200px !important;
-    background: #F6F8F9;
-    margin: 20px 5% !important;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
 
 .diagramCardsContainer {
-    width: 50%;
+    width: 60%;
     min-height: 100px;
     justify-content: center;
     align-items: center;
 }
+
 
 
 .addItemsButton {
@@ -208,8 +193,34 @@
 
 }
 
+.addMeetingRoomButton {
+    border: 1px solid #E0E7EB !important;
+    width: 90%;
+    margin: 10px 5% 5px 5% !important;
+    text-align: center;
+    color: #85A0AD;
+    font-size: 18px;
+    font-weight: 900 !important;
+    margin-top: 30px !important;
+    height: 50px;
+    transition: .5s ease-out 0s;
+}
 
-.addItemsButton:hover {
+
+.addMeetingRoomButton:hover {
     border: 1px solid #85A0AD !important;
 
+}
+
+.itemDeleteButtom {
+    color: #E0E7EB;
+    font-size: 10px;
+    font-weight: 900 !important;
+    transition: .5s ease-out 0s;
+    width: 50px;
+    padding-left: 10px;
+}
+
+.itemDeleteButtom:hover {
+    color: #BF2600;
 }

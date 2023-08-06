@@ -1,4 +1,30 @@
-.input {
-    width: 100% !important;
-    font-weight: normal !important;
+label.container input[type="file"] {
+    position: absolute;
+    top: -1000px;
+}
+
+.container {
+    cursor: pointer;
+    border: 1px solid #E0E7EB;
+    padding: 0px 15px 5px 15px;
+    background: #F6F8F9;
+    display: inline-block;
+    transition: .5s ease-out 0s;
+}
+
+.container:hover {
+    border: 1px solid #85A0AD !important;
+    color: #85A0AD;
+}
+
+.container:active {
+    background: #9fa1a0;
+}
+
+.container:invalid+span {
+    color: #000000;
+}
+
+.container:valid+span {
+    color: #ffffff;
 }

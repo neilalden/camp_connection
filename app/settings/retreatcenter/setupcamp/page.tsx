@@ -9,14 +9,16 @@ import Divider from "@/components/Divider";
 import FileUpload from "@/components/FileUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
-import { addItemType, } from "@/services/redux/slice/retreatcenter";
+import { addMeetingRoom, addItemStyle, addDiagramStyle, setDiagramStyles, setMeetingRooms, } from "@/services/redux/slice/retreatcenters";
 import RadioButton from "@/components/RadioButton";
 import CheckBox from "@/components/CheckBox";
 import DropDown from "@/components/DropDown";
-import { IDGenerator, arrayToMap } from "@/utils/functions";
+import { IDGenerator, arrayToMap, ItemGenerator } from "@/utils/functions";
 import HousingSetup from "@/components/setupcamp/components/HousingSetup";
 import SpotCard from "@/components/setupcamp/components/SpotCard";
 import RVAndTentSetup from "@/components/setupcamp/components/RVAndTentSetup";
+import ItemsSetup from "@/components/setupcamp/components/ItemsSetupComponent";
+import DiagramCard from "@/components/setupcamp/components/DiagramCard";
 const Userprofile = () => {
     const [showHousing, setShowHousing] = useState(false)
     const [showRvAndTent, setShowRvAndTent] = useState(false)
@@ -60,90 +62,80 @@ const Userprofile = () => {
         </div>
     )
 }
-const ItemsSetup = () => {
-    const dispatch = useDispatch()
-    const ITEMS = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.items)
-    return (
-        <div className={styles.setUpContainer}>
-            <div className={styles.BedStylesCardContainer}>
-                {
-                    ITEMS && ITEMS.map((item, i) => {
-                        return (
-                            <div key={i} className={styles.spotCard}>
-                                <div className="row">
-                                    <TextInput
-                                        containerClassName={styles.meetingRoomCardNameInputContainer}
-                                        inputClassName={styles.meetingRoomCardNameInput}
-                                        placeholder={`King bed ${i + 1}`}
-                                        value={item.name}
-                                        setValue={e => {
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        )
-                    })
-                }
-            </div>
-            <button
-                className={styles.addItemsButton}
-                onClick={
-                    () => dispatch(addItemType({
-                        id: IDGenerator(),
-                        name: `Camp Item ${ITEMS ? ITEMS.length + 1 : 1}`,
-                        amount: 10
-                    }))
-                }
-            >
-                +
-            </button>
-        </div>
-    )
-}
+
 const MeetingRoomsSetup = () => {
-    const [meetingRooms, setMeetingRooms] = useState<Array<MeetingRoomType>>([])
-    const [diagrams, setDiagrams] = useState<Array<DiagramType>>([])
-    const changeName = (name: string, meetingRoomId: string) => {
-        const newRooms = meetingRooms.map((mr) => {
+    const dispatch = useDispatch()
+    const MEETINGROOMS = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.meetingRooms)
+    const DIAGRAMSTYLES = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.diagramStyles)
+    const changeMeetingRoomName = (name: string, meetingRoomId: string) => {
+        if (!MEETINGROOMS) return;
+        const newRooms = [...MEETINGROOMS].map((mr) => {
             if (mr.id === meetingRoomId) return { ...mr, name }
             return mr
         })
-        setMeetingRooms(newRooms)
     }
-    const changeValue = (value: string, meetingRoomId: string) => {
+    const changeMeetingRoomCapacity = (value: string, meetingRoomId: string) => {
         if (isNaN(Number(value))) return
-        const newRooms = meetingRooms.map((mr) => {
+        if (!MEETINGROOMS) return;
+        const newRooms = [...MEETINGROOMS].map((mr) => {
             if (mr.id === meetingRoomId) return { ...mr, capacity: Number(value) }
             return mr
         })
-        setMeetingRooms(newRooms)
     }
-    const addMeetingRoom = () => setMeetingRooms((prev) => [...prev, {
-        id: IDGenerator(),
-        name: `Meeting room ${prev.length + 1}`,
-        capacity: 0
-    }])
+    const addMeetingRoomClick = () => {
+        dispatch(addMeetingRoom({
+            id: IDGenerator(),
+            name: `Meeting room ${MEETINGROOMS ? MEETINGROOMS.length + 1 : 1}`,
+            capacity: 0
+        }))
+    }
+    const changeDiagramName = (name: string, diagramId: string) => {
+        if (!DIAGRAMSTYLES) return;
+        const newDiagrams = [...DIAGRAMSTYLES].map((dg) => {
+            if (dg.id === diagramId) return { ...dg, name }
+            return dg
+        })
+        dispatch(setDiagramStyles(newDiagrams))
+    }
+    const addDiagramStyleClick = () => {
+        dispatch(addDiagramStyle(
+            {
+                id: IDGenerator(),
+                name: `Diagram ${DIAGRAMSTYLES ? DIAGRAMSTYLES.length + 1 : 1}`,
+                items: [
+                    {
+                        id: IDGenerator(),
+                        name: "T.V.",
+                        amount: 5
+                    }
+                ]
+            }
+        ))
+    }
 
-    const addDiagram = () => setDiagrams(prev => [...prev,
-    {
-        id: IDGenerator(),
-        name: `Meeting room ${prev.length + 1}`,
-    }])
     return (
         <div className={styles.meetingSetupContainer}>
             <div className={styles.meetingRoomCardsContainer}>
                 {
-                    meetingRooms.map((meetingRoom, i) => {
+                    MEETINGROOMS && [...MEETINGROOMS].map((meetingRoom, i) => {
                         return (
                             <div key={meetingRoom.id} className={styles.meetingRoomCard}>
                                 <div className="row">
-
+                                    <button
+                                        type="button"
+                                        className={styles.itemDeleteButtom}
+                                        onClick={() => {
+                                            if (!Array.isArray(MEETINGROOMS)) return;
+                                            let newMeetingRooms: RetreatCenterType["meetingRooms"] = [...MEETINGROOMS]
+                                            newMeetingRooms.splice(i, 1);
+                                            dispatch(setMeetingRooms(newMeetingRooms))
+                                        }}>X</button>
                                     <TextInput
                                         containerClassName={styles.meetingRoomCardNameInputContainer}
                                         inputClassName={styles.meetingRoomCardNameInput}
                                         placeholder={`Meeting Room ${i + 1}`}
                                         value={meetingRoom.name}
-                                        setValue={(e) => changeName(e.target.value, meetingRoom.id)}
+                                        setValue={(e) => changeMeetingRoomName(e.target.value, meetingRoom.id)}
                                     />
                                     <TextInput
                                         containerClassName={styles.meetingRoomCardCapacityInputContainer}
@@ -151,7 +143,7 @@ const MeetingRoomsSetup = () => {
                                         labelClassName={styles.capacityLabelClassName}
                                         label="Capacity"
                                         value={meetingRoom.capacity}
-                                        setValue={(e) => changeValue(e.target.value, meetingRoom.id)}
+                                        setValue={(e) => changeMeetingRoomCapacity(e.target.value, meetingRoom.id)}
                                     />
                                 </div>
                             </div>
@@ -160,34 +152,22 @@ const MeetingRoomsSetup = () => {
                 }
                 <button
                     className={styles.addMeetingRoomButton}
-                    onClick={addMeetingRoom}
+                    onClick={addMeetingRoomClick}
                 >
                     +
                 </button>
             </div>
             <div className={styles.diagramCardsContainer}>
                 {
-                    diagrams.map((diagram, i) => {
+                    DIAGRAMSTYLES && [...DIAGRAMSTYLES].map((diagram, i) => {
                         return (
-                            <div key={diagram.id} className={styles.diagramCard}>
-
-                                <TextInput
-                                    placeholder={`Meeting Room ${i + 1}`}
-                                    value={diagram.name}
-                                    setValue={(e) => changeName(e.target.value, diagram.id)}
-                                />
-                                <TextInput
-                                    label="Capacity"
-                                    value={diagram.name}
-                                    setValue={(e) => changeValue(e.target.value, diagram.id)}
-                                />
-                            </div>
+                            <DiagramCard key={i} diagram={diagram} index={i} />
                         )
                     })
                 }
                 <button
                     className={styles.addMeetingRoomButton}
-                    onClick={addDiagram}
+                    onClick={addDiagramStyleClick}
                 >
                     +
                 </button>

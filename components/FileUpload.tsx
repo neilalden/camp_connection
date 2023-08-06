@@ -1,41 +1,44 @@
+import Images from '@/common/images';
 import { ArgFunction, FileType, SetStateType } from '@/types';
+import Image from 'next/image';
 import React from 'react'
 import styles from "./FileUpload.module.css"
 type Props = {
     label?: string;
-    placeholder?: string;
-    value?: File;
-    setValue: SetStateType<File> | ArgFunction;
+    ref?: React.RefObject<HTMLInputElement>;
+    onChange: ArgFunction;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
-    inputClassName?: string
+    inputClassName?: string,
+    required?: boolean,
+    accept?: string;
 }
 const FileUpload = (props: Props) => {
     const {
         label,
-        placeholder,
-        value,
-        setValue,
+        ref,
+        onChange,
         containerStyle,
         containerClassName,
-        inputClassName
+        inputClassName,
+        required = false,
+        accept = "image/*",
     } = props
     return (
-        <div style={containerStyle} className={containerClassName}>
-            <label htmlFor={label}>{label}</label><br />
+        <label htmlFor={label} style={containerStyle} className={[styles.container, containerClassName].join(" ")}>
             <input
                 type="file"
+                accept={accept}
+                ref={ref}
+                required={required}
                 name={label}
                 id={label}
                 className={[styles.input, inputClassName].join(" ")}
-                placeholder={placeholder}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    const { files } = event.target;
-                    const selectedFiles = files as FileList;
-                    if (selectedFiles.length > 0) setValue(selectedFiles[0])
-                }}
+                onChange={onChange}
             />
-        </div >
+            <span>{label}</span>
+            <Image alt="file upload icon" src={Images.ic_upload} height={10} width={10} style={{ marginLeft: 10 }} />
+        </label>
     )
 }
 

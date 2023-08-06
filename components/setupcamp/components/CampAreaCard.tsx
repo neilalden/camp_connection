@@ -1,6 +1,6 @@
 import Images from "@/common/images"
 import TextInput from "@/components/TextInput"
-import { setCampAreaName, setCampAreaSpaces, setSpaceSpots } from "@/services/redux/slice/retreatcenter"
+import { setCampAreaName, setCampAreaSpaces, setSpaceSpots } from "@/services/redux/slice/retreatcenters"
 import { RootState } from "@/services/redux/store"
 import { ArgFunction, BedType, CampAreaType, SpaceType, SpotType, } from "@/types"
 import { arrayToMap, IDGenerator } from "@/utils/functions"
@@ -13,7 +13,7 @@ import SpotCard from "./SpotCard"
 
 const CampAreaCard = ({ campArea, deleteCampArea }: { campArea: CampAreaType, deleteCampArea: ArgFunction }) => {
     const dispatch = useDispatch()
-    const BEDSTYLES = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.spotStyles)
+    const BEDSTYLES = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.spotStyles)
 
     const [openSpaceArea, setOpenSpaceArea] = useState(true)
 
@@ -86,7 +86,7 @@ const CampAreaCard = ({ campArea, deleteCampArea }: { campArea: CampAreaType, de
                         value={campArea.name}
                         onClick={(e) => { e.stopPropagation(); }}
                         setValue={(e) => dispatch(setCampAreaName({ id: campArea.id, name: e.target.value }))}
-                        containerClassName={styles.buildingNameInputStyle}
+                        containerClassName={styles.buildingNameInputContainer}
                     /></div>
 
                 <Image alt="chevron down" src={openSpaceArea ? Images.ic_chevron_up : Images.ic_chevron_down} height={15} />
@@ -126,7 +126,7 @@ const CampAreaCard = ({ campArea, deleteCampArea }: { campArea: CampAreaType, de
                                 <div key={ind} className={styles.spaceCard}>
                                     <TextInput
                                         inputClassName={styles.inputInsideBox}
-                                        containerClassName={styles.buildingNameInputStyle}
+                                        containerClassName={styles.buildingNameInputContainer}
                                         placeholder={"Space name..."}
                                         value={space.name}
                                         setValue={(e) => changeSpaceName({
@@ -174,6 +174,7 @@ const CampAreaCard = ({ campArea, deleteCampArea }: { campArea: CampAreaType, de
                                             }
                                             const changeSpotAmount = (value: number, paramspot: SpotType) => {
                                                 if (isNaN(value)) return;
+                                                if (value < 1) return;
                                                 const spaces = campArea.spaces?.map((rm) => {
                                                     if (rm.id === space.id) {
                                                         return {

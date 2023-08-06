@@ -1,0 +1,7 @@
+.buttonHover {
+    transition: .5s ease-out 0s;
+}
+
+.buttonHover:hover {
+    border: 1px solid #85A0AD !important;
+}

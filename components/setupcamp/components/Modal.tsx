@@ -4,7 +4,7 @@ import { BedType, SetStateType } from '@/types'
 import TextInput from '@/components/TextInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { IDGenerator } from '@/utils/functions'
-import { addBedPriceDay, addBedStyle, setBedPrice } from '@/services/redux/slice/retreatcenter'
+import { addBedPriceDay, addBedStyle, setBedPrice } from '@/services/redux/slice/retreatcenters'
 import Colors from '@/common/colors'
 import { RootState } from '@/services/redux/store'
 type Props = {

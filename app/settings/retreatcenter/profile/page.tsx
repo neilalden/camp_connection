@@ -3,83 +3,59 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Images from "@/common/images";
-import { ArrayRCSD, UsersSampleData } from "@/utils/sampleData";
+import { UsersSampleData } from "@/utils/sampleData";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
 import TextInput from "@/components/TextInput";
-import { StatesInUSA, StatesWithCitiesAPI, TimeZones, weekdays } from "@/utils/variables";
-import { GET } from "@/services/api";
-import { default as statesWithCities } from "@/utils/statesWithCities.json";
-import DropDown, { OptionType } from "@/components/DropDown";
+import { weekdays } from "@/utils/variables";
+import { POST } from "@/services/api";
 import DropDownUsers, { UsersOptionType } from "@/components/DropDownUsers";
 import CheckBox from "@/components/CheckBox";
-import FileUpload from "@/components/FileUpload";
-import FileButton from "@/components/FileButton";
 import RadioButton from "@/components/RadioButton";
 import { usaStatesFull } from 'typed-usa-states';
 import ZipcodeToTimezone from "zipcode-to-timezone"
 import { ScheduleType } from "@/types";
-import { sortArrayOfObjects } from "@/utils/functions";
 import Divider from "@/components/Divider";
-import { setRetreatCenterName, setRetreatCenterPhoto } from "@/services/redux/slice/retreatcenter";
-import Colors from "@/common/colors";
-const options = StatesInUSA.map(state => ({ label: state, value: state }))
+import { setRetreatCenter, setRetreatCenterName, setRetreatCenterPhoto } from "@/services/redux/slice/retreatcenters";
 const Userprofile = () => {
     const dispatch = useDispatch()
-    const retreatcenter = useSelector((state: RootState) => state.RetreatCenter.retreatCenter)
-    const [retreatCenterName, setRetreatCenterNameUseState] = useState<string | undefined>(undefined)
-    const [state, setState] = useState("")
-    const [city, setCity] = useState("")
-    const [street, setStreet] = useState("")
-    const [zipcode, setZipcode] = useState("")
-    const [phoneNumber, setPhoneNumber] = useState("")
-    const [email, setEmail] = useState("")
-    const [website, setWebsite] = useState("")
-    const [timezone, setTimezone] = useState("")
+    const retreatcenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter)
     const [representative, setRepresentative] = useState<UsersOptionType>()
     const [isAceeptingGroups, setIsAcceptingGroups] = useState<boolean>(false)
     const [isAceeptingRVTent, setIsAcceptingRVTent] = useState<boolean>(false)
     const [isRecievingCCLeads, setIsRecievingCCLeads] = useState<boolean>(false)
-    const [stateOptions] = useState<Array<OptionType>>(Object.keys(statesWithCities).map(s => ({ label: s, value: s })))
-    // @ts-ignore
-    const cityOptions: Array<OptionType> = Array.isArray(statesWithCities[state]) ? statesWithCities[state].map(c => ({ label: c, value: c })) : []
-    // const timeZoneOptions: Array<OptionType> = TimeZones.map(tz => ({ label: tz, value: tz }))
+
     const userOptions: Array<UsersOptionType> = UsersSampleData.map(user => ({ label: `${user.firstName} ${user.lastName} • ${user.userType}`, value: user.id, user: user }))
 
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const campPhoto = useSelector((state: RootState) => state.RetreatCenter.retreatCenter?.photo);
+    const campPhoto = useSelector((state: RootState) => state.RetreatCenters.retreatCenter?.photo);
     const [campPhotoState, setCampPhotoState] = useState<string | undefined>(campPhoto)
-
     useEffect(() => {
-        if (!zipcode) {
-            setState("")
-            setCity("")
-            setTimezone("")
-            return
-        }
-        setTimezone(String(ZipcodeToTimezone.lookup(zipcode)))
-        const stateFull = usaStatesFull.find((state) => state.zipCodes && state.zipCodes.some(zcItem => zcItem.some(zc => String(zc) === zipcode)))
+        dispatch(setRetreatCenter({ ...retreatcenter, timezone: String(ZipcodeToTimezone.lookup(retreatcenter.zipCode)) }))
+        const stateFull = usaStatesFull.find((state) => state.zipCodes && state.zipCodes.some(zcItem => zcItem.some(zc => String(zc) === retreatcenter.zipCode)))
         if (!stateFull) return;
-        setState(stateFull.name)
-    }, [zipcode])
-    useEffect(() => {
-        if (retreatCenterName === undefined) return
-        dispatch(setRetreatCenterName(retreatCenterName))
-    }, [retreatCenterName])
+        dispatch(setRetreatCenter({ ...retreatcenter, state: stateFull.name }))
+    }, [retreatcenter.zipCode])
     useEffect(() => {
         setCampPhotoState(campPhoto)
     }, [campPhoto])
+
     const handleEditClick = () => {
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
     };
-
     const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const selectedFile = e.target.files[0];
             const imageUrl = URL.createObjectURL(selectedFile);
+            console.log(selectedFile)
+            POST("http://atsdevs.org/api/images/images.php", {
+                image: e.target.files[0].name
+            })?.then(res => {
+                console.log(res)
+            })
             dispatch(setRetreatCenterPhoto(imageUrl));
         }
     };
@@ -93,7 +69,7 @@ const Userprofile = () => {
                         className={styles.logo}
                         height={150}
                         width={150}
-                        style={{ objectFit: "contain" }}
+                        style={{ objectFit: "cover" }}
                         onError={e => setCampPhotoState(undefined)}
                     />
                     <div className={styles.overlay} onClick={handleEditClick}></div>
@@ -107,9 +83,9 @@ const Userprofile = () => {
                     />
                 </div>
                 <div className={styles.campName}>
-                    <TextInput placeholder="Camp name..." value={String(retreatcenter?.name)} setValue={(e) => setRetreatCenterNameUseState(e.target.value)} containerClassName={styles.campNameInputStyle} />
+                    <TextInput placeholder="Camp name..." value={String(retreatcenter?.name)} setValue={(e) => dispatch(setRetreatCenterName(e.target.value))} containerClassName={styles.campNameInputStyle} />
                     <p className={styles.stateText}>
-                        {state}
+                        {retreatcenter.state}
                     </p>
                 </div>
                 <div className={styles.videoIntro}>
@@ -121,20 +97,23 @@ const Userprofile = () => {
                 <div className={["card", styles.addressAndContactInfoContainer].join(" ")}>
                     <h4 className={styles.cardTitle}>Address</h4>
                     <form>
-                        <TextInput label="Zipcode" value={zipcode} setValue={(e) => setZipcode(e.target.value)} containerClassName={styles.inputStyle} />
-                        <TextInput label="State" value={state} setValue={(e) => setState(e.target.value)} containerClassName={styles.inputStyle} disabled />
-                        <TextInput label="City" value={city} setValue={(e) => setCity(e.target.value)} containerClassName={styles.inputStyle} />
-                        <TextInput label="Street" value={street} setValue={(e) => setStreet(e.target.value)} containerClassName={styles.inputStyle} />
+                        <TextInput label="Zipcode" value={retreatcenter.zipCode ?? ""} setValue={(e) => {
+                            dispatch(setRetreatCenter({ ...retreatcenter, zipCode: e.target.value }))
+
+                        }}
+                            containerClassName={styles.inputStyle} />
+                        <TextInput label="State" value={retreatcenter.state ?? ""} containerClassName={styles.inputStyle} disabled />
+                        <TextInput label="City" value={retreatcenter.city ?? ""} setValue={(e) => dispatch(setRetreatCenter({ ...retreatcenter, city: e.target.value }))} containerClassName={styles.inputStyle} />
+                        <TextInput label="Street" value={retreatcenter.street ?? ""} setValue={(e) => dispatch(setRetreatCenter({ ...retreatcenter, street: e.target.value }))} containerClassName={styles.inputStyle} />
                     </form>
                 </div>
                 <div className={["card", styles.availabilityContainer].join(" ")}>
                     <h4 className={styles.cardTitle}>Contact Info</h4>
                     <form>
-                        <TextInput label="Phone Number" type="tel" value={phoneNumber} setValue={(e) => setPhoneNumber(e.target.value)} containerClassName={styles.inputStyle} />
-                        <TextInput label="Email" type="email" value={email} setValue={(e) => setEmail(e.target.value)} containerClassName={styles.inputStyle} />
-                        <TextInput label="Website" type="url" value={website} setValue={(e) => setWebsite(e.target.value)} containerClassName={styles.inputStyle} />
-                        <TextInput label="Timezone" value={timezone} setValue={(e) => setTimezone(e.target.value)} containerClassName={styles.inputStyle} disabled />
-                        {/* <DropDown htmlFor="Time Zone" options={timeZoneOptions} value={timezone} setValue={setTimezone} containerClassName={styles.inputStyle} /> */}
+                        <TextInput label="Phone Number" type="tel" value={retreatcenter.contactNumber ?? ""} setValue={(e) => dispatch(setRetreatCenter({ ...retreatcenter, contactNumber: e.target.value }))} containerClassName={styles.inputStyle} />
+                        <TextInput label="Email" type="email" value={retreatcenter.email ?? ""} setValue={(e) => dispatch(setRetreatCenter({ ...retreatcenter, email: e.target.value }))} containerClassName={styles.inputStyle} />
+                        <TextInput label="Website" type="url" value={retreatcenter.website ?? ""} setValue={(e) => dispatch(setRetreatCenter({ ...retreatcenter, website: e.target.value }))} containerClassName={styles.inputStyle} />
+                        <TextInput label="Timezone" value={retreatcenter.timezone ?? ""} containerClassName={styles.inputStyle} disabled />
                     </form>
                 </div>
                 <div className={["card", styles.general].join(" ")}>

@@ -1,0 +1,232 @@
+.diagramCardsContainer {
+    width: 100%;
+    min-height: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.diagramCard {
+    width: 90%;
+    min-height: 180px !important;
+    background: #F6F8F9;
+    margin: 20px 5%;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.diagramCard>div {
+    width: 100%;
+    height: 100% !important;
+}
+
+.itemDeleteButtom {
+    color: #E0E7EB;
+    font-size: 10px;
+    font-weight: 900 !important;
+    transition: .5s ease-out 0s;
+    width: 50px;
+    padding-left: 10px;
+}
+
+.itemDeleteButtom:hover {
+    color: #BF2600;
+}
+
+.diagramNameInput {
+    width: 100% !important;
+}
+
+.diagramNameInputContainer {
+    width: 80% !important;
+    margin: 16px 32px
+}
+
+.diagramNameInputContainer>input {
+    outline: 0 !important;
+    border: 0;
+    font-size: 20px;
+    font-weight: 700 !important;
+    max-width: 250px;
+}
+
+.diagram {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.diagramPhoto {
+    height: 100%;
+    width: auto;
+    max-height: 300px;
+    max-width: 400px;
+    margin: 15px auto;
+}
+
+.diagram>h3 {
+    margin: 16px auto 0 auto;
+    height: 40px;
+}
+
+.addButton {
+    border: 1px solid #E0E7EB !important;
+    width: 90%;
+    margin: 5px 5% 5px 5% !important;
+    text-align: center;
+    color: #85A0AD;
+    font-size: 18px;
+    font-weight: 900 !important;
+    height: 50px;
+    transition: .5s ease-out 0s;
+}
+
+.addButton:hover {
+    border: 1px solid #85A0AD;
+}
+
+.itemsContainer {
+    width: 100%;
+    padding: 10px;
+}
+
+.itemCard {
+    border: 1px solid #E0E7EB;
+    width: 94% !important;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    position: relative;
+}
+
+.itemCard>h4 {
+    margin-top: 5px;
+    padding: 10px !important;
+}
+
+
+.itemCapacityInputContainer {
+    max-width: 45px !important;
+}
+
+.itemCapacityInput {
+    background: #fff !important;
+    height: 30px !important;
+    width: 40px !important;
+    border: 1px solid #E0E7EB;
+    text-align: center !important;
+}
+
+.selectItemButton {
+    min-width: 100px !important;
+}
+
+.itemCapacityInput:focus {
+    border: 1px solid #85A0AD;
+}
+
+.capacityPlus {
+    border: 1px solid #E0E7EB;
+    margin-right: -1px;
+    height: 30px;
+    width: 30px;
+    transition: .5s ease-out 0s;
+    text-align: center;
+}
+
+.capacityPlus:hover {
+    border: 1px solid #85A0AD;
+    z-index: 1;
+}
+
+.darkBackground {
+    background-color: transparent;
+    width: 200vw !important;
+    height: 200vh !important;
+    z-index: 1 !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    cursor: pointer;
+}
+
+.itemStyleOptionsContainer {
+    background: #F6F8F9 !important;
+    border: 1px solid #85A0AD;
+    position: absolute;
+    left: 21.647%;
+    top: -14.64px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    z-index: 1;
+
+}
+
+.itemStyleOption {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2px;
+
+}
+
+.optionItemButton {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: start;
+    padding: 5px 10px;
+    padding-bottom: 0 !important;
+}
+
+.logoContainer {
+    position: relative;
+    display: inline-block;
+    min-width: 150px;
+    min-height: 150px;
+    padding-left: 10px;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 18px;
+    width: calc(100% - 10px) !important;
+    height: 50%;
+    background-color: rgba(255, 255, 255, 0);
+    transition: 0.5s ease-out 0s;
+    cursor: pointer;
+}
+
+.editText {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-weight: bold;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s ease-out 0s;
+}
+
+
+.logoContainer:hover .overlay {
+    opacity: 1;
+    background-color: #C2CFD6;
+}
+
+.logoContainer:hover .editText {
+    opacity: 1;
+    background-color: #C2CFD6;
+}

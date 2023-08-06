@@ -1,0 +1,109 @@
+.itemCard {
+    border: 1px solid #E0E7EB;
+    width: 94% !important;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    position: relative;
+}
+
+.itemCard>h4 {
+    margin-top: 5px;
+    padding: 10px !important;
+}
+
+.itemDeleteButtom {
+    color: #E0E7EB;
+    font-size: 10px;
+    font-weight: 900 !important;
+    transition: .5s ease-out 0s;
+    width: 50px;
+    padding-left: 10px;
+}
+
+.itemDeleteButtom:hover {
+    color: #BF2600;
+}
+
+.darkBackground {
+    background-color: transparent;
+    width: 200vw !important;
+    height: 200vh !important;
+    z-index: 1 !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    cursor: pointer;
+}
+
+.itemStyleOptionsContainer {
+    background: #F6F8F9 !important;
+    border: 1px solid #85A0AD;
+    position: absolute;
+    left: 21.647%;
+    top: -14.64px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    z-index: 1;
+
+}
+
+.itemStyleOption {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2px;
+
+}
+
+.optionItemButton {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: start;
+    padding: 5px 10px;
+    padding-bottom: 0 !important;
+}
+
+.itemCapacityInputContainer {
+    max-width: 45px !important;
+}
+
+.itemCapacityInput {
+    background: #fff !important;
+    height: 30px !important;
+    width: 40px !important;
+    border: 1px solid #E0E7EB;
+    text-align: center !important;
+}
+
+.selectItemButton {
+    min-width: 100px !important;
+}
+
+.itemCapacityInput:focus {
+    border: 1px solid #85A0AD;
+}
+
+.capacityPlus {
+    border: 1px solid #E0E7EB;
+    margin-right: -1px;
+    height: 30px;
+    width: 30px;
+    transition: .5s ease-out 0s;
+    text-align: center;
+}
+
+.capacityPlus:hover {
+    border: 1px solid #85A0AD;
+    z-index: 1;
+}

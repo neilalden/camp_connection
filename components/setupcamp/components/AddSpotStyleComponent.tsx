@@ -1,21 +1,21 @@
 import Colors from "@/common/colors"
 import Divider from "@/components/Divider"
 import TextInput from "@/components/TextInput"
-import { setBedPrice, addBedStyle, setBedStyles } from "@/services/redux/slice/retreatcenters"
+import { addSpotStyle, setSpotStyles } from "@/services/redux/slice/retreatcenters"
 import { RootState } from "@/services/redux/store"
-import { BedType, SetStateType, SpotType } from "@/types"
+import { SpotType, SetStateType, } from "@/types"
 import { IDGenerator } from "@/utils/functions"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import styles from "./AddBedStyleComponent.module.css"
+import styles from "./AddSpotStyleComponent.module.css"
 type Props = {
-    BedStyle?: BedType
+    SpotStyle?: SpotType
     setIsVisible?: SetStateType<boolean>
 }
-const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
+const AddSpotStyleComponent = ({ SpotStyle, setIsVisible }: Props) => {
     const dispatch = useDispatch()
-    const BEDSTYLES = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.bedStyles)
-    const [bedstyle, setBedstyle] = useState<BedType>(BedStyle ?? {
+    const BEDSTYLES = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.spotStyles)
+    const [spotstyle, setSpotstyle] = useState<SpotType>(SpotStyle ?? {
         id: IDGenerator(),
         name: "",
         capacity: 1,
@@ -28,18 +28,17 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
     })
 
 
-    const updateBed = () => {
-        if (!BEDSTYLES) return
-        const newBedStyles = [...BEDSTYLES].map((bs) => bs.id === bedstyle.id ? bedstyle : bs)
-        dispatch(setBedStyles(newBedStyles))
+    const updateSpot = () => {
+        const newSpotStyles = BEDSTYLES?.map((bs) => bs.id === spotstyle.id ? spotstyle : bs)
+        dispatch(setSpotStyles(newSpotStyles))
     }
     return (
         <form style={{ justifyContent: "center", minHeight: "200px", }} className='col-center'>
             <div className="row-center">
                 <TextInput
-                    value={bedstyle.name}
-                    placeholder='Bed style name...'
-                    setValue={e => setBedstyle(prev => ({ ...prev, name: e.target.value }))}
+                    value={spotstyle.name}
+                    placeholder='Spot style name...'
+                    setValue={e => setSpotstyle(prev => ({ ...prev, name: e.target.value }))}
                     containerStyle={{ width: "300px", marginTop: "20.5px" }}
                 />
                 <TextInput
@@ -49,17 +48,17 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
                     inputStyle={capacityInputStyle}
                     containerStyle={capacityContainerStyle}
                     labelStyle={{ fontSize: "10px" }}
-                    value={bedstyle.capacity}
-                    setValue={e => setBedstyle(prev => ({ ...prev, capacity: Number(e.target.value) }))}
+                    value={spotstyle.capacity}
+                    setValue={e => setSpotstyle(prev => ({ ...prev, capacity: Number(e.target.value) }))}
                 />
             </div>
             <Divider style={{ width: "100%", margin: "10px" }} />
             <h4 style={{ marginBottom: "10px" }}>Pricing</h4>
             <div
-                style={Array.isArray(bedstyle.pricing) ? pricingContainerStyle : {}}
+                style={Array.isArray(spotstyle.pricing) ? pricingContainerStyle : {}}
             >
                 {
-                    Array.isArray(bedstyle.pricing) ? bedstyle.pricing.map((price, i) => {
+                    Array.isArray(spotstyle.pricing) ? spotstyle.pricing.map((price, i) => {
                         return (
                             <div
                                 key={i}
@@ -70,15 +69,15 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
                                     type="button"
                                     style={deleteButtonStyle}
                                     onClick={() => {
-                                        if (!Array.isArray(bedstyle.pricing)) return;
-                                        let newPricing: BedType["pricing"] = [...bedstyle.pricing]
+                                        if (!Array.isArray(spotstyle.pricing)) return;
+                                        let newPricing: SpotType["pricing"] = [...spotstyle.pricing]
                                         newPricing.splice(i, 1);
                                         if (newPricing.length > 1) newPricing = newPricing.map((p, ix) => ({ ...p, nights: ix + 1 }))
                                         else newPricing = {
                                             nights: "*",
                                             price: newPricing[0]["price"]
                                         }
-                                        setBedstyle(prev => ({
+                                        setSpotstyle(prev => ({
                                             ...prev,
                                             pricing: newPricing
                                         }))
@@ -93,9 +92,9 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
                                     setValue={(e) => {
                                         const value = Number(e.target.value);
                                         if (isNaN(value)) return alert("Price is not a number")
-                                        if (!Array.isArray(bedstyle.pricing)) return;
-                                        const newPrice = bedstyle.pricing.map(pr => pr.nights === price.nights ? { ...price, price: value } : pr)
-                                        setBedstyle(prev => ({
+                                        if (!Array.isArray(spotstyle.pricing)) return;
+                                        const newPrice = spotstyle.pricing.map(pr => pr.nights === price.nights ? { ...price, price: value } : pr)
+                                        setSpotstyle(prev => ({
                                             ...prev,
                                             pricing: newPrice
                                         }))
@@ -114,11 +113,11 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
                                 labelStyle={priceLabelStyle}
                                 containerClassName="row-reverse no-wrap"
                                 label={`$ per night`}
-                                value={bedstyle.pricing.price}
+                                value={spotstyle.pricing.price}
                                 setValue={(e) => {
                                     const value = Number(e.target.value);
                                     if (isNaN(value)) return alert("Price is not a number")
-                                    setBedstyle(prev => ({
+                                    setSpotstyle(prev => ({
                                         ...prev,
                                         pricing: {
                                             nights: "*",
@@ -132,7 +131,7 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
                                 className={styles.buttonHover}
                                 style={addButtonStyle}
                                 onClick={() => {
-                                    setBedstyle(prev => ({
+                                    setSpotstyle(prev => ({
                                         ...prev,
                                         pricing: Array.isArray(prev.pricing) ?
                                             [...prev.pricing, { nights: prev.pricing.length + 1, price: 100 }]
@@ -145,13 +144,13 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
                     )
 
                 }
-                {Array.isArray(bedstyle.pricing) ?
+                {Array.isArray(spotstyle.pricing) ?
                     <button
                         type='button'
                         className={styles.buttonHover}
                         style={addButtonStyle}
                         onClick={() => {
-                            setBedstyle(prev => ({
+                            setSpotstyle(prev => ({
                                 ...prev,
                                 pricing: Array.isArray(prev.pricing) ?
                                     [...prev.pricing, { nights: prev.pricing.length + 1, price: 100 }]
@@ -164,37 +163,37 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
 
             <div className="row-between" style={{ width: "300px", marginTop: "20px" }}>
                 {
-                    BedStyle ?
+                    SpotStyle ?
                         <button
                             type="button"
-                            style={deleteBedStyleStyle}
+                            style={deleteSpotStyleStyle}
                             onClick={() => {
                                 if (!BEDSTYLES) return;
-                                const confirmed = confirm("Are you sure you want to delete this bed?");
-                                if (confirmed) dispatch(setBedStyles([...BEDSTYLES].filter(bs => bs.id !== BedStyle?.id)))
+                                const confirmed = confirm("Are you sure you want to delete this spot?");
+                                if (confirmed) dispatch(setSpotStyles([...BEDSTYLES].filter(bs => bs.id !== SpotStyle?.id)))
                                 if (setIsVisible) setIsVisible(false)
                             }}>
-                            Delete Bed Style
+                            Delete Spot Style
                         </button>
                         : null
                 }
 
                 <button
                     type="button"
-                    style={saveBedStyleStyle}
+                    style={saveSpotStyleStyle}
                     onClick={() => {
-                        if (BedStyle) updateBed()
-                        else dispatch(addBedStyle(bedstyle))
+                        if (SpotStyle) updateSpot()
+                        else dispatch(addSpotStyle(spotstyle))
                         if (setIsVisible) setIsVisible(false)
                     }}>
-                    Save Bed Style
+                    Save Spot Style
                 </button>
             </div>
         </form>
     )
 }
 
-export default AddBedStyleComponent;
+export default AddSpotStyleComponent;
 
 const capacityInputStyle: React.CSSProperties = {
     border: "1px solid #E0E7EB",
@@ -234,7 +233,7 @@ const addButtonStyle: React.CSSProperties = {
     justifySelf: "center",
     margin: "auto",
 }
-const saveBedStyleStyle: React.CSSProperties = {
+const saveSpotStyleStyle: React.CSSProperties = {
     background: Colors.blue500,
     borderRadius: 5,
     padding: "5px 10px",
@@ -244,7 +243,7 @@ const saveBedStyleStyle: React.CSSProperties = {
     justifySelf: "center",
     margin: "auto",
 }
-const deleteBedStyleStyle: React.CSSProperties = {
+const deleteSpotStyleStyle: React.CSSProperties = {
     background: Colors.transparent,
     borderRadius: 5,
     borderColor: Colors.red500,

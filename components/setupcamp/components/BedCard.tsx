@@ -1,5 +1,5 @@
 import TextInput from "@/components/TextInput";
-import { setBedStyles, addBedStyle } from "@/services/redux/slice/retreatcenter";
+import { setBedStyles, addBedStyle } from "@/services/redux/slice/retreatcenters";
 import { RootState } from "@/services/redux/store";
 import { BedType, ArgFunction } from "@/types";
 import { IDGenerator } from "@/utils/functions";
@@ -23,25 +23,10 @@ const BedCard = ({
     changeBedAmount: ArgFunction,
 }) => {
     const dispatch = useDispatch()
-    const bedstyles = useSelector((state: RootState) => state.RetreatCenter.retreatCenter.bedStyles)
+    const bedstyles = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.bedStyles)
     const [showBedStyleOptions, setShowBedStyleOptions] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [toEditBedStyle, setToEditBedStyle] = useState<BedType | undefined>()
-    useEffect(() => {
-        const handleEsc = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                setShowBedStyleOptions(false)
-            }
-            if (event.key === 'Enter') {
-                setShowBedStyleOptions(false)
-            }
-        };
-        window.addEventListener('keydown', handleEsc);
-
-        return () => {
-            window.removeEventListener('keydown', handleEsc);
-        };
-    }, []);
 
     return (
         <div className={styles.bedCard}
@@ -138,9 +123,9 @@ const BedCard = ({
                     </div>
                     <button
                         type="button"
-                        disabled={bed.amount === 1}
+                        disabled={bed.amount <= 1}
                         onClick={() => changeBedAmount(bed.amount - 1, bed)}
-                        className={[bed.amount === 1 && "disabled", styles.capacityPlus].join(" ")}>-</button>
+                        className={[bed.amount <= 1 && "disabled", styles.capacityPlus].join(" ")}>-</button>
                     <button
                         type="button"
                         onClick={() => changeBedAmount(bed.amount + 1, bed)}

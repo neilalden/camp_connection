@@ -1,14 +1,14 @@
 import { ArgFunction, HTMLEvent, SetStateType } from '@/types';
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styles from "./TextInput.module.css"
 type Props = {
     type?: React.HTMLInputTypeAttribute;
     htmlFor?: string;
-    label?: string;
+    label?: string | ReactNode;
     bottomLabel?: string;
     disabled?: boolean;
     placeholder?: string;
-    value: string | number;
+    value?: string | number;
     setValue?: ArgFunction | VoidFunction;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
@@ -25,7 +25,7 @@ const TextInput = (props: Props) => {
         label,
         bottomLabel,
         disabled = false,
-        htmlFor = label,
+        htmlFor,
         placeholder,
         value,
         setValue,
@@ -41,10 +41,10 @@ const TextInput = (props: Props) => {
 
     return (
         <div style={containerStyle} className={containerClassName}>
-            {label ? <><label htmlFor={htmlFor} style={labelStyle} className={labelClassName}>{label}</label><br /></> : null}
+            {label ? <label htmlFor={htmlFor} style={labelStyle} className={labelClassName}>{label}</label> : null}
             <input
                 style={inputStyle}
-                onClick={onClick}
+                onClick={(e) => onClick ? onClick(e) : e.stopPropagation()}
                 type={type}
                 name={htmlFor}
                 id={htmlFor}

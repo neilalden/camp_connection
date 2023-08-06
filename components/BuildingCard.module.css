@@ -1,5 +1,5 @@
 .collapsableSection {
-    width: 90%;
+    width: 100%;
     min-height: 90px;
     height: 90px;
     background: #E0E7EB;
@@ -18,19 +18,15 @@
     font-weight: 500;
 }
 
-.buildingCard {
-    border: 1px solid #E0E7EB;
-    padding: 30px 15px;
-}
 
-.housingCardsContainer {
+.buildingCard {
     width: 100%;
-    margin-top: 10px !important;
     display: flex;
     flex-direction: row;
     flex-flow: wrap;
     justify-content: space-evenly;
-    gap: 5px;
+    border: 1px solid #E0E7EB;
+    padding: 30px 15px;
 }
 
 .roomCard {

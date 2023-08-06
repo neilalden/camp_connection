@@ -8,11 +8,13 @@ import { AppointmentType, RetreatCenterType } from "@/types"
 import { ObjectToArray, onDragOver, trunc } from "@/utils/functions"
 import Image from "next/image"
 import Images from "@/common/images"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/services/redux/store"
 import Modal from "@/components/Modal"
+import { setDraggedLead } from "@/services/redux/slice/leads"
 type ExtraType = { distance?: number }
 const BookPage = () => {
+    const dispatch = useDispatch()
     const retreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
 
     const [rerenderingRetreatCenters, setRerenderingRetreatCenters] = useState<Array<RetreatCenterType & ExtraType>>(retreatCenters)
@@ -28,6 +30,7 @@ const BookPage = () => {
         const widgetType = JSON.stringify(data);
         event.dataTransfer.setData("widgetType", widgetType);
         setCurrentAppointment(data)
+        dispatch(setDraggedLead(data))
         if (data && data.zipCode) {
             let copy = rerenderingRetreatCenters.map(rc => ({ ...rc, distance: Math.abs(Number(rc.zipCode) - Number(data.zipCode)) }))
             setRerenderingRetreatCenters(copy.sort((a, b) => {
