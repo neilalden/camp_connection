@@ -38,12 +38,6 @@ export interface RetreatCenterUserType extends User {
 export interface CampConnectionTeamUserType extends User {
   userType?: "Admin" | "Sales" | "Support";
 }
-export type FilterType = {
-  id: string;
-  name: string;
-  type: "Housing" | "Meeting room" | "Activity" | "Group";
-  // [key: string]: any
-};
 export type MeetingRoomType = {
   id: string;
   name: string;
@@ -142,16 +136,32 @@ export type SpaceType = {
   spots: Array<SpotType>
 };
 
+export type FilterType = {
+  id: string;
+  name: string;
+  type: "Housing" | "Meeting room" | "Activity" | "Group";
+  // [key: string]: any
+};
 export type CampAreaType = {
+  id: string;
+  name: string;
   spaces?: Array<SpaceType>;
-} & FilterType;
+};
 export type BuildingType = {
   // levels?: Array<LevelType>;
+  id: string;
+  name: string;
   rooms?: Array<RoomType>;
-} & FilterType;
+};
 export type ActivityType = {
-  class: "pool" | "paintball" | "zipline" | "canoe";
-} & FilterType;
+
+  id: string;
+  name: string;
+  capacity: number;
+  occupiedBy?: AppointmentType;
+  available: boolean
+  class: "Custom" | "Paintball" | "Pool" | "Canoe" | "Hiking" | "Basketball" | "Zipline"
+};
 export type FacilitiesType = {
   housing: {
     buildings?: Array<BuildingType>;
@@ -177,6 +187,7 @@ export type RetreatCenterType = {
   website?: string;
   meals?: Array<MealType>;
   bedStyles: Array<BedType>
+  activityStyles: Array<ActivityType>;
   spotStyles: Array<SpotType>;
   itemStyles: Array<ItemType>;
   diagramStyles: Array<DiagramType>;

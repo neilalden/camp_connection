@@ -55,7 +55,15 @@ const Images = {
   ic_check_green: require("../assets/ic_check_green.png"),
   ic_close_red: require("../assets/ic_close_red.png"),
 
-  //user
+  // Activities
+  Basketball: require("../assets/activities/Basketball.png"),
+  Canoe: require("../assets/activities/Canoe.png"),
+  Hiking: require("../assets/activities/Hiking.png"),
+  Paintball: require("../assets/activities/Paintball.png"),
+  Pool: require("../assets/activities/Pool.png"),
+  Zipline: require("../assets/activities/Zipline.png"),
+
+  //arnold import
   ic_user_profile: require("../assets/ic_user_profile.png"),
   ic_user_group: require("../assets/ic_user_group.png"),
   ic_doc_icon: require("../assets/ic_doc_icon.png"),

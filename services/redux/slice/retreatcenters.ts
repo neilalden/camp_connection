@@ -1,5 +1,5 @@
-import { AppointmentType, BedType, BuildingType, CampAreaType, DiagramType, MeetingRoomType, PricingType, RetreatCenterType, SpotType } from "@/types";
-import { IDGenerator } from "@/utils/functions";
+import { ActivityType, AppointmentType, BedType, BuildingType, CampAreaType, DiagramType, MeetingRoomType, PricingType, RetreatCenterType, SpotType } from "@/types";
+import { ActivityGenerator, IDGenerator } from "@/utils/functions";
 import { ArrayRCSD, } from "@/utils/sampleData";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import appointments from "./appointments";
@@ -75,6 +75,10 @@ export const RetreatCentersSlice = createSlice({
         },
         setRetreatCenterPhoto: (state, action: PayloadAction<RetreatCenterType["photo"]>) => {
             if (state.retreatCenter) state.retreatCenter.photo = action.payload;
+            state.retreatCenters = state.retreatCenters.map((rc) => rc.id == state.retreatCenter.id ? state.retreatCenter : rc)
+        },
+        setActivities: (state, action: PayloadAction<Array<ActivityType>>) => {
+            state.retreatCenter.amenities.activities = action.payload
             state.retreatCenters = state.retreatCenters.map((rc) => rc.id == state.retreatCenter.id ? state.retreatCenter : rc)
         },
         setMeetingRooms: (state, action: PayloadAction<Array<MeetingRoomType>>) => {
@@ -192,6 +196,12 @@ export const RetreatCentersSlice = createSlice({
             )
             state.retreatCenters = state.retreatCenters.map((rc) => rc.id == state.retreatCenter.id ? state.retreatCenter : rc)
         },
+        addActivity: (state, action: PayloadAction<ActivityType>) => {
+            if (!state.retreatCenter.amenities.activities) state.retreatCenter.amenities.activities = [action.payload]
+            else state.retreatCenter.amenities.activities = [...state.retreatCenter.amenities.activities, action.payload]
+
+            state.retreatCenters = state.retreatCenters.map((rc) => rc.id == state.retreatCenter.id ? state.retreatCenter : rc)
+        },
         addMeetingRoom: (state, action: PayloadAction<MeetingRoomType>) => {
             if (!state.retreatCenter.meetingRooms) state.retreatCenter.meetingRooms = [action.payload]
             else state.retreatCenter.meetingRooms = [...state.retreatCenter.meetingRooms, action.payload]
@@ -293,6 +303,7 @@ export const RetreatCentersSlice = createSlice({
         },
         setRetreatCenterName: (state, action: PayloadAction<string>) => {
             if (!state.retreatCenter) {
+                const activity = ActivityGenerator()
                 state.retreatCenter = {
                     id: new Date().toString(),
                     name: action.payload,
@@ -300,6 +311,15 @@ export const RetreatCentersSlice = createSlice({
                     housing: {},
                     amenities: {},
                     appointments: [],
+                    activityStyles: [
+                        {
+                            id: IDGenerator(),
+                            available: true,
+                            name: activity,
+                            class: activity,
+                            capacity: 10,
+                        }
+                    ],
                     bedStyles: [
                         {
                             id: IDGenerator(),
@@ -323,7 +343,7 @@ export const RetreatCentersSlice = createSlice({
                                 nights: "*",
                                 price: 100
                             }
-                        },]
+                        },],
                 }
                 return
             }
@@ -373,7 +393,9 @@ export const { addRetreatCenter, addAppointment, clearAppointments, cancelAppoin
     addDiagramStyle,
     setDiagramStyles,
     setMeetingRooms,
-    setDiagramStyleItems
+    setDiagramStyleItems,
+    addActivity,
+    setActivities
 } = RetreatCentersSlice.actions
 
 export default RetreatCentersSlice.reducer

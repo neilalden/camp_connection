@@ -1,18 +1,26 @@
 import TextInput from "@/components/TextInput";
 import { addItemStyle, setItemStyles } from "@/services/redux/slice/retreatcenters";
 import { RootState } from "@/services/redux/store";
-import { RetreatCenterType } from "@/types";
+import { ItemType, RetreatCenterType } from "@/types";
 import { ItemGenerator, IDGenerator } from "@/utils/functions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ItemsSetupComponent.module.css"
 const ItemsSetup = () => {
     const dispatch = useDispatch();
     const ITEMSTYLES = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.itemStyles)
-    const changeValue = (value: string, meetingRoomId: string) => {
+    const changeAmount = (value: string, itemId: ItemType["id"]) => {
         if (isNaN(Number(value))) return
         if (!ITEMSTYLES) return;
-        const newItems = [...ITEMSTYLES].map((item) => {
-            if (item.id === meetingRoomId) return { ...item, capacity: Number(value) }
+        const newItems: Array<ItemType> = [...ITEMSTYLES].map((item) => {
+            if (item.id === itemId) return { ...item, amount: Number(value) }
+            return item
+        })
+        dispatch(setItemStyles(newItems))
+    }
+    const changeName = (value: string, itemId: ItemType["id"]) => {
+        if (!ITEMSTYLES) return;
+        const newItems: Array<ItemType> = [...ITEMSTYLES].map((item) => {
+            if (item.id === itemId) return { ...item, name: (value) }
             return item
         })
         dispatch(setItemStyles(newItems))
@@ -38,8 +46,7 @@ const ItemsSetup = () => {
                                     inputClassName={styles.meetingRoomCardNameInput}
                                     placeholder={ItemGenerator()}
                                     value={item.name}
-                                    setValue={e => {
-                                    }}
+                                    setValue={e => changeName(e.target.value, item.id)}
                                 />
                                 <TextInput
                                     containerClassName={styles.meetingRoomCardCapacityInputContainer}
@@ -47,7 +54,7 @@ const ItemsSetup = () => {
                                     labelClassName={styles.capacityLabelClassName}
                                     label="Amount"
                                     value={item.amount}
-                                    setValue={(e) => changeValue(e.target.value, item.id)}
+                                    setValue={(e) => changeAmount(e.target.value, item.id)}
                                 />
                             </div>
                         )

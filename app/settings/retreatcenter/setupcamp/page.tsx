@@ -19,6 +19,7 @@ import SpotCard from "@/components/setupcamp/components/SpotCard";
 import RVAndTentSetup from "@/components/setupcamp/components/RVAndTentSetup";
 import ItemsSetup from "@/components/setupcamp/components/ItemsSetupComponent";
 import DiagramCard from "@/components/setupcamp/components/DiagramCard";
+import ActivitiesSetup from "@/components/setupcamp/components/ActivitiesSetupComponent";
 const Userprofile = () => {
     const [showHousing, setShowHousing] = useState(false)
     const [showRvAndTent, setShowRvAndTent] = useState(false)
@@ -183,10 +184,6 @@ const MeetingRoomsSetup = () => {
                 </button>
             </div>
         </div>
-    )
-}
-const ActivitiesSetup = () => {
-    return (<div className={styles.setUpContainer}></div>
     )
 }
 export default (Userprofile);

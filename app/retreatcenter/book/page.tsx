@@ -10,7 +10,7 @@ import Image from "next/image"
 import Images from "@/common/images"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/services/redux/store"
-import Modal from "@/components/Modal"
+import AppointmentModal from "@/components/AppointmentModal"
 import { setDraggedLead } from "@/services/redux/slice/leads"
 type ExtraType = { distance?: number }
 const BookPage = () => {
@@ -50,7 +50,7 @@ const BookPage = () => {
 
     return (
         <div className={styles.container}>
-            {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+            {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
             <div className={styles.leadColumn}>
 
                 <LeadsColumn customOnDrag={customOnDrag} leadCardOnClick={clickLead} />

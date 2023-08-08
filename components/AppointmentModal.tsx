@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styles from "./Modal.module.css"
+import styles from "./AppointmentModal.module.css"
 import { AppointmentType, BuildingType, RetreatCenterType, SetStateType } from '@/types'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -20,7 +20,7 @@ type Props = {
 const Tabs = [
     "Booking", "Housing", "Meeting", "Activity", "Group", "Journey"
 ]
-const Modal = (props: Props) => {
+const AppointmentModal = (props: Props) => {
     const {
         appointment,
         setIsVisible = () => { }
@@ -171,4 +171,4 @@ const Journey = ({ appointment }: { appointment: AppointmentType }) => {
     )
 }
 
-export default Modal
+export default AppointmentModal

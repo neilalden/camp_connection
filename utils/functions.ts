@@ -1,4 +1,4 @@
-import { ArgFunction, VoidFunction, HTMLEvent, SetStateType, AppointmentType, FilterType } from "@/types"
+import { ArgFunction, VoidFunction, HTMLEvent, SetStateType, AppointmentType, FilterType, ActivityType } from "@/types"
 import { Dispatch, SetStateAction } from "react"
 import { months } from "./variables"
 
@@ -114,6 +114,10 @@ export const BedStyleGenerator = () => {
 }
 export const SpotStyleGenerator = () => {
     const items = ["Large RV", "Small Rv", "Large tent", "Small Tent"]
+    return items[getRandomInt(items.length)]
+}
+export const ActivityGenerator = (): ActivityType["class"] => {
+    const items: Array<ActivityType["class"]> = ["Paintball", "Pool", "Canoe", "Hiking", "Basketball", "Zipline"]
     return items[getRandomInt(items.length)]
 }
 function getRandomInt(max: number) {

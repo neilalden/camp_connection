@@ -7,7 +7,7 @@ import { RootState } from "@/services/redux/store";
 import { addAppointment, cancelAppointment } from "@/services/redux/slice/retreatcenters";
 import { useEffect, useState } from "react";
 import { AppointmentTypeWithExtraProp, removeLead, setDraggedLead } from "@/services/redux/slice/leads";
-import Modal from "./Modal";
+import AppointmentModal from "./AppointmentModal";
 import Colors from "@/common/colors";
 const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: RetreatCenterType }) => {
     const dispatch = useDispatch()
@@ -79,7 +79,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
     }
     const onDragEnd = (e: any) => dispatch(setDraggedLead(undefined))
     return (<div>
-        {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+        {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
         <div className={styles.calendarWeek}>
             {calendarDays.map((d, i) => {
                 if (i === 0) return <div key={i} className={styles.calendarHeaderText0} />
