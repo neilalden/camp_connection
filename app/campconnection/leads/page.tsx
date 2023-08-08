@@ -96,7 +96,8 @@ const Leads = () => {
                                             retreatCenter.amenities.activities && retreatCenter.amenities.activities.map((act, ind) => {
                                                 return (
                                                     <div key={ind}>
-                                                        <Image alt={act.name} src={Images[`ic_${act.class}`]} height={30} width={30} className={styles.amenityLogo} />
+                                                        {/* @ts-ignore */}
+                                                        <Image alt={act.name} src={Images[act.class]} height={30} width={30} className={styles.amenityLogo} />
                                                     </div>
                                                 )
                                             })

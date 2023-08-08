@@ -103,6 +103,7 @@ const ActivityPicker = ({
                     ) : (
                         <button
                             type="button" className={styles.selectBedButton} onClick={(e) => { e.stopPropagation(); setShowBedStyleOptions(true) }}>
+                            {/* @ts-ignore */}
                             <Image src={Images[String(activity.class)]} alt="edit icon" height={30} />
                         </button>
                     )

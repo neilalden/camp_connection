@@ -91,7 +91,8 @@ const BookPage = () => {
                                             retreatCenter.amenities.activities && retreatCenter.amenities.activities.map((act, i) => {
                                                 return (
                                                     <div key={i}>
-                                                        <Image alt={act.name} src={Images[`ic_${act.class}`]} height={30} width={30} className={styles.amenityLogo} />
+                                                        {/* @ts-ignore */}
+                                                        <Image alt={act.name} src={Images[act.class]} height={30} width={30} className={styles.amenityLogo} />
                                                     </div>
                                                 )
                                             })

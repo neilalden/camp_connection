@@ -21,7 +21,6 @@ export const FacilitiesSampleData: FacilitiesType = {
       {
         id: "buildingA",
         name: "Building A",
-        type: "Housing",
         rooms: [
           {
             id: "buildingAlevel1room1",
@@ -64,26 +63,30 @@ export const FacilitiesSampleData: FacilitiesType = {
       {
         id: "Zipline1",
         name: "Zipline A",
-        type: "Activity",
-        class: "zipline",
+        class: "Zipline",
+        available: true,
+        capacity: 10,
       },
       {
         id: "CanoeA",
         name: "Canoe A",
-        type: "Activity",
-        class: "canoe",
+        class: "Canoe",
+        available: true,
+        capacity: 10,
       },
       {
         id: "pool1",
         name: "Pool A",
-        type: "Activity",
-        class: "pool",
+        class: "Pool",
+        available: true,
+        capacity: 10,
       },
       {
         id: "paintballA",
         name: "Paintball A",
-        type: "Activity",
-        class: "paintball",
+        class: "Paintball",
+        available: true,
+        capacity: 10,
       },
     ],
   },
@@ -157,6 +160,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     photo: "",
     zipCode: "",
     capacity: 30,
+    activityStyles: [],
     spotStyles: [
       {
         id: IDGenerator(),
@@ -256,6 +260,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Art of Living Retreat Center",
     zipCode: "",
     capacity: 50,
+    activityStyles: [],
 
     itemStyles: [
       {
@@ -357,6 +362,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     zipCode: "",
     capacity: 100,
     photo: "",
+    activityStyles: [],
 
     itemStyles: [
       {
@@ -457,6 +463,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     zipCode: "7654",
     capacity: 20,
     photo: "",
+    activityStyles: [],
 
     itemStyles: [
       {
@@ -556,6 +563,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Saint John’s Abbey",
     zipCode: "5843",
     capacity: 170,
+    activityStyles: [],
     photo: "",
     spotStyles: [
       {
@@ -656,6 +664,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Abbey of Gethsemani",
     zipCode: "2134",
     capacity: 70,
+    activityStyles: [],
     photo: "",
     spotStyles: [
       {
