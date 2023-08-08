@@ -32,13 +32,14 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
         if (!date) return;
 
         const widgetType = e.dataTransfer.getData("widgetType") as string;
+        if (!widgetType) return;
         const parsed: AppointmentType = JSON.parse(widgetType)
         const copiedDate = new Date(date)
-        if (parsed.status === undefined) return; // it means that the data from drop is not an appointment
         const appointment: AppointmentType = {
             ...parsed,
             checkInDate: new Date(copiedDate.setDate(copiedDate.getDate() + 1)),
             checkOutDate: new Date(copiedDate.setDate(copiedDate.getDate() + parsed.checkInDays - 1)),
+            status: "Reserved"
         }
 
         const isBooked = retreatcenters.find(rc => rc.appointments.some(a => a.id === appointment.id));
@@ -54,7 +55,6 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
     const onDropPreview = (data: AppointmentType, date?: Date) => {
         if (!date) return;
         const copiedDate = new Date(date)
-        if (data.status === undefined) return; // it means that the data from drop is not an appointment
         const appointment: AppointmentType = {
             ...data,
             checkInDate: new Date(copiedDate.setDate(copiedDate.getDate() + 1)),
@@ -75,7 +75,6 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
         if (!currentDate) return;
         if (Array.isArray(data)) return;
         const newdata: AppointmentTypeWithExtraProp = { ...data, draggedDate: currentDate }
-        // setCurrentDrag(newdata)
         dispatch(setDraggedLead(newdata))
     }
     const onDragEnd = (e: any) => dispatch(setDraggedLead(undefined))
@@ -198,6 +197,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                 >
                                     {appointment && currentDate && cond ?
                                         <div
+                                            // data-content={appointment.checkInDate.toLocaleDateString() + ":" + appointment.checkOutDate.toLocaleDateString()}
                                             data-content={!Array.isArray(appointment) ?
                                                 `${appointment.groupName}` :
                                                 appointment.map((app) => app.groupName).toString().replaceAll(",", ", \n")}

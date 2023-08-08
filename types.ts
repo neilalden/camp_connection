@@ -48,6 +48,8 @@ export type MeetingRoomType = {
   id: string;
   name: string;
   capacity: number;
+  occupiedBy?: AppointmentType;
+  available: boolean
 }
 export type PricingType = {
   nights: number | "*";
@@ -66,7 +68,7 @@ export type AppointmentType = {
   id: string;
   reservedBy: CamperUserType | RetreatCenterUserType | CampConnectionTeamUserType;
   reservee: CamperUserType
-  status: "Reserved" | "Booked";
+  status?: "Reserved" | "Booked";
   checkInDays: number;
   groupName: string;
   color: string;
@@ -76,8 +78,9 @@ export type AppointmentType = {
   amenities?: Array<AmenityType>;
   meals?: Array<MealType>;
   rooms?: Array<RoomType>;
+  meetingRooms?: Array<MeetingRoomType>;
   zipCode?: number;
-  createdAt: Date
+  createdAt: Date;
 };
 
 export type FileType = {
@@ -126,7 +129,10 @@ export type RoomType = {
   name: string;
   buildingId?: string;
   level?: string;
-  beds: Array<BedType>
+  beds: Array<BedType>;
+  capacity: number;
+  occupiedBy?: AppointmentType;
+  available: boolean
 };
 export type SpaceType = {
   id: string;
@@ -155,7 +161,6 @@ export type FacilitiesType = {
     activities?: Array<ActivityType>;
   };
   meetingRooms?: Array<MeetingRoomType>;
-  appointments: Array<AppointmentType>;
 };
 export type RetreatCenterType = {
   id: string;
@@ -174,5 +179,6 @@ export type RetreatCenterType = {
   bedStyles: Array<BedType>
   spotStyles: Array<SpotType>;
   itemStyles: Array<ItemType>;
-  diagramStyles: Array<DiagramType>
+  diagramStyles: Array<DiagramType>;
+  appointments: Array<AppointmentType>;
 } & FacilitiesType;

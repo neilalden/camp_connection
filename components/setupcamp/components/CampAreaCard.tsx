@@ -63,8 +63,15 @@ const CampAreaCard = ({ campArea, deleteCampArea }: { campArea: CampAreaType, de
         const length = newSpaces.length
         if (length >= numberOfSpaces) newSpaces = newSpaces.filter((item, index) => index < numberOfSpaces)
         else {
-            const addedSpaces: Array<SpaceType> = Array(numberOfSpaces - length).fill({ id: IDGenerator(), name: `Space 1${length + 1 > 9 ? length + 1 : "0" + (length + 1)}`, spots: newSpaces.at(-1) ? newSpaces.at(-1)?.spots : [] })
-            newSpaces.push(...addedSpaces)
+            // const size = Array(numberOfSpaces - length).fill(1)
+            // // @ts-ignore
+            // const addedSpaces: Array<SpaceType> = size.map((item,index): SpaceType=>({ id: IDGenerator(), name: `Space 1${index + 1 > 9 ? index + 1 : "0" + (index + 1)}`, spots: newSpaces.at(-1) ? newSpaces.at(-1)?.spots : [] }))
+            // newSpaces.push(...addedSpaces)
+            
+           const size = Array(numberOfSpaces - length).fill(1)
+           //@ts-ignore
+           const addedRooms: Array<RoomType> = size.map((x,i)=>({ id: IDGenerator(), name: `Space 1${length+i+1 > 9 ? length+i+1 : "0" + (length+i+1)}`, spots: newSpaces.at(-1) ? newSpaces.at(-1).spots : [] }))
+           newSpaces.push(...addedRooms)
         }
         dispatch(setSpaceSpots({
             campAreaId: campAreaId,

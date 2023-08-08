@@ -37,8 +37,13 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
             amount: 1
         }
         const newRooms = rooms?.map((room) => {
-            if (room.id === roomId) return {
-                ...room, beds: room.beds ? [...room.beds, bedConfig] : [bedConfig]
+            if (room.id === roomId) {
+                const newBeds = room.beds ? [...room.beds, bedConfig] : [bedConfig]
+                return {
+                    ...room,
+                    beds: newBeds,
+                    capacity: newBeds.reduce((accu, bed) => accu + (bed.capacity * bed.amount), 0)
+                }
             }
             return room
         })
@@ -62,7 +67,19 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
         const length = newRooms.length
         if (length >= numberOfRooms) newRooms = newRooms.filter((item, index) => index < numberOfRooms)
         else {
-            const addedRooms: Array<RoomType> = Array(numberOfRooms - length).fill({ id: IDGenerator(), name: `Room 1${length + 1 > 9 ? length + 1 : "0" + (length + 1)}`, beds: newRooms.at(-1) ? newRooms.at(-1)?.beds : [] })
+            const size = Array(numberOfRooms - length).fill(1)
+            //@ts-ignore
+            const addedRooms: Array<RoomType> = size.map((x, i) => {
+                const prevRoomBeds = newRooms.at(-1) ? newRooms.at(-1)?.beds : []
+                const beds = prevRoomBeds && prevRoomBeds?.length > 0 ? prevRoomBeds : [BEDSTYLES[0]]
+                return ({
+                    id: IDGenerator(),
+                    name: `Room 1${length + i + 1 > 9 ? length + i + 1 : "0" + (length + i + 1)}`,
+                    beds: beds,
+                    available: true,
+                    capacity: beds.reduce((accu, bed) => accu + (bed.capacity * bed.amount), 0)
+                })
+            })
             newRooms.push(...addedRooms)
         }
         dispatch(setRoomBeds({
@@ -120,30 +137,49 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
                     </div>
                     <div className={styles.housingCardsContainer}>
                         {building.rooms?.map((room, ind) => {
+                            const changeRoomAvailability = (paramroom: RoomType) => {
+                                if (!building.rooms) return;
+                                if (room.occupiedBy) return;
+                                const newRooms = [...building.rooms].map((r) => r.id === paramroom.id ? ({ ...r, available: !r.available }) : r)
+                                dispatch(setRoomBeds({
+                                    buildingId: building.id,
+                                    rooms: newRooms
+                                }))
+                            }
                             return (
                                 <div key={ind} className={styles.roomCard}>
-                                    <TextInput
-                                        inputClassName={styles.inputInsideBox}
-                                        containerClassName={styles.buildingNameInputStyle}
-                                        placeholder={"Room name..."}
-                                        value={room.name}
-                                        setValue={(e) => changeRoomName({
-                                            name: e.target.value,
-                                            buildingId: building.id,
-                                            roomId: room.id,
-                                            rooms: building.rooms
-                                        })}
-                                    />
+                                    <div className="row">
+
+                                        <TextInput
+                                            inputClassName={styles.inputInsideBox}
+                                            containerClassName={styles.buildingNameInputStyle}
+                                            placeholder={"Room name..."}
+                                            value={room.name}
+                                            setValue={(e) => changeRoomName({
+                                                name: e.target.value,
+                                                buildingId: building.id,
+                                                roomId: room.id,
+                                                rooms: building.rooms
+                                            })}
+                                        />
+                                        <button className={[room.available ? styles.available : styles.unavailable, "texthover"].join(" ")} onClick={() => changeRoomAvailability(room)}>
+                                            <Image alt="availability" src={room.available ? Images["ic_check_green"] : Images["ic_close_red"]} height={20} width={20} />
+                                            <span >{room.available ? "available" : "unavailable"}</span>
+                                        </button>
+                                    </div>
                                     {
                                         room.beds?.map((bed, inde) => {
                                             const deleteBed = () => {
+                                                if (room.occupiedBy) return;
                                                 const rooms = building.rooms?.map((rm) => {
                                                     if (rm.id === room.id) {
                                                         const newBeds = [...rm.beds]
                                                         newBeds.splice(inde, 1)
                                                         return {
                                                             ...rm,
-                                                            beds: newBeds
+                                                            beds: newBeds,
+                                                            available: newBeds.length > 0,
+                                                            capacity: newBeds.reduce((accu, bed) => accu + (bed.capacity * bed.amount), 0)
                                                         }
                                                     }
                                                     return rm
@@ -154,13 +190,15 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
                                                 })
                                             }
                                             const changeBed = (parambed: BedType) => {
+                                                if (room.occupiedBy) return;
                                                 const rooms = building.rooms?.map((rm) => {
                                                     if (rm.id === room.id) {
                                                         const newBeds = [...rm.beds]
                                                         newBeds.splice(inde, 1, parambed)
                                                         return {
                                                             ...rm,
-                                                            beds: newBeds
+                                                            beds: newBeds,
+                                                            capacity: newBeds.reduce((accu, bed) => accu + (bed.capacity * bed.amount), 0)
                                                         }
                                                     }
                                                     return rm
@@ -173,11 +211,14 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
                                             const changeBedAmount = (value: number, parambed: BedType) => {
                                                 if (isNaN(value)) return;
                                                 if (value < 1) return;
+                                                if (room.occupiedBy) return;
                                                 const rooms = building.rooms?.map((rm) => {
                                                     if (rm.id === room.id) {
+                                                        const newBeds = rm.beds.map(b => b.id == parambed.id ? { ...parambed, amount: value } : b)
                                                         return {
                                                             ...rm,
-                                                            beds: rm.beds.map(b => b.id == parambed.id ? { ...parambed, amount: value } : b)
+                                                            beds: newBeds,
+                                                            capacity: newBeds.reduce((accu, bed) => accu + (bed.capacity * bed.amount), 0)
                                                         }
                                                     }
                                                     return rm
@@ -201,11 +242,14 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
                                     }
                                     <button
                                         className={styles.addBedButton}
-                                        onClick={() => addBed({
-                                            buildingId: building.id,
-                                            roomId: room.id,
-                                            rooms: building.rooms
-                                        })}
+                                        onClick={() => {
+                                            if (room.occupiedBy) return;
+                                            addBed({
+                                                buildingId: building.id,
+                                                roomId: room.id,
+                                                rooms: building.rooms
+                                            })
+                                        }}
                                     >
                                         +
                                     </button>
@@ -213,7 +257,7 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
                                         <button
                                             className={styles.pricingButton}
                                             onClick={() => {
-                                                const rooms = building.rooms?.map((rm) => ({ ...rm, beds: room.beds }))
+                                                const rooms = building.rooms?.map((rm) => ({ ...rm, beds: room.beds, available: room.available }))
                                                 updateBuildingRooms({
                                                     buildingId: building.id,
                                                     rooms: rooms

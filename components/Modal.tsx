@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from "./Modal.module.css"
-import { AppointmentType, BuildingType, SetStateType } from '@/types'
+import { AppointmentType, BuildingType, RetreatCenterType, SetStateType } from '@/types'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Colors from '@/common/colors';
@@ -9,6 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setBuildings } from '@/services/redux/slice/retreatcenters';
 import { RootState } from '@/services/redux/store';
 import BuildingCard from './BuildingCard';
+import TextInput from './TextInput';
+import Images from '@/common/images';
+import Image from 'next/image';
+import MeetingRoomCard from './MeetingRoomCard';
 type Props = {
     appointment?: AppointmentType | Array<AppointmentType>
     setIsVisible: SetStateType<boolean>
@@ -68,8 +72,18 @@ const getComponent = (tab: string, appointment: AppointmentType) => {
     switch (tab) {
         case "Booking":
             return <Booking appointment={appointment} />
-        default:
+        case "Housing":
             return <Housing appointment={appointment} />
+        case "Meeting":
+            return <Meeting appointment={appointment} />
+        case "Activity":
+            return <Activity appointment={appointment} />
+        case "Group":
+            return <Group appointment={appointment} />
+        case "Journey":
+            return <Journey appointment={appointment} />
+        default:
+            return <></>
     }
 }
 const Booking = ({ appointment }: { appointment: AppointmentType }) => {
@@ -100,7 +114,7 @@ const Housing = ({ appointment }: { appointment: AppointmentType }) => {
             {
                 BUILDINGS && BUILDINGS.map((building, i) => {
                     return (
-                        <BuildingCard building={building} />
+                        <BuildingCard key={i} building={building} appointment={appointment} />
                     )
                 })
             }
@@ -108,9 +122,30 @@ const Housing = ({ appointment }: { appointment: AppointmentType }) => {
     )
 }
 const Meeting = ({ appointment }: { appointment: AppointmentType }) => {
-    return (
-        <div>
+    const dispatch = useDispatch()
+    const MEETINGROOMS = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.meetingRooms)
 
+    return (
+        <div className={styles.setUpContainer}>
+
+            <div className={styles.collapsableSection}>
+                <h3>Meeting Rooms</h3>
+            </div>
+            <div className={styles.meetingRoomContainer}>
+
+                {
+                    MEETINGROOMS && MEETINGROOMS.map((meetingroom, i) => {
+                        return (
+                            <MeetingRoomCard key={i} meetingRoom={meetingroom} appointment={appointment} />
+                        )
+                    })
+                }
+            </div>
+            <div className={styles.legendContainer}>
+                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.occupiedText].join(" ")}><div style={{ outline: `2px solid ${appointment.color}` }} className={styles.occupied} />Occupied</div>
+                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.vacantText].join(" ")}><div className={styles.vacant} />Available</div>
+                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.unavailableText].join(" ")}><div className={styles.unavailable} />Unavailable</div>
+            </div>
         </div>
     )
 }

@@ -17,3 +17,20 @@
 .inputField {
     border-bottom: 1px solid transparent;
 }
+.tooltip:hover::after {
+    content: attr(data-content);
+    border-radius: 3px;
+    background: #1f2c47;
+    color: #fff;
+    position: absolute;
+    padding: 5px 10px !important;
+    top: -30px !important;
+    min-height: 10px !important;
+    min-width: 100px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px !important;
+    font-weight: 400;
+    z-index: 1;
+  }

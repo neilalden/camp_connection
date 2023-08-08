@@ -297,3 +297,32 @@ input[type=number] {
   position: absolute;
   cursor: pointer;
 }
+
+.tooltip:hover::after {
+  content: attr(data-content);
+  border-radius: 3px;
+  background: #1f2c47;
+  color: #fff;
+  position: absolute;
+  padding: 5px !important;
+  top: -30px !important;
+  min-height: 10px !important;
+  min-width: 50px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 12px !important;
+  font-weight: 400;
+  z-index: 2;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+.texthover:hover {
+  border-bottom: 1px solid #85A0AD;
+}
+
+.buttonhover:hover {
+  border: 1px solid #85A0AD;
+}

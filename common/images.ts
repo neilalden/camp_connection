@@ -50,6 +50,10 @@ const Images = {
   ic_location: require("../assets/ic_location.png"),
   ic_clock: require("../assets/ic_clock.png"),
   ic_user_fill: require("../assets/ic_user_fill.png"),
+  ic_check: require("../assets/ic_check.png"),
+  ic_close: require("../assets/ic_close.png"),
+  ic_check_green: require("../assets/ic_check_green.png"),
+  ic_close_red: require("../assets/ic_close_red.png"),
 
   //user
   ic_user_profile: require("../assets/ic_user_profile.png"),

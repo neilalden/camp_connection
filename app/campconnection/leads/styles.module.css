@@ -63,6 +63,7 @@
 
 .detailsContainer {
     margin: 4px 8px !important;
+    max-width: 290px;
 }
 
 .groupName {
@@ -110,11 +111,16 @@
 
 .bedsContainer {
     margin-top: 10px !important;
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: space-between;
 }
 
 .bedText {
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: normal
+    line-height: normal;
+    width: 100px;
 }

@@ -26,12 +26,34 @@ export const FacilitiesSampleData: FacilitiesType = {
           {
             id: "buildingAlevel1room1",
             name: "room101",
-            beds: []
+            beds: [{
+              id: IDGenerator(),
+              name: "Bunk Bed",
+              amount: 2,
+              capacity: 4,
+              pricing: {
+                nights: "*",
+                price: 100
+              }
+            }],
+            available: true,
+            capacity: (2 * 4)
           },
           {
             id: "buildingAlevel1room2",
             name: "room102",
-            beds: []
+            beds: [{
+              id: IDGenerator(),
+              name: "Bunk Bed",
+              amount: 2,
+              capacity: 4,
+              pricing: {
+                nights: "*",
+                price: 100
+              }
+            }],
+            available: true,
+            capacity: (2 * 4)
           },
         ],
       },
@@ -69,8 +91,8 @@ export const FacilitiesSampleData: FacilitiesType = {
     id: "Meeting room",
     name: "Meeting room",
     capacity: 100,
+    available: true
   }],
-  appointments: [],
 };
 
 export const DaysSampleData = getDays({
@@ -188,6 +210,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           price: 100
         }
       },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
     ],
 
     itemStyles: [
@@ -296,6 +328,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           price: 100
         }
       },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
     ],
     housing: {
       buildings: [
@@ -397,6 +439,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           price: 100
         }
       },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
     ],
   },
   {
@@ -487,6 +539,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           price: 100
         }
       },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
     ],
   },
   {
@@ -542,6 +604,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         id: IDGenerator(),
         name: "King Bed",
         capacity: 4,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
         amount: 5,
         pricing: {
           nights: "*",
@@ -632,6 +704,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         id: IDGenerator(),
         name: "King Bed",
         capacity: 4,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
         amount: 5,
         pricing: {
           nights: "*",

@@ -77,7 +77,7 @@ const BookPage = () => {
                                             <p className={[styles.capacity, styles.bedsContainer].join(" ")}>Beds Available : </p>
                                             <div className={"row-between"}>
                                                 <p className={styles.bedText}>King: 4</p>
-                                                <p className={styles.bedText}>Queenn: 6</p>
+                                                <p className={styles.bedText}>Queen: 6</p>
                                             </div>
                                             <div className="row-between">
                                                 <p className={styles.bedText}>Double: 4</p>

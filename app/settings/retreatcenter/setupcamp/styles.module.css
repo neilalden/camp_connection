@@ -224,3 +224,25 @@
 .itemDeleteButtom:hover {
     color: #BF2600;
 }
+
+.available {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    height: fit-content;
+    align-self: center;
+}
+
+.unavailable {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    height: fit-content;
+    align-self: center;
+}

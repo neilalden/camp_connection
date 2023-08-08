@@ -9,7 +9,7 @@ import Divider from "@/components/Divider";
 import FileUpload from "@/components/FileUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
-import { addMeetingRoom, addItemStyle, addDiagramStyle, setDiagramStyles, setMeetingRooms, } from "@/services/redux/slice/retreatcenters";
+import { addMeetingRoom, addItemStyle, addDiagramStyle, setDiagramStyles, setMeetingRooms, setRoomBeds, } from "@/services/redux/slice/retreatcenters";
 import RadioButton from "@/components/RadioButton";
 import CheckBox from "@/components/CheckBox";
 import DropDown from "@/components/DropDown";
@@ -73,6 +73,7 @@ const MeetingRoomsSetup = () => {
             if (mr.id === meetingRoomId) return { ...mr, name }
             return mr
         })
+        dispatch(setMeetingRooms(newRooms))
     }
     const changeMeetingRoomCapacity = (value: string, meetingRoomId: string) => {
         if (isNaN(Number(value))) return
@@ -81,21 +82,16 @@ const MeetingRoomsSetup = () => {
             if (mr.id === meetingRoomId) return { ...mr, capacity: Number(value) }
             return mr
         })
+        dispatch(setMeetingRooms(newRooms))
     }
     const addMeetingRoomClick = () => {
         dispatch(addMeetingRoom({
             id: IDGenerator(),
             name: `Meeting room ${MEETINGROOMS ? MEETINGROOMS.length + 1 : 1}`,
-            capacity: 0
+            capacity: 10,
+            occupiedBy: undefined,
+            available: true
         }))
-    }
-    const changeDiagramName = (name: string, diagramId: string) => {
-        if (!DIAGRAMSTYLES) return;
-        const newDiagrams = [...DIAGRAMSTYLES].map((dg) => {
-            if (dg.id === diagramId) return { ...dg, name }
-            return dg
-        })
-        dispatch(setDiagramStyles(newDiagrams))
     }
     const addDiagramStyleClick = () => {
         dispatch(addDiagramStyle(
@@ -113,6 +109,15 @@ const MeetingRoomsSetup = () => {
         ))
     }
 
+    const changeMeetingRoomAvailability = (paramroom: MeetingRoomType) => {
+        if (paramroom.occupiedBy) return;
+        if (!MEETINGROOMS) return;
+        const newRooms = [...MEETINGROOMS].map((mr) => {
+            if (mr.id === paramroom.id) return { ...mr, available: !paramroom.available }
+            return mr
+        })
+        dispatch(setMeetingRooms(newRooms))
+    }
     return (
         <div className={styles.meetingSetupContainer}>
             <div className={styles.meetingRoomCardsContainer}>
@@ -145,6 +150,11 @@ const MeetingRoomsSetup = () => {
                                         value={meetingRoom.capacity}
                                         setValue={(e) => changeMeetingRoomCapacity(e.target.value, meetingRoom.id)}
                                     />
+
+                                    <button className={[meetingRoom.available ? styles.available : styles.unavailable, "texthover"].join(" ")} onClick={() => changeMeetingRoomAvailability(meetingRoom)}>
+                                        <Image alt="availability" src={meetingRoom.available ? Images["ic_check_green"] : Images["ic_close_red"]} height={20} width={20} />
+                                        <span >{meetingRoom.available ? "available" : "unavailable"}</span>
+                                    </button>
                                 </div>
                             </div>
                         )
