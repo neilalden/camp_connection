@@ -31,7 +31,6 @@ const RVAndTentSetup = () => {
                     dispatch(addCampArea({
                         id: IDGenerator(),
                         name: ``,
-                        type: "Housing",
                         spaces: []
                     }))
                 }}

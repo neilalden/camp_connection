@@ -21,17 +21,38 @@ export const FacilitiesSampleData: FacilitiesType = {
       {
         id: "buildingA",
         name: "Building A",
-        type: "Housing",
         rooms: [
           {
             id: "buildingAlevel1room1",
             name: "room101",
-            beds: []
+            beds: [{
+              id: IDGenerator(),
+              name: "Bunk Bed",
+              amount: 2,
+              capacity: 4,
+              pricing: {
+                nights: "*",
+                price: 100
+              }
+            }],
+            available: true,
+            capacity: (2 * 4)
           },
           {
             id: "buildingAlevel1room2",
             name: "room102",
-            beds: []
+            beds: [{
+              id: IDGenerator(),
+              name: "Bunk Bed",
+              amount: 2,
+              capacity: 4,
+              pricing: {
+                nights: "*",
+                price: 100
+              }
+            }],
+            available: true,
+            capacity: (2 * 4)
           },
         ],
       },
@@ -42,26 +63,30 @@ export const FacilitiesSampleData: FacilitiesType = {
       {
         id: "Zipline1",
         name: "Zipline A",
-        type: "Activity",
-        class: "zipline",
+        class: "Zipline",
+        available: true,
+        capacity: 10,
       },
       {
         id: "CanoeA",
         name: "Canoe A",
-        type: "Activity",
-        class: "canoe",
+        class: "Canoe",
+        available: true,
+        capacity: 10,
       },
       {
         id: "pool1",
         name: "Pool A",
-        type: "Activity",
-        class: "pool",
+        class: "Pool",
+        available: true,
+        capacity: 10,
       },
       {
         id: "paintballA",
         name: "Paintball A",
-        type: "Activity",
-        class: "paintball",
+        class: "Paintball",
+        available: true,
+        capacity: 10,
       },
     ],
   },
@@ -69,8 +94,8 @@ export const FacilitiesSampleData: FacilitiesType = {
     id: "Meeting room",
     name: "Meeting room",
     capacity: 100,
+    available: true
   }],
-  appointments: [],
 };
 
 export const DaysSampleData = getDays({
@@ -135,6 +160,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     photo: "",
     zipCode: "",
     capacity: 30,
+    activityStyles: [],
     spotStyles: [
       {
         id: IDGenerator(),
@@ -182,6 +208,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         id: IDGenerator(),
         name: "King Bed",
         capacity: 4,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
         amount: 5,
         pricing: {
           nights: "*",
@@ -224,6 +260,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Art of Living Retreat Center",
     zipCode: "",
     capacity: 50,
+    activityStyles: [],
 
     itemStyles: [
       {
@@ -290,6 +327,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         id: IDGenerator(),
         name: "King Bed",
         capacity: 4,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
         amount: 5,
         pricing: {
           nights: "*",
@@ -315,6 +362,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     zipCode: "",
     capacity: 100,
     photo: "",
+    activityStyles: [],
 
     itemStyles: [
       {
@@ -391,6 +439,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         id: IDGenerator(),
         name: "King Bed",
         capacity: 4,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
         amount: 5,
         pricing: {
           nights: "*",
@@ -405,6 +463,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     zipCode: "7654",
     capacity: 20,
     photo: "",
+    activityStyles: [],
 
     itemStyles: [
       {
@@ -487,6 +546,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
           price: 100
         }
       },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
     ],
   },
   {
@@ -494,6 +563,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Saint John’s Abbey",
     zipCode: "5843",
     capacity: 170,
+    activityStyles: [],
     photo: "",
     spotStyles: [
       {
@@ -542,6 +612,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         id: IDGenerator(),
         name: "King Bed",
         capacity: 4,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
         amount: 5,
         pricing: {
           nights: "*",
@@ -584,6 +664,7 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
     name: "Abbey of Gethsemani",
     zipCode: "2134",
     capacity: 70,
+    activityStyles: [],
     photo: "",
     spotStyles: [
       {
@@ -632,6 +713,16 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
         id: IDGenerator(),
         name: "King Bed",
         capacity: 4,
+        amount: 5,
+        pricing: {
+          nights: "*",
+          price: 100
+        }
+      },
+      {
+        id: IDGenerator(),
+        name: "Single Bed",
+        capacity: 1,
         amount: 5,
         pricing: {
           nights: "*",

@@ -10,7 +10,7 @@ import Image from "next/image"
 import Images from "@/common/images"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/services/redux/store"
-import Modal from "@/components/Modal"
+import AppointmentModal from "@/components/AppointmentModal"
 import { setDraggedLead } from "@/services/redux/slice/leads"
 type ExtraType = { distance?: number }
 const BookPage = () => {
@@ -50,7 +50,7 @@ const BookPage = () => {
 
     return (
         <div className={styles.container}>
-            {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+            {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
             <div className={styles.leadColumn}>
 
                 <LeadsColumn customOnDrag={customOnDrag} leadCardOnClick={clickLead} />
@@ -77,7 +77,7 @@ const BookPage = () => {
                                             <p className={[styles.capacity, styles.bedsContainer].join(" ")}>Beds Available : </p>
                                             <div className={"row-between"}>
                                                 <p className={styles.bedText}>King: 4</p>
-                                                <p className={styles.bedText}>Queenn: 6</p>
+                                                <p className={styles.bedText}>Queen: 6</p>
                                             </div>
                                             <div className="row-between">
                                                 <p className={styles.bedText}>Double: 4</p>
@@ -91,7 +91,8 @@ const BookPage = () => {
                                             retreatCenter.amenities.activities && retreatCenter.amenities.activities.map((act, i) => {
                                                 return (
                                                     <div key={i}>
-                                                        <Image alt={act.name} src={Images[`ic_${act.class}`]} height={30} width={30} className={styles.amenityLogo} />
+                                                        {/* @ts-ignore */}
+                                                        <Image alt={act.name} src={Images[act.class]} height={30} width={30} className={styles.amenityLogo} />
                                                     </div>
                                                 )
                                             })

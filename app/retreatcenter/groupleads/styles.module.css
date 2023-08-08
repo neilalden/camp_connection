@@ -1,6 +1,6 @@
 /* LAYOUT STYLES */
 .main {
-  height: calc(100% - 70px) !important;
+  height: 100%!important;
   width: 100% !important;
   display: flex;
   flex-direction: column;

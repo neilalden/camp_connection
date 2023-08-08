@@ -35,7 +35,7 @@ const MainCalendar = ({ date }: { date: Date }) => {
                             FacilitiesSampleData && FacilitiesSampleData.housing.buildings?.map((building, i) => {
                                 return (
                                     <div key={i}>
-                                        <input id={building.id} type="checkbox" onClick={() => setSelectedFilters([building])} />
+                                        {/* <input id={building.id} type="checkbox" onClick={() => setSelectedFilters([building.name])} /> */}
                                         <label htmlFor={building.id} className="pointer">{building.name}</label>
                                     </div>
 
@@ -57,9 +57,9 @@ const MainCalendar = ({ date }: { date: Date }) => {
                             FacilitiesSampleData.amenities.activities && FacilitiesSampleData.amenities?.activities.map((activity, i) => {
                                 return (
                                     <div key={i}>
-                                        <input id={activity.id} type="checkbox" onClick={() => setSelectedFilters([activity])
+                                        {/* <input id={activity.id} type="checkbox" onClick={() => setSelectedFilters([activity])
 
-                                        } />
+                                        } /> */}
                                         <label htmlFor={activity.id} className="pointer">{activity.name}</label>
                                     </div>
 

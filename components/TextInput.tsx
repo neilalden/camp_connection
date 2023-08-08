@@ -18,6 +18,8 @@ type Props = {
     onClick?: ArgFunction;
     labelStyle?: React.CSSProperties
     inputStyle?: React.CSSProperties
+    dataContent?: string
+    required?: boolean
 }
 const TextInput = (props: Props) => {
     const {
@@ -37,12 +39,15 @@ const TextInput = (props: Props) => {
         labelStyle,
         inputStyle,
         onClick,
+        dataContent,
+        required
     } = props
 
     return (
-        <div style={containerStyle} className={containerClassName}>
+        <div style={containerStyle} className={[styles.container,containerClassName].join(" ")} data-content={dataContent}>
             {label ? <label htmlFor={htmlFor} style={labelStyle} className={labelClassName}>{label}</label> : null}
             <input
+                 required={required}
                 style={inputStyle}
                 onClick={(e) => onClick ? onClick(e) : e.stopPropagation()}
                 type={type}

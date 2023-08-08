@@ -60,7 +60,6 @@ const LeadsColumn = (props: Props) => {
             },
             color: color,
             groupName: "",
-            status: "Reserved",
             amenities: [],
             meals: [],
             rooms: [],
@@ -74,22 +73,25 @@ const LeadsColumn = (props: Props) => {
 
     const onDrop = (e: React.DragEvent) => {
         const widgetType = e.dataTransfer.getData("widgetType") as string;
+        if (!widgetType) return;
         const parsed: AppointmentType = JSON.parse(widgetType)
         const isALead = leads?.find((lead) => lead.id === parsed.id)
         if (isALead) dispatch(removeLead(parsed.id))
         else dispatch(cancelAppointment({
             appointmentId: parsed.id
         }))
-        dispatch(addLead(parsed))
+        dispatch(addLead({ ...parsed, status: undefined, rooms: [] }))
 
     }
     return (
         <div
             className={styles.leadscolumn}
-            onDrop={onDrop}
-            onDragOver={onDragOver}
         >
-            <div style={{ height: "100%", overflowY: "hidden" }}>
+            <div
+                style={{ height: "100%", overflowY: "hidden" }}
+                onDrop={onDrop}
+                onDragOver={onDragOver}
+            >
                 <h3 className={styles.leadsTitle}>Leads</h3>
                 {leads && leads?.length >= 5 ? <TextInput value={searchString} setValue={(e) => setSearchString(e.target.value)} placeholder="Search Lead" containerClassName={styles.searchInput} /> : null}
                 <div className={styles.leadsContainer}>

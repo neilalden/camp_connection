@@ -7,7 +7,7 @@ import { RootState } from "@/services/redux/store";
 import { addAppointment, cancelAppointment } from "@/services/redux/slice/retreatcenters";
 import { useEffect, useState } from "react";
 import { AppointmentTypeWithExtraProp, removeLead, setDraggedLead } from "@/services/redux/slice/leads";
-import Modal from "./Modal";
+import AppointmentModal from "./AppointmentModal";
 import Colors from "@/common/colors";
 const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: RetreatCenterType }) => {
     const dispatch = useDispatch()
@@ -32,13 +32,14 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
         if (!date) return;
 
         const widgetType = e.dataTransfer.getData("widgetType") as string;
+        if (!widgetType) return;
         const parsed: AppointmentType = JSON.parse(widgetType)
         const copiedDate = new Date(date)
-        if (parsed.status === undefined) return; // it means that the data from drop is not an appointment
         const appointment: AppointmentType = {
             ...parsed,
-            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate() + 1)),
+            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate())),
             checkOutDate: new Date(copiedDate.setDate(copiedDate.getDate() + parsed.checkInDays - 1)),
+            status: "Reserved"
         }
 
         const isBooked = retreatcenters.find(rc => rc.appointments.some(a => a.id === appointment.id));
@@ -54,10 +55,9 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
     const onDropPreview = (data: AppointmentType, date?: Date) => {
         if (!date) return;
         const copiedDate = new Date(date)
-        if (data.status === undefined) return; // it means that the data from drop is not an appointment
         const appointment: AppointmentType = {
             ...data,
-            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate() + 1)),
+            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate())),
             checkOutDate: new Date(copiedDate.setDate(copiedDate.getDate() + data.checkInDays - 1)),
         }
         setCurrentRetreatCenter(prev => ({
@@ -75,12 +75,11 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
         if (!currentDate) return;
         if (Array.isArray(data)) return;
         const newdata: AppointmentTypeWithExtraProp = { ...data, draggedDate: currentDate }
-        // setCurrentDrag(newdata)
         dispatch(setDraggedLead(newdata))
     }
     const onDragEnd = (e: any) => dispatch(setDraggedLead(undefined))
     return (<div>
-        {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+        {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
         <div className={styles.calendarWeek}>
             {calendarDays.map((d, i) => {
                 if (i === 0) return <div key={i} className={styles.calendarHeaderText0} />
@@ -124,7 +123,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                             let classes: string | undefined;
                             let style: React.CSSProperties | undefined;
                             if (!Array.isArray(appointment) && appointment && appointment.checkInDate && appointment.checkOutDate && currentDate) {
-                                const checkInDate = new Date(appointment.checkInDate)
+                                const checkInDate = new Date(new Date(appointment.checkInDate).setDate(new Date(appointment.checkInDate).getDate()))
                                 const checkOutDate = new Date(appointment.checkOutDate)
                                 const backgroundString = appointment.color
 
@@ -132,7 +131,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
 
                                 let checkInString
                                 let checkOutString
-                                const currentDateString = `${months[currentDate.getMonth()]} ${currentDate.getDate() + 1}`
+                                const currentDateString = `${months[currentDate.getMonth()]} ${currentDate.getDate()}`
                                 if (appointment && checkInDate) {
                                     checkInString = `${months[checkInDate.getMonth()]} ${checkInDate.getDate()}`
                                 }

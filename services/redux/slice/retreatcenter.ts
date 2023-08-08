@@ -27,6 +27,7 @@ const initialState: RetreatCenterStateType = {
         name: "",
         zipCode: "",
         photo: undefined,
+        activityStyles: [],
         housing: {
             buildings: [
             ],

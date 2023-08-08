@@ -31,7 +31,6 @@ const HousingSetup = () => {
                     dispatch(addBuilding({
                         id: IDGenerator(),
                         name: ``,
-                        type: "Housing",
                         rooms: []
                     }))
                 }}

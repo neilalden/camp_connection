@@ -16,7 +16,7 @@ import MainCalendar from "@/components/MainCalendar";
 import Divider from "@/components/Divider";
 import { getNextMonth, getPrevMonth, trunc } from "@/utils/functions";
 import TextInput from "@/components/TextInput";
-import Modal from "@/components/Modal";
+import AppointmentModal from "@/components/AppointmentModal";
 
 const GroupLeads = () => {
   const retreatCenters = useSelector(
@@ -49,7 +49,7 @@ const GroupLeads = () => {
   return (
 
     <div className={styles.container}>
-      {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+      {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
       <div className={styles.leadColumn}>
         <LeadsColumn leadCardOnClick={clickLead} showZipCode={false} />
       </div>

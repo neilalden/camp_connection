@@ -16,7 +16,7 @@ import MainCalendar from '@/components/MainCalendar'
 import Divider from '@/components/Divider'
 import { getNextMonth, getPrevMonth, trunc } from '@/utils/functions'
 import TextInput from '@/components/TextInput'
-import Modal from '@/components/Modal'
+import AppointmentModal from '@/components/AppointmentModal'
 
 const CalendarPage = () => {
   const retreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
@@ -34,7 +34,7 @@ const CalendarPage = () => {
   if (!RetreatCenter) return;
   return (
     <div className={styles.container}>
-      {modalIsVisible ? <Modal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+      {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
       <div className={styles.heading}>
         <h3 className={styles.overviewTitle}>Overview</h3>
       </div>
