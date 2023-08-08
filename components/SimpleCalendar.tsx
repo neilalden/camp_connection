@@ -37,7 +37,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
         const copiedDate = new Date(date)
         const appointment: AppointmentType = {
             ...parsed,
-            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate() + 1)),
+            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate())),
             checkOutDate: new Date(copiedDate.setDate(copiedDate.getDate() + parsed.checkInDays - 1)),
             status: "Reserved"
         }
@@ -57,7 +57,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
         const copiedDate = new Date(date)
         const appointment: AppointmentType = {
             ...data,
-            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate() + 1)),
+            checkInDate: new Date(copiedDate.setDate(copiedDate.getDate())),
             checkOutDate: new Date(copiedDate.setDate(copiedDate.getDate() + data.checkInDays - 1)),
         }
         setCurrentRetreatCenter(prev => ({
@@ -123,7 +123,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                             let classes: string | undefined;
                             let style: React.CSSProperties | undefined;
                             if (!Array.isArray(appointment) && appointment && appointment.checkInDate && appointment.checkOutDate && currentDate) {
-                                const checkInDate = new Date(appointment.checkInDate)
+                                const checkInDate = new Date(new Date(appointment.checkInDate).setDate(new Date(appointment.checkInDate).getDate()))
                                 const checkOutDate = new Date(appointment.checkOutDate)
                                 const backgroundString = appointment.color
 
@@ -131,7 +131,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
 
                                 let checkInString
                                 let checkOutString
-                                const currentDateString = `${months[currentDate.getMonth()]} ${currentDate.getDate() + 1}`
+                                const currentDateString = `${months[currentDate.getMonth()]} ${currentDate.getDate()}`
                                 if (appointment && checkInDate) {
                                     checkInString = `${months[checkInDate.getMonth()]} ${checkInDate.getDate()}`
                                 }
@@ -197,7 +197,6 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                 >
                                     {appointment && currentDate && cond ?
                                         <div
-                                            // data-content={appointment.checkInDate.toLocaleDateString() + ":" + appointment.checkOutDate.toLocaleDateString()}
                                             data-content={!Array.isArray(appointment) ?
                                                 `${appointment.groupName}` :
                                                 appointment.map((app) => app.groupName).toString().replaceAll(",", ", \n")}

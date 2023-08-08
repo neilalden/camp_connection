@@ -57,7 +57,7 @@ export const dateIsScheduled = ({ date, appointments }: { date?: Date; appointme
     if (!date || !appointments) return undefined;
     let result: Array<AppointmentType> = []
     appointments.map(appointment => {
-        if (appointment.checkInDate && appointment.checkOutDate && new Date(new Date(date).setDate(new Date(date).getDate() + 1)) >= new Date(appointment.checkInDate) && date < new Date(appointment.checkOutDate)) {
+        if (appointment.checkInDate && appointment.checkOutDate && new Date(new Date(date).setDate(new Date(date).getDate() + 1)) >= new Date(new Date(date).setDate(new Date(appointment.checkInDate).getDate() + 1)) && date < new Date(new Date(date).setDate(new Date(appointment.checkOutDate).getDate() + 1))) {
             if (result === undefined) result = [appointment];
             else result.push(appointment)
         }
