@@ -9,8 +9,7 @@
     width: 90%;
     min-height: 180px !important;
     background: #F6F8F9;
-    margin: 20px 5%;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    margin: 0 5% 20px 5%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -22,11 +21,11 @@
 }
 
 .itemDeleteButtom {
-    color: #E0E7EB;
+    color: #85A0AD;
     font-size: 10px;
     font-weight: 900 !important;
     transition: .5s ease-out 0s;
-    width: 50px;
+    width: 10px;
     padding-left: 10px;
 }
 
@@ -229,4 +228,17 @@
 .logoContainer:hover .editText {
     opacity: 1;
     background-color: #C2CFD6;
+}
+
+.collapsableSection {
+    width: 90% !important;
+    min-height: 90px;
+    height: 90px;
+    background: #E0E7EB;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px !important;
+    margin: 0 auto !important;
 }

@@ -7,15 +7,13 @@ export type AppointmentTypeWithExtraProp = {
 
 export type AppointmentsStateType = {
     loading: boolean;
-    error?: string;
-    appointments?: Array<AppointmentType>
-    requestToken?: string;
+    error: string | false;
+    appointments: Array<AppointmentType>
 }
 const initialState: AppointmentsStateType = {
     loading: false,
-    error: undefined,
-    appointments: undefined,
-    requestToken: undefined,
+    error: false,
+    appointments: [],
 }
 export const addNewAppointments = createAsyncThunk("user/newappointments", async (appointment: any) => {
     const response = await POST(
@@ -29,26 +27,26 @@ export const Appointmentslice = createSlice({
     name: "appointments",
     initialState,
     reducers: {
-        setAppointment: (state, action: PayloadAction<AppointmentType>) => {
-            state.appointments = state.appointments?.map(appointment => appointment.id === action.payload.id ? action.payload : appointment)
+        createAppointment: (state, action: PayloadAction<AppointmentType>) => {
+            state.appointments = [action.payload, ...state.appointments]
         },
-        addAppointment: (state, action: PayloadAction<AppointmentType>) => {
-            state.appointments = Array.isArray(state.appointments) ? [action.payload, ...state.appointments] : [action.payload]
+        updateAppointment: (state, action: PayloadAction<AppointmentType>) => {
+            state.appointments = state.appointments.map(appointment => appointment.id === action.payload.id ? action.payload : appointment)
         },
-        removeAppointment: (state, action: PayloadAction<AppointmentType["id"]>) => {
-            state.appointments = state.appointments?.filter(appointment => appointment.id !== action.payload)
+        deleteAppointment: (state, action: PayloadAction<AppointmentType["id"]>) => {
+            state.appointments = state.appointments.filter(appointment => appointment.id !== action.payload)
         },
         clearAppointments: (state) => {
-            state.appointments = undefined
+            state.appointments = []
         }
     },
 })
 
 export const {
-    setAppointment,
-    addAppointment,
+    createAppointment,
+    updateAppointment,
+    deleteAppointment,
     clearAppointments,
-    removeAppointment,
 } = Appointmentslice.actions
 
 export default Appointmentslice.reducer

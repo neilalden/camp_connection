@@ -1,114 +1,94 @@
-import TextInput from "@/components/TextInput";
-import { setBedStyles, addBedStyle } from "@/services/redux/slice/retreatcenters";
-import { RootState } from "@/services/redux/store";
-import { ActivityType, ArgFunction } from "@/types";
-import { IDGenerator } from "@/utils/functions";
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import Images from "@/common/images"
+import { RootState } from "@/services/redux/store"
+import { ActivityType, ArgFunction, Activity } from "@/types"
+import Image from "next/image"
+import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import styles from "./ActivityPicker.module.css"
-import Images from "@/common/images";
-import Image from "next/image";
-import Modal from "./Modal";
-import AddBedStyleComponent from "./AddBedStyleComponent";
 
 const ActivityPicker = ({
     activity,
-    deleteBed,
-    changeBed,
-    changeBedAmount,
+    deleteActivity,
+    changeActivityClass,
+    changeActivityAmount,
 }: {
     activity: ActivityType,
-    deleteBed: ArgFunction,
-    changeBed: ArgFunction,
-    changeBedAmount: ArgFunction,
+    deleteActivity: ArgFunction,
+    changeActivityClass: ArgFunction,
+    changeActivityAmount: ArgFunction,
 }) => {
     const dispatch = useDispatch()
     const activitystyles = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.activityStyles)
-    const [showBedStyleOptions, setShowBedStyleOptions] = useState(false)
+    const [showActivityStyleOptions, setShowActivityStyleOptions] = useState(false)
     const [showModal, setShowModal] = useState(false)
-    const [toEditBedStyle, setToEditBedStyle] = useState<ActivityType | undefined>()
-
+    const [toEditActivityStyle, setToEditActivityStyle] = useState<ActivityType | undefined>()
     return (
-        <div className={styles.bedCard}
-            onClick={() => setShowBedStyleOptions(prev => prev ? true : false)}
-        >
-            {/* {showModal ? <Modal setIsVisible={setShowModal} component={<AddBedStyleComponent BedStyle={toEditBedStyle} setIsVisible={setShowModal} />} /> : null} */}
-            <div className="row-between" style={{ margin: "10px 5px", position: "relative" }}
-                onClick={() => setShowBedStyleOptions(false)}
-            >
-                {
-                    showBedStyleOptions ? (
-                        <React.Fragment>
-                            <div className={styles.darkBackground} onClick={() => setShowBedStyleOptions(false)} />
+        <div className={styles.activityCard} onClick={(e) => { e.stopPropagation(); setShowActivityStyleOptions(prev => !prev) }}>
+            {showActivityStyleOptions ? <div className={styles.darkBackground} onClick={(e) => { e.stopPropagation(); setShowActivityStyleOptions(false); }} /> : null}
+            {
+                showActivityStyleOptions ? (
+                    <div style={{ position: "relative" }} onClick={() => setShowActivityStyleOptions(false)}>
+                        <div
+                            className={styles.activityStyleOptionsContainer}
+                            onClick={() => setShowActivityStyleOptions(prev => prev ? false : true)}
 
-                            <div
-                                className={styles.bedStyleOptionsContainer}
-                                onClick={() => setShowBedStyleOptions(prev => prev ? false : true)}
+                        >
+                            {
+                                Object.keys(Activity)?.map((activitystyle, i) => {
+                                    const currentActivity = activitystyle === activity.class
+                                    return (
+                                        <div
+                                            key={i}
+                                            className={styles.activityStyleOption}
+                                            style={{ width: "90%" }}
+                                            onClick={(e) => {
+                                                changeActivityClass({ ...activity, class: activitystyle, name: activitystyle });
+                                                setShowActivityStyleOptions(false)
+                                            }}
 
-                            >
-                                {
-                                    activitystyles?.map((bedstyle, i) => {
-                                        const currentBed = bedstyle.id === activity.id
-                                        return (
-                                            <div
-                                                key={i}
-                                                className={styles.bedStyleOption}
-                                                style={{ width: "90%" }}
+                                        >
+                                            <button
+                                                type="button"
                                                 onClick={(e) => {
-                                                    changeBed({ ...bedstyle, capacity: activity.capacity });
-                                                    setShowBedStyleOptions(prev => prev ? false : true)
+                                                    e.stopPropagation();
+                                                    changeActivityClass({ ...activity, class: activitystyle, name: activitystyle });
+                                                    setShowModal(true)
+                                                    setShowActivityStyleOptions(false)
                                                 }}
-
+                                                style={{
+                                                    marginTop: "5px",
+                                                    marginLeft: activitystyle === "Custom" ? "5px" : 0
+                                                }}
                                             >
-                                                <button
-                                                    type="button"
-                                                    className={styles.optionBedButton}
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        changeBed({ ...bedstyle, capacity: activity.capacity })
-                                                        setShowBedStyleOptions(false)
-                                                    }}
-                                                    style={{
-                                                        color: currentBed ? "#000" : "#999"
-                                                    }}
-                                                >
-                                                    {bedstyle.name} {currentBed ? "▴" : ""}
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        setToEditBedStyle(bedstyle)
-                                                        setShowModal(true)
-                                                    }}
-                                                    style={{ marginTop: "5px" }}
-                                                >
-                                                    <Image src={Images.ic_edit_gray} alt="edit icon" height={15} />
-                                                </button>
-                                            </div>
-                                        )
-                                    })
-                                }
-                                <button
-                                    type="button"
-                                    className={styles.addMeetingRoomButton}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        setToEditBedStyle(undefined)
-                                        setShowModal(true)
-                                    }}
-                                >+</button>
-                            </div>
-                        </React.Fragment>
-                    ) : (
-                        <button
-                            type="button" className={styles.selectBedButton} onClick={(e) => { e.stopPropagation(); setShowBedStyleOptions(true) }}>
-                            {/* @ts-ignore */}
-                            <Image src={Images[String(activity.class)]} alt="edit icon" height={30} />
-                        </button>
-                    )
-                }
-            </div>
+                                                {/* @ts-ignore */}
+                                                <Image src={Images[activitystyle] ?? Images["ic_logo"]} alt="Activity icon" height={activitystyle === "Custom" ? 20 : 30} width={activitystyle === "Custom" ? 20 : 30} onError={e => console.error(e)} />
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className={styles.optionActivityButton}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    changeActivityClass({ ...activity, class: activitystyle, name: activitystyle });
+                                                    setShowActivityStyleOptions(false)
+                                                }}
+                                                style={{
+                                                    color: currentActivity ? "#000" : "#999",
+                                                    marginLeft: activitystyle === "Custom" ? "5px" : 0
+                                                }}
+                                            >
+                                                {activitystyle} {currentActivity ? "▴" : ""}
+                                            </button>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                ) : (
+                    // @ts-ignore
+                    <Image src={Images[String(activity.class)] ?? Images["ic_logo"]} alt="Activity icon" height={30} width={30} onError={e => console.error(e)} />
+                )
+            }
         </div>
     )
 }

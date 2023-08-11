@@ -1,4 +1,9 @@
-const Images = {
+import { Activity, ActivityClass } from "@/types";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+type ImageType = {
+  [key: string | ActivityClass]: StaticImport;
+};
+const Images: ImageType = {
   ic_logo: require("../assets/ic_logo.png"),
   ic_grapic1: require("../assets/ic_grapic1.png"),
   ic_grapic2: require("../assets/ic_grapic2.png"),
@@ -56,12 +61,13 @@ const Images = {
   ic_close_red: require("../assets/ic_close_red.png"),
 
   // Activities
-  Basketball: require("../assets/activities/Basketball.png"),
-  Canoe: require("../assets/activities/Canoe.png"),
-  Hiking: require("../assets/activities/Hiking.png"),
-  Paintball: require("../assets/activities/Paintball.png"),
-  Pool: require("../assets/activities/Pool.png"),
-  Zipline: require("../assets/activities/Zipline.png"),
+  [Activity["Custom"]]: require("../assets/activities/Custom.png"),
+  [Activity["Basketball"]]: require("../assets/activities/Basketball.png"),
+  [Activity["Canoe"]]: require("../assets/activities/Canoe.png"),
+  [Activity["Hiking"]]: require("../assets/activities/Hiking.png"),
+  [Activity["Paintball"]]: require("../assets/activities/Paintball.png"),
+  [Activity["Pool"]]: require("../assets/activities/Pool.png"),
+  [Activity["Zipline"]]: require("../assets/activities/Zipline.png"),
 
   //arnold import
   ic_user_profile: require("../assets/ic_user_profile.png"),

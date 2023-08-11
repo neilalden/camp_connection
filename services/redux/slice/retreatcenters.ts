@@ -1,19 +1,31 @@
-import { ActivityType, AppointmentType, BedType, BuildingType, CampAreaType, DiagramType, MeetingRoomType, PricingType, RetreatCenterType, SpotType } from "@/types";
-import { ActivityGenerator, IDGenerator } from "@/utils/functions";
+import {
+    ActivityType,
+    BedType,
+    BuildingType,
+    CampAreaType,
+    DiagramType,
+    EditBedStyleCapacity,
+    EditBedStyleName,
+    MeetingRoomType,
+    PricingType,
+    RetreatCenterType,
+    SpotType
+} from "@/types";
+import {
+    ActivityGenerator,
+    IDGenerator
+} from "@/utils/functions";
 import { ArrayRCSD, } from "@/utils/sampleData";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import appointments from "./appointments";
-import { EditBedStyleName, EditBedStyleCapacity } from "./retreatcenter";
+import {
+    createSlice,
+    PayloadAction
+} from "@reduxjs/toolkit";
 
 export type RetreatCenterStateType = {
     loading: boolean;
     error?: string;
     retreatCenters: Array<RetreatCenterType>;
     retreatCenter: RetreatCenterType;
-}
-export type AddAppointmentPayload = {
-    retreatCenterId: RetreatCenterType["id"];
-    appointment: AppointmentType
 }
 const initialState: RetreatCenterStateType = {
     loading: false,
@@ -33,48 +45,16 @@ export const RetreatCentersSlice = createSlice({
                 ...state.retreatCenters,
             ]
         },
-        setAppointment: (state, action: PayloadAction<AppointmentType>) => {
-            state.retreatCenter.appointments = state.retreatCenter.appointments.map((appointment) => appointment.id === action.payload.id ? action.payload : appointment);
-            state.retreatCenters = state.retreatCenters.map((rc) => rc.id == state.retreatCenter.id ? state.retreatCenter : rc)
-        },
-        addAppointment: (state, action: PayloadAction<AddAppointmentPayload>) => {
-            const { retreatCenterId, appointment } = action.payload
-
-            state.retreatCenters.map(rc => {
-                if (retreatCenterId === rc.id) {
-                    rc.appointments = rc.appointments ? [...rc.appointments, appointment] : [appointment]
-                    return rc
-                }
-                return rc
-            })
-
-            state.retreatCenter = state.retreatCenters.find(rcs => rcs.id === state.retreatCenter.id) ?? state.retreatCenter
-
-        },
-        cancelAppointment: (state, action: PayloadAction<{ appointmentId: AppointmentType["id"] }>) => {
-            const { appointmentId } = action.payload;
-            state.retreatCenters = state.retreatCenters.map((rc) => {
-                return {
-                    ...rc,
-                    appointments: rc.appointments.filter(a => a.id !== appointmentId),
-                    housing: {
-                        ...rc.housing,
-                        buildings: rc.housing.buildings?.map((bldg) => ({ ...bldg, rooms: bldg.rooms?.map(rm => rm.occupiedBy?.id === appointmentId ? ({ ...rm, occupiedBy: undefined }) : rm) }))
-                    }
-                }
-            })
-            state.retreatCenter = state.retreatCenters.find(rcs => rcs.id === state.retreatCenter.id) ?? state.retreatCenter
-
-        },
-        clearAppointments: (state) => {
-            state.retreatCenters = state.retreatCenters.map(rc => ({ ...rc, appointments: [] }))
-        },
         setRetreatCenter: (state, action: PayloadAction<RetreatCenterType>) => {
             state.retreatCenter = action.payload
             state.retreatCenters = state.retreatCenters.map(rcs => rcs.id === action.payload.id ? action.payload : rcs)
         },
         setRetreatCenterPhoto: (state, action: PayloadAction<RetreatCenterType["photo"]>) => {
             if (state.retreatCenter) state.retreatCenter.photo = action.payload;
+            state.retreatCenters = state.retreatCenters.map((rc) => rc.id == state.retreatCenter.id ? state.retreatCenter : rc)
+        },
+        setRetreatCenterMapPhoto: (state, action: PayloadAction<RetreatCenterType["mapPhoto"]>) => {
+            if (state.retreatCenter) state.retreatCenter.mapPhoto = action.payload;
             state.retreatCenters = state.retreatCenters.map((rc) => rc.id == state.retreatCenter.id ? state.retreatCenter : rc)
         },
         setActivities: (state, action: PayloadAction<Array<ActivityType>>) => {
@@ -310,7 +290,6 @@ export const RetreatCentersSlice = createSlice({
                     zipCode: "",
                     housing: {},
                     amenities: {},
-                    appointments: [],
                     activityStyles: [
                         {
                             id: IDGenerator(),
@@ -318,6 +297,14 @@ export const RetreatCentersSlice = createSlice({
                             name: activity,
                             class: activity,
                             capacity: 10,
+                            description: "",
+                            pricing: [
+                                {
+                                    price: 20,
+                                    per: "head"
+                                }
+                            ],
+                            seasonsAvailable: ["Winter", "Spring", "Summer", "Fall"]
                         }
                     ],
                     bedStyles: [
@@ -362,8 +349,8 @@ export const RetreatCentersSlice = createSlice({
     },
 })
 
-export const { addRetreatCenter, addAppointment, clearAppointments, cancelAppointment,
-    setAppointment,
+export const {
+    addRetreatCenter,
     setRetreatCenter,
     setRetreatCenterName,
     setRetreatCenterZipCode,
@@ -388,6 +375,7 @@ export const { addRetreatCenter, addAppointment, clearAppointments, cancelAppoin
     setSpaceSpots,
     setSpotStyles,
     setRetreatCenterPhoto,
+    setRetreatCenterMapPhoto,
     setItemStyles,
     addMeetingRoom,
     addDiagramStyle,

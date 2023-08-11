@@ -92,7 +92,7 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
         <div>
             <button type="button" className={styles.collapsableSection} style={{ width: "100%" }} onClick={(e) => setOpenBuilding(prev => !prev)}>
                 <div className="row">
-                    {!openBuilding ? <button
+                    {openBuilding ? <button
                         type="button"
                         className={styles.deleteButton}
                         onClick={deleteBuilding}

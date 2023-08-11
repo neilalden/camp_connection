@@ -9,12 +9,12 @@ import styles from './SigninForm.module.css'
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '@/services/redux/slice/user';
-import { RetreatCenterUserType } from '@/types';
+import { RetreatCenterTeamType } from '@/types';
 import { RootState } from '@/services/redux/store';
 import TextInput from '@/components/TextInput';
 import { IDGenerator } from '@/utils/functions';
 
-const RetreatCenterUserTestData: RetreatCenterUserType = {
+const RetreatCenterUserTestData: RetreatCenterTeamType = {
     id: IDGenerator(),
     firstName: "Reuvin",
     lastName: "Hernandez",
@@ -25,7 +25,9 @@ const RetreatCenterUserTestData: RetreatCenterUserType = {
     organization: "CampConnection",
     userType: "Admin",
     createdAt: new Date(),
-    userCategory: "retreatcenter"
+    userCategory: "retreatcenterteam",
+    retreatCenterId: "",
+
 }
 
 const SigninForm = () => {

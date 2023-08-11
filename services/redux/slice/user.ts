@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   CamperUserType,
-  RetreatCenterUserType,
+  RetreatCenterTeamType,
   CampConnectionTeamUserType,
 } from "@/types";
 
 export type UserStateType = {
   loading: boolean;
   error?: string;
-  user?: CamperUserType | RetreatCenterUserType | CampConnectionTeamUserType;
+  user?: CamperUserType | RetreatCenterTeamType | CampConnectionTeamUserType;
   requestToken?: string;
 };
 const initialState: UserStateType = {

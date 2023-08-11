@@ -26,7 +26,6 @@
     flex-flow: wrap;
     justify-content: space-evenly;
     border: 1px solid #E0E7EB;
-    padding: 30px 15px;
 }
 
 .roomCard {
@@ -111,7 +110,7 @@
     z-index: 1;
 }
 
-.meetingRoomButton {
+.roomButton {
     min-width: 25% !important;
     margin: 10px;
     display: flex;
@@ -164,4 +163,17 @@
     flex-direction: row;
     justify-content: space-between;
     margin-top: 5px;
+}
+
+.meetingRoomContainer {
+    width: 100%;
+    border: 1px solid #E0E7EB;
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: space-around;
+}
+
+.timeInput {
+    margin-top: 18px;
 }

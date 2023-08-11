@@ -4,28 +4,24 @@ import styles from "./styles.module.css"
 import Images from "@/common/images";
 import TextInput from "@/components/TextInput";
 import { useEffect, useState } from "react";
-import { ArgFunction, BedType, DiagramType, HTMLEvent, MeetingRoomType, RoomType, CampAreaType, BuildingType, RetreatCenterType } from "@/types";
+import { MeetingRoomType, RetreatCenterType } from "@/types";
 import Divider from "@/components/Divider";
-import FileUpload from "@/components/FileUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/services/redux/store";
-import { addMeetingRoom, addItemStyle, addDiagramStyle, setDiagramStyles, setMeetingRooms, setRoomBeds, } from "@/services/redux/slice/retreatcenters";
-import RadioButton from "@/components/RadioButton";
-import CheckBox from "@/components/CheckBox";
-import DropDown from "@/components/DropDown";
-import { IDGenerator, arrayToMap, ItemGenerator } from "@/utils/functions";
+import { addMeetingRoom, addDiagramStyle, setMeetingRooms, } from "@/services/redux/slice/retreatcenters";
+import { IDGenerator } from "@/utils/functions";
 import HousingSetup from "@/components/setupcamp/components/HousingSetup";
-import SpotCard from "@/components/setupcamp/components/SpotCard";
 import RVAndTentSetup from "@/components/setupcamp/components/RVAndTentSetup";
 import ItemsSetup from "@/components/setupcamp/components/ItemsSetupComponent";
 import DiagramCard from "@/components/setupcamp/components/DiagramCard";
 import ActivitiesSetup from "@/components/setupcamp/components/ActivitiesSetupComponent";
-const Userprofile = () => {
+const SetupCamp = () => {
     const [showHousing, setShowHousing] = useState(false)
     const [showRvAndTent, setShowRvAndTent] = useState(false)
     const [showActivities, setShowActivities] = useState(false)
     const [showMeetingRooms, setShowMeetingRooms] = useState(false)
     const [showItems, setShowItems] = useState(false)
+
     return (
         <div className={styles.container}>
             <button type="button" className={styles.collapsableSection} onClick={() => setShowHousing(prev => !prev)}>
@@ -186,4 +182,4 @@ const MeetingRoomsSetup = () => {
         </div>
     )
 }
-export default (Userprofile);
+export default SetupCamp;

@@ -21,8 +21,9 @@
 // export type AppDispatch = typeof store.dispatch;
 
 import { applyMiddleware, combineReducers, configureStore, createStore } from "@reduxjs/toolkit";
+import { default as Appointments } from './slice/appointments';
+import { default as CamperGroups } from './slice/campergroups';
 import { default as Leads } from './slice/leads';
-import { default as RetreatCenter } from './slice/retreatcenter';
 import { default as RetreatCenters } from './slice/retreatcenters';
 import { default as User } from './slice/user';
 import { persistStore, persistReducer } from 'redux-persist'
@@ -34,8 +35,9 @@ const persistConfig = {
 }
 
 const reducers = combineReducers({
+    Appointments,
+    CamperGroups,
     Leads,
-    // RetreatCenter,
     RetreatCenters,
     User,
 });

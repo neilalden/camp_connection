@@ -6,12 +6,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Nav.module.css";
 import { clearLeads } from "@/services/redux/slice/leads";
-import { addRetreatCenter, clearAppointments, setRetreatCenterPhoto } from "@/services/redux/slice/retreatcenters";
+import { addRetreatCenter, setRetreatCenterPhoto } from "@/services/redux/slice/retreatcenters";
 import Image from "next/image";
 import Images from "@/common/images";
 import { IDGenerator, trunc } from "@/utils/functions";
 import { RetreatCenterType } from "@/types";
 import { setRetreatCenter } from "@/services/redux/slice/retreatcenters";
+import { clearAppointments } from "@/services/redux/slice/appointments";
 const TopNavigation = () => {
   const dispatch = useDispatch();
   const router = useRouter();

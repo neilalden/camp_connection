@@ -16,7 +16,8 @@ import { usaStatesFull } from 'typed-usa-states';
 import ZipcodeToTimezone from "zipcode-to-timezone"
 import { ScheduleType } from "@/types";
 import Divider from "@/components/Divider";
-import { setRetreatCenter, setRetreatCenterName, setRetreatCenterPhoto } from "@/services/redux/slice/retreatcenters";
+import { setRetreatCenter, setRetreatCenterMapPhoto, setRetreatCenterName, setRetreatCenterPhoto } from "@/services/redux/slice/retreatcenters";
+import FileUpload from "@/components/FileUpload";
 const Userprofile = () => {
     const dispatch = useDispatch()
     const retreatcenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter)
@@ -118,9 +119,9 @@ const Userprofile = () => {
                     <h4 className={styles.cardTitle}>General</h4>
                     <form>
                         <DropDownUsers htmlFor="Representative" options={userOptions} value={representative} setValue={setRepresentative} containerClassName={styles.inputStyle} />
-                        <CheckBox value={isAceeptingGroups} onChange={() => setIsAcceptingGroups(prev => !prev)} label="Do you accept groups?" containerClassName={styles.inputStyle} />
-                        <CheckBox value={isAceeptingRVTent} onChange={() => setIsAcceptingRVTent(prev => !prev)} label="Do you accept RV/Tent Camping?" containerClassName={styles.inputStyle} />
-                        <CheckBox value={isRecievingCCLeads} onChange={() => setIsRecievingCCLeads(prev => !prev)} label="Receive Camp Connection Leads?" containerClassName={styles.inputStyle} />
+                        <CheckBox name="accept groups" value={isAceeptingGroups} onChange={() => setIsAcceptingGroups(prev => !prev)} label="Do you accept groups?" containerClassName={styles.inputStyle} />
+                        <CheckBox name="accept rv" value={isAceeptingRVTent} onChange={() => setIsAcceptingRVTent(prev => !prev)} label="Do you accept RV/Tent Camping?" containerClassName={styles.inputStyle} />
+                        <CheckBox name="connect leads" value={isRecievingCCLeads} onChange={() => setIsRecievingCCLeads(prev => !prev)} label="Receive Camp Connection Leads?" containerClassName={styles.inputStyle} />
                         <span className="mini-link">Learn more</span>
                         {/* <div className={["row-around", styles.inputStyle].join(" ")}>
                             <FileButton text="Contract for RV" containerClassName={styles.inputStyle} />
@@ -139,6 +140,19 @@ const Userprofile = () => {
                     <SchedulePicker season={"Fall"} />
                 </div>
             </div>
+            {/* <FileUpload onChange={
+                (e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                        const selectedFile = e.target.files[0];
+                        const imageUrl = URL.createObjectURL(selectedFile);
+                        POST("http://atsdevs.org/api/images/images.php", {
+                            image: e.target.files[0].name
+                        })?.then(res => {
+                        })
+                        dispatch(setRetreatCenterMapPhoto(imageUrl));
+                    }
+                }
+            } /> */}
             <Divider className={styles.bottomSpace} />
         </div>
     );
@@ -146,7 +160,7 @@ const Userprofile = () => {
 const SchedulePicker = ({ season = "all" }: { season?: string }) => {
     const schedule: Array<ScheduleType> = weekdays.map(wd => ({
         label: wd,
-        value: false,
+        value: true,
         editMode: false,
         from: "09:00 AM",
         to: "05:00 PM"
@@ -239,7 +253,7 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
                                             <CheckBox
                                                 label={sched.label}
                                                 value={sched.value}
-                                                htmlFor={`${season}---${sched.label}`}
+                                                name={`${season}---${sched.label}`}
                                                 onChange={() => onChange(sched)}
                                                 containerStyle={{ width: "65px", alignSelf: "center" }}
                                             />
@@ -248,7 +262,6 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
                                                     (
                                                         <div className={styles.schedContainer}>
                                                             <div className={["row", styles.timeInputContainer].join(" ")}>
-                                                                {/* <DropDown options={Array(12).fill(0).map(i => i + 1)} value={String(sched.from.hour)} setValue={setHour} /> */}
                                                                 <input type={"time"} onChange={e => setHour(e.target.value, "from", sched.label)} className={styles.timeInput} />
                                                                 <h4 className={styles.timeInputTo}>to</h4>
                                                                 <input type={"time"} onChange={e => setHour(e.target.value, "to", sched.label)} className={styles.timeInput} />
@@ -274,7 +287,7 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
                                         <CheckBox
                                             label={sched.label}
                                             value={sched.value}
-                                            htmlFor={`${season}---${sched.label}`}
+                                            name={`${season}---${sched.label}`}
                                             onChange={() => onChange(sched)}
                                             containerStyle={{ width: "65px" }} />
                                         <span className={styles.spanClosed}>Closed</span>

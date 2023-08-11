@@ -9,7 +9,7 @@ import Colors from '@/common/colors'
 import { months, weekdays } from '@/utils/variables'
 import { AppointmentType, SetStateType } from '@/types'
 import CalendarNavigation from '@/components/CalendarNavigation'
-import { addLead } from '@/services/redux/slice/leads'
+import { createLead } from '@/services/redux/slice/leads'
 import LeadsColumn from '@/components/LeadsColumn'
 import SimpleCalendar from '@/components/SimpleCalendar'
 import MainCalendar from '@/components/MainCalendar'
@@ -17,8 +17,10 @@ import Divider from '@/components/Divider'
 import { getNextMonth, getPrevMonth, trunc } from '@/utils/functions'
 import TextInput from '@/components/TextInput'
 import AppointmentModal from '@/components/AppointmentModal'
+import { setRetreatCenter } from '@/services/redux/slice/retreatcenters'
 
 const CalendarPage = () => {
+  const dispatch = useDispatch()
   const retreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
   // const RetreatCenter = retreatCenters["Eatern Point Retreat House"]
   const RetreatCenter = retreatCenters[0]
@@ -28,13 +30,14 @@ const CalendarPage = () => {
   const [currentAppointment, setCurrentAppointment] = useState<AppointmentType>()
 
   const clickLead = (appointment: AppointmentType) => {
+    dispatch(setRetreatCenter(RetreatCenter))
     setCurrentAppointment(appointment)
     setModalIsVisible(true)
   }
   if (!RetreatCenter) return;
   return (
     <div className={styles.container}>
-      {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+      {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} /> : null}
       <div className={styles.heading}>
         <h3 className={styles.overviewTitle}>Overview</h3>
       </div>

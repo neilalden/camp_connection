@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "./AppointmentModal.module.css"
-import { AppointmentType, BuildingType, RetreatCenterType, SetStateType } from '@/types'
+import { AppointmentType, BuildingType, CamperGroupType, RetreatCenterType, SetStateType } from '@/types'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Colors from '@/common/colors';
@@ -13,8 +13,11 @@ import TextInput from './TextInput';
 import Images from '@/common/images';
 import Image from 'next/image';
 import MeetingRoomCard from './MeetingRoomCard';
+import { setCurrentLead } from '@/services/redux/slice/leads';
+import { setCurrentCamperGroup } from '@/services/redux/slice/campergroups';
+import { months } from '@/utils/variables';
+import { getNumberWithOrdinal, trunc } from '@/utils/functions';
 type Props = {
-    appointment?: AppointmentType | Array<AppointmentType>
     setIsVisible: SetStateType<boolean>
 }
 const Tabs = [
@@ -22,20 +25,24 @@ const Tabs = [
 ]
 const AppointmentModal = (props: Props) => {
     const {
-        appointment,
         setIsVisible = () => { }
     } = props;
-    if (!appointment) return null;
-    if (Array.isArray(appointment)) return null;
+    const dispatch = useDispatch()
+    const group = useSelector((state: RootState) => state.CamperGroups.currentCamperGroup)
+    const appointment = useSelector((state: RootState) => state.Leads.currentLead)
+    if (!group || !appointment) return null
     const [activeTab, setActiveTab] = useState(Tabs[0])
-    const currentData = Array.isArray(appointment) ? appointment[0] : appointment
-    const color = currentData?.color
+
     const modalContainer: React.CSSProperties = {
-        outline: `5px solid ${color}`
+        outline: `5px solid ${group.color}`
     }
     return (
-        <React.Fragment>
-            <div className={styles.darkBackground} onClick={() => setIsVisible(false)} />
+        <div>
+            <div className={styles.darkBackground} onClick={() => {
+                dispatch(setCurrentLead(undefined))
+                dispatch(setCurrentCamperGroup(undefined))
+                setIsVisible(false)
+            }} />
             <div className={styles.centered}>
                 <div
                     className={styles.modal}
@@ -46,7 +53,7 @@ const AppointmentModal = (props: Props) => {
                             Tabs.map((tab) => {
                                 const className = activeTab === tab ? styles.activeTab : styles.tab
                                 const style = activeTab === tab ?
-                                    { color: color, borderBottom: `2px solid ${color}` } : undefined
+                                    { color: group.color, bborderBottom: `2px solid ${group.color}`, } : undefined
                                 return (
                                     <button
                                         key={tab}
@@ -61,58 +68,71 @@ const AppointmentModal = (props: Props) => {
                             })
                         }
                     </div>
-                    {getComponent(activeTab, appointment)}
+                    <div >
+                        {getComponent(activeTab, appointment, group)}
+                    </div>
                 </div>
             </div>
-        </React.Fragment>
+        </div>
     )
 }
 
-const getComponent = (tab: string, appointment: AppointmentType) => {
+const getComponent = (tab: string, appointment: AppointmentType, group: CamperGroupType) => {
     switch (tab) {
         case "Booking":
-            return <Booking appointment={appointment} />
+            return <Booking appointment={appointment} group={group} />
         case "Housing":
-            return <Housing appointment={appointment} />
+            return <Housing appointment={appointment} group={group} />
         case "Meeting":
-            return <Meeting appointment={appointment} />
+            return <Meeting appointment={appointment} group={group} />
         case "Activity":
-            return <Activity appointment={appointment} />
+            return <Activity appointment={appointment} group={group} />
         case "Group":
-            return <Group appointment={appointment} />
+            return <Group appointment={appointment} group={group} />
         case "Journey":
-            return <Journey appointment={appointment} />
+            return <Journey appointment={appointment} group={group} />
         default:
             return <></>
     }
 }
-const Booking = ({ appointment }: { appointment: AppointmentType }) => {
+const Booking = ({ appointment, group }: { appointment: AppointmentType, group: CamperGroupType }) => {
     return (
         <div className={styles.container}>
-            <div className={styles.progressbarContainer}>
-                <CircularProgressbar
-                    value={10}
-                    text={"10%"}
-                    styles={{
-                        trail: {
-                            strokeWidth: 1
-                        },
-                        path: {
-                            stroke: appointment.color,
-                        }
-                    }} />
-            </div>
 
         </div>
     )
 }
-const Housing = ({ appointment }: { appointment: AppointmentType }) => {
+const Housing = ({ appointment, group }: { appointment: AppointmentType, group: CamperGroupType }) => {
     const dispatch = useDispatch()
-    const BUILDINGS = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.housing.buildings)
+    const Buildings = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.housing.buildings)
+    const RetreatCenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter)
+    const Appointments = useSelector((state: RootState) => state.Appointments.appointments)
+    const CurrentAppointment = useSelector((state: RootState) => state.Leads.currentLead)
+    const CurrentGroup = useSelector((state: RootState) => state.CamperGroups.currentCamperGroup)
+    if (!CurrentAppointment || !CurrentAppointment.checkInDate || !CurrentAppointment.checkOutDate) return null
+    const CheckInDate = new Date(CurrentAppointment.checkInDate);
+    const CheckOutDate = new Date(CurrentAppointment.checkOutDate);
+    // @ts-ignore 
+    const otherAppointments = Appointments.filter((a) => (new Date(CurrentAppointment.checkInDate) <= new Date(a?.checkOutDate) || new Date(CurrentAppointment.checkOutDate) <= new Date(a?.checkInDate)) && a.id !== CurrentAppointment.id)
+    const unassignedGuests = Number(CurrentGroup?.groupSize) - Number(CurrentAppointment?.roomSchedule.reduce((accu, shed) => accu + shed.rooms.reduce((acc, room) => acc + room.capacity, accu), 0))
+    const checkInSplit = CheckInDate.toLocaleDateString().split("/")
+    const checkOutSplit = CheckOutDate.toLocaleDateString().split("/")
+    // @ts-ignore 
+    const checkInMonth = trunc(months[checkInSplit?.at(0)], 3, "")
+    const checkInDay = Number(checkInSplit?.at(1))
+    // @ts-ignore 
+    const checkOutMonth = trunc(months[checkOutSplit?.at(0)], 3, "")
+    const checkOutDay = Number(checkOutSplit?.at(1))
     return (
         <div className={styles.setUpContainer}>
+            <div className="row-between">
+
+                <h5 style={{ textAlign: "start", margin: "10px 0" }}>Unassigned guests : {unassignedGuests}</h5>
+
+                <h5 style={{ textAlign: "start", margin: "10px 0" }}>{checkInMonth}/{getNumberWithOrdinal(checkInDay)} - {checkOutMonth}/{getNumberWithOrdinal(checkOutDay)}</h5>
+            </div>
             {
-                BUILDINGS && BUILDINGS.map((building, i) => {
+                Buildings && Buildings.map((building, i) => {
                     return (
                         <BuildingCard key={i} building={building} appointment={appointment} />
                     )
@@ -121,49 +141,53 @@ const Housing = ({ appointment }: { appointment: AppointmentType }) => {
         </div>
     )
 }
-const Meeting = ({ appointment }: { appointment: AppointmentType }) => {
+const Meeting = ({ appointment, group }: { appointment: AppointmentType, group: CamperGroupType }) => {
     const dispatch = useDispatch()
     const MEETINGROOMS = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.meetingRooms)
+    const Appointments = useSelector((state: RootState) => state.Appointments.appointments)
+    const CurrentAppointment = useSelector((state: RootState) => state.Leads.currentLead)
 
     return (
         <div className={styles.setUpContainer}>
-
-            <div className={styles.collapsableSection}>
-                <h3>Meeting Rooms</h3>
-            </div>
-            <div className={styles.meetingRoomContainer}>
-
-                {
-                    MEETINGROOMS && MEETINGROOMS.map((meetingroom, i) => {
-                        return (
-                            <MeetingRoomCard key={i} meetingRoom={meetingroom} appointment={appointment} />
-                        )
-                    })
-                }
-            </div>
-            <div className={styles.legendContainer}>
-                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.occupiedText].join(" ")}><div style={{ outline: `2px solid ${appointment.color}` }} className={styles.occupied} />Occupied</div>
-                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.vacantText].join(" ")}><div className={styles.vacant} />Available</div>
-                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.unavailableText].join(" ")}><div className={styles.unavailable} />Unavailable</div>
-            </div>
+            {
+                MEETINGROOMS && MEETINGROOMS.map((meetingroom, i) =>
+                    <MeetingRoomCard key={i} meetingRoom={meetingroom} appointment={appointment} />
+                )
+            }
         </div>
     )
 }
-const Activity = ({ appointment }: { appointment: AppointmentType }) => {
+const Activity = ({ appointment, group }: { appointment: AppointmentType, group: CamperGroupType }) => {
+    const Appointments = useSelector((state: RootState) => state.Appointments.appointments)
+    const CurrentAppointment = useSelector((state: RootState) => state.Leads.currentLead)
+    if (!CurrentAppointment || !CurrentAppointment.checkInDate || !CurrentAppointment.checkOutDate) return null
+    const CheckInDate = new Date(CurrentAppointment.checkInDate);
+    const CheckOutDate = new Date(CurrentAppointment.checkOutDate);
+    // @ts-ignore 
+    const otherAppointments = Appointments.filter((a) => (new Date(CurrentAppointment.checkInDate) <= new Date(a?.checkOutDate) || new Date(CurrentAppointment.checkOutDate) <= new Date(a?.checkInDate)) && a.id !== CurrentAppointment.id)
+    const unassignedGuests = Number(group.groupSize) - (appointment.roomSchedule.reduce((accu, shed) => accu + shed.rooms.reduce((acc, room) => acc + room.capacity, accu), 0) ?? 0)
+    const checkInSplit = CheckInDate.toLocaleDateString().split("/")
+    const checkOutSplit = CheckOutDate.toLocaleDateString().split("/")
+    // @ts-ignore 
+    const checkInMonth = trunc(months[checkInSplit?.at(0)], 3, "")
+    const checkInDay = Number(checkInSplit?.at(1))
+    // @ts-ignore 
+    const checkOutMonth = trunc(months[checkOutSplit?.at(0)], 3, "")
+    const checkOutDay = Number(checkOutSplit?.at(1))
     return (
         <div>
 
         </div>
     )
 }
-const Group = ({ appointment }: { appointment: AppointmentType }) => {
+const Group = ({ appointment, group }: { appointment: AppointmentType, group: CamperGroupType }) => {
     return (
         <div>
 
         </div>
     )
 }
-const Journey = ({ appointment }: { appointment: AppointmentType }) => {
+const Journey = ({ appointment, group }: { appointment: AppointmentType, group: CamperGroupType }) => {
     return (
         <div>
 

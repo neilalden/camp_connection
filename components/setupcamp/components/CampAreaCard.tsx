@@ -67,11 +67,11 @@ const CampAreaCard = ({ campArea, deleteCampArea }: { campArea: CampAreaType, de
             // // @ts-ignore
             // const addedSpaces: Array<SpaceType> = size.map((item,index): SpaceType=>({ id: IDGenerator(), name: `Space 1${index + 1 > 9 ? index + 1 : "0" + (index + 1)}`, spots: newSpaces.at(-1) ? newSpaces.at(-1)?.spots : [] }))
             // newSpaces.push(...addedSpaces)
-            
-           const size = Array(numberOfSpaces - length).fill(1)
-           //@ts-ignore
-           const addedRooms: Array<RoomType> = size.map((x,i)=>({ id: IDGenerator(), name: `Space 1${length+i+1 > 9 ? length+i+1 : "0" + (length+i+1)}`, spots: newSpaces.at(-1) ? newSpaces.at(-1).spots : [] }))
-           newSpaces.push(...addedRooms)
+
+            const size = Array(numberOfSpaces - length).fill(1)
+            //@ts-ignore
+            const addedRooms: Array<RoomType> = size.map((x, i) => ({ id: IDGenerator(), name: `Space 1${length + i + 1 > 9 ? length + i + 1 : "0" + (length + i + 1)}`, spots: newSpaces.at(-1) ? newSpaces.at(-1).spots : [] }))
+            newSpaces.push(...addedRooms)
         }
         dispatch(setSpaceSpots({
             campAreaId: campAreaId,
@@ -83,7 +83,7 @@ const CampAreaCard = ({ campArea, deleteCampArea }: { campArea: CampAreaType, de
         <div>
             <button type="button" className={styles.collapsableSection} style={{ width: "100%" }} onClick={(e) => setOpenSpaceArea(prev => !prev)}>
                 <div className="row">
-                    {!openSpaceArea ? <button
+                    {openSpaceArea ? <button
                         type="button"
                         className={styles.deleteButton}
                         onClick={deleteCampArea}

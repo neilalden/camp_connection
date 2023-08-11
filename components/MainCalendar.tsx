@@ -118,44 +118,17 @@ const MainCalendar = ({ date }: { date: Date }) => {
                                                     // })
                                                     const appointment: AppointmentType = {
                                                         id: "appointment1",
-                                                        reservee: {
-                                                            id: "string",
-                                                            firstName: "Jane",
-                                                            lastName: "Doe",
-                                                            contactNumber: "+639 123 456",
-                                                            email: "jane.doe@email.com",
-                                                            createdAt: new Date(),
-                                                            userCategory: "camper",
-                                                        },
-                                                        reservedBy: {
-                                                            id: "string",
-                                                            firstName: "Jane",
-                                                            lastName: "Doe",
-                                                            contactNumber: "+639 123 456",
-                                                            email: "jane.doe@email.com",
-                                                            createdAt: new Date(),
-                                                            userCategory: "camper",
-                                                        },
-                                                        groupSize: 12,
-                                                        color: Colors.green300,
-                                                        groupName: "Jane's group",
                                                         status: "Reserved",
                                                         checkInDate: new Date("July 05 2023"),
                                                         checkOutDate: new Date("July 10 2023"),
                                                         checkInDays: 3,
                                                         createdAt: new Date(),
-                                                        amenities: [
-                                                            {
-                                                                id: "pool1",
-                                                                name: "pool",
-                                                            },
-                                                            {
-                                                                id: "hiking1",
-                                                                name: "hiking",
-                                                            },
-                                                        ],
-                                                        meals: [],
-                                                        rooms: [],
+                                                        activitySchedule: [],
+                                                        groupId: "",
+                                                        mealSchedule: [],
+                                                        meetingRoomSchedule: [],
+                                                        retreatCenterId: "",
+                                                        roomSchedule: []
                                                     }
                                                     let checkInString
                                                     let checkOutString

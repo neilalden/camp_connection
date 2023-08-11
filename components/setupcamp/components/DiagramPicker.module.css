@@ -10,18 +10,10 @@
     cursor: pointer;
 }
 
-.activityCard {
+.diagramCard {
     border: 1px solid #E0E7EB;
-    height: 33px;
-    width: 33px;
-    padding: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto 0 auto 10px;
-    position: relative;
-    cursor: pointer;
-    z-index: 5;
+    width: calc(100% - 20px) !important;
+    margin: 0 10px 15px 10px;
 }
 
 .deleteButton {
@@ -37,7 +29,7 @@
     color: #BF2600;
 }
 
-.activityStyleOptionsContainer {
+.diagramStyleOptionsContainer {
     background: #F6F8F9 !important;
     border: 1px solid #85A0AD;
     position: absolute;
@@ -53,7 +45,7 @@
 
 }
 
-.activityStyleOption {
+.diagramStyleOption {
     display: flex;
     flex-direction: row;
     /* justify-content: space-between; */
@@ -62,7 +54,7 @@
 
 }
 
-.optionActivityButton {
+.optionDiagramButton {
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -72,12 +64,12 @@
     padding-bottom: 0 !important;
 }
 
-.activityInputStyle {
+.diagramInputStyle {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
 }
 
-.activityInputStyle>input {
+.diagramInputStyle>input {
     max-width: min-content;
     width: 90px !important;
     outline: 0 !important;
@@ -123,11 +115,11 @@
 }
 
 
-.activityCapacityInputContainer {
+.diagramCapacityInputContainer {
     max-width: 45px !important;
 }
 
-.activityCapacityInput {
+.diagramCapacityInput {
     background: #fff !important;
     height: 30px !important;
     width: 40px !important;
@@ -135,7 +127,10 @@
     text-align: center !important;
 }
 
+.selectDiagramButton {
+    min-width: 100px !important;
+}
 
-.activityCapacityInput:focus {
+.diagramCapacityInput:focus {
     border: 1px solid #85A0AD;
 }

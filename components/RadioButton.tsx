@@ -1,27 +1,32 @@
 import { ArgFunction, SetStateType } from '@/types';
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styles from "./RadioButton.module.css"
 type Props = {
     name: string,
-    htmlFor?: string;
-    label: string;
     value: boolean;
     onChange: ArgFunction;
+    label?: string | ReactNode;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
+    labelTop?: string | ReactNode;
+    labelStyle?: React.CSSProperties;
+    labelClassName?: string;
 }
 const RadioButton = (props: Props) => {
     const {
         name,
         label,
-        htmlFor = name,
         value,
         onChange,
         containerStyle,
-        containerClassName
+        containerClassName,
+        labelTop,
+        labelStyle,
+        labelClassName,
     } = props
     return (
-        <div style={containerStyle} className={containerClassName}>
+        <div style={containerStyle} className={[styles.container, containerClassName].join(" ")}>
+            {labelTop ? <><label htmlFor={name} style={labelStyle} className={[styles.labelTop, labelClassName].join(" ")}>{labelTop}</label><br /></> : null}
             <input
                 type="radio"
                 id={name}
@@ -30,7 +35,7 @@ const RadioButton = (props: Props) => {
                 onChange={onChange}
                 className={styles.input}
             />
-            <label htmlFor={name} className={styles.label}>{label}</label>
+            {label ? <label htmlFor={name} className={styles.label}>{label}</label> : null}
         </div >
     )
 }
