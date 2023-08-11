@@ -55,10 +55,13 @@ const ActivityPicker = ({
                                                     setShowModal(true)
                                                     setShowActivityStyleOptions(false)
                                                 }}
-                                                style={{ marginTop: "5px" }}
+                                                style={{
+                                                    marginTop: "5px",
+                                                    marginLeft: activitystyle === "Custom" ? "5px" : 0
+                                                }}
                                             >
                                                 {/* @ts-ignore */}
-                                                <Image src={Images[activitystyle] ?? Images["ic_logo"]} alt="Activity icon" height={30} width={30} onError={e => console.error(e)} />
+                                                <Image src={Images[activitystyle] ?? Images["ic_logo"]} alt="Activity icon" height={activitystyle === "Custom" ? 20 : 30} width={activitystyle === "Custom" ? 20 : 30} onError={e => console.error(e)} />
                                             </button>
                                             <button
                                                 type="button"
@@ -69,7 +72,8 @@ const ActivityPicker = ({
                                                     setShowActivityStyleOptions(false)
                                                 }}
                                                 style={{
-                                                    color: currentActivity ? "#000" : "#999"
+                                                    color: currentActivity ? "#000" : "#999",
+                                                    marginLeft: activitystyle === "Custom" ? "5px" : 0
                                                 }}
                                             >
                                                 {activitystyle} {currentActivity ? "▴" : ""}

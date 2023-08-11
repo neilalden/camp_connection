@@ -21,6 +21,7 @@
     margin: auto 0 auto 10px;
     position: relative;
     cursor: pointer;
+    z-index: 5;
 }
 
 .deleteButton {

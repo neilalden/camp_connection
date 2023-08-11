@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "./styles.module.css"
 import Images from "@/common/images";
 import TextInput from "@/components/TextInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MeetingRoomType, RetreatCenterType } from "@/types";
 import Divider from "@/components/Divider";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ const SetupCamp = () => {
     const [showActivities, setShowActivities] = useState(false)
     const [showMeetingRooms, setShowMeetingRooms] = useState(false)
     const [showItems, setShowItems] = useState(false)
+
     return (
         <div className={styles.container}>
             <button type="button" className={styles.collapsableSection} onClick={() => setShowHousing(prev => !prev)}>

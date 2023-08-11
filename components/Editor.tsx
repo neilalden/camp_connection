@@ -14,7 +14,6 @@ const Editor = (props: Props) => {
     useEffect(() => {
         setLoaded(true);
     }, []); // run on mounting
-    console.log(data)
     if (!loaded) return <h2> Editor is loading </h2>;
     const toolBarRef = React.createRef<HTMLDivElement>();
     return <div>

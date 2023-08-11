@@ -156,14 +156,6 @@ a {
   flex-direction: column;
 }
 
-.col-center {
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .col-reverse {
   display: flex;
   flex-direction: column-reverse
@@ -173,6 +165,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .col-between {
@@ -207,6 +200,7 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
 }
 
 .row-between {
@@ -239,6 +233,58 @@ a {
 
 .m-auto {
   margin: auto;
+}
+
+.mv-20px {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.mh-20px {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.m-20px {
+  margin: 20px;
+}
+
+
+.pv-20px {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.ph-20px {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.p-20px {
+  padding: 20px;
+}
+
+.pv-auto {
+  padding-top: auto;
+  padding-bottom: auto;
+}
+
+.ph-auto {
+  padding-right: auto;
+  padding-left: auto;
+}
+
+.p-auto {
+  padding: auto;
+}
+
+
+.h-100p {
+  height: 100%;
+}
+
+.w-100p {
+  width: 100%
 }
 
 .no-wrap {

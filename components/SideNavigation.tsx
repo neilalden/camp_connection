@@ -109,8 +109,8 @@ const SideNavigation = () => {
                                 key={i}
                                 className={currentPage == nav.id ? styles.buttonActive : styles.button}
                                 onClick={() => {
-                                    if (nav.category !== user.userCategory) clearRouteAndReroute(`/${nav.category}/${nav.id}`)
-                                    else router.push(isInSettings ? `/settings/${user.userCategory}/${nav.id}` : `/${user.userCategory}/${nav.id}`)
+                                    if (nav.category !== user.userCategory) clearRouteAndReroute(isInSettings ? `/settings/${nav.category}/${nav.id}` : `/${nav.category}/${nav.id}`)
+                                    else router.push(isInSettings ? `/settings/${nav.category}/${nav.id}` : `/${nav.category}/${nav.id}`)
                                 }}
                             >
                                 <Image
@@ -124,7 +124,7 @@ const SideNavigation = () => {
                     })}
                 </div>
                 <button
-                    onClick={() => router.push(isInSettings ? `/${user.userCategory}/${user.userCategory === "campconnectionteam" ? "leads" : "groupleads"}` : `/settings/retreatcenter/profile`)}
+                    onClick={() => router.push(isInSettings ? `/${sideNavs[0].category}/${sideNavs[0].category === "campconnection" ? "leads" : "groupleads"}` : `/settings/retreatcenter/profile`)}
                     className={styles.settingsButton}>
                     <Image
                         alt={"Settings icon"}

@@ -17,8 +17,10 @@ import Divider from '@/components/Divider'
 import { getNextMonth, getPrevMonth, trunc } from '@/utils/functions'
 import TextInput from '@/components/TextInput'
 import AppointmentModal from '@/components/AppointmentModal'
+import { setRetreatCenter } from '@/services/redux/slice/retreatcenters'
 
 const CalendarPage = () => {
+  const dispatch = useDispatch()
   const retreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
   // const RetreatCenter = retreatCenters["Eatern Point Retreat House"]
   const RetreatCenter = retreatCenters[0]
@@ -28,6 +30,7 @@ const CalendarPage = () => {
   const [currentAppointment, setCurrentAppointment] = useState<AppointmentType>()
 
   const clickLead = (appointment: AppointmentType) => {
+    dispatch(setRetreatCenter(RetreatCenter))
     setCurrentAppointment(appointment)
     setModalIsVisible(true)
   }

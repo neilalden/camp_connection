@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "./AppointmentModal.module.css"
 import { AppointmentType, BuildingType, CamperGroupType, RetreatCenterType, SetStateType } from '@/types'
 import { CircularProgressbar } from 'react-circular-progressbar';
@@ -15,6 +15,8 @@ import Image from 'next/image';
 import MeetingRoomCard from './MeetingRoomCard';
 import { setCurrentLead } from '@/services/redux/slice/leads';
 import { setCurrentCamperGroup } from '@/services/redux/slice/campergroups';
+import { months } from '@/utils/variables';
+import { getNumberWithOrdinal, trunc } from '@/utils/functions';
 type Props = {
     setIsVisible: SetStateType<boolean>
 }
@@ -51,7 +53,7 @@ const AppointmentModal = (props: Props) => {
                             Tabs.map((tab) => {
                                 const className = activeTab === tab ? styles.activeTab : styles.tab
                                 const style = activeTab === tab ?
-                                    { color: group.color, borderBottom: `2px solid ${group.color}` } : undefined
+                                    { color: group.color, bborderBottom: `2px solid ${group.color}`, } : undefined
                                 return (
                                     <button
                                         key={tab}
@@ -96,19 +98,6 @@ const getComponent = (tab: string, appointment: AppointmentType, group: CamperGr
 const Booking = ({ appointment, group }: { appointment: AppointmentType, group: CamperGroupType }) => {
     return (
         <div className={styles.container}>
-            <div className={styles.progressbarContainer}>
-                <CircularProgressbar
-                    value={10}
-                    text={"10%"}
-                    styles={{
-                        trail: {
-                            strokeWidth: 1
-                        },
-                        path: {
-                            stroke: group.color,
-                        }
-                    }} />
-            </div>
 
         </div>
     )
@@ -118,10 +107,30 @@ const Housing = ({ appointment, group }: { appointment: AppointmentType, group: 
     const Buildings = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.housing.buildings)
     const RetreatCenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter)
     const Appointments = useSelector((state: RootState) => state.Appointments.appointments)
-    const unassignedGuests = Number(group.groupSize) - (appointment.roomSchedule.reduce((accu, shed) => accu + shed.rooms.reduce((acc, room) => acc + room.capacity, accu), 0) ?? 0)
+    const CurrentAppointment = useSelector((state: RootState) => state.Leads.currentLead)
+    const CurrentGroup = useSelector((state: RootState) => state.CamperGroups.currentCamperGroup)
+    if (!CurrentAppointment || !CurrentAppointment.checkInDate || !CurrentAppointment.checkOutDate) return null
+    const CheckInDate = new Date(CurrentAppointment.checkInDate);
+    const CheckOutDate = new Date(CurrentAppointment.checkOutDate);
+    // @ts-ignore 
+    const otherAppointments = Appointments.filter((a) => (new Date(CurrentAppointment.checkInDate) <= new Date(a?.checkOutDate) || new Date(CurrentAppointment.checkOutDate) <= new Date(a?.checkInDate)) && a.id !== CurrentAppointment.id)
+    const unassignedGuests = Number(CurrentGroup?.groupSize) - Number(CurrentAppointment?.roomSchedule.reduce((accu, shed) => accu + shed.rooms.reduce((acc, room) => acc + room.capacity, accu), 0))
+    const checkInSplit = CheckInDate.toLocaleDateString().split("/")
+    const checkOutSplit = CheckOutDate.toLocaleDateString().split("/")
+    // @ts-ignore 
+    const checkInMonth = trunc(months[checkInSplit?.at(0)], 3, "")
+    const checkInDay = Number(checkInSplit?.at(1))
+    // @ts-ignore 
+    const checkOutMonth = trunc(months[checkOutSplit?.at(0)], 3, "")
+    const checkOutDay = Number(checkOutSplit?.at(1))
     return (
         <div className={styles.setUpContainer}>
-            <h5 style={{ textAlign: "start", margin: "10px 0" }}>Unassigned guests : {unassignedGuests}</h5>
+            <div className="row-between">
+
+                <h5 style={{ textAlign: "start", margin: "10px 0" }}>Unassigned guests : {unassignedGuests}</h5>
+
+                <h5 style={{ textAlign: "start", margin: "10px 0" }}>{checkInMonth}/{getNumberWithOrdinal(checkInDay)} - {checkOutMonth}/{getNumberWithOrdinal(checkOutDay)}</h5>
+            </div>
             {
                 Buildings && Buildings.map((building, i) => {
                     return (
@@ -135,6 +144,8 @@ const Housing = ({ appointment, group }: { appointment: AppointmentType, group: 
 const Meeting = ({ appointment, group }: { appointment: AppointmentType, group: CamperGroupType }) => {
     const dispatch = useDispatch()
     const MEETINGROOMS = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.meetingRooms)
+    const Appointments = useSelector((state: RootState) => state.Appointments.appointments)
+    const CurrentAppointment = useSelector((state: RootState) => state.Leads.currentLead)
 
     return (
         <div className={styles.setUpContainer}>
@@ -147,6 +158,22 @@ const Meeting = ({ appointment, group }: { appointment: AppointmentType, group: 
     )
 }
 const Activity = ({ appointment, group }: { appointment: AppointmentType, group: CamperGroupType }) => {
+    const Appointments = useSelector((state: RootState) => state.Appointments.appointments)
+    const CurrentAppointment = useSelector((state: RootState) => state.Leads.currentLead)
+    if (!CurrentAppointment || !CurrentAppointment.checkInDate || !CurrentAppointment.checkOutDate) return null
+    const CheckInDate = new Date(CurrentAppointment.checkInDate);
+    const CheckOutDate = new Date(CurrentAppointment.checkOutDate);
+    // @ts-ignore 
+    const otherAppointments = Appointments.filter((a) => (new Date(CurrentAppointment.checkInDate) <= new Date(a?.checkOutDate) || new Date(CurrentAppointment.checkOutDate) <= new Date(a?.checkInDate)) && a.id !== CurrentAppointment.id)
+    const unassignedGuests = Number(group.groupSize) - (appointment.roomSchedule.reduce((accu, shed) => accu + shed.rooms.reduce((acc, room) => acc + room.capacity, accu), 0) ?? 0)
+    const checkInSplit = CheckInDate.toLocaleDateString().split("/")
+    const checkOutSplit = CheckOutDate.toLocaleDateString().split("/")
+    // @ts-ignore 
+    const checkInMonth = trunc(months[checkInSplit?.at(0)], 3, "")
+    const checkInDay = Number(checkInSplit?.at(1))
+    // @ts-ignore 
+    const checkOutMonth = trunc(months[checkOutSplit?.at(0)], 3, "")
+    const checkOutDay = Number(checkOutSplit?.at(1))
     return (
         <div>
 

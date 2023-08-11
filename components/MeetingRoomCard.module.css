@@ -173,3 +173,7 @@
     flex-flow: wrap;
     justify-content: space-around;
 }
+
+.timeInput {
+    margin-top: 18px;
+}

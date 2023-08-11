@@ -22,8 +22,9 @@ const DiagramCard = (props: Props) => {
     const dispatch = useDispatch()
     const DIAGRAMSTYLES = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.diagramStyles)
     const ITEMSTYLES = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.itemStyles)
-    const [diagramPhoto, setDiagramPhoto] = useState<string | undefined>(diagram.photo)
+    const [diagramPhoto, setDiagramPhoto] = useState(diagram.photo)
     const fileInputRef = React.useRef<HTMLInputElement>(null);
+    const [openDiagram, setOpenDiagram] = useState(true)
 
     useEffect(() => {
         if (diagram.photo) setDiagramPhoto(diagram.photo)
@@ -60,7 +61,7 @@ const DiagramCard = (props: Props) => {
             if (ds.id === diagram.id) {
                 return {
                     ...diagram,
-                    items: diagram.items ? [...diagram.items, ITEMSTYLES[0]] : [ITEMSTYLES[0]]
+                    items: diagram.items ? [...diagram.items, ITEMSTYLES[diagram.items.length]] : [ITEMSTYLES[0]]
                 }
             }
             return ds
@@ -111,10 +112,10 @@ const DiagramCard = (props: Props) => {
     };
 
     return (
-        <div className={styles.diagramCard}>
-            <div className={styles.diagram}>
+        <div style={{ marginBottom: "20px" }}>
+            <button type="button" className={styles.collapsableSection} style={{ width: "100%" }} onClick={(e) => setOpenDiagram(prev => !prev)}>
                 <div className="row">
-                    <button
+                    {openDiagram ? <button
                         type="button"
                         className={styles.itemDeleteButtom}
                         onClick={() => {
@@ -122,7 +123,8 @@ const DiagramCard = (props: Props) => {
                             let newDiagramStyles: RetreatCenterType["diagramStyles"] = [...DIAGRAMSTYLES]
                             newDiagramStyles.splice(index, 1);
                             dispatch(setDiagramStyles(newDiagramStyles))
-                        }}>X</button>
+                        }}
+                    >X</button> : <div style={{ width: "10px" }} />}
                     <TextInput
                         containerClassName={styles.diagramNameInputContainer}
                         inputClassName={styles.diagramNameInput}
@@ -131,65 +133,76 @@ const DiagramCard = (props: Props) => {
                         setValue={(e) => changeDiagramName(e.target.value, diagram.id)}
                     />
                 </div>
-                {
-                    !diagramPhoto ?
-                        <FileUpload
-                            label={"Upload Diagram"}
-                            accept={"image/*"}
-                            onChange={handleChangePhoto}
-                        />
-                        : null
-                }
-                {
-                    diagramPhoto ? (
-                        <div className={styles.logoContainer}>
-                            <Image
-                                alt="Diagram"
-                                src={diagramPhoto}
-                                className={styles.diagramPhoto}
-                                height={200}
-                                width={200}
-                                onError={() => setDiagramPhoto(undefined)}
-                            />
-                            <div className={styles.overlay} onClick={handleEditClick}></div>
-                            <p className={styles.editText}>Edit</p>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleChangePhoto}
-                                ref={fileInputRef}
-                                style={{ display: "none" }}
-                            />
-                        </div>
-                    ) : null
-                }
-            </div>
-            <div className={styles.diagram}>
-                <h3>Items</h3>
-                <button
-                    className={styles.addButton}
-                    onClick={addDiagramItem}
-                >
-                    +
-                </button>
+                <Image alt="chevron down" src={openDiagram ? Images.ic_chevron_up : Images.ic_chevron_down} height={15} />
+            </button >
+            {
+                openDiagram ?
 
-                <div className={styles.itemsContainer}>
-                    {
-                        diagram?.items && diagram.items?.map((item, i) => {
-                            return (
-                                <ItemCard
-                                    key={i}
-                                    item={item}
-                                    index={i}
-                                    deleteItem={deleteItem}
-                                    changeItemAmount={changeItemAmount}
-                                    changeDiagramStyleItem={changeDiagramStyleItem}
-                                />
-                            )
-                        })
-                    }
-                </div>
-            </div>
+                    <div className={styles.diagramCard}>
+                        <div className={styles.diagram}>
+                            {
+                                !diagramPhoto ?
+                                    <FileUpload
+                                        label={"Upload Diagram"}
+                                        accept={"image/*"}
+                                        onChange={handleChangePhoto}
+                                        containerStyle={{ marginTop: "10px" }}
+                                    />
+                                    : null
+                            }
+                            {
+                                diagramPhoto ? (
+                                    <div className={styles.logoContainer}>
+                                        <Image
+                                            alt="Diagram"
+                                            src={diagramPhoto}
+                                            className={styles.diagramPhoto}
+                                            height={200}
+                                            width={200}
+                                            onError={() => setDiagramPhoto(undefined)}
+                                        />
+                                        <div className={styles.overlay} onClick={handleEditClick}></div>
+                                        <p className={styles.editText}>Edit</p>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleChangePhoto}
+                                            ref={fileInputRef}
+                                            style={{ display: "none" }}
+                                        />
+                                    </div>
+                                ) : null
+                            }
+                        </div >
+                        <div className={styles.diagram}>
+                            <h3>Items</h3>
+                            {diagram.items.length !== ITEMSTYLES.length ? (<button
+                                className={styles.addButton}
+                                onClick={addDiagramItem}
+                            >
+                                +
+                            </button>) : null}
+
+                            <div className={styles.itemsContainer}>
+                                {
+                                    diagram?.items && diagram.items?.map((item, i) => {
+                                        return (
+                                            <ItemCard
+                                                key={i}
+                                                item={item}
+                                                index={i}
+                                                deleteItem={deleteItem}
+                                                changeItemAmount={changeItemAmount}
+                                                changeDiagramStyleItem={changeDiagramStyleItem}
+                                            />
+                                        )
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </div > :
+                    null
+            }
         </div>
     )
 }

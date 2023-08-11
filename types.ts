@@ -1,3 +1,5 @@
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+
 export type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;
 export type HTMLEvent<T> = React.ChangeEvent<T>;
 export type VoidFunction = () => void;
@@ -45,6 +47,7 @@ export type RetreatCenterType = {
   name: string;
   zipCode: string;
   photo?: string;
+  mapPhoto?: string;
   capacity?: number;
   timezone?: string;
   state?: string;
@@ -69,6 +72,7 @@ export type RetreatCenterType = {
   itemStyles: Array<ItemType>;
   diagramStyles: Array<DiagramType>;
 }
+
 export type AppointmentType = {
   id: string;
   createdAt: Date;
@@ -77,9 +81,9 @@ export type AppointmentType = {
   status: "Lead" | "Reserved" | "Booked";
   checkInDays: number;
 
-  mealSchedule: Array<MealType>;
+  mealSchedule: Array<MealScheduleType>;
   roomSchedule: Array<RoomScheduleType>;
-  meetingRoomSchedule: Array<MeetingRoomType>;
+  meetingRoomSchedule: Array<MeetingRoomScheduleType>;
   activitySchedule: Array<ActivityScheduleType>;
 
   checkInDate?: Date;
@@ -115,8 +119,9 @@ export type RoomScheduleType = {
 
 export type MeetingRoomScheduleType = {
   groupId: CamperGroupType["id"];
-  time: Date;
-  activities: Array<ActivityType>
+  checkIn?: Date;
+  checkOut?: Date;
+  meetingRooms: Array<MeetingRoomType>
 }
 
 export type ActivityScheduleType = {
@@ -149,11 +154,16 @@ export type BedType = {
 export type ActivityType = {
   id: string;
   name: string;
+  class: ActivityClass;
   capacity: number;
-  occupiedBy?: AppointmentType;
   available: boolean;
   description: any;
-  class: ActivityClass
+  pricing: Array<PricingType>;
+  seasonsAvailable: Array<SeasonClass>
+  occupiedBy?: AppointmentType;
+  feature?: string;
+  releaseForm?: string,
+  refundPolicy?: string
 };
 export type SpotType = {
   id: string;
@@ -170,7 +180,7 @@ export type ItemType = {
 export type DiagramType = {
   id: string;
   name: string;
-  photo?: string;
+  photo?: string | StaticImport;
   items: Array<ItemType>
 }
 
@@ -183,7 +193,8 @@ export type EditBedStyleCapacity = {
   capacity: BedType["capacity"];
 }
 export type PricingType = {
-  nights: number | "*";
+  nights?: number | "*";
+  per?: string;
   price: number;
 }
 export type AmenityType = {
@@ -235,6 +246,11 @@ export type BuildingType = {
   name: string;
   rooms?: Array<RoomType>;
 };
+export type FilterType = {
+  id: string;
+  name: string;
+  type: "Housing" | "Meeting room" | "Activity" | "Group";
+};
 export const Activity = {
   Custom: "Custom",
   Paintball: "Paintball",
@@ -245,8 +261,10 @@ export const Activity = {
   Zipline: "Zipline",
 } as const
 export type ActivityClass = (typeof Activity)[keyof typeof Activity]
-export type FilterType = {
-  id: string;
-  name: string;
-  type: "Housing" | "Meeting room" | "Activity" | "Group";
-};
+export const Season = {
+  Winter: "Winter",
+  Spring: "Spring",
+  Summer: "Summer",
+  Fall: "Fall",
+} as const
+export type SeasonClass = (typeof Season)[keyof typeof Season]

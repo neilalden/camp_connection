@@ -1,9 +1,11 @@
 import Images from "@/common/images"
 import TextInput from "@/components/TextInput"
 import { updateAppointment } from "@/services/redux/slice/appointments"
+import { setCurrentCamperGroup } from "@/services/redux/slice/campergroups"
+import { setCurrentLead } from "@/services/redux/slice/leads"
 import { setBuildingRooms, setRoomBeds, setBuildingName, setBuildings, } from "@/services/redux/slice/retreatcenters"
 import { RootState } from "@/services/redux/store"
-import { RoomType, BedType, ArgFunction, BuildingType, AppointmentType } from "@/types"
+import { RoomType, BedType, ArgFunction, BuildingType, AppointmentType, CamperGroupType } from "@/types"
 import { arrayToMap, IDGenerator } from "@/utils/functions"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -14,27 +16,42 @@ const BuildingCard = ({ building, appointment }: { building: BuildingType, appoi
     const dispatch = useDispatch()
     const RetreatCenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter);
     const Appointments = useSelector((state: RootState) => state.Appointments.appointments);
+    const CamperGroups = useSelector((state: RootState) => state.CamperGroups.camperGroups);
     const CurrentGroup = useSelector((state: RootState) => state.CamperGroups.currentCamperGroup);
-
+    const CurrentAppointment = useSelector((state: RootState) => state.Leads.currentLead) ?? appointment
+    // @ts-ignore 
+    const AppointmentsInThisSched = Appointments.filter((a) =>
+    // @ts-ignore 
+    ((new Date(CurrentAppointment.checkOutDate) >= new Date(a?.checkInDate) && (new Date(CurrentAppointment.checkInDate) <= new Date(a?.checkOutDate)))
+        && a.retreatCenterId === RetreatCenter.id
+    )).concat(CurrentAppointment)
     const [openBuilding, setOpenBuilding] = useState(false)
-    const currentAppointment = Appointments.find((ap) => ap.id === appointment.id) ?? appointment
     const currentBuilding = (RetreatCenter.housing && RetreatCenter.housing.buildings?.find((bldg) => bldg.id === building.id)) ?? building
-    const unassignedGuests = Number(CurrentGroup?.groupSize) - (currentAppointment.roomSchedule.reduce((accu, shed) => accu + shed.rooms.reduce((acc, room) => acc + room.capacity, accu), 0) ?? 0)
+    const unassignedGuests = Number(CurrentGroup?.groupSize) - CurrentAppointment.roomSchedule.reduce((accu, shed) => accu + shed.rooms.reduce((acc, room) => acc + room.capacity, accu), 0)
     const updateBuildingRooms = (room: RoomType) => {
+        const occupiedBy = AppointmentsInThisSched.find(app => app.roomSchedule.some(sched => sched.rooms.some(rm => rm.id === room.id)))
+        const occupyingGroup = CamperGroups.find(cg => cg.id === occupiedBy?.groupId)
         if (!building.rooms) return;
-        if (room.occupiedBy && room.occupiedBy.id !== currentAppointment.id) return;
-        if (unassignedGuests <= 0 && (!room.occupiedBy || room.occupiedBy?.id !== currentAppointment.id)) return
-        let newRooms: Array<RoomType> = [...building.rooms]
-        newRooms = newRooms.map((nr) => nr.id === room.id ? nr.occupiedBy ? ({ ...room, occupiedBy: undefined }) : ({ ...room, occupiedBy: currentAppointment }) : nr)
-        const found = RetreatCenter.housing.buildings ? RetreatCenter.housing.buildings.find(rm => rm.id === room.id) : false
-        const newAppointment: AppointmentType = {
-            ...currentAppointment,
+        if (occupiedBy && occupiedBy.id !== CurrentAppointment.id) return;
+        if (unassignedGuests <= 0 && (!occupiedBy || occupiedBy?.id !== CurrentAppointment.id)) return
+
+        const found = CurrentAppointment.roomSchedule.find(sched => sched.rooms.some(rm => rm.id === room.id))
+        const data: AppointmentType = {
+            ...CurrentAppointment,
+            roomSchedule: !!found ?
+                CurrentAppointment.roomSchedule.map(sched => ({ ...sched, rooms: sched.rooms.filter(rm => rm.id !== room.id) })) :
+                CurrentAppointment.roomSchedule.length > 0 ?
+                    CurrentAppointment.roomSchedule.map(sched => ({ ...sched, rooms: [...sched.rooms, room] })) :
+                    [{
+                        checkInDays: CurrentAppointment.checkInDays,
+                        groupId: CurrentAppointment.groupId,
+                        rooms: [room],
+                        checkInDate: CurrentAppointment.checkInDate,
+                        checkOutDate: CurrentAppointment.checkOutDate
+                    }]
         }
-        dispatch(updateAppointment(newAppointment))
-        dispatch(setRoomBeds({
-            buildingId: building.id,
-            rooms: newRooms
-        }))
+        dispatch(updateAppointment(data))
+        dispatch(setCurrentLead(data))
     }
     return (
         <div >
@@ -45,22 +62,24 @@ const BuildingCard = ({ building, appointment }: { building: BuildingType, appoi
             {openBuilding ?
                 <div className={styles.roomContainer}>
                     {currentBuilding.rooms?.map((room, ind) => {
+                        const occupiedBy = AppointmentsInThisSched.find(app => app.roomSchedule.some(sched => sched.rooms.some(rm => rm.id === room.id)))
+                        const occupyingGroup = CamperGroups.find(cg => cg.id === occupiedBy?.groupId)
                         return (
                             <button
                                 key={ind}
                                 type="button"
                                 data-content={
-                                    room.occupiedBy ?
-                                        room.occupiedBy.groupId
+                                    occupiedBy ?
+                                        occupyingGroup?.groupName
                                         : room.available && room.beds.length > 0 ? "Beds for " + room.capacity + " Guests"
                                             : "Unavailable"}
                                 onClick={() => room.available && room.beds.length > 0 ? updateBuildingRooms(room) : () => { }}
-                                style={room.occupiedBy ? { color: room.occupiedBy.groupId } : {}}
-                                className={[styles.roomButton, room.occupiedBy ? styles.occupiedText : room.available && room.beds.length > 0 ? styles.vacantText : styles.unavailableText, "tooltip"].join(" ")}
+                                style={occupiedBy ? { color: occupyingGroup?.color } : {}}
+                                className={[styles.roomButton, occupiedBy ? styles.occupiedText : room.available && room.beds.length > 0 ? styles.vacantText : styles.unavailableText, "tooltip"].join(" ")}
                             >
                                 <div
-                                    style={room.occupiedBy ? { outline: `2px solid ${room.occupiedBy.groupId}` } : {}}
-                                    className={room.occupiedBy ? styles.occupied : room.available && room.beds.length > 0 ? styles.vacant : styles.unavailable}
+                                    style={occupiedBy ? { outline: `2px solid ${occupyingGroup?.color}` } : {}}
+                                    className={occupiedBy ? styles.occupied : room.available && room.beds.length > 0 ? styles.vacant : styles.unavailable}
                                 />
                                 {room.name}
                             </button>
@@ -79,4 +98,4 @@ const BuildingCard = ({ building, appointment }: { building: BuildingType, appoi
     )
 }
 
-export default BuildingCard;
+export default BuildingCard

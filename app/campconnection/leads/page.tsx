@@ -13,6 +13,7 @@ import { RootState } from "@/services/redux/store"
 import AppointmentModal from "@/components/AppointmentModal"
 import { setCurrentLead } from "@/services/redux/slice/leads"
 import { setCurrentCamperGroup } from "@/services/redux/slice/campergroups"
+import { setRetreatCenter } from "@/services/redux/slice/retreatcenters"
 type ExtraType = { distance?: number }
 const Leads = () => {
     const dispatch = useDispatch()
@@ -53,6 +54,7 @@ const Leads = () => {
         }
     }
     const clickLead = (appointment: AppointmentType) => {
+        dispatch(setRetreatCenter(RetreatCenter))
         setCurrentAppointment(appointment)
         setModalIsVisible(true)
     }
@@ -100,7 +102,7 @@ const Leads = () => {
 
                                             activities.map((act, ind) => {
                                                 return (
-                                                    <div key={ind} data-content={act.class} className="tooltip" >
+                                                    <div key={ind} data-content={act.name} className="tooltip" >
                                                         <Image alt={act.name} src={Images[act.class]} height={30} width={30} className={styles.amenityLogo} />
                                                     </div>
                                                 )

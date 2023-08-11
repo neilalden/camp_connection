@@ -51,7 +51,7 @@ const LeadsColumn = (props: Props) => {
             appointmentId: appointmentId,
             campers: [],
             color: generateColor(),
-            groupName: "",
+            groupName: "Group " + (CamperGroups.length + 1),
             groupSize: 0,
             zipCode: 0,
         }

@@ -1,5 +1,5 @@
 import { AppointmentType, SetStateType, RetreatCenterType } from "@/types";
-import { dateIsScheduled, debounce, getDayOfWeek, getDays, getEndDate, getLastDayOfMonth, onDragOver, trunc } from "@/utils/functions";
+import { dateIsScheduled, debounce, getDayOfWeek, getDays, getEndDate, getLastDayOfMonth, getNumberWithOrdinal, onDragOver, trunc } from "@/utils/functions";
 import { months, weekdays } from "@/utils/variables";
 import styles from "./SimpleCalendar.module.css"
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import AppointmentModal from "./AppointmentModal";
 import Colors from "@/common/colors";
 import { setCurrentCamperGroup } from "@/services/redux/slice/campergroups";
 import { createAppointment, deleteAppointment } from "@/services/redux/slice/appointments";
+import { setRetreatCenter } from "@/services/redux/slice/retreatcenters";
 const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: RetreatCenterType }) => {
     const dispatch = useDispatch()
     const RetreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
@@ -30,6 +31,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
     const onDrop = useCallback((e: React.DragEvent, date?: Date) => {
         // const widgetType = e.dataTransfer.getData("widgetType") as string;
         // const parsed: AppointmentType = JSON.parse(widgetType)
+        e.preventDefault()
         if (!date) return;
         if (!CurrentLead) return;
         if (!CurrentLead.checkInDays) return;
@@ -48,9 +50,10 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
         dispatch(setCurrentLead(undefined))
         dispatch(setCurrentCamperGroup(undefined))
     }, [CurrentLead])
-    const leaveDrag = useCallback((e: React.DragEvent) => { e.stopPropagation(); debounce(setAppointmentsCopy(Appointments)) }, [Appointments])
     const onDropPreview = useCallback((date?: Date) => {
+
         if (!date) return;
+
         if (!CurrentLead?.checkInDays || !CurrentGroup?.groupSize) return;
         const copiedDate = new Date(date)
         const appointment: AppointmentType = {
@@ -60,7 +63,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
             checkOutDate: new Date(copiedDate.setDate(copiedDate.getDate() + CurrentLead.checkInDays - 1)),
         }
         debounce(setAppointmentsCopy(prev => [...prev, appointment]))
-    }, [CurrentLead])
+    }, [CurrentLead, CurrentGroup])
     const onDrag = useCallback((event: React.DragEvent, data: AppointmentType | Array<AppointmentType>, currentDate?: Date) => {
         const widgetType = JSON.stringify(data);
         event.dataTransfer.setData("widgetType", widgetType);
@@ -80,9 +83,11 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
     }, [CamperGroups])
 
     const onDragEnd = useCallback((e: any) => dispatch(setCurrentLead(undefined)), [])
+    const leaveDrag = useCallback((e: React.DragEvent) => { e.stopPropagation(); debounce(setAppointmentsCopy(Appointments)) }, [Appointments])
 
     const clickAppointment = useCallback((appointment: AppointmentType) => {
         const group = CamperGroups.find((cg) => cg.id === appointment.groupId)
+        dispatch(setRetreatCenter(RetreatCenter))
         dispatch(setCurrentLead(appointment))
         dispatch(setCurrentCamperGroup(group))
         setModalIsVisible(true)
@@ -103,6 +108,8 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                 })}
             </div>{
                 calendarWeeks.map((w, i) => {
+                    let isHead = false;
+                    let isTail = false;
                     return (
                         <div key={i} className={styles.calendarWeek}>
                             {calendarDays.map((d, ix) => {
@@ -154,20 +161,23 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                     if (appointment && checkOutDate) {
                                         checkOutString = `${months[checkOutDate.getMonth()]} ${checkOutDate.getDate()}`
                                     }
+                                    isTail = checkInString == currentDateString
+                                    isHead = checkOutString === currentDateString
                                     classes = [
                                         currentDate.getDate() > checkInDate.getDate() && currentDate.getDate() <= checkOutDate.getDate() ?
                                             styles.occupied : styles.calendarDay,
                                         appointment.status === "Booked" || appointment.status === "Reserved" ? styles.occupied : "",
                                         checkInString == currentDateString ? styles.occupiedTail : "",
                                         checkOutString === currentDateString ? styles.occupiedHead : "",
+                                        "no-wrap"
                                     ].join(" ");
                                 } else {
 
                                 }
                                 if (Array.isArray(appointment) && Array.isArray(group)) {
                                     const backgroundString = `repeating-linear-gradient(${group.map(g => (g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color)).toString()} 15px)`
-                                    let isHead = true;
-                                    let isTail = true;
+                                    let isArrayHead = true;
+                                    let isArrayTail = true;
                                     for (const app of appointment) {
                                         if (!currentDate) break;
                                         const currentDateString = `${months[currentDate.getMonth()]} ${currentDate.getDate()}`
@@ -176,16 +186,20 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                         const checkOutDate = new Date(app.checkOutDate)
                                         const checkInString = `${months[checkInDate.getMonth()]} ${checkInDate.getDate()}`
                                         const checkOutString = `${months[checkOutDate.getMonth()]} ${checkOutDate.getDate()}`
-                                        if (checkInString !== currentDateString) isHead = false;
-                                        if (checkOutString !== currentDateString) isTail = false
+                                        if (checkInString !== currentDateString) isArrayHead = false;
+                                        if (checkOutString !== currentDateString) isArrayTail = false
                                     }
+
+                                    isTail = isArrayTail
+                                    isHead = isArrayHead
                                     style = {
                                         backgroundImage: backgroundString,
                                     }
                                     classes = [
                                         styles.occupied,
-                                        isHead ? styles.occupiedTail : styles.noSideBorder,
-                                        isTail ? styles.occupiedHead : styles.noSideBorder,
+                                        isArrayHead ? styles.occupiedTail : styles.noSideBorder,
+                                        isArrayTail ? styles.occupiedHead : styles.noSideBorder,
+                                        "no-wrap"
                                     ].join(" ")
                                 }
 
@@ -194,7 +208,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                         key={ix}
                                         className={[styles.vacant, styles.calendarDate].join(" ")}
                                         onDrop={(e) => onDrop(e, currentDate)}
-                                        onDragOver={e => onDropPreview(currentDate)}
+                                        onDragOver={e => { e.preventDefault(); onDropPreview(currentDate) }}
                                         onDragLeave={leaveDrag}
                                     />;
 
@@ -207,13 +221,18 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                 const cellBeingDragged = CurrentLead && currentDate && CurrentLead?.draggedDate?.toString() === currentDate.toString()
                                 const appointmentBeingDragged = !Array.isArray(appointment) && currentDate && appointment && CurrentLead?.id === appointment.id
                                 let cond = true;
+                                // @ts-ignore 
+                                const currentDateSplit = new Date(currentDate).toLocaleDateString().split("/")
+                                // @ts-ignore 
+                                const currentMonth = trunc(months[currentDateSplit.at(0)], 3, "")
+                                const currentDay = Number(currentDateSplit?.at(1))
                                 if (appointmentBeingDragged && !cellBeingDragged) cond = false
                                 return (
                                     <div
                                         key={ix}
                                         className={[styles.vacant, styles.calendarDate].join(" ")}
                                         onDrop={(e) => onDrop(e, currentDate)}
-                                        onDragOver={e => onDropPreview(currentDate)}
+                                        onDragOver={e => { e.preventDefault(); onDropPreview(currentDate) }}
                                         onDragLeave={leaveDrag}
                                     >
                                         {appointment && currentDate && cond ?
@@ -236,19 +255,21 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                                 onDragEnd={e => onDragEnd(e)}
                                                 onClick={() => clickAppointment(Array.isArray(appointment) ? appointment[0] : appointment)}
 
-                                            >{!Array.isArray(CurrentLead) && appointmentBeingDragged ? (
-                                                <div>
-                                                    <p className={styles.leadName} style={{ color: CurrentGroup?.color }}>{CurrentGroup?.groupName}</p>
-                                                    {/* <p>{appointment.reservee.firstName}</p>
+                                            >
+                                                {!Array.isArray(CurrentLead) && appointmentBeingDragged ? (
+                                                    <div>
+                                                        <p className={styles.leadName} style={{ color: CurrentGroup?.color }}>{CurrentGroup?.groupName}</p>
+                                                        {/* <p>{appointment.reservee.firstName}</p>
                                                 <p>{appointment.reservee.contactNumber}</p>
                                                 <p>{appointment.zipCode}</p> */}
-                                                </div>)
-                                                : null}
+                                                    </div>)
+                                                    : null}
                                             </div>
                                             : <div
                                                 className={styles.vacantLine}
-                                                onDragOver={e => onDropPreview(currentDate)}
+                                                onDragOver={e => { e.preventDefault(); onDropPreview(currentDate) }}
                                             />}
+                                        {!!appointmentBeingDragged && (isHead || isTail) ? <span>{currentMonth}/{getNumberWithOrdinal(currentDay)} </span> : null}
                                     </div>
                                 )
                             })}

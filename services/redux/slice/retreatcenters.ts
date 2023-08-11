@@ -53,6 +53,10 @@ export const RetreatCentersSlice = createSlice({
             if (state.retreatCenter) state.retreatCenter.photo = action.payload;
             state.retreatCenters = state.retreatCenters.map((rc) => rc.id == state.retreatCenter.id ? state.retreatCenter : rc)
         },
+        setRetreatCenterMapPhoto: (state, action: PayloadAction<RetreatCenterType["mapPhoto"]>) => {
+            if (state.retreatCenter) state.retreatCenter.mapPhoto = action.payload;
+            state.retreatCenters = state.retreatCenters.map((rc) => rc.id == state.retreatCenter.id ? state.retreatCenter : rc)
+        },
         setActivities: (state, action: PayloadAction<Array<ActivityType>>) => {
             state.retreatCenter.amenities.activities = action.payload
             state.retreatCenters = state.retreatCenters.map((rc) => rc.id == state.retreatCenter.id ? state.retreatCenter : rc)
@@ -293,7 +297,14 @@ export const RetreatCentersSlice = createSlice({
                             name: activity,
                             class: activity,
                             capacity: 10,
-                            description: ""
+                            description: "",
+                            pricing: [
+                                {
+                                    price: 20,
+                                    per: "head"
+                                }
+                            ],
+                            seasonsAvailable: ["Winter", "Spring", "Summer", "Fall"]
                         }
                     ],
                     bedStyles: [
@@ -364,6 +375,7 @@ export const {
     setSpaceSpots,
     setSpotStyles,
     setRetreatCenterPhoto,
+    setRetreatCenterMapPhoto,
     setItemStyles,
     addMeetingRoom,
     addDiagramStyle,
