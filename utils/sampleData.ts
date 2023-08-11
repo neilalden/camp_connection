@@ -5,17 +5,16 @@ import {
   MealType,
   CampConnectionTeamUserType,
   CamperUserType,
-  RetreatCenterUserType,
   BedType,
   ItemType,
   RoomType,
-  FacilitiesType,
   RetreatCenterType,
+  RetreatCenterTeamType,
 } from "@/types";
 import { generateColor, getDays, IDGenerator } from "./functions";
 import { URL } from "url";
 import Images from "@/common/images";
-export const FacilitiesSampleData: FacilitiesType = {
+export const FacilitiesSampleData = {
   housing: {
     buildings: [
       {
@@ -104,7 +103,7 @@ export const DaysSampleData = getDays({
 });
 
 export const UsersSampleData: Array<
-  CamperUserType | RetreatCenterUserType | CampConnectionTeamUserType
+  CamperUserType | RetreatCenterTeamType | CampConnectionTeamUserType
 > = [
     {
       photo: "https://thispersondoesnotexist.com/",
@@ -112,7 +111,7 @@ export const UsersSampleData: Array<
       lastName: "Doe",
       id: "1",
       createdAt: new Date(),
-      userCategory: "retreatcenter",
+      userCategory: "retreatcenterteam",
       userType: "Sales",
       contactNumber: "+123 456 789",
       email: "John.Doe@campconnetion.net",
@@ -123,21 +122,10 @@ export const UsersSampleData: Array<
       lastName: "Ross",
       id: "2",
       createdAt: new Date(),
-      userCategory: "retreatcenter",
+      userCategory: "retreatcenterteam",
       userType: "Admin",
       contactNumber: "+123 456 789",
       email: "Mike.Ross@campconnetion.net",
-    },
-    {
-      photo: "https://thispersondoesnotexist.com/",
-      firstName: "Jessica",
-      lastName: "Pearson",
-      id: "3",
-      createdAt: new Date(),
-      userCategory: "retreatcenter",
-      userType: "Hospitality",
-      contactNumber: "+123 456 789",
-      email: "Jessica.Pearson@campconnetion.net",
     },
     {
       photo: "https://thispersondoesnotexist.com/",
@@ -145,10 +133,21 @@ export const UsersSampleData: Array<
       lastName: "Litt",
       id: "4",
       createdAt: new Date(),
-      userCategory: "retreatcenter",
+      userCategory: "retreatcenterteam",
       userType: "Sales",
       contactNumber: "+123 456 789",
       email: "Louis.Litt@campconnetion.net",
+    },
+    {
+      photo: "https://thispersondoesnotexist.com/",
+      firstName: "Jessica",
+      lastName: "Pearson",
+      id: "3",
+      createdAt: new Date(),
+      userCategory: "retreatcenterteam",
+      userType: "Admin",
+      contactNumber: "+123 456 789",
+      email: "Jessica.Pearson@campconnetion.net",
     },
   ];
 
@@ -252,7 +251,6 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       ],
     },
     meetingRooms: [],
-    appointments: [],
     diagramStyles: [],
   },
   {
@@ -353,7 +351,6 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       ],
     },
     meetingRooms: [],
-    appointments: [],
     diagramStyles: [],
   },
   {
@@ -390,7 +387,6 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       ],
     },
     meetingRooms: [],
-    appointments: [],
     diagramStyles: [],
     spotStyles: [
       {
@@ -491,7 +487,6 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       ],
     },
     meetingRooms: [],
-    appointments: [],
     diagramStyles: [],
     spotStyles: [
       {
@@ -638,7 +633,6 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       ],
     },
     meetingRooms: [],
-    appointments: [],
 
     itemStyles: [
       {
@@ -739,7 +733,6 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       ],
     },
     meetingRooms: [],
-    appointments: [],
 
     itemStyles: [
       {
@@ -821,14 +814,15 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
 //   },
 // ];
 
-export const RetreatCenterUserData: RetreatCenterUserType = {
+export const RetreatCenterUserData: RetreatCenterTeamType = {
+  retreatCenterId: "Eatern Point Retreat House",
   photo: "https://thispersondoesnotexist.com/",
   firstName: "John",
   lastName: "Doe",
   middleName: "Doe",
   id: "1",
   createdAt: new Date(),
-  userCategory: "retreatcenter",
+  userCategory: "retreatcenterteam",
   userType: "Sales",
   position: "Assistant",
   contactNumber: "+123 456 789",

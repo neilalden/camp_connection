@@ -43,7 +43,7 @@
     line-height: normal;
 }
 
-.addLead {
+.createLead {
     width: calc(100% - 20px) !important;
     height: 30px;
     font-size: 14px;

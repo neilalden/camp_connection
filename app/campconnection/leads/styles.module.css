@@ -96,7 +96,7 @@
 }
 
 .amenities {
-    overflow-x: scroll;
+    overflow-x: visible;
     display: flex;
     flex-direction: row;
     width: 400px;

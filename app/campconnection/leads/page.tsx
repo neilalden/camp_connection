@@ -4,23 +4,24 @@ import styles from "./styles.module.css"
 import CalendarNavigation from "@/components/CalendarNavigation"
 import { CSSProperties, useEffect, useRef, useState } from "react"
 import SimpleCalendar from "@/components/SimpleCalendar"
-import { AppointmentType, RetreatCenterType } from "@/types"
-import { arrayToMap, ObjectToArray, onDragOver, trunc } from "@/utils/functions"
+import { ActivityType, AppointmentType, RetreatCenterType } from "@/types"
+import { arrayToMap, ObjectToArray, onDragOver, removeDuplicates, trunc } from "@/utils/functions"
 import Image from "next/image"
 import Images from "@/common/images"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/services/redux/store"
 import AppointmentModal from "@/components/AppointmentModal"
-import { setDraggedLead } from "@/services/redux/slice/leads"
+import { setCurrentLead } from "@/services/redux/slice/leads"
+import { setCurrentCamperGroup } from "@/services/redux/slice/campergroups"
 type ExtraType = { distance?: number }
 const Leads = () => {
     const dispatch = useDispatch()
-    const retreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
-    const retreatCenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter)
-    const BEDSTYLES = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.bedStyles)
+    const CamperGroups = useSelector((state: RootState) => state.CamperGroups.camperGroups)
+    const RetreatCenters = useSelector((state: RootState) => state.RetreatCenters.retreatCenters)
+    const RetreatCenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter)
 
 
-    const [rerenderingRetreatCenters, setRerenderingRetreatCenters] = useState<Array<RetreatCenterType & ExtraType>>(retreatCenters)
+    const [rerenderingRetreatCenters, setRerenderingRetreatCenters] = useState<Array<RetreatCenterType & ExtraType>>(RetreatCenters)
     const [date, setDate] = useState(new Date())
     const [currentAppointment, setCurrentAppointment] = useState<AppointmentType>();
     const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -28,21 +29,25 @@ const Leads = () => {
     const onDrop = (e: React.DragEvent) => {
         const widgetType = e.dataTransfer.getData("widgetType") as string;
         // const parsed: any = JSON.parse(widgetType)
+        dispatch(setCurrentLead(undefined))
+        dispatch(setCurrentCamperGroup(undefined))
     }
     const customOnDrag = ({ event, data }: { event: React.DragEvent, data: AppointmentType }) => {
         const widgetType = JSON.stringify(data);
         event.dataTransfer.setData("widgetType", widgetType);
+        const group = CamperGroups.find((cg) => cg.id === data.groupId);
         setCurrentAppointment(data)
-        dispatch(setDraggedLead(data))
-        if (data && data.zipCode) {
-            let copy = rerenderingRetreatCenters.map(rc => ({ ...rc, distance: Math.abs(Number(rc.zipCode) - Number(data.zipCode)) }))
+        dispatch(setCurrentLead(data))
+        dispatch(setCurrentCamperGroup(group))
+        if (group && group.zipCode) {
+            let copy = rerenderingRetreatCenters.map(rc => ({ ...rc, distance: Math.abs(Number(rc.zipCode) - Number(group.zipCode)) }))
             setRerenderingRetreatCenters(copy.sort((a, b) => {
-                if (!data.zipCode) return 0
+                if (!group.zipCode) return 0
                 if (!a.zipCode || !b.zipCode) return 0;
                 if (!a.capacity || !b.capacity) return 0
-                if (data.groupSize && data.groupSize > b.capacity) return -1
-                if (Math.abs(data.zipCode - Number(a.zipCode)) > Math.abs(data.zipCode - Number(b.zipCode))) return 1;
-                if (Math.abs(data.zipCode - Number(a.zipCode)) < Math.abs(data.zipCode - Number(b.zipCode))) return -1;
+                if (group.groupSize && group.groupSize > b.capacity) return -1
+                if (Math.abs(group.zipCode - Number(a.zipCode)) > Math.abs(group.zipCode - Number(b.zipCode))) return 1;
+                if (Math.abs(group.zipCode - Number(a.zipCode)) < Math.abs(group.zipCode - Number(b.zipCode))) return -1;
                 return 0
             }))
         }
@@ -54,9 +59,8 @@ const Leads = () => {
 
     return (
         <div className={styles.container}>
-            {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+            {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} /> : null}
             <div className={styles.leadColumn}>
-
                 <LeadsColumn customOnDrag={customOnDrag} leadCardOnClick={clickLead} showZipCode />
             </div>
 
@@ -68,12 +72,13 @@ const Leads = () => {
                 <div className={styles.retreatCenterCardContainer}>
                     {
                         rerenderingRetreatCenters.map((retreatCenter, i) => {
-                            const logo = retreatCenter.photo ? retreatCenter.photo : Images["ic_logo"]
+                            const logo = !!retreatCenter.photo ? retreatCenter.photo : Images["ic_logo"]
                             const capacity = retreatCenter.housing.buildings?.reduce((accum, building) =>
                                 [...building.rooms ?? []].reduce((accu, room) =>
                                     room.beds?.reduce((acc, bed) => acc + (arrayToMap({ array: retreatCenter.bedStyles ?? [], key: "id" }).get(bed.id)?.capacity * bed.amount), accu), accum), 0)
-                            const capacityClass = currentAppointment?.groupSize && capacity && currentAppointment.groupSize > capacity ? styles.capacityDanger : styles.capacity
-
+                            const group = CamperGroups.find((cg) => cg.id === currentAppointment?.groupId);
+                            const capacityClass = group?.groupSize && capacity && group.groupSize > capacity ? styles.capacityDanger : styles.capacity
+                            const activities = removeDuplicates(retreatCenter.amenities.activities ?? [], (item: ActivityType) => item.class)
                             return (
                                 <div key={i} className={styles.retreatCenterCard}>
                                     <div className="row">
@@ -93,18 +98,17 @@ const Leads = () => {
                                     <div className={styles.amenities}>
                                         {
 
-                                            retreatCenter.amenities.activities && retreatCenter.amenities.activities.map((act, ind) => {
+                                            activities.map((act, ind) => {
                                                 return (
-                                                    <div key={ind}>
-                                                        {/* @ts-ignore */}
+                                                    <div key={ind} data-content={act.class} className="tooltip" >
                                                         <Image alt={act.name} src={Images[act.class]} height={30} width={30} className={styles.amenityLogo} />
                                                     </div>
                                                 )
                                             })
                                         }
                                     </div>
-                                    <div className={styles.calendarContainer}>
-                                        <SimpleCalendar date={date} RetreatCenter={retreatCenters.find(rc => rc.id === retreatCenter.id) ?? retreatCenters[i]} />
+                                    <div className={styles.calendarContainer} >
+                                        <SimpleCalendar date={date} RetreatCenter={RetreatCenters.find(rc => rc.id === retreatCenter.id) ?? RetreatCenters[i]} />
                                     </div>
                                 </div>
                             )

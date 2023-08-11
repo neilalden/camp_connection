@@ -83,7 +83,7 @@
 html body {
   width: 100%;
   height: 100vh;
-  overflow: hidden !important;
+  overflow-x: hidden;
 
 }
 
@@ -227,6 +227,20 @@ a {
   justify-content: space-around;
 }
 
+.mv-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.mh-auto {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.m-auto {
+  margin: auto;
+}
+
 .no-wrap {
   white-space: nowrap;
 }
@@ -298,6 +312,10 @@ input[type=number] {
   cursor: pointer;
 }
 
+.tooltip {
+  position: relative;
+}
+
 .tooltip:hover::after {
   content: attr(data-content);
   border-radius: 3px;
@@ -314,9 +332,10 @@ input[type=number] {
   text-align: center;
   font-size: 12px !important;
   font-weight: 400;
-  z-index: 2;
+  z-index: 100;
   white-space: nowrap;
   overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .texthover:hover {
@@ -325,4 +344,23 @@ input[type=number] {
 
 .buttonhover:hover {
   border: 1px solid #85A0AD;
+}
+
+.scroll-y {
+  overflow: scroll !important;
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners.ck-focused {
+  border: 1px solid #85A0AD;
+  box-shadow: none;
+  background: #FFF;
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
+  border: 1px solid #d9d9d9;
+  background: #FFF;
+}
+
+.ck-powered-by-balloon {
+  display: none !important;
 }

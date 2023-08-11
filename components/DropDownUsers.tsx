@@ -1,4 +1,4 @@
-import { CampConnectionTeamUserType, CamperUserType, RetreatCenterUserType, SetStateType } from '@/types';
+import { CampConnectionTeamUserType, CamperUserType, RetreatCenterTeamType, SetStateType } from '@/types';
 import React from 'react'
 import styles from "./DropDownUsers.module.css"
 import Image from 'next/image';
@@ -6,7 +6,7 @@ import Images from '@/common/images';
 export type UsersOptionType = {
     label: string;
     value: string | number;
-    user: CamperUserType | RetreatCenterUserType | CampConnectionTeamUserType
+    user: CamperUserType | RetreatCenterTeamType | CampConnectionTeamUserType
 }
 type Props = {
     options: Array<UsersOptionType>;

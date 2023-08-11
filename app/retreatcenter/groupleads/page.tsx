@@ -9,7 +9,7 @@ import Colors from "@/common/colors";
 import { months, weekdays } from "@/utils/variables";
 import { AppointmentType, SetStateType } from "@/types";
 import CalendarNavigation from "@/components/CalendarNavigation";
-import { addLead } from "@/services/redux/slice/leads";
+import { createLead } from "@/services/redux/slice/leads";
 import LeadsColumn from "@/components/LeadsColumn";
 import SimpleCalendar from "@/components/SimpleCalendar";
 import MainCalendar from "@/components/MainCalendar";
@@ -19,13 +19,9 @@ import TextInput from "@/components/TextInput";
 import AppointmentModal from "@/components/AppointmentModal";
 
 const GroupLeads = () => {
-  const retreatCenters = useSelector(
-    (state: RootState) => state.RetreatCenters.retreatCenters
-  );
+  const Appointments = useSelector((state: RootState) => state.Appointments.appointments);
   // const RetreatCenter = retreatCenters["Eatern Point Retreat House"]
-  const RetreatCenter = useSelector(
-    (state: RootState) => state.RetreatCenters.retreatCenter
-  );
+  const RetreatCenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter);
   const [date, setDate] = useState<Date>(new Date());
   const [progress, setProgress] = useState(66);
   const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -49,7 +45,7 @@ const GroupLeads = () => {
   return (
 
     <div className={styles.container}>
-      {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+      {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} /> : null}
       <div className={styles.leadColumn}>
         <LeadsColumn leadCardOnClick={clickLead} showZipCode={false} />
       </div>
@@ -287,22 +283,22 @@ const GroupLeads = () => {
 
         <div>
           <div className={styles.groupsContainer}>
-            {RetreatCenter?.appointments.length > 0 ? (
+            {Appointments.length > 0 ? (
               <div className={styles.groupsHeading}>
                 <h3 className={styles.groupsTitle}>Groups</h3>
               </div>
             ) : null}
             {RetreatCenter &&
-              RetreatCenter?.appointments?.map((appointment, i) => {
+              Appointments.map((appointment, i) => {
                 return (
                   <button
                     key={i}
                     type="button"
                     className={styles.groupCard}
                     onClick={() => clickLead(appointment)}
-                    style={{ background: appointment.color }}
+                    style={{ background: appointment.groupId }}
                   >
-                    <h3>{appointment.groupName}</h3>
+                    <h3>{appointment.groupId}</h3>
                   </button>
                 );
               })}

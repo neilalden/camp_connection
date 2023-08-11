@@ -1,91 +1,89 @@
 import React, { useState } from 'react'
 import styles from "./LeadCard.module.css"
-import { AppointmentType, ArgFunction } from '@/types'
+import { AppointmentType, ArgFunction, CamperGroupType } from '@/types'
 import TextInput from './TextInput';
 import Image from 'next/image';
 import Images from '@/common/images';
 import { useDispatch } from 'react-redux';
-import { setLead } from '@/services/redux/slice/leads';
+import { updateLead } from '@/services/redux/slice/leads';
 import Colors from '@/common/colors';
+import { updateCamperGroup } from '@/services/redux/slice/campergroups';
 type Props = {
     lead: AppointmentType;
-    onDragStart: ArgFunction;
+    group?: CamperGroupType;
+    onDragStart?: ArgFunction;
     onClick?: ArgFunction;
     showZipCode?: boolean
 }
 const LeadCard = (props: Props) => {
     const {
         lead,
-        onDragStart,
-        onClick,
+        group,
+        onDragStart = () => { },
+        onClick = () => { },
         showZipCode = false
     } = props
     const dispatch = useDispatch()
-    const [error,setError] = useState(false)
+    const [groupSizeError, setGroupSizeError] = useState(false)
+    const [checkInError, setCheckInError] = useState(false)
+    if (!group) return <></>
     return (
-
         <div
-            draggable={!error}
+            draggable={(!groupSizeError && !checkInError) && !!onDragStart}
             className={styles.leadCard}
             style={{
-                border: `3px solid ${lead.color}`,
-                cursor: !error ? "grab" : "not-allowed"
+                border: `3px solid ${group.color}`,
+                cursor: (!groupSizeError && !checkInError) ? "grab" : "not-allowed"
             }}
-            onClick={() =>  onClick ? onClick(lead) : null}
-            onDragStart={(e)=>{
-                if(lead.checkInDays)onDragStart(e)
-                else setError(true)
+            onClick={() => onClick ? onClick(lead) : null}
+            onDragStart={(e) => {
+                if (lead.checkInDays && group.groupSize && onDragStart) onDragStart(e)
+                else { !lead.checkInDays && setCheckInError(true); !group.groupSize && setGroupSizeError(true) }
             }}
         >
-            {/* <p className={styles.leadName} style={{ color: lead.color }}>{lead.groupName}</p> */}
             <TextInput
                 placeholder='Group name...'
                 containerClassName={styles.leadGroupNameContainer}
                 inputClassName={styles.leadGroupName}
-                inputStyle={{ color: lead.color }}
-                value={lead.groupName}
+                inputStyle={{ color: group.color }}
+                value={group.groupName}
                 setValue={(e) => {
                     const value = e.target.value
-                    const newLead: AppointmentType = { ...lead, groupName: value }
-                    dispatch(setLead(newLead))
+                    const newGroup: CamperGroupType = { ...group, groupName: value }
+                    dispatch(updateCamperGroup(newGroup))
                 }}
             />
             <TextInput
                 placeholder='Name...'
                 inputClassName={styles.inputField}
-                value={lead.reservee.firstName}
+                value={group.appointeeName}
                 setValue={(e) => {
                     const value: string = e.target.value
-                    const newLead: AppointmentType = {
-                        ...lead, reservee: {
-                            ...lead.reservee,
-                            firstName: value
-                        }
+                    const newGroup: CamperGroupType = {
+                        ...group,
+                        appointeeName: value
                     }
-                    dispatch(setLead(newLead))
+                    dispatch(updateCamperGroup(newGroup))
                 }}
             />
             <TextInput
                 placeholder='Phone number...'
                 inputClassName={styles.inputField}
-                value={lead.reservee.contactNumber ?? ""}
+                value={group.appointeeContactNumber ?? ""}
                 setValue={(e) => {
                     const value = e.target.value
-                    const newLead: AppointmentType = {
-                        ...lead, reservee: {
-                            ...lead.reservee,
-                            contactNumber: value
-                        }
+                    const newGroup: CamperGroupType = {
+                        ...group,
+                        appointeeContactNumber: value
                     }
-                    dispatch(setLead(newLead))
+                    dispatch(updateCamperGroup(newGroup))
                 }}
             />
             <div className={"row-between"}>
                 {showZipCode ?
                     <TextInput
-                    data-content="hello world"
                         label={<Image alt='location' src={Images.ic_location} height={15} />}
-                        value={lead.zipCode ?? 0}
+                        value={group.zipCode ?? 0}
                         containerStyle={{ ...inputContainerStyle, width: "55px" }}
                         containerClassName="tooltip"
                         dataContent={"Zip Code"}
@@ -95,48 +93,55 @@ const LeadCard = (props: Props) => {
                         setValue={(e) => {
                             const value = e.target.value
                             if (isNaN(Number(value))) return;
-                            const newLead: AppointmentType = { ...lead, zipCode: Number(value) }
-                            dispatch(setLead(newLead))
+                            const newGroup: CamperGroupType = { ...group, zipCode: Number(value) }
+                            dispatch(updateCamperGroup(newGroup))
                         }}
                     /> : null}
                 <TextInput
                     label={<Image alt='group' src={Images.ic_group} height={15} />}
-                    value={lead.groupSize ?? 0}
-                    containerStyle={{...inputContainerStyle, width: "45px" }}
+                    value={group.groupSize ?? 0}
+                    containerStyle={{ ...inputContainerStyle, width: "45px" }}
                     containerClassName="tooltip"
                     dataContent={"Group Size"}
+                    required
                     inputStyle={{
                         textAlign: "center",
+                        borderBottomColor: !groupSizeError ? "" : Colors.red500,
+                        borderBottomWidth: !groupSizeError ? "" : 3,
+                        color: !groupSizeError ? "" : Colors.red500,
+                        fontWeight: !groupSizeError ? "normal" : 900,
                     }}
                     setValue={(e) => {
-                        const value = e.target.value
-                        if (isNaN(Number(value))) return;
-                        const newLead: AppointmentType = { ...lead, groupSize: Number(value) }
-                        dispatch(setLead(newLead))
+                        const value = Number(e.target.value)
+                        if (isNaN(value)) return;
+                        if (value > 0) setGroupSizeError(false)
+                        else setGroupSizeError(true)
+                        const newGroup: CamperGroupType = { ...group, groupSize: value }
+                        dispatch(updateCamperGroup(newGroup))
                     }}
                 />
 
                 <TextInput
                     label={<Image alt='clock' src={Images.ic_clock} height={15} />}
                     value={lead.checkInDays ?? 0}
-                    containerStyle={{ ...inputContainerStyle}}
+                    containerStyle={{ ...inputContainerStyle }}
                     containerClassName="tooltip"
-                    dataContent={"Days"}
+                    dataContent={"Nights"}
                     required
                     inputStyle={{
                         textAlign: "center",
-                        borderBottomColor: !error? "":Colors.red500,
-                        borderBottomWidth: !error? "": 3,
-                        color: !error? "":Colors.red500,
-                        fontWeight: !error? "normal":900,
+                        borderBottomColor: !checkInError ? "" : Colors.red500,
+                        borderBottomWidth: !checkInError ? "" : 3,
+                        color: !checkInError ? "" : Colors.red500,
+                        fontWeight: !checkInError ? "normal" : 900,
                     }}
                     setValue={(e) => {
-                        const value = e.target.value
-                        if (isNaN(Number(value))) return;
-                        const newLead: AppointmentType = { ...lead, checkInDays: Number(value) }
-                        dispatch(setLead(newLead))
-                        if(Number(value) > 0) setError(false)
-                        else setError(true)
+                        const value = Number(e.target.value)
+                        if (isNaN(value)) return;
+                        const newLead: AppointmentType = { ...lead, checkInDays: value }
+                        dispatch(updateLead(newLead))
+                        if (value > 0) setCheckInError(false)
+                        else setCheckInError(true)
                     }}
                 />
 

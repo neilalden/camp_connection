@@ -25,3 +25,6 @@ const Layout = ({ children }: any) => {
 
 
 export default Layout
+
+// export const config = { runtime: "experimental-edge", };
+export const runtime = 'edge'

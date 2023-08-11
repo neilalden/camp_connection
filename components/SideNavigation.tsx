@@ -1,13 +1,14 @@
 "use client";
 import Images from '@/common/images'
 import { RootState } from '@/services/redux/store';
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { usePathname } from "next/navigation"
 import React from 'react'
 import { useSelector } from 'react-redux';
 import styles from "./Nav.module.css"
-type SideNavType = { id: string; name: string; img: string; category: string }
+type SideNavType = { id: string; name: string; img: string | StaticImport; category: string }
 const SideNavigation = () => {
     const pathname = usePathname();
     const paths = pathname.split("/")

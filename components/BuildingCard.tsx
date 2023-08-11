@@ -1,6 +1,7 @@
 import Images from "@/common/images"
 import TextInput from "@/components/TextInput"
-import { setBuildingRooms, setRoomBeds, setBuildingName, setBuildings, addAppointment, setAppointment } from "@/services/redux/slice/retreatcenters"
+import { updateAppointment } from "@/services/redux/slice/appointments"
+import { setBuildingRooms, setRoomBeds, setBuildingName, setBuildings, } from "@/services/redux/slice/retreatcenters"
 import { RootState } from "@/services/redux/store"
 import { RoomType, BedType, ArgFunction, BuildingType, AppointmentType } from "@/types"
 import { arrayToMap, IDGenerator } from "@/utils/functions"
@@ -11,31 +12,32 @@ import styles from "./BuildingCard.module.css"
 
 const BuildingCard = ({ building, appointment }: { building: BuildingType, appointment: AppointmentType }) => {
     const dispatch = useDispatch()
-    const retreatCenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter)
+    const RetreatCenter = useSelector((state: RootState) => state.RetreatCenters.retreatCenter);
+    const Appointments = useSelector((state: RootState) => state.Appointments.appointments);
+    const CurrentGroup = useSelector((state: RootState) => state.CamperGroups.currentCamperGroup);
+
     const [openBuilding, setOpenBuilding] = useState(false)
-    const currentAppointment = retreatCenter.appointments.find((ap) => ap.id === appointment.id) ?? appointment
-    const currentBuilding = (retreatCenter.housing && retreatCenter.housing.buildings?.find((bldg) => bldg.id === building.id)) ?? building
-    const unassignedGuests = Number(currentAppointment.groupSize) - (currentAppointment.rooms?.reduce((acc, rm) => acc + rm.capacity, 0) ?? 0)
+    const currentAppointment = Appointments.find((ap) => ap.id === appointment.id) ?? appointment
+    const currentBuilding = (RetreatCenter.housing && RetreatCenter.housing.buildings?.find((bldg) => bldg.id === building.id)) ?? building
+    const unassignedGuests = Number(CurrentGroup?.groupSize) - (currentAppointment.roomSchedule.reduce((accu, shed) => accu + shed.rooms.reduce((acc, room) => acc + room.capacity, accu), 0) ?? 0)
     const updateBuildingRooms = (room: RoomType) => {
         if (!building.rooms) return;
         if (room.occupiedBy && room.occupiedBy.id !== currentAppointment.id) return;
         if (unassignedGuests <= 0 && (!room.occupiedBy || room.occupiedBy?.id !== currentAppointment.id)) return
         let newRooms: Array<RoomType> = [...building.rooms]
         newRooms = newRooms.map((nr) => nr.id === room.id ? nr.occupiedBy ? ({ ...room, occupiedBy: undefined }) : ({ ...room, occupiedBy: currentAppointment }) : nr)
-        const found = currentAppointment.rooms ? currentAppointment.rooms.find(rm => rm.id === room.id) : false
+        const found = RetreatCenter.housing.buildings ? RetreatCenter.housing.buildings.find(rm => rm.id === room.id) : false
         const newAppointment: AppointmentType = {
             ...currentAppointment,
-            rooms: currentAppointment.rooms ? found ? currentAppointment.rooms?.filter((rm) => rm.id !== room.id) : [room, ...currentAppointment.rooms] : [room]
         }
-        dispatch(setAppointment(newAppointment))
+        dispatch(updateAppointment(newAppointment))
         dispatch(setRoomBeds({
             buildingId: building.id,
             rooms: newRooms
         }))
     }
     return (
-        <div style={{ marginBottom: "40px" }}>
-            <h5 style={{ textAlign: "start", margin: "10px 0" }}>unassigned guests : {unassignedGuests}</h5>
+        <div >
             <button type="button" className={styles.collapsableSection} onClick={(e) => setOpenBuilding(prev => !prev)}>
                 <h3>{building.name}</h3>
                 <Image alt="chevron down" src={openBuilding ? Images.ic_chevron_up : Images.ic_chevron_down} height={15} />
@@ -49,15 +51,15 @@ const BuildingCard = ({ building, appointment }: { building: BuildingType, appoi
                                 type="button"
                                 data-content={
                                     room.occupiedBy ?
-                                        room.occupiedBy.groupName
-                                        : room.available && room.beds.length > 0 ? "Beds for " + room.capacity + "Guests"
+                                        room.occupiedBy.groupId
+                                        : room.available && room.beds.length > 0 ? "Beds for " + room.capacity + " Guests"
                                             : "Unavailable"}
                                 onClick={() => room.available && room.beds.length > 0 ? updateBuildingRooms(room) : () => { }}
-                                style={room.occupiedBy ? { color: room.occupiedBy.color } : {}}
+                                style={room.occupiedBy ? { color: room.occupiedBy.groupId } : {}}
                                 className={[styles.roomButton, room.occupiedBy ? styles.occupiedText : room.available && room.beds.length > 0 ? styles.vacantText : styles.unavailableText, "tooltip"].join(" ")}
                             >
                                 <div
-                                    style={room.occupiedBy ? { outline: `2px solid ${room.occupiedBy.color}` } : {}}
+                                    style={room.occupiedBy ? { outline: `2px solid ${room.occupiedBy.groupId}` } : {}}
                                     className={room.occupiedBy ? styles.occupied : room.available && room.beds.length > 0 ? styles.vacant : styles.unavailable}
                                 />
                                 {room.name}
@@ -69,7 +71,7 @@ const BuildingCard = ({ building, appointment }: { building: BuildingType, appoi
                 : null}
 
             {openBuilding ? <div className={styles.legendContainer}>
-                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.occupiedText].join(" ")}><div style={{ outline: `2px solid ${appointment.color}` }} className={styles.occupied} />Occupied</div>
+                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.occupiedText].join(" ")}><div style={{ border: `1px solid #000000`, outline: 0 }} className={styles.occupied} />Occupied</div>
                 <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.vacantText].join(" ")}><div className={styles.vacant} />Available</div>
                 <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.unavailableText].join(" ")}><div className={styles.unavailable} />Unavailable</div>
             </div> : null}

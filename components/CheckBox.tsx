@@ -1,20 +1,23 @@
 import { ArgFunction, SetStateType } from '@/types';
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styles from "./CheckBox.module.css"
 type Props = {
-    label: string;
     value: boolean;
-    labelClassname?: string;
-    htmlFor?: string;
+    name: string;
     onChange: ArgFunction;
+    labelClassname?: string;
+    label?: string | ReactNode;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
+    labelTop?: string | ReactNode;
+    labelStyle?: React.CSSProperties;
+    labelClassName?: string;
 }
 const CheckBox = (props: Props) => {
     const {
         label,
         value,
-        htmlFor = label,
+        name,
         onChange,
         containerStyle,
         containerClassName,
@@ -24,13 +27,13 @@ const CheckBox = (props: Props) => {
         <div style={containerStyle} className={containerClassName}>
             <input
                 type="checkbox"
-                id={htmlFor}
-                name={htmlFor}
+                id={name}
+                name={name}
                 checked={value}
                 onChange={onChange}
                 className={styles.input}
             />
-            <label htmlFor={htmlFor} className={[styles.label, labelClassname].join(" ")}>{label}</label>
+            <label htmlFor={name} className={[styles.label, labelClassname].join(" ")}>{label}</label>
         </div >
     )
 }

@@ -15,15 +15,45 @@
 }
 
 .activityCard {
-    width: 25%;
+    width: 70% !important;
     min-width: 300px;
-    max-width: 400px;
+    min-height: 100px !important;
+    background: #F6F8F9;
+    margin-top: 20px !important;
+    margin-right: 20px !important;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+}
+
+.preview {
+    width: 30% !important;
+    min-width: 300px;
     min-height: 100px !important;
     background: #F6F8F9;
     margin-top: 20px !important;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    position: relative;
+}
+
+.preview::after {
+    content: "Preview";
+    position: absolute;
+    color: black;
+    top: -15px !important;
+    left: -2px;
+    min-height: 10px !important;
+    min-width: 50px !important;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 12px !important;
+    font-weight: 400;
+    z-index: 100;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: visible;
 }
 
 .activityDeleteButtom {
@@ -31,8 +61,7 @@
     font-size: 10px;
     font-weight: 900 !important;
     transition: .5s ease-out 0s;
-    width: 50px;
-    padding-left: 10px;
+    width: 20px;
 }
 
 .activityDeleteButtom:hover {
@@ -40,8 +69,9 @@
 }
 
 .meetingRoomCardNameInputContainer {
-    width: 80% !important;
-    margin: 28px 0 25px 25px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 .meetingRoomCardNameInput {
@@ -75,6 +105,8 @@
     font-size: 10px;
     font-style: normal;
     font-weight: 300;
+    text-align: center;
+
 }
 
 .addActivitiesButton:hover {
@@ -101,7 +133,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-right: 10px;
     height: fit-content;
     align-self: center;
 }
@@ -112,7 +143,47 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-right: 10px;
     height: fit-content;
     align-self: center;
+}
+
+.info {
+    height: 11px;
+    width: 11px;
+    font-size: 10px;
+    border-radius: 50%;
+    background: #1f2c47;
+    color: #FFF;
+    text-align: center;
+    justify-self: flex-end;
+    margin-top: 5px;
+    margin-right: 5px;
+    position: relative;
+}
+
+.info:hover::after {
+    content: attr(data-content);
+    border-radius: 3px;
+    background: #1f2c47;
+    color: #fff;
+    position: absolute;
+    padding: 5px !important;
+    top: -25px !important;
+    left: -20px;
+    min-height: 10px !important;
+    min-width: 50px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 12px !important;
+    font-weight: 400;
+    z-index: 100;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.detailsContainer {
+    width: 25%;
 }

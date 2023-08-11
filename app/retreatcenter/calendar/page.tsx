@@ -9,7 +9,7 @@ import Colors from '@/common/colors'
 import { months, weekdays } from '@/utils/variables'
 import { AppointmentType, SetStateType } from '@/types'
 import CalendarNavigation from '@/components/CalendarNavigation'
-import { addLead } from '@/services/redux/slice/leads'
+import { createLead } from '@/services/redux/slice/leads'
 import LeadsColumn from '@/components/LeadsColumn'
 import SimpleCalendar from '@/components/SimpleCalendar'
 import MainCalendar from '@/components/MainCalendar'
@@ -34,7 +34,7 @@ const CalendarPage = () => {
   if (!RetreatCenter) return;
   return (
     <div className={styles.container}>
-      {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} appointment={currentAppointment} /> : null}
+      {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} /> : null}
       <div className={styles.heading}>
         <h3 className={styles.overviewTitle}>Overview</h3>
       </div>

@@ -347,7 +347,7 @@ const SchedulePicker = ({ season }: { season: string }) => {
                     <CheckBox
                       label={sched.label}
                       value={sched.value}
-                      htmlFor={`${season}---${sched.label}`}
+                      name={`${season}---${sched.label}`}
                       onChange={() => onChange(sched)}
                       containerStyle={{ width: "65px" }}
                     />
@@ -382,7 +382,7 @@ const SchedulePicker = ({ season }: { season: string }) => {
                   <CheckBox
                     label={sched.label}
                     value={sched.value}
-                    htmlFor={`${season}---${sched.label}`}
+                    name={`${season}---${sched.label}`}
                     onChange={() => onChange(sched)}
                     containerStyle={{ width: "65px" }}
                   />

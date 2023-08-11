@@ -57,32 +57,17 @@
     margin: auto 0px !important;
 }
 
-.booked {
-    border-top: 3px solid #149237;
-    border-bottom: 3px solid #149237;
-    width: 100% !important;
-    height: 15px !important;
-    overflow-x: visible;
-    margin: auto 0px !important;
-    cursor: pointer;
-    position: relative;
+.occupied {
 
-}
-
-.reserved {
-    border-top: 3px solid #FFB31A;
-    border-bottom: 3px solid #FFB31A;
     width: 100% !important;
     height: 15px !important;
     overflow-x: visible;
     margin: auto 0px !important;
     cursor: grab;
     position: relative;
-
 }
 
-
-.booked:hover::after {
+.occupied:hover::after {
     content: attr(data-content);
     border-radius: 3px;
     background: #1f2c47;
@@ -99,56 +84,14 @@
     font-weight: 400;
 }
 
-.reserved:hover::after {
-    content: attr(data-content);
-    border-radius: 3px;
-    background: #1f2c47;
-    color: #fff;
-    position: absolute;
-    padding: 5px 10px !important;
-    top: -30px !important;
-    min-height: 10px !important;
-    min-width: 100px !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px !important;
-    font-weight: 400;
-    cursor: grab;
-
-
-}
-
-.booked:active::after {
-    display: none;
-}
-
-.reserved:active::after {
-    display: none;
-}
-
-.bookingTail {
+.occupiedTail {
     border-top-left-radius: 50px !important;
     border-bottom-left-radius: 50px !important;
-    border-left: 3px solid #149237;
 }
 
-.bookingHead {
+.occupiedHead {
     border-top-right-radius: 50px !important;
     border-bottom-right-radius: 50px !important;
-    border-right: 3px solid #149237;
-}
-
-.reservationTail {
-    border-top-left-radius: 50px !important;
-    border-bottom-left-radius: 50px !important;
-    border-left: 3px solid #FFB31A;
-}
-
-.reservationHead {
-    border-top-right-radius: 50px !important;
-    border-bottom-right-radius: 50px !important;
-    border-right: 3px solid #FFB31A;
 }
 
 

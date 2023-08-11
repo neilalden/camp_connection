@@ -118,9 +118,9 @@ const Userprofile = () => {
                     <h4 className={styles.cardTitle}>General</h4>
                     <form>
                         <DropDownUsers htmlFor="Representative" options={userOptions} value={representative} setValue={setRepresentative} containerClassName={styles.inputStyle} />
-                        <CheckBox value={isAceeptingGroups} onChange={() => setIsAcceptingGroups(prev => !prev)} label="Do you accept groups?" containerClassName={styles.inputStyle} />
-                        <CheckBox value={isAceeptingRVTent} onChange={() => setIsAcceptingRVTent(prev => !prev)} label="Do you accept RV/Tent Camping?" containerClassName={styles.inputStyle} />
-                        <CheckBox value={isRecievingCCLeads} onChange={() => setIsRecievingCCLeads(prev => !prev)} label="Receive Camp Connection Leads?" containerClassName={styles.inputStyle} />
+                        <CheckBox name="accept groups" value={isAceeptingGroups} onChange={() => setIsAcceptingGroups(prev => !prev)} label="Do you accept groups?" containerClassName={styles.inputStyle} />
+                        <CheckBox name="accept rv" value={isAceeptingRVTent} onChange={() => setIsAcceptingRVTent(prev => !prev)} label="Do you accept RV/Tent Camping?" containerClassName={styles.inputStyle} />
+                        <CheckBox name="connect leads" value={isRecievingCCLeads} onChange={() => setIsRecievingCCLeads(prev => !prev)} label="Receive Camp Connection Leads?" containerClassName={styles.inputStyle} />
                         <span className="mini-link">Learn more</span>
                         {/* <div className={["row-around", styles.inputStyle].join(" ")}>
                             <FileButton text="Contract for RV" containerClassName={styles.inputStyle} />
@@ -239,7 +239,7 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
                                             <CheckBox
                                                 label={sched.label}
                                                 value={sched.value}
-                                                htmlFor={`${season}---${sched.label}`}
+                                                name={`${season}---${sched.label}`}
                                                 onChange={() => onChange(sched)}
                                                 containerStyle={{ width: "65px", alignSelf: "center" }}
                                             />
@@ -274,7 +274,7 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
                                         <CheckBox
                                             label={sched.label}
                                             value={sched.value}
-                                            htmlFor={`${season}---${sched.label}`}
+                                            name={`${season}---${sched.label}`}
                                             onChange={() => onChange(sched)}
                                             containerStyle={{ width: "65px" }} />
                                         <span className={styles.spanClosed}>Closed</span>

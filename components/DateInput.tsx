@@ -2,11 +2,11 @@ import { ArgFunction, SetStateType } from '@/types';
 import React from 'react'
 import styles from "./DateInput.module.css"
 type Props = {
+    value: Date;
+    setValue?: SetStateType<Date> | ArgFunction;
     htmlFor?: string;
     label?: string;
     placeholder?: string;
-    value: Date;
-    setValue: SetStateType<Date> | ArgFunction;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
 }
@@ -38,7 +38,7 @@ const DateInput = (props: Props) => {
                 value={convertDateToString()}
                 className={styles.input}
                 placeholder={placeholder}
-                onChange={(e) => setValue(new Date(e.target.value))}
+                onChange={(e) => setValue && setValue(new Date(e.target.value))}
             />
         </div >
     )
