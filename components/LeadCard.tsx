@@ -41,6 +41,7 @@ const LeadCard = (props: Props) => {
                 else { !lead.checkInDays && setCheckInError(true); !group.groupSize && setGroupSizeError(true) }
             }}
         >
+            <span style={{ position: "absolute", top: "-15px", right: "0" }}>{new Date(lead.createdAt).toLocaleTimeString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
             <TextInput
                 placeholder='Group name...'
                 containerClassName={styles.leadGroupNameContainer}

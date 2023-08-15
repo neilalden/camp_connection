@@ -13,6 +13,7 @@ import { RetreatCenterTeamType } from '@/types';
 import { RootState } from '@/services/redux/store';
 import TextInput from '@/components/TextInput';
 import { IDGenerator } from '@/utils/functions';
+import { POST } from '@/services/api';
 
 const RetreatCenterUserTestData: RetreatCenterTeamType = {
     id: IDGenerator(),
@@ -39,7 +40,26 @@ const SigninForm = () => {
 
     useEffect(() => { if (user) router.push(`/campconnection/leads`) }, [user])
 
-    const handleSignin = () => dispatch(setUser(RetreatCenterUserTestData))
+    const handleSignin = async () => {
+        // const payload = {
+        //     "id": IDGenerator(),
+        //     "email": email,
+        //     "password": password,
+        //     "firstName": "Neil Alden",
+        //     "middleName": "Paicaglino",
+        //     "lastName": "Escobin",
+        //     "contact": "099764477771",
+        //     "birthday": "1999-07-07",
+        //     "photo": null,
+        //     "organization": "ATS",
+        //     "userType": "admin",
+        //     "category": "campconnectionteam"
+        // }
+        // const res = await POST("https://atsdevs.org/campconnection/public/api/retreatcenter", payload)
+
+        dispatch(setUser(RetreatCenterUserTestData))
+
+    }
 
     return (
         <form className={styles.form}>

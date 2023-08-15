@@ -59,6 +59,12 @@ const Images: ImageType = {
   ic_close: require("../assets/ic_close.png"),
   ic_check_green: require("../assets/ic_check_green.png"),
   ic_close_red: require("../assets/ic_close_red.png"),
+  ic_info: require("../assets/ic_info.png"),
+  ic_merge: require("../assets/ic_merge.png"),
+  ic_download: require("../assets/ic_download.png"),
+  ic_delete: require("../assets/ic_delete.png"),
+  ic_envelop: require("../assets/ic_envelop.png"),
+  ic_text_bubble: require("../assets/ic_text_bubble.png"),
 
   // Activities
   [Activity["Custom"]]: require("../assets/activities/Custom.png"),

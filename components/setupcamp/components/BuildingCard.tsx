@@ -90,7 +90,7 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
 
     return (
         <div>
-            <button type="button" className={styles.collapsableSection} style={{ width: "100%" }} onClick={(e) => setOpenBuilding(prev => !prev)}>
+            <div className={styles.collapsableSection} style={{ width: "100%" }} onClick={(e) => setOpenBuilding(prev => !prev)}>
                 <div className="row">
                     {openBuilding ? <button
                         type="button"
@@ -105,7 +105,7 @@ const BuildingCard = ({ building, deleteBuilding }: { building: BuildingType, de
                     /></div>
 
                 <Image alt="chevron down" src={openBuilding ? Images.ic_chevron_up : Images.ic_chevron_down} height={15} />
-            </button>
+            </div>
             {openBuilding ?
                 <div className={styles.buildingCard}>
                     <div className="row-between">

@@ -80,7 +80,6 @@ const Leads = () => {
                                     room.beds?.reduce((acc, bed) => acc + (arrayToMap({ array: retreatCenter.bedStyles ?? [], key: "id" }).get(bed.id)?.capacity * bed.amount), accu), accum), 0)
                             const group = CamperGroups.find((cg) => cg.id === currentAppointment?.groupId);
                             const capacityClass = group?.groupSize && capacity && group.groupSize > capacity ? styles.capacityDanger : styles.capacity
-                            const activities = removeDuplicates(retreatCenter.amenities.activities ?? [], (item: ActivityType) => item.class)
                             return (
                                 <div key={i} className={styles.retreatCenterCard}>
                                     <div className="row">
@@ -92,7 +91,7 @@ const Leads = () => {
                                             <p className={styles.capacity} style={{ marginTop: 10 }}>Beds Available : </p>
                                             <div className={styles.bedsContainer}>
                                                 {
-                                                    retreatCenter.bedStyles.map((bedstyle, ind) => <p key={ind} className={styles.bedText}>{bedstyle.name + ": " + bedstyle.capacity}</p>)
+                                                    retreatCenter.bedStyles.map((bedstyle, ind) => <p key={ind} className={styles.bedText}>{bedstyle.name + ": " + bedstyle.amount}</p>)
                                                 }
                                             </div>
                                         </div>
@@ -100,7 +99,7 @@ const Leads = () => {
                                     <div className={styles.amenities}>
                                         {
 
-                                            activities.map((act, ind) => {
+                                            retreatCenter.amenities.activities && retreatCenter.amenities.activities.map((act, ind) => {
                                                 return (
                                                     <div key={ind} data-content={act.name} className="tooltip" >
                                                         <Image alt={act.name} src={Images[act.class]} height={30} width={30} className={styles.amenityLogo} />

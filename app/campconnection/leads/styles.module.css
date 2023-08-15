@@ -34,11 +34,12 @@
     align-items: center;
     margin: 20px 0 !important;
     overflow-y: scroll;
-    overflow: overlay;
+    overflow-x: visible !important;
 }
 
 .calendarContainer {
     width: 400px;
+    overflow-x: visible !important;
 }
 
 .retreatCenterCardContainer {

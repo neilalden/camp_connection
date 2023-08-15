@@ -141,6 +141,7 @@ const Userprofile = () => {
             />
 
             <DateInput
+              name="Birthdate"
               label="Birthdate"
               value={birthDate}
               setValue={setBirthDate}

@@ -6,7 +6,7 @@ import styles from "./FileUpload.module.css"
 type Props = {
     label?: string;
     ref?: React.RefObject<HTMLInputElement>;
-    onChange: ArgFunction;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
     inputClassName?: string,

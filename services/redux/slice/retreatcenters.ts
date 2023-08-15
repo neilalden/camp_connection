@@ -304,7 +304,12 @@ export const RetreatCentersSlice = createSlice({
                                     per: "head"
                                 }
                             ],
-                            seasonsAvailable: ["Winter", "Spring", "Summer", "Fall"]
+                            seasonsAvailable: ["Winter", "Spring", "Summer", "Fall"],
+                            duration: {
+                                interval: "minutes",
+                                time: 30,
+                            },
+                            photos: []
                         }
                     ],
                     bedStyles: [

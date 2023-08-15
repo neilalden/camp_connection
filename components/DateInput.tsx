@@ -1,24 +1,32 @@
 import { ArgFunction, SetStateType } from '@/types';
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styles from "./DateInput.module.css"
 type Props = {
     value: Date;
     setValue?: SetStateType<Date> | ArgFunction;
     htmlFor?: string;
-    label?: string;
+    label?: string | ReactNode;
+    name: string;
     placeholder?: string;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
+    min?: string;
+    max?: string;
+    disabled?: boolean;
 }
 const DateInput = (props: Props) => {
     const {
         label,
-        htmlFor = label,
+        name,
+        htmlFor = name,
         placeholder,
         value,
         setValue,
         containerStyle,
-        containerClassName
+        containerClassName,
+        min,
+        max,
+        disabled = false,
     } = props
     const convertDateToString = () => {
         if (!value) return "";
@@ -32,12 +40,15 @@ const DateInput = (props: Props) => {
         <div style={containerStyle} className={containerClassName}>
             <label htmlFor={htmlFor}>{label}</label><br />
             <input
+                disabled={disabled}
                 type={"date"}
                 name={htmlFor}
                 id={htmlFor}
                 value={convertDateToString()}
                 className={styles.input}
                 placeholder={placeholder}
+                min={min}
+                max={max}
                 onChange={(e) => setValue && setValue(new Date(e.target.value))}
             />
         </div >

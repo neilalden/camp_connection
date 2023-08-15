@@ -1,5 +1,4 @@
-export const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMWI1Mjc0MDA4ODZkNTlhMjJhYmM3N2FhM2M3OWFlNCIsInN1YiI6IjY0NjRlOTFhMDI4NDIwMDBmY2JlNDQ3MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.s0nIRWvZkJDApcfA2LB5V-bTxdUNfv5pGcWw42PWN0Y'
-
+export const ACCESS_TOKEN = '4|ifrqaL7rwvz9lVJTbANLL0DDxF8rYUwzquguUwtn'
 
 export const GET = (url: string) => {
     if (typeof url !== "string") return;
@@ -30,7 +29,11 @@ export const POST = (url: string, payload = {}) => {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=utf-8',
-            'Authorization': `Bearer ${ACCESS_TOKEN}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+            // 'Authorization': `Bearer ${ACCESS_TOKEN}`,
         },
         body: JSON.stringify(payload)
     };
