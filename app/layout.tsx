@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: any) {
   return (
     <html lang="en">
-      <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+      <meta httpEquiv="Permissions-Policy" content="interest-cohort=()" />
       <body className={montserrat.className}>
         {children}
       </body>

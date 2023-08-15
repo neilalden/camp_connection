@@ -119,15 +119,22 @@ export type RoomScheduleType = {
 
 export type MeetingRoomScheduleType = {
   groupId: CamperGroupType["id"];
-  checkIn?: Date;
-  checkOut?: Date;
-  meetingRooms: Array<MeetingRoomType>
+  scheduleId: string;
+  checkInDate?: Date;
+  checkInTime?: string;
+  checkOutTime?: string;
+  meetingRooms: Array<MeetingRoomType>;
+  notes?: string
 }
 
 export type ActivityScheduleType = {
   groupId: CamperGroupType["id"];
-  time: Date;
-  activities: Array<ActivityType>
+  scheduleId: string;
+  checkInDate?: Date;
+  checkInTime?: string;
+  checkOutTime?: string;
+  activities: Array<ActivityType>;
+  notes?: string
 }
 
 export type MealType = {
@@ -142,7 +149,9 @@ export type MeetingRoomType = {
   capacity: number;
   occupiedBy?: AppointmentType;
   available: boolean;
-  diagram?: DiagramType
+  diagram?: DiagramType;
+  items?: Array<ItemType>
+  notes?: string
 }
 export type BedType = {
   id: string;
@@ -156,14 +165,20 @@ export type ActivityType = {
   name: string;
   class: ActivityClass;
   capacity: number;
+  duration: {
+    time: number;
+    interval: TimeIntervalClass
+  };
   available: boolean;
   description: any;
   pricing: Array<PricingType>;
   seasonsAvailable: Array<SeasonClass>
   occupiedBy?: AppointmentType;
   feature?: string;
-  releaseForm?: string,
-  refundPolicy?: string
+  releaseForm?: string;
+  refundPolicy?: string;
+  photos: Array<string | StaticImport>;
+  notes?: string
 };
 export type SpotType = {
   id: string;
@@ -261,6 +276,14 @@ export const Activity = {
   Zipline: "Zipline",
 } as const
 export type ActivityClass = (typeof Activity)[keyof typeof Activity]
+
+
+export const TimeInterval = {
+  minutes: "minutes",
+  hours: "hours",
+} as const
+export type TimeIntervalClass = (typeof TimeInterval)[keyof typeof TimeInterval]
+
 export const Season = {
   Winter: "Winter",
   Spring: "Spring",

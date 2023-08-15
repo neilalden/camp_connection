@@ -1,21 +1,23 @@
 import { ArgFunction, SetStateType } from '@/types';
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styles from "./TextInput.module.css"
 type Props = {
     value?: string | number
-    setValue?: SetStateType<string | number | undefined> | ArgFunction;
+    setValue?: ArgFunction;
     htmlFor?: string;
-    label?: string;
+    label?: string | ReactNode;
     placeholder?: string;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
     inputClassName?: string;
-    disabled?: boolean
+    disabled?: boolean;
+    name: string;
 }
 const TimeInput = (props: Props) => {
     const {
         label,
-        htmlFor = label,
+        name,
+        htmlFor = name,
         placeholder,
         value,
         setValue,
@@ -35,7 +37,7 @@ const TimeInput = (props: Props) => {
                 disabled={disabled}
                 className={[disabled ? styles.disabledInput : styles.input, inputClassName].join(" ")}
                 placeholder={placeholder}
-                onChange={(e) => setValue && setValue(e.target.value)}
+                onChange={setValue}
             />
         </div >
     )

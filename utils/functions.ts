@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from "react"
 import { months } from "./variables"
 
 export const getDays = ({ start, end }: { start: Date, end: Date }): Array<Date> => {
+    if (!start || !end) return []
     if (start > end) return []
     const days: Array<Date> = []
     while (end > start) {
@@ -83,15 +84,26 @@ export const addDaysToDate = (date: Date, days: number = 1) => {
     const copy = new Date(date)
     return new Date(new Date(copy).setDate(new Date(copy).getDate() + days))
 }
-export const sortArrayOfObjects = (array: Array<any>, property: string) => {
+export const sortArrayOfObjects = (array: Array<any>, property: string, order: "asc" | "desc" = "asc") => {
     return [...array].sort((a: object, b: object) => {
-        // @ts-ignore
-        if (a[property] < b[property]) {
-            return -1;
-        }
-        // @ts-ignore
-        if (a[property] > b[property]) {
-            return 1;
+        if (order === "asc") {
+            // @ts-ignore
+            if (a[property] > b[property]) {
+                return -1;
+            }
+            // @ts-ignore
+            if (a[property] < b[property]) {
+                return 1;
+            }
+        } else {
+            // @ts-ignore
+            if (a[property] < b[property]) {
+                return -1;
+            }
+            // @ts-ignore
+            if (a[property] > b[property]) {
+                return 1;
+            }
         }
         return 0;
     });

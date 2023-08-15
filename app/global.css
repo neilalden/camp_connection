@@ -221,6 +221,8 @@ a {
   justify-content: space-around;
 }
 
+
+
 .mv-auto {
   margin-top: auto;
   margin-bottom: auto;
@@ -279,12 +281,36 @@ a {
 }
 
 
+.h-40p {
+  height: 40% !important;
+}
+
+.h-50p {
+  height: 50% !important;
+}
+
+.h-60p {
+  height: 60% !important;
+}
+
 .h-100p {
   height: 100%;
 }
 
+.w-40p {
+  width: 40% !important;
+}
+
+.w-50p {
+  width: 50% !important;
+}
+
+.w-60p {
+  width: 60% !important;
+}
+
 .w-100p {
-  width: 100%
+  width: 100% !important;
 }
 
 .no-wrap {
@@ -343,7 +369,7 @@ input[type=number] {
 }
 
 .flow-wrap {
-  flexFlow: wrap,
+  flex-flow: wrap,
 }
 
 .darkBackground {
@@ -405,6 +431,7 @@ input[type=number] {
 .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
   border: 1px solid #d9d9d9;
   background: #FFF;
+  min-height: 100px;
 }
 
 .ck-powered-by-balloon {

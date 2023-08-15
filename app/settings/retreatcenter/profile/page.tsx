@@ -47,13 +47,12 @@ const Userprofile = () => {
             fileInputRef.current.click();
         }
     };
-    const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const selectedFile = e.target.files[0];
             const imageUrl = URL.createObjectURL(selectedFile);
-            POST("http://atsdevs.org/api/images/images.php", {
-                image: e.target.files[0].name
-            })?.then(res => {
+            const res = await POST("https://atsdevs.org/campconnection/public/api/upload", {
+                fileName: e.target.files[0].name
             })
             dispatch(setRetreatCenterPhoto(imageUrl));
         }
@@ -222,7 +221,7 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
         }
 
         timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;
-        timeValue += (hours >= 12) ? " P.M." : " A.M.";
+        timeValue += (hours >= 12) ? " PM" : " AM";
         return (timeValue)
 
     }

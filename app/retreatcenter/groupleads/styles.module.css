@@ -35,7 +35,8 @@
   margin: 20px !important;
   width: 70%;
   overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-x: overlay !important;
+  z-index: 0;
 }
 
 .heading {
@@ -124,6 +125,7 @@
 .calendarContainer {
   margin: 50px auto 0 auto !important;
   width: 100% !important;
+  overflow-x: visible !important;
 }
 
 .bottomCalendarContainer {
@@ -133,14 +135,17 @@
   align-items: center;
   width: 100%;
   height: 100%;
+  overflow-x: overlay !important;
 }
 
 .prevCalendarContainer {
   width: 50%;
+  overflow-x: visible !important;
 }
 
 .nextCalendarContainer {
   width: 50%;
+  overflow-x: visible !important;
 }
 
 .divider {
@@ -177,7 +182,7 @@
   padding: 10px 20px !important;
   border-radius: 5px;
   margin: 10px !important;
-  width: 100%;
+  width: 50%;
   min-width: 100px;
   text-align: center;
 }

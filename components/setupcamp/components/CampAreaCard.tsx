@@ -81,7 +81,7 @@ const CampAreaCard = ({ campArea, deleteCampArea }: { campArea: CampAreaType, de
 
     return (
         <div>
-            <button type="button" className={styles.collapsableSection} style={{ width: "100%" }} onClick={(e) => setOpenSpaceArea(prev => !prev)}>
+            <div className={styles.collapsableSection} style={{ width: "100%" }} onClick={(e) => setOpenSpaceArea(prev => !prev)}>
                 <div className="row">
                     {openSpaceArea ? <button
                         type="button"
@@ -97,7 +97,7 @@ const CampAreaCard = ({ campArea, deleteCampArea }: { campArea: CampAreaType, de
                     /></div>
 
                 <Image alt="chevron down" src={openSpaceArea ? Images.ic_chevron_up : Images.ic_chevron_down} height={15} />
-            </button>
+            </div>
             {openSpaceArea ?
                 <div className={styles.buildingCard}>
                     <div className="row-between">

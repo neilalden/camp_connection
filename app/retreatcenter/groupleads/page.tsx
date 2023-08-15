@@ -62,7 +62,7 @@ const GroupLeads = () => {
                             strokeWidth: 1,
                           },
                           path: {
-                            stroke: Colors.green300,
+                            stroke: Colors.chalky500,
                           },
                         }}
                       />
@@ -81,7 +81,7 @@ const GroupLeads = () => {
                             strokeWidth: 1,
                           },
                           path: {
-                            stroke: Colors.yellow300,
+                            stroke: Colors.yellow500,
                           },
                         }}
                       />
@@ -111,7 +111,7 @@ const GroupLeads = () => {
                               strokeWidth: 1,
                             },
                             path: {
-                              stroke: Colors.green300,
+                              stroke: Colors.chalky500,
                             },
                           }}
                         />
@@ -130,7 +130,7 @@ const GroupLeads = () => {
                               strokeWidth: 1,
                             },
                             path: {
-                              stroke: Colors.yellow300,
+                              stroke: Colors.yellow500,
                             },
                           }}
                         />
@@ -169,7 +169,7 @@ const GroupLeads = () => {
                               strokeWidth: 1,
                             },
                             path: {
-                              stroke: Colors.green300,
+                              stroke: Colors.chalky500,
                             },
                           }}
                         />
@@ -188,7 +188,7 @@ const GroupLeads = () => {
                               strokeWidth: 1,
                             },
                             path: {
-                              stroke: Colors.yellow300,
+                              stroke: Colors.yellow500,
                             },
                           }}
                         />
@@ -215,59 +215,102 @@ const GroupLeads = () => {
             </div>
           </div>
 
-          <div className={styles.groupsContainer} style={{ width: "20%" }}>
-            <div className={styles.groupsHeading}>
-              <h3 className={styles.groupsTitle}>Rooms</h3>
+          <div className={styles.groupsContainer} style={{ width: "40%" }}>
+            <div className="row-between" style={{ width: "100%" }}>
+              <div style={{ width: "50%" }}>
+                <div className={styles.groupsHeading}>
+                  <h3 className={styles.groupsTitle}>Mid-Week</h3>
+                </div>
+                {RetreatCenter.bedStyles?.map((bedstyle, i) => {
+                  const totalAmount = Number(RetreatCenter.housing.buildings?.reduce((accum, bldg) => accum + ([...bldg.rooms ?? []].reduce((accu, room) => accu + room?.beds?.reduce((acc, bed) => bed.name === bedstyle.name ? acc + bedstyle.amount : acc + 0, 0), accum)), 0))
+
+                  return (
+                    <div key={i} className="row" style={{ height: "70px", width: "100%", margin: "10px 5px" }}>
+                      <div style={{ height: "40px", width: "40px", marginRight: "10px" }}>
+                        <CircularProgressbar
+                          value={totalAmount}
+                          maxValue={totalAmount}
+                          styles={{
+                            trail: {
+                              strokeWidth: 1,
+                            },
+                            path: {
+                              stroke: Colors.chalky500,
+                            },
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <h3>{bedstyle.name}</h3>
+                        <p>{totalAmount}</p>
+                      </div>
+                    </div>
+                  );
+                  // })
+                })}
+              </div>
+              <div style={{ width: "50%" }}>
+                <div className={styles.groupsHeading}>
+                  <h3 className={styles.groupsTitle}>Weekends</h3>
+                </div>
+                {RetreatCenter.bedStyles?.map((bedstyle, i) => {
+                  const totalAmount = Number(RetreatCenter.housing.buildings?.reduce((accum, bldg) => accum + ([...bldg.rooms ?? []].reduce((accu, room) => accu + room?.beds?.reduce((acc, bed) => bed.name === bedstyle.name ? acc + bedstyle.amount : acc + 0, 0), accum)), 0))
+                  // return bedstyle.map((room, ix) => {
+
+                  // const occupiedDays = Appointments.filter(ap =>
+                  //   ap.checkInDate?.getMonth() === date.getMonth() &&
+                  //   ap.retreatCenterId === RetreatCenter.id).reduce((accum, ap) =>
+                  //     accum + (ap.roomSchedule.some((sched) =>
+                  //       (sched.rooms.some(rm => rm.id === room.id))) ?
+                  //       ap.checkInDays : 0), 0)
+
+                  return (
+                    <div key={i} className="row" style={{ height: "70px", width: "100%", margin: "10px 5px" }}>
+                      <div style={{ height: "40px", width: "40px", marginRight: "10px" }}>
+                        <CircularProgressbar
+                          value={totalAmount}
+                          maxValue={totalAmount}
+                          styles={{
+                            trail: {
+                              strokeWidth: 1,
+                            },
+                            path: {
+                              stroke: Colors.chalky500,
+                            },
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <h3>{bedstyle.name}</h3>
+                        <p>{totalAmount}</p>
+                      </div>
+                    </div>
+                  );
+                  // })
+                })}
+              </div>
+
             </div>
-            {RetreatCenter.housing.buildings?.map((bldg, i) => {
-              return bldg.rooms?.map((room, ix) => {
-                const occupiedDays = Appointments.filter(ap => ap.checkInDate?.getMonth() === date.getMonth() && ap.retreatCenterId === RetreatCenter.id).reduce((accum, ap) => accum + (ap.roomSchedule.some((sched) => (sched.rooms.some(rm => rm.id === room.id))) ? ap.checkInDays : 0), 0)
 
-                // const occupiedDays = Appointments.filter(ap => ap.checkInDate?.getMonth() === date.getMonth() && ap.retreatCenterId === RetreatCenter.id).reduce((accum, ap) => accum + ap.roomSchedule.reduce((accu, sched) => accu + (sched.rooms.some(rm => rm.id === room.id) ? sched.checkInDays : 0), accum), 0)
-
-                return (
-                  <div key={ix} className="row-evenly" style={{ height: "70px", width: "100%", margin: "10px 5px" }}>
-                    <div style={{ height: "40px", width: "40px" }}>
-                      <CircularProgressbar
-                        value={occupiedDays}
-                        maxValue={getLastDayOfMonth(date).getDate()}
-                        styles={{
-                          trail: {
-                            strokeWidth: 1,
-                          },
-                          path: {
-                            stroke: Colors.green300,
-                          },
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <h3>{room.name}</h3>
-                      <p>{getLastDayOfMonth(date).getDate()}/{occupiedDays}</p>
-                    </div>
-                  </div>
-                );
-              })
-            })}
-          </div>
-          <div className={styles.groupsContainer} style={{ width: "20%" }}>
             <div className={styles.groupsHeading}>
               <h3 className={styles.groupsTitle}>Groups</h3>
             </div>
-            {Appointments.map((appointment, i) => {
-              const group = CamperGroups.find(cg => cg.id === appointment.groupId)
-              return (
-                <button
-                  key={i}
-                  type="button"
-                  className={styles.groupCard}
-                  onClick={() => clickLead(appointment)}
-                  style={{ background: group?.color }}
-                >
-                  <h3>{group?.groupName}</h3>
-                </button>
-              );
-            })}
+            <div className="row-between flex-wrap" style={{ width: "100%" }}>
+              {Appointments.map((appointment, i) => {
+                const group = CamperGroups.find(cg => cg.id === appointment.groupId)
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    className={styles.groupCard}
+                    onClick={() => clickLead(appointment)}
+                    style={{ background: group?.color }}
+                  >
+                    <h3>{group?.groupName}</h3>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

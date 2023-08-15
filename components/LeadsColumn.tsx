@@ -2,7 +2,7 @@
 import { createLead, deleteLead, setCurrentLead } from "@/services/redux/slice/leads";
 import { RootState } from "@/services/redux/store";
 import { AppointmentType, ArgFunction, CamperGroupType, HTMLEvent } from "@/types";
-import { IDGenerator, debounce, generateColor, onDragOver } from "@/utils/functions";
+import { IDGenerator, debounce, generateColor, onDragOver, sortArrayOfObjects } from "@/utils/functions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./LeadsColumn.module.css"
 import TextInput from "./TextInput";
@@ -81,6 +81,9 @@ const LeadsColumn = (props: Props) => {
         else dispatch(deleteAppointment(parsed.id))
         dispatch(createLead({
             ...parsed,
+            checkInDate: parsed.checkInDate ? new Date(parsed.checkInDate) : undefined,
+            checkOutDate: parsed.checkOutDate ? new Date(parsed.checkOutDate) : undefined,
+            createdAt: new Date(parsed.createdAt),
             status: "Lead",
             activitySchedule: [],
             mealSchedule: [],
@@ -101,7 +104,7 @@ const LeadsColumn = (props: Props) => {
                 {Leads.length >= 5 ? <TextInput value={searchString} setValue={(e) => setSearchString(e.target.value)} placeholder="Search Lead" containerClassName={styles.searchInput} /> : null}
                 <div className={styles.leadsContainer}>
                     {
-                        rerenderingLeads.map((lead, i) => {
+                        sortArrayOfObjects(rerenderingLeads, "createdAt").map((lead, i) => {
                             return (
                                 <LeadCard
                                     showZipCode={showZipCode}

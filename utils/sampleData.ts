@@ -229,17 +229,17 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       {
         id: IDGenerator(),
         name: "T.V.",
-        amount: 5
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Office Chairs",
-        amount: 50
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Long Table",
-        amount: 2
+        amount: 1
       }
     ],
     housing: {
@@ -264,17 +264,17 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       {
         id: IDGenerator(),
         name: "T.V.",
-        amount: 5
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Office Chairs",
-        amount: 50
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Long Table",
-        amount: 2
+        amount: 1
       }
     ],
     photo: "",
@@ -365,17 +365,17 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       {
         id: IDGenerator(),
         name: "T.V.",
-        amount: 5
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Office Chairs",
-        amount: 50
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Long Table",
-        amount: 2
+        amount: 1
       }
     ],
     housing: {
@@ -465,17 +465,17 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       {
         id: IDGenerator(),
         name: "T.V.",
-        amount: 5
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Office Chairs",
-        amount: 50
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Long Table",
-        amount: 2
+        amount: 1
       }
     ],
     housing: {
@@ -638,17 +638,17 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       {
         id: IDGenerator(),
         name: "T.V.",
-        amount: 5
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Office Chairs",
-        amount: 50
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Long Table",
-        amount: 2
+        amount: 1
       }
     ],
     diagramStyles: []
@@ -738,17 +738,17 @@ export const ArrayRCSD: Array<RetreatCenterType> = [
       {
         id: IDGenerator(),
         name: "T.V.",
-        amount: 5
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Office Chairs",
-        amount: 50
+        amount: 1
       },
       {
         id: IDGenerator(),
         name: "Long Table",
-        amount: 2
+        amount: 1
       }
     ],
     diagramStyles: []

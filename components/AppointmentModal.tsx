@@ -17,6 +17,7 @@ import { setCurrentLead } from '@/services/redux/slice/leads';
 import { setCurrentCamperGroup } from '@/services/redux/slice/campergroups';
 import { months } from '@/utils/variables';
 import { getNumberWithOrdinal, trunc } from '@/utils/functions';
+import ActivityCard from './ActivityCard';
 type Props = {
     setIsVisible: SetStateType<boolean>
 }
@@ -30,9 +31,8 @@ const AppointmentModal = (props: Props) => {
     const dispatch = useDispatch()
     const group = useSelector((state: RootState) => state.CamperGroups.currentCamperGroup)
     const appointment = useSelector((state: RootState) => state.Leads.currentLead)
-    if (!group || !appointment) return null
     const [activeTab, setActiveTab] = useState(Tabs[0])
-
+    if (!group || !appointment) return null
     const modalContainer: React.CSSProperties = {
         outline: `5px solid ${group.color}`
     }
@@ -115,21 +115,14 @@ const Housing = ({ appointment, group }: { appointment: AppointmentType, group: 
     // @ts-ignore 
     const otherAppointments = Appointments.filter((a) => (new Date(CurrentAppointment.checkInDate) <= new Date(a?.checkOutDate) || new Date(CurrentAppointment.checkOutDate) <= new Date(a?.checkInDate)) && a.id !== CurrentAppointment.id)
     const unassignedGuests = Number(CurrentGroup?.groupSize) - Number(CurrentAppointment?.roomSchedule.reduce((accu, shed) => accu + shed.rooms.reduce((acc, room) => acc + room.capacity, accu), 0))
-    const checkInSplit = CheckInDate.toLocaleDateString().split("/")
-    const checkOutSplit = CheckOutDate.toLocaleDateString().split("/")
-    // @ts-ignore 
-    const checkInMonth = trunc(months[checkInSplit?.at(0)], 3, "")
-    const checkInDay = Number(checkInSplit?.at(1))
-    // @ts-ignore 
-    const checkOutMonth = trunc(months[checkOutSplit?.at(0)], 3, "")
-    const checkOutDay = Number(checkOutSplit?.at(1))
+
     return (
         <div className={styles.setUpContainer}>
             <div className="row-between">
 
                 <h5 style={{ textAlign: "start", margin: "10px 0" }}>Unassigned guests : {unassignedGuests}</h5>
 
-                <h5 style={{ textAlign: "start", margin: "10px 0" }}>{checkInMonth}/{getNumberWithOrdinal(checkInDay)} - {checkOutMonth}/{getNumberWithOrdinal(checkOutDay)}</h5>
+                <h5 style={{ textAlign: "start", margin: "10px 0" }}>{trunc(months[CheckInDate.getMonth()], 3, "")}/{getNumberWithOrdinal(CheckInDate.getDate())} - {trunc(months[CheckOutDate.getMonth()], 3, "")}/{getNumberWithOrdinal(CheckOutDate.getDate())}</h5>
             </div>
             {
                 Buildings && Buildings.map((building, i) => {
@@ -158,6 +151,7 @@ const Meeting = ({ appointment, group }: { appointment: AppointmentType, group: 
     )
 }
 const Activity = ({ appointment, group }: { appointment: AppointmentType, group: CamperGroupType }) => {
+    const Activities = useSelector((state: RootState) => state.RetreatCenters.retreatCenter.amenities.activities)
     const Appointments = useSelector((state: RootState) => state.Appointments.appointments)
     const CurrentAppointment = useSelector((state: RootState) => state.Leads.currentLead)
     if (!CurrentAppointment || !CurrentAppointment.checkInDate || !CurrentAppointment.checkOutDate) return null
@@ -176,7 +170,11 @@ const Activity = ({ appointment, group }: { appointment: AppointmentType, group:
     const checkOutDay = Number(checkOutSplit?.at(1))
     return (
         <div>
-
+            {
+                Activities && Activities.map((activity, i) =>
+                    <ActivityCard key={i} activity={activity} appointment={appointment} />
+                )
+            }
         </div>
     )
 }

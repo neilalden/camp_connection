@@ -9,7 +9,7 @@ type Props = {
     disabled?: boolean;
     placeholder?: string;
     value?: string | number;
-    setValue?: ArgFunction | VoidFunction;
+    setValue?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     containerStyle?: React.CSSProperties
     containerClassName?: string;
     inputClassName?: string;
@@ -44,10 +44,10 @@ const TextInput = (props: Props) => {
     } = props
 
     return (
-        <div style={containerStyle} className={[styles.container,containerClassName].join(" ")} data-content={dataContent}>
+        <div style={containerStyle} className={[styles.container, containerClassName].join(" ")} data-content={dataContent}>
             {label ? <label htmlFor={htmlFor} style={labelStyle} className={labelClassName}>{label}</label> : null}
             <input
-                 required={required}
+                required={required}
                 style={inputStyle}
                 onClick={(e) => onClick ? onClick(e) : e.stopPropagation()}
                 type={type}
