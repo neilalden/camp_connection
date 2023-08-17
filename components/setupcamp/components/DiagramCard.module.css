@@ -241,4 +241,5 @@
     align-items: center;
     padding: 0 25px !important;
     margin: 0 auto !important;
+    cursor: pointer;
 }

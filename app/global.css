@@ -95,14 +95,20 @@ label {
   user-select: none;
 }
 
+.select-none {
+  -webkit-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
 input {
   outline: 0;
   border: 0;
   font-size: 16px;
-  font-weight: 900 !important;
-  padding: 5px 5px 2px 5px !important;
+  font-weight: 900;
+  padding: 2px;
   border-bottom: 1px solid #E0E7EB;
-  transition: .5s ease-out 0s !important;
+  transition: .5s ease-out 0s;
   background: transparent;
 }
 
@@ -122,7 +128,7 @@ input:hover {
 
 button {
   all: unset;
-  cursor: pointer !important;
+  cursor: pointer;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
@@ -145,10 +151,11 @@ br {
 
 a {
   all: unset;
-  font-size: 12px;
-  font-weight: light;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .col {
@@ -237,6 +244,38 @@ a {
   margin: auto;
 }
 
+.mv-10px {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mh-10px {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.m-10px {
+  margin: 10px;
+}
+
+.mt-10px {
+  margin-top: 10px;
+}
+
+.mr-10px {
+  margin-right: 10px;
+}
+
+.mb-10px {
+  margin-bottom: 10px;
+}
+
+.ml-10px {
+  margin-left: 10px;
+}
+
+
+
 .mv-20px {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -249,6 +288,85 @@ a {
 
 .m-20px {
   margin: 20px;
+}
+
+.mt-20px {
+  margin-top: 20px;
+}
+
+.mr-20px {
+  margin-right: 20px;
+}
+
+.mb-20px {
+  margin-bottom: 20px;
+}
+
+.ml-20px {
+  margin-left: 20px;
+}
+
+
+.mv-40px {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.mh-40px {
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.m-40px {
+  margin: 40px;
+}
+
+.mt-40px {
+  margin-top: 40px;
+}
+
+.mr-40px {
+  margin-right: 40px;
+}
+
+.mb-40px {
+  margin-bottom: 40px;
+}
+
+.ml-40px {
+  margin-left: 40px;
+}
+
+
+
+.pv-10px {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.ph-10px {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.p-10px {
+  padding: 10px;
+}
+
+.pt-10px {
+  padding-top: 10px;
+}
+
+.pr-10px {
+  padding-right: 10px;
+}
+
+.pb-10px {
+  padding-bottom: 10px;
+}
+
+.pl-10px {
+  padding-left: 10px;
 }
 
 
@@ -264,6 +382,53 @@ a {
 
 .p-20px {
   padding: 20px;
+}
+
+.pt-20px {
+  padding-top: 20px;
+}
+
+.pr-20px {
+  padding-right: 20px;
+}
+
+.pb-20px {
+  padding-bottom: 20px;
+}
+
+.pl-20px {
+  padding-left: 20px;
+}
+
+
+.pv-40px {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.ph-40px {
+  padding-right: 40px;
+  padding-left: 40px;
+}
+
+.p-40px {
+  padding: 40px;
+}
+
+.pt-40px {
+  padding-top: 40px;
+}
+
+.pr-40px {
+  padding-right: 40px;
+}
+
+.pb-40px {
+  padding-bottom: 40px;
+}
+
+.pl-40px {
+  padding-left: 40px;
 }
 
 .pv-auto {
@@ -307,6 +472,18 @@ a {
 
 .w-60p {
   width: 60% !important;
+}
+
+.w-70p {
+  width: 70% !important;
+}
+
+.w-80p {
+  width: 80% !important;
+}
+
+.w-90p {
+  width: 90% !important;
 }
 
 .w-100p {
@@ -369,7 +546,7 @@ input[type=number] {
 }
 
 .flow-wrap {
-  flex-flow: wrap,
+  flex-flow: wrap !important;
 }
 
 .darkBackground {
@@ -410,13 +587,55 @@ input[type=number] {
   overflow-y: visible;
 }
 
+.tooltipBreakText {
+  position: relative;
+}
+
+.tooltipBreakText:hover::after {
+  content: attr(data-content);
+  border-radius: 3px;
+  background: #1f2c47;
+  color: #fff;
+  position: absolute;
+  padding: 5px !important;
+  bottom: calc(100% + 5px) !important;
+  min-height: 10px !important;
+  min-width: 100px !important;
+  width: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 12px !important;
+  font-weight: 400;
+  z-index: 100;
+  overflow-x: hidden;
+  overflow-y: visible;
+  white-space: break-spaces;
+}
+
 .texthover:hover {
   border-bottom: 1px solid #85A0AD;
 }
 
-.buttonhover:hover {
-  border: 1px solid #85A0AD;
+.button-hover {
+  transition: .5s ease-out 0s !important;
 }
+
+.button-hover:hover {
+  border: 1px solid #85A0AD !important;
+  color: #85A0AD !important;
+
+}
+
+.button-link-hover {
+  transition: .5s ease-out 0s !important;
+}
+
+.button-link-hover:hover {
+  text-decoration: underline;
+}
+
 
 .scroll-y {
   overflow: scroll !important;

@@ -15,6 +15,7 @@ const Layout = ({ children }: any) => {
           <TopNavigation />
           <div className={styles.content}>
             <SideNavigation />
+            <div style={{ width: "50px" }} />
             <div className={styles.mainContent}>{children}</div>
           </div>
         </div>

@@ -100,7 +100,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
     const calendarDays = Array(8).fill(0)
     let calendarDate: number | undefined = undefined;
     return (
-        <div>
+        <div className="select-none">
             {modalIsVisible ? <AppointmentModal setIsVisible={setModalIsVisible} /> : null}
             <div className={styles.calendarWeek}>
                 {calendarDays.map((d, i) => {
@@ -180,7 +180,7 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
 
                                 }
                                 if (Array.isArray(appointment) && Array.isArray(group)) {
-                                    const backgroundString = `repeating-linear-gradient(${group.map(g => (g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color)).toString()} 5px)`
+                                    const backgroundString = `linear-gradient(${group.map(g => (g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color + "," + g.color)).toString()} 15px)`
                                     let isArrayHead = true;
                                     let isArrayTail = true;
                                     for (const app of appointment) {
@@ -233,10 +233,10 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                 // @ts-ignore 
                                 const outDateSplit = addDaysToDate(new Date(currentAppointment?.checkInDate), currentAppointment?.checkInDays).toLocaleDateString().split("/")
                                 // @ts-ignore 
-                                const currentMonth = trunc(months[currentDateSplit.at(0)], 3, "")
+                                const currentMonth = trunc(months[Number(currentDateSplit.at(0)) - 1], 3, "")
                                 const currentDay = Number(currentDateSplit?.at(1))
                                 // @ts-ignore 
-                                const outMonth = trunc(months[outDateSplit.at(0)], 3, "")
+                                const outMonth = trunc(months[Number(outDateSplit.at(0)) - 1], 3, "")
                                 const outDay = Number(outDateSplit?.at(1))
                                 if (appointmentBeingDragged && !cellBeingDragged) cond = false;
                                 return (
@@ -248,42 +248,90 @@ const SimpleCalendar = ({ date, RetreatCenter }: { date: Date, RetreatCenter: Re
                                         onDragLeave={leaveDrag}
                                         onMouseOver={() => {
                                             if (!currentAppointment && !grabbedAppointment && !currentDate) return;
+                                            const grabbed = Array.isArray(appointment) ? { appointments: appointment } : currentAppointment;
                                             // @ts-ignore
-                                            debounce(setGrabbedAppointment({ ...currentAppointment, hoverDate: currentDate }))
+                                            debounce(setGrabbedAppointment({ ...grabbed, hoverDate: currentDate }))
                                         }}
                                         onMouseLeave={() => debounce(setGrabbedAppointment(undefined))}>
                                         {grabbedAppointment && grabbedAppointment.hoverDate === currentDate && appointment && currentDate && cond && currentGroup ?
-                                            <div style={{
-                                                top: "-12px",
-                                                height: "22px",
-                                                width: "fit-content",
-                                                position: "absolute",
-                                                background: "white",
-                                                display: "flex",
-                                                flexDirection: "row",
-                                                padding: "0px 10px 5px 10px",
-                                                whiteSpace: "nowrap",
-                                                borderRadius: "5px",
-                                                border: `2px solid ${currentGroup.color}`,
-                                                zIndex: 10
-                                            }}>
-                                                <p style={{ color: currentGroup.color, fontWeight: "800", marginRight: "15px" }}>{currentGroup.groupName}</p>
-                                                <p style={{ marginRight: "15px" }}>{currentGroup.groupSize} Guests</p>
-                                                <p style={{ marginRight: "15px" }}>{currentAppointment?.checkInDays} Nights</p>
-                                                <p style={{ fontWeight: "800" }}>{currentMonth}. {getNumberWithOrdinal(currentDay)} <span style={{ fontSize: "14px" }}>to</span> {outMonth}. {getNumberWithOrdinal(outDay)}</p>
-                                            </div>
+                                            Array.isArray(appointment) ?
+                                                appointment.map((ap: AppointmentType, idx: number) => {
+                                                    // @ts-ignore 
+                                                    const odSplit = addDaysToDate(new Date(ap?.checkInDate), ap?.checkInDays).toLocaleDateString().split("/")
+                                                    // @ts-ignore 
+                                                    const oMonth = trunc(months[Number(odSplit.at(0)) - 1], 3, "")
+                                                    const oDay = Number(odSplit?.at(1))
+                                                    const g = CamperGroups.find(cg => cg.id === ap.groupId)
+                                                    if (!g || appointment[idx - 1] && appointment[idx - 1].id === ap.id) return null
+                                                    return (
+                                                        <div
+                                                            onDragOver={e => { e.preventDefault(); onDropPreview(currentDate) }}
+                                                            onDragLeave={leaveDrag}
+                                                            key={idx}
+                                                            style={{
+                                                                top: `-${20 * (idx + (idx / 2) + 1)}px`,
+                                                                left: "-200px",
+                                                                height: "24px",
+                                                                width: "fit-content",
+                                                                position: "absolute",
+                                                                background: "white",
+                                                                display: "flex",
+                                                                flexDirection: "row",
+                                                                padding: "0px 10px 10px 10px",
+                                                                whiteSpace: "nowrap",
+                                                                borderRadius: "5px",
+                                                                border: `2px solid ${g.color}`,
+                                                                zIndex: 10,
+                                                                boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                                                            }}>
+                                                            <p style={{ color: g.color, fontWeight: "800", marginRight: "15px" }}>{g.groupName}</p>
+                                                            <p style={{ marginRight: "15px" }}>{g.groupSize} Guests</p>
+                                                            <p style={{ marginRight: "15px" }}>{ap?.checkInDays} Nights</p>
+                                                            <p style={{ fontWeight: "800" }}>{currentMonth}. {getNumberWithOrdinal(currentDay)} <span style={{ fontSize: "14px" }}>to</span> {oMonth}. {getNumberWithOrdinal(oDay)}</p>
+                                                        </div>
+                                                    )
+                                                })
+                                                :
+                                                <div
+                                                    onDragOver={e => { e.preventDefault(); onDropPreview(currentDate) }}
+                                                    onDragLeave={leaveDrag}
+                                                    style={{
+                                                        top: "-20px",
+                                                        left: "-200px",
+                                                        height: "24px",
+                                                        width: "fit-content",
+                                                        position: "absolute",
+                                                        background: "white",
+                                                        display: "flex",
+                                                        flexDirection: "row",
+                                                        padding: "0px 10px 10px 10px",
+                                                        whiteSpace: "nowrap",
+                                                        borderRadius: "5px",
+                                                        border: `2px solid ${currentGroup.color}`,
+                                                        zIndex: 10,
+                                                        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                                                    }}>
+                                                    <p style={{ color: currentGroup.color, fontWeight: "800", marginRight: "15px" }}>{currentGroup.groupName}</p>
+                                                    <p style={{ marginRight: "15px" }}>{currentGroup.groupSize} Guests</p>
+                                                    <p style={{ marginRight: "15px" }}>{currentAppointment?.checkInDays} Nights</p>
+                                                    <p style={{ fontWeight: "800" }}>{currentMonth}. {getNumberWithOrdinal(currentDay)} <span style={{ fontSize: "14px" }}>to</span> {outMonth}. {getNumberWithOrdinal(outDay)}</p>
+                                                </div>
                                             : null}
                                         {appointment && currentDate && cond ?
                                             <div
                                                 style={appointmentBeingDragged ? vacantLine : style}
                                                 className={classes}
                                                 draggable={isDraggable}
+                                                onDragOver={e => { e.preventDefault(); onDropPreview(currentDate) }}
+                                                onDragLeave={leaveDrag}
                                                 onDragStart={(e) => onDrag(e, appointment, currentDate)}
                                                 onDragEnd={e => onDragEnd(e)}
                                                 onClick={(e) => { e.stopPropagation(); clickAppointment(Array.isArray(appointment) ? appointment[0] : appointment) }}
                                             />
                                             : <div
                                                 style={vacantLine}
+                                                onDragOver={e => { e.preventDefault(); onDropPreview(currentDate) }}
+                                                onDragLeave={leaveDrag}
                                             />}
 
                                     </div>

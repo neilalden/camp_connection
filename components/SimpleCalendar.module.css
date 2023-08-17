@@ -59,7 +59,7 @@
 
 .occupied {
     width: 100% !important;
-    height: 5px !important;
+    height: 15px !important;
     overflow-x: visible;
     margin: auto 0px !important;
     cursor: grab;

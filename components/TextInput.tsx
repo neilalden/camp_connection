@@ -45,7 +45,7 @@ const TextInput = (props: Props) => {
 
     return (
         <div style={containerStyle} className={[styles.container, containerClassName].join(" ")} data-content={dataContent}>
-            {label ? <label htmlFor={htmlFor} style={labelStyle} className={labelClassName}>{label}</label> : null}
+            {label ? <label htmlFor={htmlFor} style={labelStyle} className={[styles.topLabel, labelClassName].join(" ")}>{label}</label> : null}
             <input
                 required={required}
                 style={inputStyle}

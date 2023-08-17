@@ -15,24 +15,25 @@
 }
 
 .calendarNavigationItem {
-    margin: 5px 10px !important;
+    margin: 5px 20px !important;
     transition-property: color !important;
     transition-duration: .5s !important;
     transition-timing-function: linear !important;
+    font-size: 20px;
 }
 
 .calendarNavigationItemActive {
     color: var(--chalky-500, #D8E189);
-    font-size: 16px;
+    font-size: 22px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 800;
     line-height: normal;
 
 }
 
 .line {
-    height: 2.5px;
-    width: 400px;
+    height: 2px;
+    width: 500px;
     margin: auto;
     background: #dddddd;
     border-radius: 200%;

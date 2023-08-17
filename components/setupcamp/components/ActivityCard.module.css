@@ -9,6 +9,7 @@
     padding-left: 25px !important;
     padding-right: 50px !important;
     margin-top: 15px !important;
+    cursor: pointer;
 }
 
 .sectionTitle {
@@ -20,9 +21,6 @@
 
 .activityCard {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     border: 1px solid #E0E7EB;
     height: max-content;
 }
@@ -31,8 +29,7 @@
     color: #85A0AD;
     font-weight: 600 !important;
     transition: .5s ease-out 0s;
-    /* width: 20px;*/
-    margin-right: 20px;
+    margin-left: 10px;
 }
 
 .pricingDeleteButton:hover {
@@ -70,14 +67,13 @@
 
 .meetingRoomCardCapacityInput {
     background: #fff !important;
-    height: 30px !important;
+    height: 15px !important;
     width: 45px !important;
     min-width: 50px !important;
     max-width: 70px !important;
     border-bottom: 1px solid #E0E7EB;
     text-align: center !important;
-    display: flex;
-    justify-content: flex-end;
+    margin-top: 10px;
 }
 
 .meetingRoomCardCapacityInput:focus {
@@ -86,14 +82,13 @@
 
 .pricingNameInput {
     background: #fff !important;
-    height: 30px !important;
-    /* max-width: 50%; */
+    height: 17px !important;
     border-bottom: 1px solid #E0E7EB;
     text-align: center !important;
     display: flex;
     justify-content: flex-end;
     padding-bottom: 0 !important;
-    margin-bottom: 0 !important;
+    margin-top: 10px;
 }
 
 .capacityLabelClassName {
@@ -111,7 +106,7 @@
     align-items: center;
     height: fit-content;
     align-self: center;
-    width: 55px;
+    width: 90px
 }
 
 .unavailable {
@@ -122,7 +117,7 @@
     align-items: center;
     height: fit-content;
     align-self: center;
-    width: 55px;
+    width: 90px
 }
 
 .info {
@@ -163,10 +158,7 @@
 
 .pricingContainer {
     max-height: 100px !important;
-    align-items: flex-end;
-    display: flex;
-    flex-direction: column;
-    width: 33%;
+    width: 34%;
 }
 
 .featureLogoContainer {
@@ -239,7 +231,6 @@
 }
 
 .previewHeader {
-    background: linear-gradient(180deg, rgba(246, 248, 249, 0.00) 0%, rgba(246, 248, 249, 0.00) 0.01%, rgba(246, 248, 249, 0.50) 31.25%, #F6F8F9 100%);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -249,7 +240,7 @@
     width: 100% !important;
     min-width: 300px;
     min-height: 350px !important;
-    height: 60%;
+    height: max-content;
     background: #F6F8F9;
     position: relative;
 }
@@ -288,8 +279,9 @@
 
 .addMeetingRoomButton {
     border: 1px solid #E0E7EB !important;
-    width: 180px;
+    width: 200px;
     margin: 5px 0 !important;
+    height: 30px;
     text-align: center;
     color: #85A0AD;
     font-size: 18px;
@@ -314,7 +306,7 @@
 }
 
 .scheduleForm {
-    min-width: 300px;
+    min-width: 340px;
 }
 
 .scheduleCheckboxContainer {
@@ -341,10 +333,14 @@
 }
 
 .timeInputContainer {
-    height: 30px;
+    height: 10px !important;
     position: absolute;
-    top: 15px;
+    top: 10px;
     left: -35px;
+    display: flex;
+    flex-direction: row !important;
+    align-items: start;
+    justify-content: start;
 }
 
 .timeInputTo {
@@ -355,13 +351,14 @@
 .timeInput {
     font-size: 12px !important;
     font-weight: lighter;
+    padding: 0;
 }
 
 .buttonApplyToAll {
     font-weight: 500;
     text-decoration: underline;
     color: #3C7FD6;
-    margin-top: 50px !important;
+    margin-top: 45px !important;
 }
 
 .schedContainer {

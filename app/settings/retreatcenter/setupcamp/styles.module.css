@@ -48,6 +48,7 @@
     padding-left: 50px !important;
     padding-right: 50px !important;
     margin-top: 15px !important;
+    cursor: pointer;
 }
 
 .sectionTitle {
@@ -132,7 +133,7 @@
 
 .meetingRoomCardNameInputContainer {
     width: 80% !important;
-    margin: 28px 0 25px 25px;
+    margin: 31px 0 25px 25px;
 }
 
 .meetingRoomCardNameInput {

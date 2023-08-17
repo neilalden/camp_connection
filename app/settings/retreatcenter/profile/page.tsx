@@ -158,11 +158,11 @@ const Userprofile = () => {
 };
 const SchedulePicker = ({ season = "all" }: { season?: string }) => {
     const schedule: Array<ScheduleType> = weekdays.map(wd => ({
-        label: wd,
-        value: true,
+        day: wd,
+        isChecked: true,
         editMode: false,
-        from: "09:00 AM",
-        to: "05:00 PM"
+        from: "09:00",
+        to: "17:00"
     }));
     const [isOpenAnytime, setIsOpenAnytime] = useState(false);
     const [weekSchedule, setWeekSchedule] = useState<Array<ScheduleType>>(schedule)
@@ -177,10 +177,17 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
         }))
         setWeekSchedule(newSched)
     }
-    const onChange = ({ label, value }: { label: string, value: boolean }) => {
+    const onChange = (sched: ScheduleType) => {
+        const {
+            day,
+            from,
+            isChecked,
+            to,
+            editMode
+        } = sched
         setWeekSchedule(prev => {
             return prev.map((val) => {
-                if (val.label === label) return { ...val, value: !val.value }
+                if (val.day === day) return { ...val, value: !val.isChecked }
                 return val
             })
         })
@@ -188,20 +195,20 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
     const toggleEdit = (sched: ScheduleType) => {
         setWeekSchedule(prev => {
             return prev.map((val) => {
-                if (val.label === sched.label) return { ...val, editMode: !val.editMode }
+                if (val.day === sched.day) return { ...val, editMode: !val.editMode }
                 return val
             })
         })
     }
-    const setHour = (value: string, property: string, label: string) => {
-        const newSched = [...weekSchedule].map((day => {
-            if (day.label === label) {
+    const setHour = (value: string, property: "from" | "to", day: string) => {
+        const newSched: Array<ScheduleType> = [...weekSchedule].map((weekday => {
+            if (weekday.day === day) {
                 return {
-                    ...day,
-                    [property]: toStandardTime(value)
+                    ...weekday,
+                    [property]: value
                 }
             }
-            return day
+            return weekday
         }))
         setWeekSchedule(newSched)
     }
@@ -246,13 +253,13 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
                     <div className={styles.scheduleCheckboxContainer}>
                         {
                             weekSchedule.map((sched, i) => {
-                                if (sched.value) {
+                                if (sched.isChecked) {
                                     return (
                                         <div key={i} className="row-between">
                                             <CheckBox
-                                                label={sched.label}
-                                                value={sched.value}
-                                                name={`${season}---${sched.label}`}
+                                                label={sched.day}
+                                                value={sched.isChecked}
+                                                name={`${season}---${sched.day}`}
                                                 onChange={() => onChange(sched)}
                                                 containerStyle={{ width: "65px", alignSelf: "center" }}
                                             />
@@ -261,9 +268,9 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
                                                     (
                                                         <div className={styles.schedContainer}>
                                                             <div className={["row", styles.timeInputContainer].join(" ")}>
-                                                                <input type={"time"} onChange={e => setHour(e.target.value, "from", sched.label)} className={styles.timeInput} />
+                                                                <input type={"time"} value={sched.from} onChange={e => setHour(e.target.value, "from", sched.day)} className={styles.timeInput} />
                                                                 <h4 className={styles.timeInputTo}>to</h4>
-                                                                <input type={"time"} onChange={e => setHour(e.target.value, "to", sched.label)} className={styles.timeInput} />
+                                                                <input type={"time"} value={sched.to} onChange={e => setHour(e.target.value, "to", sched.day)} className={styles.timeInput} />
 
                                                             </div>
                                                             <button type="button" className={styles.buttonApplyToAll} onClick={() => applyToAll(sched)}>Apply to all selected days?</button>
@@ -273,7 +280,7 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
                                                     (
 
                                                         <p className={styles.scheduleString}>
-                                                            {`${sched.from} - ${sched.to}`}
+                                                            {`${toStandardTime(sched.from)} - ${toStandardTime(sched.to)}`}
                                                         </p>
                                                     )
                                             }
@@ -284,9 +291,9 @@ const SchedulePicker = ({ season = "all" }: { season?: string }) => {
                                 return (
                                     <div key={i} className="row">
                                         <CheckBox
-                                            label={sched.label}
-                                            value={sched.value}
-                                            name={`${season}---${sched.label}`}
+                                            label={sched.day}
+                                            value={sched.isChecked}
+                                            name={`${season}---${sched.day}`}
                                             onChange={() => onChange(sched)}
                                             containerStyle={{ width: "65px" }} />
                                         <span className={styles.spanClosed}>Closed</span>

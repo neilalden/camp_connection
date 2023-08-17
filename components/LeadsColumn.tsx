@@ -74,8 +74,9 @@ const LeadsColumn = (props: Props) => {
 
     const onDrop = (e: React.DragEvent) => {
         const widgetType = e.dataTransfer.getData("widgetType") as string;
+        const data = JSON.parse(widgetType)
         if (!widgetType) return;
-        const parsed: AppointmentType = JSON.parse(widgetType)
+        const parsed: AppointmentType = Array.isArray(data) ? data[0] : data;
         const isALead = parsed && parsed.status === "Lead"
         if (isALead) dispatch(deleteLead(parsed.id))
         else dispatch(deleteAppointment(parsed.id))

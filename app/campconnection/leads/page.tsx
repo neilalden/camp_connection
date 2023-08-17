@@ -77,9 +77,9 @@ const Leads = () => {
                             const logo = !!retreatCenter.photo ? retreatCenter.photo : Images["ic_logo"]
                             const capacity = retreatCenter.housing.buildings?.reduce((accum, building) =>
                                 [...building.rooms ?? []].reduce((accu, room) =>
-                                    room.beds?.reduce((acc, bed) => acc + (arrayToMap({ array: retreatCenter.bedStyles ?? [], key: "id" }).get(bed.id)?.capacity * bed.amount), accu), accum), 0)
+                                    room.beds?.reduce((acc, bed) => acc + (arrayToMap({ array: retreatCenter.bedStyles ?? [], key: "id" }).get(bed.id)?.capacity * bed.amount), accu), accum), 0) ?? 0
                             const group = CamperGroups.find((cg) => cg.id === currentAppointment?.groupId);
-                            const capacityClass = group?.groupSize && capacity && group.groupSize > capacity ? styles.capacityDanger : styles.capacity
+                            const capacityClass = group && group.groupSize > capacity ? styles.capacityDanger : styles.capacity
                             return (
                                 <div key={i} className={styles.retreatCenterCard}>
                                     <div className="row">

@@ -112,7 +112,12 @@ export const sortArrayOfObjects = (array: Array<any>, property: string, order: "
 export const ObjectToArray = (obj: any) => {
     return Object.keys(obj).map((key) => obj[key]);
 }
-
+export const ArrayToObject = (arr: Array<any>, key: string) => {
+    return arr.reduce(function (result, item, index, array) {
+        result[index] = item;
+        return result;
+    }, {})
+}
 
 export const getNextMonth = (m: number) => {
     if (m == 11) return 0;
@@ -199,4 +204,40 @@ export const getNumberWithOrdinal = (n: number) => {
     var s = ["th", "st", "nd", "rd"],
         v = n % 100;
     return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+export const getTimeBlocks = ({ from, to, interval }: { from: Date; to: Date, interval: number }) => {
+    // @ts-ignore
+    const diffInMS = to - from
+    const diffInMins = Math.floor((diffInMS / 1000) / 60);
+    const timeBlocksArr = [];
+    for (let i = 0; i <= diffInMins - interval; i += interval) {
+        const today = new Date(from);
+        const halfHourInLoop = i / 60;
+        let formattedBlock = String(halfHourInLoop);
+        const hour = formattedBlock.split('.')[0];
+        const minute = i % 60 === 0 ? '00' : interval;
+        formattedBlock = `${today.getHours() + Number(hour)}:${minute}`;
+        const timeString = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate(),
+            today.getHours() + Number(hour),
+            Number(minute),
+        );
+        timeBlocksArr.push({
+            timeString: timeString.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            timeValue: formattedBlock,
+        });
+    }
+
+    return timeBlocksArr;
+};
+export const hourStringToDate = (dStr: string, format: "h:m" = "h:m") => {
+    const now = new Date();
+    const split = dStr.split(":")
+    now.setHours(Number(split[0]));
+    now.setMinutes(Number(split[1]));
+    now.setSeconds(0);
+    return now;
 }
