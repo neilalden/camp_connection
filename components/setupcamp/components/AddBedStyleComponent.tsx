@@ -40,7 +40,7 @@ const AddBedStyleComponent = ({ BedStyle, setIsVisible }: Props) => {
                     value={bedstyle.name}
                     placeholder='Bed style name...'
                     setValue={e => setBedstyle(prev => ({ ...prev, name: e.target.value }))}
-                    containerStyle={{ width: "300px", marginTop: "20.5px" }}
+                    containerStyle={{ width: "300px" }}
                 />
                 <TextInput
                     type='number'
@@ -199,7 +199,7 @@ export default AddBedStyleComponent;
 const capacityInputStyle: React.CSSProperties = {
     border: "1px solid #E0E7EB",
     textAlign: "center",
-    marginBottom: "5px",
+    marginBottom: "1px",
 }
 const capacityContainerStyle: React.CSSProperties = {
     textAlign: "center",

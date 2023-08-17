@@ -28,7 +28,7 @@ export type CamperUserType = {
   | "Group Member"
   | "Camper Gaurdian/Parent"
   | "Individual Camper";
-  groupName?: string;
+  groupId: CamperGroupType["id"]
   checkInDate?: Date;
   checkOutDate?: Date;
   checkInDays?: Number;
@@ -41,6 +41,20 @@ export type RetreatCenterTeamType = {
 export type CampConnectionTeamUserType = {
   userType?: "Admin" | "Sales" | "Support";
 } & User
+
+export type CamperGroupType = {
+  id: string;
+  appointmentId: AppointmentType["id"]
+  campers: Array<CamperUserType>
+  color: string;
+  appointeeName?: string;
+  appointeeContactNumber?: string;
+  appointeeEmail?: string;
+  groupName: string;
+  zipCode?: number;
+  groupSize: number;
+}
+
 
 export type RetreatCenterType = {
   id: string;
@@ -80,28 +94,13 @@ export type AppointmentType = {
   groupId: CamperGroupType["id"]
   status: "Lead" | "Reserved" | "Booked";
   checkInDays: number;
-
   mealSchedule: Array<MealScheduleType>;
   roomSchedule: Array<RoomScheduleType>;
   meetingRoomSchedule: Array<MeetingRoomScheduleType>;
   activitySchedule: Array<ActivityScheduleType>;
-
   checkInDate?: Date;
   checkOutDate?: Date;
 };
-
-export type CamperGroupType = {
-  id: string;
-  appointmentId: AppointmentType["id"]
-  campers: Array<CamperUserType>
-  color: string;
-  appointeeName?: string;
-  appointeeContactNumber?: string;
-  appointeeEmail?: string;
-  groupName: string;
-  zipCode?: number;
-  groupSize?: number;
-}
 
 export type MealScheduleType = {
   groupId: CamperGroupType["id"];
@@ -133,7 +132,7 @@ export type ActivityScheduleType = {
   checkInDate?: Date;
   checkInTime?: string;
   checkOutTime?: string;
-  activities: Array<ActivityType>;
+  activity: ActivityType;
   notes?: string
 }
 
@@ -173,12 +172,15 @@ export type ActivityType = {
   description: any;
   pricing: Array<PricingType>;
   seasonsAvailable: Array<SeasonClass>
+  dailyAvailable: "*" | Array<ScheduleType>
   occupiedBy?: AppointmentType;
-  feature?: string;
+  feature: string;
   releaseForm?: string;
   refundPolicy?: string;
   photos: Array<string | StaticImport>;
-  notes?: string
+  notes?: string;
+  learnMoreUrl: string;
+  contracts: Array<string>
 };
 export type SpotType = {
   id: string;
@@ -222,9 +224,9 @@ export type FileType = {
   name: string;
 };
 export type ScheduleType = {
-  label: string;
-  value: boolean;
-  editMode: boolean;
+  day: string;
+  isChecked: boolean;
+  editMode?: boolean;
   from: string;
   to: string;
 };

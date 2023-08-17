@@ -309,7 +309,11 @@ export const RetreatCentersSlice = createSlice({
                                 interval: "minutes",
                                 time: 30,
                             },
-                            photos: []
+                            photos: [],
+                            contracts: [],
+                            dailyAvailable: "*",
+                            feature: "https://campconnection.net/wp-content/uploads/2023/02/videoplayback.mp4",
+                            learnMoreUrl: "CampConnection.net"
                         }
                     ],
                     bedStyles: [

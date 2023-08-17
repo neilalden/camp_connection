@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import styles from "./MainCalendar.module.css"
-import { arrayToMap, filterAppointment, getDays } from '@/utils/functions'
+import { arrayToMap, filterAppointment, getDays, trunc } from '@/utils/functions'
 import { months, weekdays } from '@/utils/variables'
 import Colors from '@/common/colors'
 import { AmenityType, FilterType, AppointmentType, RoomType } from '@/types'
@@ -74,7 +74,7 @@ const MainCalendar = ({ date }: { date: Date }) => {
                     {calendarDays.map((d, i) => {
                         if (i === 0) return <div key={i} className={styles.calendarHeader0} />
                         return (
-                            <div key={i} className={styles.calendarHeader}><span className={styles.calendarHeaderText}>{weekdays[i - 1]}</span></div>
+                            <div key={i} className={styles.calendarHeader}><span className={styles.calendarHeaderText}>{trunc(weekdays[i - 1], 3, "")}</span></div>
                         )
                     })}
                 </div>

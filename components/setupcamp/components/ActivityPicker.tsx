@@ -42,7 +42,7 @@ const ActivityPicker = ({
                                             className={styles.activityStyleOption}
                                             style={{ width: "90%" }}
                                             onClick={(e) => {
-                                                changeActivityClass({ ...activity, class: activitystyle, name: activitystyle });
+                                                changeActivityClass({ ...activity, class: activitystyle });
                                                 setShowActivityStyleOptions(false)
                                             }}
 
@@ -51,7 +51,7 @@ const ActivityPicker = ({
                                                 type="button"
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    changeActivityClass({ ...activity, class: activitystyle, name: activitystyle });
+                                                    changeActivityClass({ ...activity, class: activitystyle });
                                                     setShowModal(true)
                                                     setShowActivityStyleOptions(false)
                                                 }}
@@ -68,7 +68,7 @@ const ActivityPicker = ({
                                                 className={styles.optionActivityButton}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    changeActivityClass({ ...activity, class: activitystyle, name: activitystyle });
+                                                    changeActivityClass({ ...activity, class: activitystyle });
                                                     setShowActivityStyleOptions(false)
                                                 }}
                                                 style={{

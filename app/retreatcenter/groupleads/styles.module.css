@@ -34,9 +34,6 @@
   align-items: center;
   margin: 20px !important;
   width: 70%;
-  overflow-y: scroll;
-  overflow-x: overlay !important;
-  z-index: 0;
 }
 
 .heading {
@@ -135,7 +132,6 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  overflow-x: overlay !important;
 }
 
 .prevCalendarContainer {
@@ -182,8 +178,7 @@
   padding: 10px 20px !important;
   border-radius: 5px;
   margin: 10px !important;
-  width: 50%;
-  min-width: 100px;
+  min-width: calc(50% - 20px);
   text-align: center;
 }
 

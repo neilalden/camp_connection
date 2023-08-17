@@ -6,9 +6,11 @@ label.container input[type="file"] {
 .container {
     cursor: pointer;
     border: 1px solid #E0E7EB;
-    padding: 0px 15px 5px 15px;
+    padding: 7px 15px;
     background: #F6F8F9;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: .5s ease-out 0s;
 }
 

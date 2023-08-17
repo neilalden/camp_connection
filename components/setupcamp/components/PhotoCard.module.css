@@ -2,6 +2,7 @@
   position: relative;
   width: 100%;
   height: 100% !important;
+  min-height: 100px;
 }
 
 .photoContainer:hover .overlay {
@@ -17,7 +18,7 @@
 
 .editText {
   position: absolute;
-  bottom: 30%;
+  top: 60%;
   left: 50%;
   transform: translateX(-50%);
   color: #fff;

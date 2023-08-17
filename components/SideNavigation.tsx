@@ -5,7 +5,7 @@ import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { usePathname } from "next/navigation"
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import styles from "./Nav.module.css"
 type SideNavType = { id: string; name: string; img: string | StaticImport; category: string }
@@ -98,44 +98,61 @@ const SideNavigation = () => {
     const clearRouteAndReroute = (newRoute: string) => {
         router.replace(newRoute);
     };
+    const [darkBG, setDarkBG] = useState(false);
     if (!user) return null;
     return (
-        <nav className={styles.sideNav}>
-            <div className={styles.navButtonsContainer}>
-                <div className={styles.sideNavButtons}>
-                    {toRender.map((nav, i) => {
-                        return (
-                            <button
-                                key={i}
-                                className={currentPage == nav.id ? styles.buttonActive : styles.button}
-                                onClick={() => {
-                                    if (nav.category !== user.userCategory) clearRouteAndReroute(isInSettings ? `/settings/${nav.category}/${nav.id}` : `/${nav.category}/${nav.id}`)
-                                    else router.push(isInSettings ? `/settings/${nav.category}/${nav.id}` : `/${nav.category}/${nav.id}`)
-                                }}
-                            >
-                                <Image
-                                    alt={`${nav.name} icon`}
-                                    src={nav.img}
-                                    height={20}
-                                    style={{ objectFit: "cover" }}
-                                /><p className={currentPage === nav.id ? styles.navTextActive : styles.navText}>{nav.name}</p>
-                            </button>
-                        )
-                    })}
+        <>
+            {darkBG ? <div className={styles.darkBackground} /> : null}
+            <nav className={styles.sideNav} onMouseOver={() => setDarkBG(true)} onMouseLeave={() => setDarkBG(false)}>
+                <div className={styles.navButtonsContainer}>
+                    <div className={styles.sideNavButtons}>
+                        {toRender.map((nav, i) => {
+                            return (
+                                <button
+                                    key={i}
+                                    className={currentPage == nav.id ? styles.buttonActive : styles.button}
+                                    onClick={() => {
+                                        if (nav.category !== user.userCategory) clearRouteAndReroute(isInSettings ? `/settings/${nav.category}/${nav.id}` : `/${nav.category}/${nav.id}`)
+                                        else router.push(isInSettings ? `/settings/${nav.category}/${nav.id}` : `/${nav.category}/${nav.id}`)
+                                    }}
+                                >
+                                    <div style={{
+                                        minWidth: "50px",
+                                        display: "flex",
+                                        justifyContent: "center"
+                                    }}>
+
+                                        <Image
+                                            alt={`${nav.name} icon`}
+                                            src={nav.img}
+                                            height={20}
+                                            style={{ objectFit: "cover" }}
+                                        />
+                                    </div>
+                                    <p className={currentPage === nav.id ? styles.navTextActive : styles.navText}>{nav.name}</p>
+                                </button>
+                            )
+                        })}
+                    </div>
+                    <button
+                        onClick={() => router.push(isInSettings ? `/${sideNavs[0].category}/${sideNavs[0].category === "campconnection" ? "leads" : "groupleads"}` : `/settings/retreatcenter/profile`)}
+                        className={styles.settingsButton}>
+                        <div style={{
+                            minWidth: "50px",
+                            display: "flex",
+                            justifyContent: "center"
+                        }}>
+                            <Image
+                                alt={"Settings icon"}
+                                src={isInSettings ? Images.ic_back : Images.ic_settings}
+                                height={20}
+                                style={{ objectFit: "cover" }}
+                            /></div>
+                        <p className={styles.navText}>{isInSettings ? "Go Back" : "Settings"}</p>
+                    </button>
                 </div>
-                <button
-                    onClick={() => router.push(isInSettings ? `/${sideNavs[0].category}/${sideNavs[0].category === "campconnection" ? "leads" : "groupleads"}` : `/settings/retreatcenter/profile`)}
-                    className={styles.settingsButton}>
-                    <Image
-                        alt={"Settings icon"}
-                        src={isInSettings ? Images.ic_back : Images.ic_settings}
-                        height={20}
-                        style={{ objectFit: "cover" }}
-                    />
-                    <p className={styles.navText}>{isInSettings ? "Go Back" : "Settings"}</p>
-                </button>
-            </div>
-        </nav>
+            </nav>
+        </>
     )
 }
 

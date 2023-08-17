@@ -9,6 +9,7 @@ import { addActivity, setActivities } from "@/services/redux/slice/retreatcenter
 import { RootState } from "@/services/redux/store";
 import { ActivityType, RetreatCenterType } from "@/types";
 import { ActivityGenerator, IDGenerator } from "@/utils/functions";
+import { weekdays } from "@/utils/variables";
 import Image from "next/image";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -119,9 +120,19 @@ const ActivitiesSetup = () => {
                                     price: 20,
                                 }
                             ],
+                            dailyAvailable: weekdays.map(wd => ({
+                                day: wd,
+                                isChecked: true,
+                                editMode: false,
+                                from: "09:00",
+                                to: "17:00"
+                            })),
                             seasonsAvailable: ["Winter", "Spring", "Summer", "Fall"],
                             releaseForm: "",
-                            refundPolicy: ""
+                            refundPolicy: "",
+                            contracts: [],
+                            learnMoreUrl: "campconnection.net",
+                            feature: "https://campconnection.net/wp-content/uploads/2023/02/videoplayback.mp4",
                         }))
                     }
                 }

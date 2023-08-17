@@ -71,11 +71,11 @@ const BuildingCard = ({ building, appointment }: { building: BuildingType, appoi
                                 data-content={
                                     occupiedBy ?
                                         occupyingGroup?.groupName
-                                        : room.available && room.beds.length > 0 ? "Beds for " + room.capacity + " Guests"
+                                        : room.available && room.beds.length > 0 ? "Beds for " + room.capacity + " Guests" + "\r\n" + room.beds.map((bed) => bed.name + ": " + bed.amount).toString().replaceAll(",", "\r\n")
                                             : "Unavailable"}
                                 onClick={() => room.available && room.beds.length > 0 ? updateBuildingRooms(room) : () => { }}
                                 style={occupiedBy ? { color: occupyingGroup?.color } : {}}
-                                className={[styles.roomButton, occupiedBy ? styles.occupiedText : room.available && room.beds.length > 0 ? styles.vacantText : styles.unavailableText, "tooltip"].join(" ")}
+                                className={[styles.roomButton, occupiedBy ? styles.occupiedText : room.available && room.beds.length > 0 ? styles.vacantText : styles.unavailableText, "tooltipBreakText"].join(" ")}
                             >
                                 <div
                                     style={occupiedBy ? { outline: `2px solid ${occupyingGroup?.color}` } : {}}
@@ -89,12 +89,14 @@ const BuildingCard = ({ building, appointment }: { building: BuildingType, appoi
                 </div>
                 : null}
 
-            {openBuilding ? <div className={styles.legendContainer}>
-                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.occupiedText].join(" ")}><div style={{ border: `1px solid #000000`, outline: 0 }} className={styles.occupied} />Occupied</div>
-                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.vacantText].join(" ")}><div className={styles.vacant} />Available</div>
-                <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.unavailableText].join(" ")}><div className={styles.unavailable} />Unavailable</div>
-            </div> : null}
-        </div>
+            {
+                openBuilding ? <div className={styles.legendContainer}>
+                    <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.occupiedText].join(" ")}><div style={{ border: `1px solid #000000`, outline: 0 }} className={styles.occupied} />Occupied</div>
+                    <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.vacantText].join(" ")}><div className={styles.vacant} />Available</div>
+                    <div style={{ fontSize: "12px" }} className={[styles.roomButton, styles.unavailableText].join(" ")}><div className={styles.unavailable} />Unavailable</div>
+                </div> : null
+            }
+        </div >
     )
 }
 

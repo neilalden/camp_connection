@@ -14,6 +14,7 @@ import { RootState } from '@/services/redux/store';
 import TextInput from '@/components/TextInput';
 import { IDGenerator } from '@/utils/functions';
 import { POST } from '@/services/api';
+import Colors from '@/common/colors';
 
 const RetreatCenterUserTestData: RetreatCenterTeamType = {
     id: IDGenerator(),
@@ -72,8 +73,8 @@ const SigninForm = () => {
             <TextInput type='password' label='Password' value={password} setValue={(e) => setPassword(e.target.value)} containerClassName={styles.input} />
 
             <div className={styles.row}>
-                <Link href="/forgotpassword"><p>Forgot password</p></Link>
-                <Link href="/signup" className={styles.signUpLink}><p>Sign up</p></Link>
+                <Link href="/forgotpassword" className={styles.link}><p>Forgot password</p></Link>
+                <Link href="/signup" className={styles.link} style={{ color: Colors.blue500, fontWeight: 600 }}><p>Sign up</p></Link>
             </div>
 
             <br />
@@ -84,7 +85,16 @@ const SigninForm = () => {
             >
                 Sign in!
             </button>
-            <Divider className={styles.divider} ><span className={styles.span}>or</span></Divider>
+            <Divider style={{
+                margin: "30px 0",
+                backgroundColor: "#595959"
+            }} ><span style={{
+                fontSize: "10px",
+                fontWeight: "light",
+                textAlign: "center",
+                background: "#FFF",
+                width: "20px",
+            }}>or</span></Divider>
             <button
                 type="button"
                 className={styles.googleButton}

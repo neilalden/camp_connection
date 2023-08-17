@@ -172,7 +172,7 @@ const Activity = ({ appointment, group }: { appointment: AppointmentType, group:
         <div>
             {
                 Activities && Activities.map((activity, i) =>
-                    <ActivityCard key={i} activity={activity} appointment={appointment} />
+                    <ActivityCard key={i} activity={activity} />
                 )
             }
         </div>

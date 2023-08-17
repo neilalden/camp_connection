@@ -10,10 +10,15 @@
     cursor: not-allowed;
 }
 
+.topLabel {
+    font-size: 14px;
+}
+
 .bottomLabel {
+    font-size: 14px;
     line-height: 0 !important;
 }
 
-.container{
+.container {
     position: relative;
 }
