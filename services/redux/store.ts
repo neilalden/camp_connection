@@ -16,36 +16,47 @@
 
 // export const store = createStore(reducers, applyMiddleware(thunk))
 
-
 // export type RootState = ReturnType<typeof store.getState>;
 // export type AppDispatch = typeof store.dispatch;
 
-import { applyMiddleware, combineReducers, configureStore, createStore } from "@reduxjs/toolkit";
-import { default as Appointments } from './slice/appointments';
-import { default as CamperGroups } from './slice/campergroups';
-import { default as Leads } from './slice/leads';
-import { default as RetreatCenters } from './slice/retreatcenters';
-import { default as User } from './slice/user';
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import {
+  applyMiddleware,
+  combineReducers,
+  configureStore,
+  createStore,
+} from "@reduxjs/toolkit";
+import { default as Appointments } from "./slice/appointments";
+import { default as CamperGroups } from "./slice/campergroups";
+import { default as Leads } from "./slice/leads";
+import { default as RetreatCenters } from "./slice/retreatcenters";
+import { default as User } from "./slice/user";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk"; // Import Redux Thunk
 
 const persistConfig = {
-    key: 'root',
-    storage
-}
+  key: "root",
+  storage,
+};
 
 const reducers = combineReducers({
-    Appointments,
-    CamperGroups,
-    Leads,
-    RetreatCenters,
-    User,
+  Appointments,
+  CamperGroups,
+  Leads,
+  RetreatCenters,
+  User,
 });
 
-export const persistedReducer = persistReducer(persistConfig, reducers)
-export const store = createStore(persistedReducer)
-export const persistor = persistStore(store);
+export const persistedReducer = persistReducer(persistConfig, reducers);
 
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: [thunk], // Add Redux Thunk middleware here
+});
+
+const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export { store, persistor };

@@ -1,0 +1,63 @@
+.form {
+  width: 250px;
+}
+
+.input {
+  margin-bottom: 10px !important;
+}
+
+.button {
+  width: 100% !important;
+  height: 30px;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 5px;
+  color: #fff;
+  background: #3c7fd6;
+}
+
+.googleButton {
+  width: 100% !important;
+  height: 30px;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 5px;
+  color: #000;
+  background: #f8faeb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  height: 15px;
+  width: 15px;
+  margin-right: 10px !important;
+}
+
+.span {
+  font-size: 10px;
+  font-weight: light;
+  text-align: center;
+  background-color: #fff !important;
+  width: 20px;
+}
+
+.form {
+  height: 100vh;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.signUpLink {
+  color: #3c7fd6;
+  font-weight: 700;
+}
+
+.divider {
+  margin: 30px 0 !important;
+  background-color: #595959 !important;
+}

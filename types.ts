@@ -24,23 +24,23 @@ type User = {
 };
 export type CamperUserType = {
   userType?:
-  | "Group Leader"
-  | "Group Member"
-  | "Camper Gaurdian/Parent"
-  | "Individual Camper";
+    | "Group Leader"
+    | "Group Member"
+    | "Camper Gaurdian/Parent"
+    | "Individual Camper";
   groupName?: string;
   checkInDate?: Date;
   checkOutDate?: Date;
   checkInDays?: Number;
-} & User
+} & User;
 export type RetreatCenterTeamType = {
-  retreatCenterId: RetreatCenterType["id"]
+  retreatCenterId: RetreatCenterType["id"];
   userType?: "Admin" | "Hospitality" | "Sales" | "Food" | "Group Coordinator";
   position?: "Leader" | "Member" | "Assistant";
-} & User
+} & User;
 export type CampConnectionTeamUserType = {
   userType?: "Admin" | "Sales" | "Support";
-} & User
+} & User;
 
 export type RetreatCenterType = {
   id: string;
@@ -58,7 +58,7 @@ export type RetreatCenterType = {
   website?: string;
   housing: {
     buildings?: Array<BuildingType>;
-    campAreas?: Array<CampAreaType>
+    campAreas?: Array<CampAreaType>;
   };
   amenities: {
     activities?: Array<ActivityType>;
@@ -66,18 +66,20 @@ export type RetreatCenterType = {
   meals?: Array<MealType>;
   meetingRooms?: Array<MeetingRoomType>;
 
-  bedStyles: Array<BedType>
+  bedStyles: Array<BedType>;
   spotStyles: Array<SpotType>;
   activityStyles: Array<ActivityType>;
   itemStyles: Array<ItemType>;
   diagramStyles: Array<DiagramType>;
-}
+};
 
 export type AppointmentType = {
   id: string;
   createdAt: Date;
-  retreatCenterId: RetreatCenterTeamType["id"] | CampConnectionTeamUserType["id"];
-  groupId: CamperGroupType["id"]
+  retreatCenterId:
+    | RetreatCenterTeamType["id"]
+    | CampConnectionTeamUserType["id"];
+  groupId: CamperGroupType["id"];
   status: "Lead" | "Reserved" | "Booked";
   checkInDays: number;
 
@@ -92,8 +94,8 @@ export type AppointmentType = {
 
 export type CamperGroupType = {
   id: string;
-  appointmentId: AppointmentType["id"]
-  campers: Array<CamperUserType>
+  appointmentId: AppointmentType["id"];
+  campers: Array<CamperUserType>;
   color: string;
   appointeeName?: string;
   appointeeContactNumber?: string;
@@ -101,40 +103,40 @@ export type CamperGroupType = {
   groupName: string;
   zipCode?: number;
   groupSize?: number;
-}
+};
 
 export type MealScheduleType = {
   groupId: CamperGroupType["id"];
-  time: "Breakfast" | "Lunch" | "Dinner" | Date
-  meals: Array<MealType>
-}
+  time: "Breakfast" | "Lunch" | "Dinner" | Date;
+  meals: Array<MealType>;
+};
 
 export type RoomScheduleType = {
   groupId: CamperGroupType["id"];
-  checkInDays: AppointmentType["checkInDays"]
-  checkInDate?: AppointmentType["checkInDate"]
-  checkOutDate?: AppointmentType["checkOutDate"]
-  rooms: Array<RoomType>
-}
+  checkInDays: AppointmentType["checkInDays"];
+  checkInDate?: AppointmentType["checkInDate"];
+  checkOutDate?: AppointmentType["checkOutDate"];
+  rooms: Array<RoomType>;
+};
 
 export type MeetingRoomScheduleType = {
   groupId: CamperGroupType["id"];
   checkIn?: Date;
   checkOut?: Date;
-  meetingRooms: Array<MeetingRoomType>
-}
+  meetingRooms: Array<MeetingRoomType>;
+};
 
 export type ActivityScheduleType = {
   groupId: CamperGroupType["id"];
   time: Date;
-  activities: Array<ActivityType>
-}
+  activities: Array<ActivityType>;
+};
 
 export type MealType = {
   id: string;
   name: string;
   serving?: number;
-  price?: number
+  price?: number;
 };
 export type MeetingRoomType = {
   id: string;
@@ -142,15 +144,15 @@ export type MeetingRoomType = {
   capacity: number;
   occupiedBy?: AppointmentType;
   available: boolean;
-  diagram?: DiagramType
-}
+  diagram?: DiagramType;
+};
 export type BedType = {
   id: string;
   name: string;
   capacity: number;
   amount: number;
-  pricing: PricingType | Array<PricingType>
-}
+  pricing: PricingType | Array<PricingType>;
+};
 export type ActivityType = {
   id: string;
   name: string;
@@ -159,44 +161,44 @@ export type ActivityType = {
   available: boolean;
   description: any;
   pricing: Array<PricingType>;
-  seasonsAvailable: Array<SeasonClass>
+  seasonsAvailable: Array<SeasonClass>;
   occupiedBy?: AppointmentType;
   feature?: string;
-  releaseForm?: string,
-  refundPolicy?: string
+  releaseForm?: string;
+  refundPolicy?: string;
 };
 export type SpotType = {
   id: string;
   name: string;
   capacity: number;
   amount: number;
-  pricing: PricingType | Array<PricingType>
-}
+  pricing: PricingType | Array<PricingType>;
+};
 export type ItemType = {
   id: string;
   name: string;
-  amount: number
-}
+  amount: number;
+};
 export type DiagramType = {
   id: string;
   name: string;
   photo?: string | StaticImport;
-  items: Array<ItemType>
-}
+  items: Array<ItemType>;
+};
 
 export type EditBedStyleName = {
   id: BedType["id"];
   name: BedType["name"];
-}
+};
 export type EditBedStyleCapacity = {
   id: BedType["id"];
   capacity: BedType["capacity"];
-}
+};
 export type PricingType = {
   nights?: number | "*";
   per?: string;
   price: number;
-}
+};
 export type AmenityType = {
   id: string;
   name: string;
@@ -226,14 +228,14 @@ export type RoomType = {
   beds: Array<BedType>;
   capacity: number;
   occupiedBy?: AppointmentType;
-  available: boolean
+  available: boolean;
 };
 export type SpaceType = {
   id: string;
   name: string;
   campAreaId?: string;
   level?: string;
-  spots: Array<SpotType>
+  spots: Array<SpotType>;
 };
 
 export type CampAreaType = {
@@ -259,12 +261,31 @@ export const Activity = {
   Hiking: "Hiking",
   Basketball: "Basketball",
   Zipline: "Zipline",
-} as const
-export type ActivityClass = (typeof Activity)[keyof typeof Activity]
+} as const;
+export type ActivityClass = (typeof Activity)[keyof typeof Activity];
 export const Season = {
   Winter: "Winter",
   Spring: "Spring",
   Summer: "Summer",
   Fall: "Fall",
-} as const
-export type SeasonClass = (typeof Season)[keyof typeof Season]
+} as const;
+export type SeasonClass = (typeof Season)[keyof typeof Season];
+
+export type userSignInType = {
+  email: string;
+  password: string;
+};
+
+export type userSignUpType = {
+  id: number;
+  email: string;
+  password: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  photo?: string | null; // Assuming it's a URL or path to the photo
+  contact: string;
+  birthday: string;
+  organization: string;
+  userType: string;
+};

@@ -3,7 +3,7 @@ import Images from "@/common/images";
 import { Metadata } from "next";
 import Image from "next/image";
 import React, { useEffect } from "react";
-import SigninForm from "./components/SigninForm";
+import SignUpForm from "./components/SignUpForm";
 import { Provider } from "react-redux";
 import { store } from "@/services/redux/store";
 import { GET } from "@/services/api";
@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 //     title: "Signin",
 //     description: "Signin page of CampConnection"
 // }
-const SigninPage = () => {
+const SignUpPage = () => {
   useEffect(() => {
     return;
     (async () => {
@@ -27,7 +27,7 @@ const SigninPage = () => {
       <Image alt="CampConnection Logo" src={Images.ic_logo} style={logo} />
       <div style={{ height: "100px" }} />
       <Provider store={store}>
-        <SigninForm />
+        <SignUpForm />
       </Provider>
       <div style={{ height: "100px" }} />
       <ToastContainer />
@@ -50,4 +50,4 @@ const logo = {
   objectFit: "contain",
 } as const;
 
-export default SigninPage;
+export default SignUpPage;
